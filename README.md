@@ -9,8 +9,14 @@
 ## Architecture
 - This API is based on small libraries with a couple of headers each.
 - The external headers of each library contain only pure C functions and or a C++ pure virtual classes with its respective pure C factories
-- Each library is in own folder and has its respective unit test application
+- Each library is in its own folder and has its respective unit test application
 - The CppUnit test framework is included in this project and is always statically linked to the test applications
+
+## Values
+1. User friendly API
+2. Mantainability
+3. Extensibility
+4. Backwards compatibility
 
 ## Goals
 1. Core functions (sleeps, threads, soft real-time, timers, clocks)
@@ -19,8 +25,4 @@
 4. Control structures (PID, PT1, debouncer, Schmitt trigger)
 5. Error handling, logs, status reports
  
-## Values
-1. User friendly API
-2. Mantainability
-3. Extensibility
-4. Backwards compatibility
+
