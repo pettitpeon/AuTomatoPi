@@ -26,6 +26,7 @@
 
 LOCAL inline speed_t baud2Speed(EBaComBaud baud);
 
+// Serial descriptor
 typedef struct TSerialDesc {
    int fd;
    IBaGpio *pTXD0;
