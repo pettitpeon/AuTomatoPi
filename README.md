@@ -4,7 +4,7 @@
 2. It is being developed with the Raspberry Pi 2 Model B, Raspbian Jessie
   1. Compiler: SysGcc cross-compiler arm-linux-gnueabihf-4.9.2
   2. You can get it here: http://gnutoolchains.com/raspberry/
-3. The project file included is from eclipse CTD LUNA
+3. The project file included is from eclipse CDT LUNA
  
 ## Architecture
 - This API is based on small libraries with a couple of headers each.
