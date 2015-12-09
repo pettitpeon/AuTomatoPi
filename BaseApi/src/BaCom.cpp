@@ -44,28 +44,6 @@ typedef struct TSerialDesc {
 
 //
 TBaComHdl BaComI2CInit() {
-   int rev, fd ;
-   const char *device;
-   int devId = 0;
-
-   if ((rev = 2) < 0)
-   {
-//     fprintf (stderr, "wiringPiI2CSetup: Unable to determine Pi board revision\n") ;
-//     exit (1) ;
-   }
-
-   if (rev == 1)
-     device = "/dev/i2c-0" ;
-   else
-     device = "/dev/i2c-1" ;
-
-   if ((fd = open (device, O_RDWR)) < 0)
-     return -1 ;
-
-   if (ioctl (fd, I2C_SLAVE, devId) < 0)
-     return -1 ;
-
-//   return fd ;
    return 0;
 }
 
