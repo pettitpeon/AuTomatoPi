@@ -19,10 +19,10 @@
 #include "BaGenMacros.h"
 #include "ProgressListener.h"
 
-
-
 #include "TestTemplate.h"
 #include "BaCoreTest.h"
+#include "BaGpioTest.h"
+#include "BaComTest.h"
 
 //
 enum TTestSelection {
@@ -33,8 +33,8 @@ enum TTestSelection {
 
 static TTestSelection sSelection =
 //      eSingleTests;
-//      eSingleSuites;
-      eFullRegistry;
+      eSingleSuites;
+//      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -81,7 +81,10 @@ int main() {
 /*  ...
 **/
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
-   pSuite->addTest(CTestTemplate::suite());
+//   pSuite->addTest(CTestTemplate::suite());
+   pSuite->addTest(CBaComTest::suite());
+//   pSuite->addTest(CBaGpioTest::suite());
+//   pSuite->addTest(CBaCoreTest::suite());
    return pSuite;
 }
 
@@ -92,3 +95,4 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite) {
    pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaCoreTest>("ThreadsSpecialCases", &CBaCoreTest::ThreadsSpecialCases));
    return pSuite;
 }
+

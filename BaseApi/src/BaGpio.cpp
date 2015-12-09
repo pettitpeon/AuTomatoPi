@@ -296,14 +296,15 @@ TBaBoolRC BaGpioSetClkHWPWM(double frequency, uint32_t resolution, EBaGpioHWPWMM
 }
 
 //
-void BaGpioCleanUp(TBaGpio gpio) {
+TBaBoolRC BaGpioCleanUp(TBaGpio gpio) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
    if (!INIT_) {
-      return;
+      return eBaBoolRC_Error;
    }
    cleanUp(gpio);
+   return eBaBoolRC_Success;
 }
 
 //

@@ -110,8 +110,9 @@ TBaBoolRC BaGpioSetClkHWPWM(
 //@{
 /******************************************************************************/
 /** Cleans up the GPIO and leaves it on default state
+ *  @return Error or success
  */
-void BaGpioCleanUp(
+TBaBoolRC BaGpioCleanUp(
       TBaGpio gpio ///< [in] GPIO number
       );
 
