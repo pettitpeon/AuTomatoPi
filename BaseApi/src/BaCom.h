@@ -60,11 +60,14 @@ typedef enum EBaComBaud {
 extern "C" {
 #endif
 
+// Stubs!
 TBaComHdl BaComI2CInit();
 TBaBoolRC BaComI2CExit(TBaComHdl hdl);
 
 TBaComHdl BaComSPIInit();
 TBaBoolRC BaComSPIExit(TBaComHdl hdl);
+// end stubs!
+
 
 /// @name Init/Exit Functions
 //@{
