@@ -18,6 +18,7 @@
 /*------------------------------------------------------------------------------
  *  Includes
  */
+#include <string>
 
 /*------------------------------------------------------------------------------
  *  Type definitions
@@ -35,7 +36,7 @@ public:
          );
 
    // Hardware PWM setup functions
-   virtual bool InitHWPWM();
+   virtual bool Log(std::string msg);
 
 private:
    // Private constructor because a public factory method is used

@@ -16,6 +16,7 @@
 #include "BaLogTest.h"
 #include "BaGenMacros.h"
 #include "BaLog.h"
+#include "CBaLog.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 
@@ -36,6 +37,19 @@ void CBaLogTest::tearDown() {
  */
 void CBaLogTest::Test() {
    CPPUNIT_ASSERT(true);
-   BaLogInit();
+
+   CBaLog *log1 = CBaLog::Create("TestLog1");
+   log1->Log("msg 1.1");
+
+   CBaLog *log2 = CBaLog::Create("TestLog2");
+   log2->Log("msg 2.1");
+
+   CBaLog *log3 = CBaLog::Create("TestLog3");
+   log3->Log("msg 3.1");
+
+   CBaLog::Delete(log1);
+   CBaLog::Delete(log2);
+   CBaLog::Delete(log3);
+
 
 }
