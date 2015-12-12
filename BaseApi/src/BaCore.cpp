@@ -136,7 +136,7 @@ TBaCoreThreadHdl BaCoreCreateThread(const char *name, TBaCoreThreadFun routine,
 
    // Lock until the thread pointer is assigned
    {
-      std::unique_lock<std::mutex> lck(pDesc->mtx);
+      std::lock_guard<std::mutex> lck(pDesc->mtx);
       pDesc->pThread = new std::thread(threadRoutine, pDesc);
    }
 
@@ -219,7 +219,7 @@ LOCAL void threadRoutine(TThreadDesc *pDesc) {
 
    // Wait for the pThread pointer to be assigned
    {
-      std::unique_lock<std::mutex> lck(pDesc->mtx);
+      std::lock_guard<std::mutex> lck(pDesc->mtx);
    }
 
    // Define the priority and scheduler
@@ -251,7 +251,7 @@ LOCAL void threadRoutine(TThreadDesc *pDesc) {
    } else {
       // Wait for detach to avoid a race condition
       {
-         std::unique_lock<std::mutex> lck(pDesc->mtx);
+         std::lock_guard<std::mutex> lck(pDesc->mtx);
       }
       delete pDesc;
    }

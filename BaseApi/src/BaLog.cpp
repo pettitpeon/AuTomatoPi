@@ -13,6 +13,8 @@
 /*------------------------------------------------------------------------------
  */
 
+#ifdef __linux
+
 #include <syslog.h>
 #include "BaLog.h"
 
@@ -25,3 +27,5 @@ void BaLogInit() {
    syslog(LOG_INFO, "%s", "Init syslog");
    closelog();
 }
+
+#endif // __linux

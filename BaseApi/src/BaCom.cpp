@@ -9,6 +9,7 @@
  */
 /*------------------------------------------------------------------------------
  */
+#ifdef __linux
 
 #include <sys/ioctl.h>
 #include <fcntl.h>
@@ -180,3 +181,6 @@ LOCAL inline speed_t baud2Speed(EBaComBaud baud) {
    }
    return 0;
 }
+
+
+#endif // __linux

@@ -12,6 +12,9 @@
  */
 /*------------------------------------------------------------------------------
  */
+
+#ifdef __linux
+
 #include <iostream>
 #include "BaComTest.h"
 #include "BaCom.h"
@@ -62,3 +65,4 @@ void CBaComTest::Serial() {
    CPPUNIT_ASSERT(BaComSerExit(hdl));
 }
 
+#endif // __linux

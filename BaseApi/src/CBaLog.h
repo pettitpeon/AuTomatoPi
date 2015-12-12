@@ -36,7 +36,8 @@ public:
          );
 
    // Hardware PWM setup functions
-   virtual bool Log(std::string msg);
+   virtual bool Log(const char* msg);
+   virtual void Logf(const char* fmt, ...);
 
 private:
    // Private constructor because a public factory method is used

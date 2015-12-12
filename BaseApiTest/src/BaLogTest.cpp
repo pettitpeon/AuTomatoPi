@@ -40,12 +40,15 @@ void CBaLogTest::Test() {
 
    CBaLog *log1 = CBaLog::Create("TestLog1");
    log1->Log("msg 1.1");
+   log1->Logf("msg 1.%i", 2);
 
    CBaLog *log2 = CBaLog::Create("TestLog2");
    log2->Log("msg 2.1");
+   log2->Logf("msg 2.%i", 2);
 
    CBaLog *log3 = CBaLog::Create("TestLog3");
    log3->Log("msg 3.1");
+   log3->Logf("msg 3.%i", 2);
 
    CBaLog::Delete(log1);
    CBaLog::Delete(log2);
