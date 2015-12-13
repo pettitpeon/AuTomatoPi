@@ -57,7 +57,8 @@ class CBaLog::Impl {
 public:
 
    // Constructors
-   Impl(std::string name) : name(name), log(), count(1), fileSize(0), buf() {
+   Impl(std::string name) : name(name), log(), openCnt(1), fileSizeB(0), buf(),
+   maxFileSizeB(1024), maxNoFiles(2), fileCnt(0) {
    }
 
 
@@ -88,13 +89,34 @@ public:
       while (!sLogdArg.exitTh) {
          {
             std::lock_guard<std::mutex> lck(sMtx);
+            Impl *p = 0;
+
+            // iterate loggers
             for (auto &kv : sLoggers) {
-               if (kv.second->mpImpl->buf.size()) {
-                  for (auto &msg : kv.second->mpImpl->buf) {
-                     kv.second->mpImpl->log << msg << std::endl;
+               p = kv.second->mpImpl;
+
+               // Iterate messages in buffer
+               for (auto &msg : p->buf) {
+
+                  // Check file size
+                  p->fileSizeB += msg.size();
+                  if (p->fileSizeB > p->maxFileSizeB) {
+                     // Open new file
+                     if (p->fileCnt > ++p->maxNoFiles) {
+                        p->fileCnt = 1;
+                        // Rewrite file
+                     }
+                     p->log.close();
+                     p->name += std::to_string(p->fileCnt);
+
+                     // todo: check open error!
+                     p->log.open(p->name.c_str(), std::ios_base::binary | std::ios_base::out);
+
                   }
-                  kv.second->mpImpl->buf.clear();
+
+                  p->log << msg << std::endl;
                }
+               kv.second->mpImpl->buf.clear();
             }
          }
 
@@ -111,9 +133,12 @@ public:
 
    std::string name;
    std::ofstream log;
-   int16_t count;
-   uint32_t fileSize;
+   int16_t openCnt;
+   uint32_t fileSizeB;
    std::vector<std::string> buf;
+   uint32_t maxFileSizeB;
+   uint16_t maxNoFiles;
+   uint16_t fileCnt;
 
 };
 
@@ -125,10 +150,11 @@ CBaLog* CBaLog::Create(std::string name) {
       return 0;
    }
 
+   // TODO: name has to contain the fileCount
    name = LOGDIR + name + LOGEXT;
    auto logger = sLoggers.find(name);
    if (logger != sLoggers.end()) {
-      logger->second->mpImpl->count++;
+      logger->second->mpImpl->openCnt++;
       return logger->second;
    }
 
@@ -147,7 +173,7 @@ bool CBaLog::Delete(CBaLog *pHdl) {
       return false;
    }
 
-   if (--p->mpImpl->count == 0) {
+   if (--p->mpImpl->openCnt == 0) {
       // erase from loggers
       sLoggers.erase(p->mpImpl->name);
       p->mpImpl->flush2Disk();
