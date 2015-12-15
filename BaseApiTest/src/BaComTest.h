@@ -31,11 +31,13 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaComTest);
 
+   CPPUNIT_TEST(Config);
    CPPUNIT_TEST(Serial);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
+   void Config();
    void Serial();
 };
 

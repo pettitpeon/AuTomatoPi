@@ -82,9 +82,9 @@ int main() {
 /*  ...
 **/
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
-//   pSuite->addTest(CTestTemplate::suite());
+   pSuite->addTest(CTestTemplate::suite());
 //   pSuite->addTest(CBaComTest::suite());
-   pSuite->addTest(CBaLogTest::suite());
+//   pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaGpioTest::suite());
 //   pSuite->addTest(CBaCoreTest::suite());
    return pSuite;

@@ -2,43 +2,36 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : TestTemplate.h
+ *   Module   : BaUtils.hpp
  *   Date     : 23/06/2015
  *------------------------------------------------------------------------------
  *   Module description:
  */
 /** @file
- *  Test template
+ *  General useful functions
  */
 /*------------------------------------------------------------------------------
  */
 
 
-#ifndef TESTTEMPLATE_H_
-#define TESTTEMPLATE_H_
+#ifndef BAUTILS_HPP_
+#define BAUTILS_HPP_
 
-#include "cppunit/extensions/HelperMacros.h"
-#include "cppunit/TestCase.h"
+#if defined(__cplusplus)
 
-//#include "Template.h"
+///
+template<typename T>
+static inline T BaToNumber(const char* s, T badInput) {
+   std::istringstream i(s);
+   T res;
+   if (!(i >> res)) {
+      return badInput;
+   }
+
+   return res;
+}
+
+#endif // __cplusplus
 
 
-class CTestTemplate : public CppUnit::TestCase {
-public:
-   void setUp();
-   void tearDown();
-
-   CPPUNIT_TEST_SUITE(CTestTemplate);
-
-   CPPUNIT_TEST(Config);
-   CPPUNIT_TEST(Test);
-
-   CPPUNIT_TEST_SUITE_END();
-
-protected:
-   void Test();
-   void Config();
-
-};
-
-#endif /* TestTemplate */
+#endif /* BAUTILS_HPP_ */
