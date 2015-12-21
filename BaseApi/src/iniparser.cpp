@@ -51,8 +51,7 @@ typedef enum _line_status_ {
   At most len - 1 elements of the input string will be converted.
  */
 /*--------------------------------------------------------------------------*/
-static const char * strlwc(const char * in, char *out, unsigned len)
-{
+LOCAL const char *strlwc(const char *in, char *out, unsigned len) {
     unsigned i ;
 
     if (in==NULL || out == NULL || len==0) return NULL ;
@@ -75,8 +74,7 @@ static const char * strlwc(const char * in, char *out, unsigned len)
   for systems that do not have it.
  */
 /*--------------------------------------------------------------------------*/
-static char * xstrdup(const char * s)
-{
+LOCAL char * xstrdup(const char * s) {
     char * t ;
     size_t len ;
     if (!s)
@@ -97,12 +95,14 @@ static char * xstrdup(const char * s)
   @return   unsigned New size of the string.
  */
 /*--------------------------------------------------------------------------*/
-unsigned strstrip(char * s)
-{
+LOCAL unsigned strstrip(char *s) {
     char *last = NULL ;
     char *dest = s;
 
-    if (s==NULL) return 0;
+
+    if (s==NULL) {
+       return 0;
+    }
 
     last = s + strlen(s);
     while (isspace((int)*s) && *s) s++;
@@ -135,8 +135,7 @@ unsigned strstrip(char * s)
   This function returns -1 in case of error.
  */
 /*--------------------------------------------------------------------------*/
-int iniparser_getnsec(const dictionary * d)
-{
+int iniparser_getnsec(const dictionary * d) {
     int i ;
     int nsec ;
 
@@ -269,7 +268,6 @@ void iniparser_dump_ini(const dictionary * d, FILE * f)
   This function dumps a given section of a given dictionary into a loadable ini
   file.  It is Ok to specify @c stderr or @c stdout as output files.
  */
-// todo:
 /*--------------------------------------------------------------------------*/
 void iniparser_dumpsection_ini(const dictionary * d, const char * s, FILE * f)
 {
@@ -607,7 +605,8 @@ LOCAL line_status iniparser_line(
     const char * input_line,
     char * section,
     char * key,
-    char * value)
+    char * value
+    )
 {
     line_status sta ;
     char * line = NULL;
@@ -685,8 +684,7 @@ LOCAL line_status iniparser_line(
   The returned dictionary must be freed using iniparser_freedict().
  */
 /*--------------------------------------------------------------------------*/
-dictionary * iniparser_load(const char * ininame)
-{
+dictionary * iniparser_load(const char *ininame) {
     FILE * in ;
 
     char line    [ASCIILINESZ+1] ;
@@ -700,14 +698,13 @@ dictionary * iniparser_load(const char * ininame)
     int  lineno=0 ;
     int  errs=0;
 
-    dictionary * dict ;
+    std::map<std::string, std::string> * dict = new std::map<std::string, std::string>();
+
 
     if ((in=fopen(ininame, "r"))==NULL) {
         fprintf(stderr, "iniparser: cannot open %s\n", ininame);
         return NULL ;
     }
-
-    dict = 0 ;
 
     memset(line,    0, ASCIILINESZ);
     memset(section, 0, ASCIILINESZ);
@@ -785,7 +782,7 @@ dictionary * iniparser_load(const char * ininame)
         dict = NULL ;
     }
     fclose(in);
-    return dict ;
+    return (void**) dict ;
 }
 
 /*-------------------------------------------------------------------------*/
@@ -804,3 +801,186 @@ void iniparser_freedict(dictionary * d)
 //    dictionary_del(d);
 }
 
+
+
+
+
+// /////////////////////////////////////////////////////////////////////////////
+
+class CBaIniParser : public IBaIniParser {
+public:
+   static IBaIniParser * Create(const char *file) {
+      CBaIniParser *pIp = new CBaIniParser();
+      FILE * in ;
+
+      char line    [ASCIILINESZ+1] ;
+      char section [ASCIILINESZ+1] ;
+      char key     [ASCIILINESZ+1] ;
+      char tmp     [(ASCIILINESZ * 2) + 1] ;
+      char val     [ASCIILINESZ+1] ;
+
+      int  last=0 ;
+      int  len ;
+      int  lineno=0 ;
+      int  errs=0;
+
+
+      if (!pIp || !(in = fopen(file, "r"))) {
+         // todo: no printf
+//         fprintf(stderr, "iniparser: cannot open %s\n", file);
+         return 0;
+      }
+
+      memset(line,    0, ASCIILINESZ);
+      memset(section, 0, ASCIILINESZ);
+      memset(key,     0, ASCIILINESZ);
+      memset(val,     0, ASCIILINESZ);
+      last=0 ;
+
+      while (fgets(line+last, ASCIILINESZ-last, in) != NULL) {
+         lineno++ ;
+         len = (int)strlen(line)-1;
+         if (len == 0) { continue; }
+         /* Safety check against buffer overflows */
+         if (line[len]!='\n' && !feof(in)) {
+            // todo: no printf
+//            fprintf(stderr, "iniparser: input line too long in %s (%d)\n",
+//                  file, lineno);
+            Destroy(pIp);
+            fclose(in);
+            return NULL ;
+         }
+
+         /* Get rid of \n and spaces at end of line */
+         while ((len>=0) && ((line[len]=='\n') || (isspace(line[len])))) {
+            line[len]=0 ;
+            len-- ;
+         }
+
+         if (len < 0) { /* Line was entirely \n and/or spaces */
+            len = 0;
+         }
+
+         /* Detect multi-line */
+         if (line[len]=='\\') {
+            /* Multi-line value */
+            last=len ;
+            continue ;
+         } else {
+            last=0 ;
+         }
+
+         switch (iniparser_line(line, section, key, val)) {
+         case LINE_EMPTY:
+         case LINE_COMMENT:
+            break ;
+
+         case LINE_SECTION:
+            // Todo: is there any other way to identify a section?
+            pIp->dic[section] = "";
+            break ;
+
+         case LINE_VALUE:
+            sprintf(tmp, "%s:%s", section, key);
+            pIp->dic[tmp] = val;
+            break ;
+
+         case LINE_ERROR:
+            // todo: no printf
+//            fprintf(stderr, "iniparser: syntax error in %s (%d):\n", file, lineno);
+//            fprintf(stderr, "-> %s\n", line);
+            errs++ ;
+            break;
+
+         default:
+            break ;
+         }
+         memset(line, 0, ASCIILINESZ);
+         last=0;
+
+      }
+
+      if (errs) {
+         Destroy(pIp);
+         pIp = 0;
+      }
+
+      fclose(in);
+      return pIp;
+   };
+
+   static bool Destroy(IBaIniParser *pHdl) {
+      CBaIniParser *p = dynamic_cast<CBaIniParser*>(pHdl);
+      if (!p ) {
+         return false;
+      }
+      delete p;
+      return true;
+   };
+
+   //
+   virtual std::string GetString(const char *key, const char *def) {
+      auto it = dic.find(key);
+      if (it != dic.end()) {
+         return it->second;
+      }
+
+      return def;
+   };
+
+   //
+   virtual bool GetBool(const char *key, bool def) {
+      std::string val = GetString(key, "!");
+
+      const char *c = val.c_str();
+      if (c[0]=='y' || c[0]=='Y' || c[0]=='1' || c[0]=='t' || c[0]=='T') {
+          return true;
+      } else if (c[0]=='!' || c[0]=='n' || c[0]=='N' || c[0]=='0' ||
+                 c[0]=='f' || c[0]=='F') {
+         return false;
+      }
+
+      return def;
+   };
+
+   //
+   virtual int GetInt(const char *key, int def) {
+      std::string val = GetString(key, "!");
+      return BaToNumber(val.c_str(), def);
+   };
+
+   //
+   virtual int GetDouble(const char *key, double def) {
+      std::string val = GetString(key, "!");
+      return BaToNumber(val.c_str(), def);
+   };
+
+   //
+   virtual bool Exists(const char *key) {
+      if (!key) {
+         return false;
+      }
+
+      return dic.find(key) != dic.end();
+   };
+
+   //
+   virtual bool Set(const char *key, const char *val) {
+      if (!key || !val) {
+         return false;
+      }
+
+      dic[key] = val;
+      return true;
+   }
+
+   std::map<std::string, std::string> dic;
+};
+
+IBaIniParser * CreateBaIniParser(const char *file) {
+   return CBaIniParser::Create(file);
+}
+
+bool DestroyBaIniParser(IBaIniParser *pHdl) {
+   return CBaIniParser::Destroy(pHdl);
+}

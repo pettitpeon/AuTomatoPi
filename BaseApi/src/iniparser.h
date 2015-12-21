@@ -18,6 +18,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+#ifdef __cplusplus
+#include <string>
+#include <vector>
+#endif
+
+#include "BaBool.h"
+
 /*
  * The following #include is necessary on many Unixes but not Linux.
  * It is not needed for Windows platforms.
@@ -315,6 +323,103 @@ void iniparser_freedict(dictionary * d);
 
 #ifdef __cplusplus
 }
+
+/*------------------------------------------------------------------------------
+ *  C++ Interface
+ */
+
+/******************************************************************************/
+/** C++ interface
+ *  ...
+ */
+class IBaIniParser {
+public:
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual int GetSecCnt();
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual std::string GetSecName(int n);
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual void DumpIni(FILE * f);
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual void DumpIniSec(const char * s, FILE * f);
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual void Dump(FILE * f);
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual int GetSecKeyCnt(const char * s);
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual const std::vector<std::string> GetSecKeys(
+         const char *s,
+         const std::vector<std::string> &keys
+         );
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual std::string GetString(const char *key, const char *def) = 0;
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual int GetInt(const char *key, int notfound) = 0;
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual double GetDouble(const char *key, double notfound) = 0;
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual bool GetBool(const char *key, bool notfound) = 0;
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual int Set(const char *key, const char * val);
+
+   /***************************************************************************/
+   /** ...
+    */
+   virtual void Reset(const char *key);
+
+   /***************************************************************************/
+   /** ...
+   */
+   virtual bool Exists(const char *key) = 0;
+
+   // In interfaces and abstract classes, ALWAYS declare a virtual destructor,
+   // and implement / inline it
+   virtual ~IBaIniParser() {};
+};
+
+
+extern "C" IBaIniParser * CreateBaIniParser(
+      const char *file
+      );
+
+extern "C" bool DestroyBaIniParser(IBaIniParser *pHdl);
+
 #endif
 
 #endif
