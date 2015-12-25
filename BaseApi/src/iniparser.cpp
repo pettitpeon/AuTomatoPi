@@ -625,6 +625,7 @@ LOCAL line_status iniparser_line(
     } else if (line[0]=='[' && line[len-1]==']') {
         /* Section name */
         sscanf(line, "[%[^]]", section);
+//        strcpy(section, line);
         strstrip(section);
         strlwc(section, section, len);
         sta = LINE_SECTION ;
@@ -804,7 +805,6 @@ void iniparser_freedict(dictionary * d)
 
 
 
-
 // /////////////////////////////////////////////////////////////////////////////
 
 class CBaIniParser : public IBaIniParser {
@@ -919,6 +919,63 @@ public:
    };
 
    //
+   virtual void DumpIni(FILE *f) {
+      if (!f) {
+         return;
+      }
+      int          i ;
+      int          nsec ;
+      const char * secname ;
+
+//      nsec = iniparser_getnsec(d);
+      if (nsec<1) {
+          /* No section in file: dump all keys as they are */
+          for (auto kv : dic) {
+             fprintf(f, "%s = %s\n", kv.first.c_str(), kv.second.c_str());
+          }
+
+          return ;
+      }
+      for (i=0 ; i<nsec ; i++) {
+//          secname = iniparser_getsecname(d, i) ;
+          DumpIniSec(secname, f);
+      }
+      fprintf(f, "\n");
+
+      return ;
+
+   }
+
+   // TODO: check that empty section is allowed
+   virtual bool DumpIniSec(const char *sec, FILE *f) {
+      if (!sec || !f || !Exists(sec)) {
+         return false;
+      }
+
+      std::string keyt = sec;
+      keyt.append(":");
+      int secLen  = keyt.length();
+
+      fprintf(f, "\n[%s]\n", sec);
+
+      // Iterate all entries and dump only the ones in the section
+      for (auto kv : dic) {
+         if (!kv.first.compare(0, secLen, keyt)) {
+            fprintf(f, "%s = %s\n", kv.first.c_str() + secLen, kv.second.c_str());
+         }
+      }
+
+      fprintf(f, "\n");
+      return true;
+   }
+
+   //
+   virtual bool DumpSecLess(FILE *f) {
+
+      return DumpIniSec("", f);
+   }
+
+   //
    virtual std::string GetString(const char *key, const char *def) {
       auto it = dic.find(key);
       if (it != dic.end()) {
@@ -950,19 +1007,11 @@ public:
    };
 
    //
-   virtual int GetDouble(const char *key, double def) {
+   virtual double GetDouble(const char *key, double def) {
       std::string val = GetString(key, "!");
       return BaToNumber(val.c_str(), def);
    };
 
-   //
-   virtual bool Exists(const char *key) {
-      if (!key) {
-         return false;
-      }
-
-      return dic.find(key) != dic.end();
-   };
 
    //
    virtual bool Set(const char *key, const char *val) {
@@ -974,13 +1023,32 @@ public:
       return true;
    }
 
+   //
+   virtual bool Reset(const char *key) {
+      if (!key) {
+         return false;
+      }
+
+      // TODO: Check why several elemets could be erased
+      return dic.erase(key);
+   }
+
+   //
+   virtual bool Exists(const char *key) {
+      if (!key) {
+         return false;
+      }
+
+      return dic.find(key) != dic.end();
+   };
+
    std::map<std::string, std::string> dic;
 };
 
-IBaIniParser * CreateBaIniParser(const char *file) {
+IBaIniParser * BaIniParserCreate(const char *file) {
    return CBaIniParser::Create(file);
 }
 
-bool DestroyBaIniParser(IBaIniParser *pHdl) {
+bool BaIniParserDestroy(IBaIniParser *pHdl) {
    return CBaIniParser::Destroy(pHdl);
 }

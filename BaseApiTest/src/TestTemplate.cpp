@@ -46,6 +46,7 @@ void CTestTemplate::Config() {
 //   iniparser_dump_ini(dd, stdout);
 //   iniparser_dump(dd, stdout);
 
+   IBaIniParser *pPars = BaIniParserCreate("res\\example.ini");
 
    dictionary  *   ini ;
 
@@ -64,17 +65,21 @@ void CTestTemplate::Config() {
 //   }
    iniparser_dump(ini, stdout);
 
+   pPars->DumpSecLess(stdout);
+   pPars->DumpIniSec("pizza", stdout);
+
    /* Get pizza attributes */
    printf("Pizza:\n");
 
+
    b = iniparser_getboolean(ini, "pizza:ham", -1);
-   printf("Ham:       [%d]\n", b);
+   printf("Ham:       [%d][%d]\n", b, pPars->GetBool("pizza:ham", -1));
    b = iniparser_getboolean(ini, "pizza:mushrooms", -1);
    printf("Mushrooms: [%d]\n", b);
    b = iniparser_getboolean(ini, "pizza:capres", -1);
    printf("Capres:    [%d]\n", b);
    b = iniparser_getboolean(ini, "pizza:cheese", -1);
-   printf("Cheese:    [%d]\n", b);
+   printf("Cheese:    [%d][%d]\n", b, pPars->GetBool("pizza:cheese", -1));
 
    /* Get wine attributes */
    printf("Wine:\n");
@@ -91,7 +96,7 @@ void CTestTemplate::Config() {
    printf("Alcohol:   [%g]\n", d);
 
    iniparser_freedict(ini);
-   return ;
+   return;
 
 
 }
@@ -110,6 +115,8 @@ static void create_example_ini_file(void)
     "# This is an example of ini file\n"
     "#\n"
     "\n"
+    "Extra     = glass ;\n"
+    "Extra2    = plates ;\n"
     "[Pizza]\n"
     "\n"
     "Ham       = yes ;\n"

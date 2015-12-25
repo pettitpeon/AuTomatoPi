@@ -338,73 +338,109 @@ public:
    /***************************************************************************/
    /** ...
     */
-   virtual int GetSecCnt();
+//   virtual int GetSecCnt();
 
    /***************************************************************************/
    /** ...
     */
-   virtual std::string GetSecName(int n);
+//   virtual std::string GetSecName(int n);
 
    /***************************************************************************/
    /** ...
     */
-   virtual void DumpIni(FILE * f);
+   virtual void DumpIni(FILE * f) = 0;
+
+   /***************************************************************************/
+   /** Dump all entries in a particular section
+    *  @return true if section exists
+    */
+   virtual bool DumpIniSec(
+         const char *sec, ///< [in] Section name
+         FILE *f          ///< [in] Opened output file (can also be stdout)
+         ) = 0;
+
+   /***************************************************************************/
+   /** Dumps all section-less entries
+    *  @return true if section exists
+    */
+   virtual bool DumpSecLess(
+         FILE *f ///< [in] Opened output file (can also be stdout)
+         ) = 0;
 
    /***************************************************************************/
    /** ...
     */
-   virtual void DumpIniSec(const char * s, FILE * f);
+//   virtual void Dump(FILE * f);
 
    /***************************************************************************/
    /** ...
     */
-   virtual void Dump(FILE * f);
+//   virtual int GetSecKeyCnt(const char * s);
 
    /***************************************************************************/
    /** ...
     */
-   virtual int GetSecKeyCnt(const char * s);
+//   virtual const std::vector<std::string> GetSecKeys(
+//         const char *s,
+//         const std::vector<std::string> &keys
+//         );
 
    /***************************************************************************/
-   /** ...
+   /** Get string value or default if not found
+    *  @return the value or def
     */
-   virtual const std::vector<std::string> GetSecKeys(
-         const char *s,
-         const std::vector<std::string> &keys
-         );
+   virtual std::string GetString(
+         const char *key, ///< [in] Key
+         const char *def  ///< [in] Default value to return if not found
+         ) = 0;
 
    /***************************************************************************/
-   /** ...
+   /** Get integer value or default if not found
+    *  @return the value or def
     */
-   virtual std::string GetString(const char *key, const char *def) = 0;
+   virtual int GetInt(
+         const char *key, ///< [in] Key
+         int def          ///< [in] Default value to return if not found
+         ) = 0;
 
    /***************************************************************************/
-   /** ...
+   /** Get double value or default if not found
+    *  @return the value or def
     */
-   virtual int GetInt(const char *key, int notfound) = 0;
+   virtual double GetDouble(
+         const char *key, ///< [in] Key
+         double def       ///< [in] Default value to return if not found
+         ) = 0;
 
    /***************************************************************************/
-   /** ...
+   /** Get boolean value or default if not found
+    *  @return the value or def
     */
-   virtual double GetDouble(const char *key, double notfound) = 0;
+   virtual bool GetBool(
+         const char *key, ///< [in] Key
+         bool def         ///< [in] Default value to return if not found
+         ) = 0;
 
    /***************************************************************************/
-   /** ...
+   /** Add or overwrite a key-value pair
+    *  @return Error or success
     */
-   virtual bool GetBool(const char *key, bool notfound) = 0;
+   virtual bool Set(
+         const char *key, ///< [in] Key
+         const char *val  ///< [in] Value
+         ) = 0;
 
    /***************************************************************************/
-   /** ...
+   /** Reset or erase a key-value pair
+    *  @return true if the element was erased
     */
-   virtual int Set(const char *key, const char * val);
+   virtual bool Reset(
+         const char *key
+         ) = 0;
 
    /***************************************************************************/
-   /** ...
-    */
-   virtual void Reset(const char *key);
-
-   /***************************************************************************/
-   /** ...
+   /** Gets if the entry exists
+    *  @return True if entry exists
    */
    virtual bool Exists(const char *key) = 0;
 
@@ -414,11 +450,11 @@ public:
 };
 
 
-extern "C" IBaIniParser * CreateBaIniParser(
+extern "C" IBaIniParser * BaIniParserCreate(
       const char *file
       );
 
-extern "C" bool DestroyBaIniParser(IBaIniParser *pHdl);
+extern "C" bool BaIniParserDestroy(IBaIniParser *pHdl);
 
 #endif
 
