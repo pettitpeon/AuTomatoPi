@@ -10,10 +10,11 @@
 
 #include <iostream>
 #include "TestTemplate.h"
+
+#include <BaIniParse.h>
 #include "BaGenMacros.h"
 #include "BaCore.h"
 
-#include "iniparser.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CTestTemplate );
 
@@ -58,15 +59,9 @@ void CTestTemplate::Config() {
 
    create_example_ini_file();
 
-   ini = iniparser_load("res\\example.ini");
-//   if (ini==NULL) {
-//       fprintf(stderr, "cannot parse file: %s\n", "res\\example.ini");
-//       return ;
-//   }
-   iniparser_dump(ini, stdout);
+   pPars->Dump(stdout);
 
-   pPars->DumpSecLess(stdout);
-   pPars->DumpIniSec("pizza", stdout);
+   pPars->DumpIni(stdout);
 
    /* Get pizza attributes */
    printf("Pizza:\n");
