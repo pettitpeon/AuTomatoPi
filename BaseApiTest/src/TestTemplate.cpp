@@ -49,7 +49,7 @@ void CTestTemplate::Config() {
 
    IBaIniParser *pPars = BaIniParserCreate("res\\example.ini");
 
-   dictionary  *   ini ;
+//   dictionary  *   ini ;
 
    /* Some temporary variables to hold query results */
    int             b ;
@@ -67,30 +67,30 @@ void CTestTemplate::Config() {
    printf("Pizza:\n");
 
 
-   b = iniparser_getboolean(ini, "pizza:ham", -1);
+//   b = iniparser_getboolean(ini, "pizza:ham", -1);
    printf("Ham:       [%d][%d]\n", b, pPars->GetBool("pizza:ham", -1));
-   b = iniparser_getboolean(ini, "pizza:mushrooms", -1);
+//   b = iniparser_getboolean(ini, "pizza:mushrooms", -1);
    printf("Mushrooms: [%d]\n", b);
-   b = iniparser_getboolean(ini, "pizza:capres", -1);
-   printf("Capres:    [%d]\n", b);
-   b = iniparser_getboolean(ini, "pizza:cheese", -1);
+//   b = iniparser_getboolean(ini, "pizza:capres", -1);
+//   printf("Capres:    [%d]\n", b);
+//   b = iniparser_getboolean(ini, "pizza:cheese", -1);
    printf("Cheese:    [%d][%d]\n", b, pPars->GetBool("pizza:cheese", -1));
 
    /* Get wine attributes */
    printf("Wine:\n");
-   s = iniparser_getstring(ini, "wine:grape", NULL);
+//   s = iniparser_getstring(ini, "wine:grape", NULL);
    printf("Grape:     [%s]\n", s ? s : "UNDEF");
 
-   i = iniparser_getint(ini, "wine:year", -1);
+//   i = iniparser_getint(ini, "wine:year", -1);
    printf("Year:      [%d]\n", i);
 
-   s = iniparser_getstring(ini, "wine:country", NULL);
+//   s = iniparser_getstring(ini, "wine:country", NULL);
    printf("Country:   [%s]\n", s ? s : "UNDEF");
 
-   d = iniparser_getdouble(ini, "wine:alcohol", -1.0);
+//   d = iniparser_getdouble(ini, "wine:alcohol", -1.0);
    printf("Alcohol:   [%g]\n", d);
 
-   iniparser_freedict(ini);
+//   iniparser_freedict(ini);
    return;
 
 

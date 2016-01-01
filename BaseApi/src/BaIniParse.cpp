@@ -12,6 +12,7 @@
 
 /*---------------------------- Defines -------------------------------------*/
 #define ASCIILINESZ         (1024)
+#define STRNOTFOUND std::string::npos
 //#define INI_INVALID_KEY     "*Invalid*)"
 
 /*---------------------------------------------------------------------------
@@ -317,13 +318,13 @@ public:
          return;
       }
 
+      // Dump the section-less entries if exist
       DumpSecLess(f);
-      for (auto kv : dic) {
 
-         // find returns 0 if : is in position zero. This must be handled
-         // TODO: find is broken in minGW check why
-         auto rc = kv.first.find(':', 0);
-         if (kv.first[0] != ':' && (!rc || rc == UINT32_MAX)) {
+      // Find all entries that are section names and dump the sections
+      for (auto kv : dic) {
+         // If the key (first) does not have ':', it is a section name
+         if (kv.first.find(':', 0) == STRNOTFOUND) {
             DumpIniSec(kv.first.c_str(), f);
          }
       }
