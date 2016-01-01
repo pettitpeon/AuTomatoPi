@@ -20,6 +20,7 @@
 
 ## Goals
 1. Core functions (sleeps, threads, soft real-time, timers, clocks)
+  1. Configuration file parser
 2. GPIOs
 3. Communication (Serial, SPI, I2C)
 4. Control structures (PID, PT1, debouncer, Schmitt trigger)
