@@ -30,14 +30,12 @@ public:
 
    CPPUNIT_TEST_SUITE(CTestTemplate);
 
-   CPPUNIT_TEST(Config);
    CPPUNIT_TEST(Test);
 
    CPPUNIT_TEST_SUITE_END();
 
 protected:
    void Test();
-   void Config();
 
 };
 
