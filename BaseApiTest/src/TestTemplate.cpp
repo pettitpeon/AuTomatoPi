@@ -47,7 +47,7 @@ void CTestTemplate::Config() {
 //   iniparser_dump_ini(dd, stdout);
 //   iniparser_dump(dd, stdout);
 
-   IBaIniParser *pPars = BaIniParserCreate("res\\example.ini");
+   IBaIniParser *pPars = CBaIniParserCreate("res\\example.ini");
 
 //   dictionary  *   ini ;
 
