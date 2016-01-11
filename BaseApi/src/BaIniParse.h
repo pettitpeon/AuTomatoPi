@@ -75,11 +75,10 @@ const char* BaIniParseGetString(
  *  failed. Supported values for integers include the usual C notation so
  *  decimal, octal (starting with 0) and hexadecimal (starting with 0x) are
  *  supported. Examples:
- *   - "42"    ->  42
- *   - "042"   ->  34 (octal -> decimal)
- *   - "0x42"  ->  66 (hexa  -> decimal)
+ *   - "42"   ->  42
+ *   - "042"  ->  34 (octal -> decimal)
+ *   - "0x42" ->  66 (hexa  -> decimal)
  *
- *  TODO: check the conversion function istream >> to see what is supported
  *  @return the value or def
  */
 int BaIniParseGetInt(
@@ -90,9 +89,11 @@ int BaIniParseGetInt(
 
 /******************************************************************************/
 /** Gets double value associated with a key or default if not found or parse
- *  failed. Supported values for double include the usual C notation .
+ *  failed. Supported values for double include the usual C notation including
+ *  the scientific notation. Examples:
+ *   - "3.14"   ->  3.14
+ *   - "3.0e-3" ->  0.003
  *
- *  TODO: check the conversion function istream >> to see what is supported
  *  @return the value or def
  */
 double BaIniParseGetDouble(
@@ -218,7 +219,6 @@ public:
     *   - "042"   ->  34 (octal -> decimal)
     *   - "0x42"  ->  66 (hexa  -> decimal)
     *
-    *  TODO: check the conversion function istream >> to see what is supported
     *  @return the value or def
     */
    virtual int GetInt(
@@ -228,9 +228,11 @@ public:
 
    /***************************************************************************/
    /** Gets double value associated with a key or default if not found or parse
-    *  failed. Supported values for double include the usual C notation .
+    *  failed. Supported values for double include the usual C notation including
+    *  the scientific notation. Examples:
+    *   - "3.14"   ->  3.14
+    *   - "3.0e-3" ->  0.003
     *
-    *  TODO: check the conversion function istream >> to see what is supported
     *  @return the value or def
     */
    virtual double GetDouble(
