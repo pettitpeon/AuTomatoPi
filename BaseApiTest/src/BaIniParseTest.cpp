@@ -16,10 +16,12 @@
 #include "BaGenMacros.h"
 #include "BaIniParseTest.h"
 #include "BaIniParse.h"
+#include "BaUtils.hpp"
 
 LOCAL void create_example_ini_file(void);
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaIniParse );
+
 
 
 /* ****************************************************************************/
@@ -38,6 +40,7 @@ void CBaIniParse::tearDown() {
 /*  ...
  */
 void CBaIniParse::CPPTest() {
+
    CPPUNIT_ASSERT(true);
    create_example_ini_file();
    IBaIniParser *pHdl = CBaIniParserCreate("res\\example.ini");
