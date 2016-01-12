@@ -33,12 +33,16 @@ public:
 
    CPPUNIT_TEST(CPPTest);
    CPPUNIT_TEST(CTest);
+   CPPUNIT_TEST(TwistedIni);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
    void CPPTest();
    void CTest();
+   void TwistedIni();
 };
 
 #endif // BAINIPARSETEST_H_
+
+

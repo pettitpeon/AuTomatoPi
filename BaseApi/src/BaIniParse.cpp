@@ -49,6 +49,9 @@ public:
    //
    static IBaIniParser * Create(const char *file) {
       CBaIniParser *pIp = new CBaIniParser();
+      if (!file) {
+         return pIp;
+      }
       FILE * in ;
 
       char line    [ASCIILINESZ+1];
@@ -120,9 +123,7 @@ public:
             pIp->dic[tmp] = val;
             break;
          case eLINE_ERROR:
-            // todo: no printf
-//            fprintf(stderr, "iniparser: syntax error in %s (%d):\n", file, lineno);
-//            fprintf(stderr, "-> %s\n", line);
+            // TODO: either log all errors or brake loop!!
             errs++;
             break;
          default:
@@ -223,8 +224,12 @@ public:
    // Uses the general GetString() method and returns explicitly a copy of the
    // internal string to protect it
    virtual std::string GetString(const char *key, const char *def) {
-      if (!key || !def) {
-         return "";
+      if (!def) {
+         def = "";
+      }
+
+      if (!key) {
+         return def;
       }
 
       // If key has no ':', prepend it. It is a section-less entry
@@ -263,11 +268,11 @@ public:
 
    //
    virtual bool Set(const char *key, const char *val) {
-      if (!key || !val) {
+      if (!key) {
          return false;
       }
 
-      dic[key] = val;
+      dic[key] = val ? val : "";
       return true;
    }
 
@@ -339,7 +344,11 @@ TBaBoolRC BaIniParseDestroy(TBaIniParseHdl hdl) {
 
 //
 const char* BaIniParseGetString(TBaIniParseHdl hdl, const char *key, const char *def) {
-   if (!hdl || !key || !def) {
+   if (!def) {
+      def = "";
+   }
+
+   if (!hdl || !key) {
       return def;
    }
 
@@ -415,11 +424,6 @@ TBaBool BaIniParseDumpIniSecLess(TBaIniParseHdl hdl, FILE * f) {
 void BaIniParseDump(TBaIniParseHdl hdl, FILE * f) {
    C_HDL_->Dump(f);
 }
-
-
-
-
-
 
 
 
