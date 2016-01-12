@@ -65,4 +65,11 @@ void CBaComTest::Serial() {
    CPPUNIT_ASSERT(BaComSerExit(hdl));
 }
 
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaComTest::Config() {
+   CPPUNIT_ASSERT(true);
+}
+
 #endif // __linux
