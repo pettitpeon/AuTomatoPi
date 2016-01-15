@@ -2,7 +2,7 @@
     Includes
  -----------------------------------------------------------------------------*/
 //#include <stdio.h>  // printf()
-#include <math.h>
+#include <math.h> // for windows needs _USE_MATH_DEFINES
 #include <fcntl.h>   // open() rd wr flags
 #include <unistd.h>  // open()
 //#include <time.h>

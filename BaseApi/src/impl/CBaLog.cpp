@@ -24,7 +24,7 @@
 
 
 #include "CBaLog.h"
-#include "BaGenMacros.h"
+#include "../BaGenMacros.h"
 #include "BaCore.h"
 
 #ifdef __linux
