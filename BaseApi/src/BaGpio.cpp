@@ -1,7 +1,8 @@
-/* ****************************************************************************/
-/*  Includes
- */
+/*------------------------------------------------------------------------------
+    Includes
+ -----------------------------------------------------------------------------*/
 //#include <stdio.h>  // printf()
+#include <math.h>
 #include <fcntl.h>   // open() rd wr flags
 #include <unistd.h>  // open()
 //#include <time.h>
@@ -11,18 +12,20 @@
 #  include <stdlib.h>   // malloc()
 #endif
 #include <string.h>  // memset()
+#include <semaphore.h>
+#include <sys/stat.h>  // File permissions
 #include <mutex>
 #include <string>
+#include <iostream>    // For debugging traces
 
+// Local includes
 #include "BaGpio.h"
-#include "CBaGpio.h"
 #include "BaCore.h"
 #include "BaGenMacros.h"
 
-
-/* ****************************************************************************/
-/*  General defines
- */
+/*------------------------------------------------------------------------------
+    General defines
+ -----------------------------------------------------------------------------*/
 #define TAG        "GPIO"
 #define VUINT      volatile uint32_t
 // Maximum No. of initializations
@@ -36,9 +39,9 @@
 #define GPIOMAX_   27
 #define GPIOLIMIT  !gpio || gpio > GPIOMAX_
 
-/* ****************************************************************************/
-/*  Memory defines
- */
+/*------------------------------------------------------------------------------
+    Memory define
+ -----------------------------------------------------------------------------*/
 // BCM Magic
 #define BCM_PASSWORD      0x5A000000
 // Offset to peripherals
@@ -51,9 +54,9 @@
 // Block size (4*1024)
 #define BLOCK_SIZE        4096
 
-/* ****************************************************************************/
-/*  Mappings offsets defines
- */
+/*------------------------------------------------------------------------------
+    Mappings offsets define
+ -----------------------------------------------------------------------------*/
 // Word offsets into the PWM control region
 #define PWM_CTL  0
 #define PWM_STAT 1
@@ -65,9 +68,9 @@
 #define CLK_CNTL 40
 #define CLK_DIV  41
 
-/* ****************************************************************************/
-/*  PWM commands defines
- */
+/*------------------------------------------------------------------------------
+    PWM commands defines
+ -----------------------------------------------------------------------------*/
 #define PWM_STARTCLK  0x0011
 #define PWM_STOPCLK   0x0001
 #define CLK_BUSY      0x0080
@@ -88,9 +91,17 @@
 #define PWM1_SERIAL   0x0200  // Run in serial mode
 #define PWM1_ENABLE   0x0100  // Channel Enable
 
-/* ****************************************************************************/
-/*  Type definitions
- */
+
+#define MAX1000S     2000000
+#define WRR_         S_IRUSR & S_IWUSR & S_IRGRP & S_IROTH
+#define SEM_LOCKED   EAGAIN
+#define SEM_UNLOCKED 0
+
+
+
+/*------------------------------------------------------------------------------
+    Type definitions
+ -----------------------------------------------------------------------------*/
 // Software PWM structure
 typedef struct TSWPWM {
    TBaCoreThreadArg threadArg;
@@ -101,9 +112,9 @@ typedef struct TSWPWM {
    TSWPWM() : threadArg(), threadHdl(0), gpio(), dutyC(0), periodUs(0) {}
 } TPWM;
 
-/* ****************************************************************************/
-/*  Static variables
- */
+/*------------------------------------------------------------------------------
+    Static variables
+ -----------------------------------------------------------------------------*/
 // Volatile:
 // This means that the compiler will assume that it is possible for the variable
 // that p is pointing at to have changed even if there is nothing in the source
@@ -116,9 +127,9 @@ static TBaBool    sUsedIos[64] = {0};
 static std::mutex sMtx;
 static uint16_t   sResolution = 0;
 
-/* ****************************************************************************/
-/*  Local functions
- */
+/*------------------------------------------------------------------------------
+    Local functions
+ -----------------------------------------------------------------------------*/
 LOCAL void pwmRoutine(TBaCoreThreadArg *pArg);
 LOCAL void setUsed(TBaGpio gpioNo, TBaBool used);
 LOCAL VUINT *mapAddr(unsigned long baseAddr);
@@ -127,19 +138,9 @@ LOCAL uint32_t freq2Divisor(float freq);
 LOCAL inline void cleanUp(TBaGpio gpio);
 LOCAL inline void setAlt(TBaGpio gpio, int alt);
 
-/* ****************************************************************************/
-/*  API functions
- */
-//
-IBaGpio* IBaGpioCreate(TBaGpio gpio) {
-   return CBaGpio::Create(gpio);
-}
-
-//
-TBaBoolRC IBaGpioDelete(IBaGpio* pHdl) {
-   return CBaGpio::Delete(pHdl);
-}
-
+/*------------------------------------------------------------------------------
+    C interface
+ -----------------------------------------------------------------------------*/
 //
 TBaBoolRC BaGpioInit() {
 
@@ -537,9 +538,9 @@ TBaBoolRC BaGpioStopSWPWM(TBaGpioSWPWMHdl hdl) {
    return pwm ? eBaBoolRC_Error : eBaBoolRC_Success;
 }
 
-/* ****************************************************************************/
-/*  Local functions
- */
+/*------------------------------------------------------------------------------
+    Local functions
+ -----------------------------------------------------------------------------*/
 //
 LOCAL void pwmRoutine(TBaCoreThreadArg *pArg) {
    if (!INIT_ || !pArg || !pArg->pArg) {
@@ -623,4 +624,254 @@ LOCAL inline void setAlt(TBaGpio gpio, int alt) {
    setUsed(gpio, eBaBool_true);
    spGpio_map[gpio/10] |= (alt <= 3 ? alt + 4 : alt == 4 ? 3 : 2) << ((gpio % 10) * 3);
 }
+
+
+/*------------------------------------------------------------------------------
+    C++ interface implementation
+ -----------------------------------------------------------------------------*/
+class CBaGpio : public IBaGpio {
+public:
+
+   // Sleeping LED auxiliary struct
+   typedef struct TSleepLED {
+      CBaGpio *pGpio;
+      float    sCycleS;
+   } TSleepLED;
+
+   /* *************************************************************************/
+   /*  Factory
+    */
+   //
+   static IBaGpio* Create(uint8_t gpioNo) {
+      BaGpioInit();
+      CBaGpio* p = new CBaGpio(gpioNo);
+
+      if (p) {
+         std::string name = "/GPIO_" + std::to_string(gpioNo);
+#ifdef __linux
+         p->mpLock = sem_open(name.c_str(), O_CREAT, WRR_, 1);
+
+         // Check if we can own this GPIO and lock it
+         if (p->mpLock != SEM_FAILED &&
+               sem_trywait(p->mpLock) == SEM_UNLOCKED) {
+#elif __WIN32
+         p->mpLock = (sem_t*)1;
+         {
+#endif
+            BaGpioCleanUp(p->mGpioNo);
+            return p;
+         }
+      }
+
+      Delete(p);
+      return 0;
+   }
+
+   //
+   static bool Delete(IBaGpio *pHdl) {
+      CBaGpio *p = dynamic_cast<CBaGpio*>(pHdl);
+      if (!p ) {
+         return false;
+      }
+
+      BaGpioCleanUp(p->mGpioNo);
+      BaGpioExit();
+      if (p->mpLock != SEM_FAILED) {
+#ifdef __linux
+         sem_unlink( ("/GPIO_" + std::to_string(p->mGpioNo)).c_str() );
+         sem_close(p->mpLock);
+#endif
+         p->mpLock = SEM_FAILED;
+      }
+      delete p;
+      return true;
+   }
+
+   // Worker thread routine
+   LOCAL void SleepLEDRoutine(TBaCoreThreadArg *pArg) {
+      CBaGpio *pGpio = ((TSleepLED*)pArg->pArg)->pGpio;
+      float &rCylcleS = ((TSleepLED*)pArg->pArg)->sCycleS;
+      for (int i = 0; !pArg->exitTh; ++i) {
+         if(i == MAX1000S) {
+            i = 0;
+         }
+         pGpio->ResetSWPWMDuCy( (sin(i/rCylcleS/1000.0 * M_PI) + 1) / 2.0 );
+         BaCoreMSleep(1);
+      }
+   }
+
+   /* *************************************************************************/
+   /*  Hardware PWM setup functions
+    */
+   //
+   virtual bool InitHWPWM() {
+      return BaGpioInitHWPWM();
+   }
+
+   //
+   virtual bool ExitHWPWM() {
+      return BaGpioExitHWPWM();
+   }
+
+   //
+   virtual bool SetClkHWPWM(double frequency, uint32_t resolution, EBaGpioHWPWMMode mode) {
+      return BaGpioSetClkHWPWM(frequency, resolution, mode);
+   }
+
+/* ****************************************************************************/
+/* Basic GPIO operations
+ */
+   //
+   virtual void CleanUp() {
+      BaGpioCleanUp(mGpioNo);
+   }
+
+   //
+   virtual bool SetInp() {
+      BaGpioCleanUp(mGpioNo);
+      return BaGpioSetInp(mGpioNo);
+   }
+
+   //
+   virtual bool SetOut() {
+      BaGpioCleanUp(mGpioNo);
+      return BaGpioSetOut(mGpioNo);
+   }
+
+   //
+   virtual bool SetAlt(int alt) {
+      BaGpioCleanUp(mGpioNo);
+      return BaGpioSetAlt(mGpioNo, alt);
+   }
+
+   //
+   virtual bool Set() {
+      return BaGpioSet(mGpioNo);
+   }
+
+   //
+   virtual bool Reset() {
+      return BaGpioReset(mGpioNo);
+   }
+
+   //
+   virtual bool Get() {
+      return BaGpioGet(mGpioNo);
+   }
+
+   /* *************************************************************************/
+   /*  PWM Functions
+    */
+   //
+   virtual bool StartHWPWM(float dutyCycle) {
+     return BaGpioStartHWPWM(mGpioNo, dutyCycle);
+   }
+
+   //
+   virtual bool ResetHWPWMDuCy(float dc) {
+      return BaGpioResetHWPWMDuCy(mGpioNo, dc);
+   }
+
+   //
+   virtual bool StopHWPWM() {
+      return BaGpioStopHWPWM(mGpioNo);
+   }
+
+   //
+   virtual bool StartSWPWM(float dutyC, uint16_t cycleMs) {
+      if (mPWM) {
+         return false;
+      }
+      BaGpioCleanUp(mGpioNo);
+      mPWM = BaGpioStartSWPWM(mGpioNo, dutyC, cycleMs);
+      return mPWM ? true : false;
+   }
+
+   //
+   virtual bool ResetSWPWMDuCy(float dutyC) {
+      return BaGpioResetSWPWMDuCy(mPWM, dutyC);
+   }
+
+   //
+   virtual bool StopSWPWM() {
+      bool ret = BaGpioStopSWPWM(mPWM);
+      mPWM = 0;
+      return ret;
+   }
+
+   //
+   virtual bool StartSWPWMSleepingLED(float sCycleS) {
+      if (mPWM || mSleepLED) {
+         return false;
+      }
+
+      StartSWPWM(0, 10);
+      std::string name = "SleepLED" +  std::to_string(mGpioNo);
+      mpSleepLEDArg = new TBaCoreThreadArg{new TSleepLED{this, sCycleS}, eBaBool_false};
+      mSleepLED = BaCoreCreateThread(name.c_str(),
+            SleepLEDRoutine, mpSleepLEDArg, eBaCorePrio_Normal);
+      return true;
+   }
+
+   //
+   virtual bool ResetSWPWMSleepingLED(float sCycleS) {
+      if (!mSleepLED || !mpSleepLEDArg || !mpSleepLEDArg->pArg) {
+         return false;
+      }
+      ((TSleepLED*) mpSleepLEDArg->pArg)->sCycleS = sCycleS;
+      return true;
+   }
+
+   //
+   virtual bool StopSWPWMSleepingLED() {
+      if (!mSleepLED || !mpSleepLEDArg || !mpSleepLEDArg->pArg) {
+         return false;
+      }
+
+      bool ret = false;
+      if (BaCoreDestroyThread(mSleepLED, 100)) {
+         delete (TSleepLED*)mpSleepLEDArg->pArg;
+         mpSleepLEDArg->pArg = 0;
+         delete mpSleepLEDArg;
+         mpSleepLEDArg = 0;
+
+         ret = true;
+      }
+
+      return ret && StopSWPWM();
+   }
+
+   // Constructor
+   CBaGpio(uint8_t gpioNo) : mGpioNo(gpioNo), mPWM(0), mSleepLED(0),
+         mpSleepLEDArg(0), mpLock(0) {};
+
+   // Typical object oriented destructor must be virtual!
+   virtual ~CBaGpio() {};
+
+   // Make this object non-copyable.
+   // This is important because the implementation is in a dynamic pointer and
+   // a deep copy of the implementation is explicitly required
+   CBaGpio(const CBaGpio&);
+   CBaGpio& operator=(const CBaGpio&);
+
+   const uint8_t    mGpioNo;        // GPIO No.
+   TBaGpioSWPWMHdl  mPWM;           // PWM thread handle
+   TBaCoreThreadHdl mSleepLED;      // Sleeping LED thread handle
+   TBaCoreThreadArg *mpSleepLEDArg; // Sleeping LED thread arg
+   sem_t            *mpLock;        // GPIO semaphore linked to the GPIO No.
+};
+
+/*------------------------------------------------------------------------------
+    C++ factory
+ -----------------------------------------------------------------------------*/
+//
+IBaGpio* IBaGpioCreate(TBaGpio gpio) {
+   return CBaGpio::Create(gpio);
+}
+
+//
+TBaBoolRC IBaGpioDelete(IBaGpio* pHdl) {
+   return CBaGpio::Delete(pHdl);
+}
+
 

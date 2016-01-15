@@ -50,8 +50,7 @@ template<>
 inline int32_t BaToNumber<int32_t>(std::string s, int32_t def, bool *pError) {
    try {
       return std::stoi(s, 0, 0);
-   }
-   catch (...) {
+   } catch (...) {
       if (pError) {
          *pError = true;
       }
@@ -63,8 +62,7 @@ template<>
 inline uint32_t BaToNumber<uint32_t>(std::string s, uint32_t def, bool *pError) {
    try {
       return std::stoul(s, 0, 0);
-   }
-   catch (...) {
+   } catch (...) {
       if (pError) {
          *pError = true;
       }
@@ -76,8 +74,7 @@ template<>
 inline int64_t BaToNumber<int64_t>(std::string s, int64_t def, bool *pError) {
    try {
       return std::stoll(s, 0, 0);
-   }
-   catch (...) {
+   } catch (...) {
       if (pError) {
          *pError = true;
       }
@@ -89,8 +86,7 @@ template<>
 inline uint64_t BaToNumber<uint64_t>(std::string s, uint64_t def, bool *pError) {
    try {
       return std::stoll(s, 0, 0);
-   }
-   catch (...) {
+   } catch (...) {
       if (pError) {
          *pError = true;
       }
@@ -102,8 +98,7 @@ template<>
 inline float BaToNumber<float>(std::string s, float def, bool *pError) {
    try {
       return std::stof(s, 0);
-   }
-   catch (...) {
+   } catch (...) {
       if (pError) {
          *pError = true;
       }
@@ -115,8 +110,7 @@ template<>
 inline double BaToNumber<double>(std::string s, double def, bool *pError) {
    try {
       return std::stof(s, 0);
-   }
-   catch (...) {
+   } catch (...) {
       if (pError) {
          *pError = true;
       }

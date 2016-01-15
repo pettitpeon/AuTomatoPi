@@ -215,9 +215,9 @@ public:
     *  failed. Supported values for integers include the usual C notation so
     *  decimal, octal (starting with 0) and hexadecimal (starting with 0x) are
     *  supported. Examples:
-    *   - "42"    ->  42
-    *   - "042"   ->  34 (octal -> decimal)
-    *   - "0x42"  ->  66 (hexa  -> decimal)
+    *   - "42"   ->  42
+    *   - "042"  ->  34 (octal -> decimal)
+    *   - "0x42" ->  66 (hexa  -> decimal)
     *
     *  @return the value or def
     */
