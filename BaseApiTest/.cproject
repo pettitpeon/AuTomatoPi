@@ -254,8 +254,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1463397523" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cross.cpp.linker.631433771" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.472867925" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/Static Win64}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/WinDebugStatic}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/WinDebugStatic}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1248565012" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="BaseApi"/>

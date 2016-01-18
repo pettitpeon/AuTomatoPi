@@ -20,6 +20,8 @@
  */
 #include <string>
 
+struct TBaCoreThreadArg;
+
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
@@ -30,7 +32,10 @@
 class CBaLog {
 public:
    // Factory
-   static CBaLog* Create(std::string name);
+   static CBaLog* Create(
+         std::string name
+         );
+
    static bool Delete (
          CBaLog* hdl
          );
@@ -40,8 +45,18 @@ public:
    virtual void Logf(const char* fmt, ...);
 
 private:
+   static bool init();
+   static bool exit();
+   static void logRoutine(
+         TBaCoreThreadArg *pArg
+         );
+
+   void flush2Disk();
+
+
    // Private constructor because a public factory method is used
-   CBaLog() : mpImpl(0) {};
+   CBaLog(std::string name) : mName(name), mLog(), mOpenCnt(1), mFileSizeB(0), mBuf(),
+         mMaxFileSizeB(1024), mMaxNoFiles(2), mFileCnt(0) {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -52,10 +67,14 @@ private:
    CBaLog(const CBaLog&);
    CBaLog& operator=(const CBaLog&);
 
-   // IF THIS IS AN EXTERNAL INTERFACE, NO MEMBER VARIABLES!
-   // Pimpl idiom (Pointer to Implementation) http://c2.com/cgi/wiki?PimplIdiom
-   class Impl;
-   Impl *mpImpl;
+   std::string mName; // name of the log
+   std::ofstream mLog; // file stream
+   int16_t mOpenCnt; // No. of times the file was opened
+   uint32_t mFileSizeB; // Actual estimated file size in bytes
+   std::vector<std::string> mBuf; // Message queue
+   uint32_t mMaxFileSizeB; // File size limit in bytes
+   uint16_t mMaxNoFiles; // Maximum no. of history files
+   uint16_t mFileCnt; // Actual file count
 
 };
 
