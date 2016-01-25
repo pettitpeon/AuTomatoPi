@@ -10,6 +10,7 @@
 #include <iostream>
 #include <mutex>
 #include <ctime>
+#include "BaUtils.hpp"
 
 #include "CBaLog.h"
 #include "../BaGenMacros.h"
@@ -59,23 +60,37 @@ void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
             // Iterate messages in buffer
             for (auto &msg : p->mBuf) {
 
-               // Check file size
+               // Check file size. If it is the first line written to the file,
+               // write it to disk anyways.
                p->mFileSizeB += msg.size();
-               if (p->mFileSizeB > p->mMaxFileSizeB) {
+               if (msg.size() != p->mFileSizeB && p->mFileSizeB > p->mMaxFileSizeB) {
                   // Open new file
-                  if (p->mFileCnt > ++p->mMaxNoFiles) {
+                  if (++p->mFileCnt > p->mMaxNoFiles) {
                      p->mFileCnt = 1;
                      // Rewrite file
                   }
                   p->mLog.close();
-                  p->mName += std::to_string(p->mFileCnt);
+                  if (p->mLog.fail()) {
+                     // error
+                  }
+
+
+                  // todo: Rename file!
+                  p->mTmpName = BaPath::ChangeFileExtension(
+                        p->mName, "_" + std::to_string(p->mFileCnt) + ".log");
+                  if (rename(p->mName.c_str(), p->mTmpName.c_str()) == -1) {
+                     errno;
+                     // error
+                  }
 
                   // todo: check open error!
                   p->mLog.open(p->mName.c_str(), std::ios_base::binary | std::ios_base::out);
-
                }
 
+               // /////////// Log to disc ///////////////////////
                p->mLog << msg << std::endl;
+               // ///////////////////////////////////////////////
+
             }
             kv.second->mBuf.clear();
          }
@@ -138,6 +153,8 @@ bool CBaLog::Delete(CBaLog *pHdl) {
       // erase from loggers
       sLoggers.erase(p->mName);
       p->flush2Disk();
+
+      // todo: save state
       delete p;
    }
 
@@ -184,7 +201,6 @@ void CBaLog::Logf(const char* fmt, ...) {
       Log(sFasMsg);
    }
 
-
 }
 
 //
@@ -200,8 +216,6 @@ inline void CBaLog::flush2Disk() {
 
 // put_time is not implemented yet in 4.9.2 thus the tmp NS
 namespace tmp_4_9_2 {
-//typedef std::chrono::time_point<std::chrono::system_clock>  system_time_point;
-
 LOCAL tm localtime(const std::time_t& rTime) {
    std::tm tm_snapshot;
 #ifdef __WIN32
@@ -224,7 +238,7 @@ LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat) {
 
    return buffer;
 }
-}
+} // NS tmp_4_9_2
 
 // ////////////////////////////////////////////////////
 

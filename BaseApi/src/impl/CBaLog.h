@@ -55,8 +55,8 @@ private:
 
 
    // Private constructor because a public factory method is used
-   CBaLog(std::string name) : mName(name), mLog(), mOpenCnt(1), mFileSizeB(0), mBuf(),
-         mMaxFileSizeB(1024), mMaxNoFiles(2), mFileCnt(0) {};
+   CBaLog(std::string name) : mName(name), mTmpName(), mLog(), mOpenCnt(1), mFileSizeB(0), mBuf(),
+         mMaxFileSizeB(45), mMaxNoFiles(2), mFileCnt(0) {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -68,6 +68,7 @@ private:
    CBaLog& operator=(const CBaLog&);
 
    std::string mName; // name of the log
+   std:: string mTmpName; // name of the new file // TODO describe it correctly
    std::ofstream mLog; // file stream
    int16_t mOpenCnt; // No. of times the file was opened
    uint32_t mFileSizeB; // Actual estimated file size in bytes
