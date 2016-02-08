@@ -132,6 +132,15 @@ inline int32_t BaToNumber<int32_t>(std::string s, int32_t def, bool *pError) {
    try {
       return std::stoi(s, 0, 0);
    } catch (...) {
+      try {
+         return std::stoul(s, 0, 0);
+      } catch (...) {
+         if (pError) {
+            *pError = true;
+         }
+         return def;
+      }
+
       if (pError) {
          *pError = true;
       }
@@ -141,14 +150,7 @@ inline int32_t BaToNumber<int32_t>(std::string s, int32_t def, bool *pError) {
 
 template<>
 inline uint32_t BaToNumber<uint32_t>(std::string s, uint32_t def, bool *pError) {
-   try {
-      return std::stoul(s, 0, 0);
-   } catch (...) {
-      if (pError) {
-         *pError = true;
-      }
-      return def;
-   }
+   return BaToNumber(s, (int32_t) def, pError);
 }
 
 template<>

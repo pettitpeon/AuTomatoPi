@@ -128,6 +128,7 @@ bool CBaLog::exit() {
    return true;
 }
 
+//
 CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
       uint16_t maxNoFiles, uint16_t maxBufLength) {
    std::lock_guard<std::mutex> lck(sMtx);
@@ -138,6 +139,8 @@ CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
 
    // Always open the numberless file
    name = LOGDIR + name + LOGEXT;
+
+   // Check if already exists
    auto logger = sLoggers.find(name);
    if (logger != sLoggers.end()) {
       logger->second->mOpenCnt++;
@@ -148,6 +151,51 @@ CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
    CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 0, 0);
    // //////////////// Create //////////////
 
+   p->mLog.open(p->mName, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
+   sLoggers[name] = p;
+   return p;
+}
+
+//
+CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
+
+
+   IBaIniParser *pIni = CBaIniParserCreate(cfgFile.c_str());
+   if (!pIni) {
+      // todo: log?
+      return 0;
+   }
+
+   std::string name = pIni->GetString("mName","");
+   uint32_t maxFileSizeB = (uint32_t) pIni->GetInt("mMaxFileSizeB", -1);
+   int32_t  maxNoFiles   = pIni->GetInt("mMaxNoFiles", -1);
+   uint32_t maxBufLength = (uint32_t) pIni->GetInt("mMaxBufLength", -1);
+
+   if (name == "" || maxFileSizeB == (uint32_t) -1 || maxNoFiles == -1
+         || maxBufLength == (uint32_t) -1) {
+      // todo: log?
+      return 0;
+   }
+
+   std::lock_guard<std::mutex> lck(sMtx);
+
+   if (name.empty() || !init()) {
+      return 0;
+   }
+
+   // Always open the numberless file
+   name = LOGDIR + name + LOGEXT;
+
+   // Check if already exists
+   auto logger = sLoggers.find(name);
+   if (logger != sLoggers.end()) {
+      logger->second->mOpenCnt++;
+      return logger->second;
+   }
+
+   // //////////////// Create //////////////
+   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 0, 0);
+   // //////////////// Create //////////////
 
    p->mLog.open(p->mName, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
    sLoggers[name] = p;

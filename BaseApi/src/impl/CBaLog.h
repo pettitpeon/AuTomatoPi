@@ -39,7 +39,7 @@ public:
    // Factory customized
    static CBaLog* Create(
          std::string name,
-         uint32_t maxFileSizeB = 1048576,
+         uint32_t  maxFileSizeB = 1048576,
          uint16_t maxNoFiles   = 3,
          uint16_t maxBufLength = 0
          );
@@ -74,9 +74,9 @@ private:
 
 
    // Private constructor because a public factory method is used
-   CBaLog(std::string name, uint32_t maxFileSizeB, uint16_t maxNoFiles,
+   CBaLog(std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
          uint16_t maxBufLength, uint16_t fileCnt, uint16_t openCnt,
-         uint16_t fileSizeB) :
+         int32_t fileSizeB) :
       mName(name), mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles),
       mMaxBufLength(maxBufLength),mFileCnt(fileCnt), mOpenCnt(openCnt),
       mFileSizeB(fileSizeB), mTmpName(),mLog(), mBuf() {};
@@ -92,14 +92,14 @@ private:
 
    // Configuration parameters
    const std::string mName; // name of the log
-   const uint32_t mMaxFileSizeB; // File size limit in bytes
+   const uint32_t  mMaxFileSizeB; // File size limit in bytes
    const uint16_t mMaxNoFiles; // Maximum no. of history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer
 
    // Things to keep track of
    uint16_t mFileCnt; // Actual file count
    uint16_t mOpenCnt; // No. of times the file was opened
-   uint32_t mFileSizeB; // Actual estimated file size in bytes
+   uint32_t  mFileSizeB; // Actual estimated file size in bytes
 
    // Internal temporary variables
    std:: string mTmpName; // name of the new file // TODO describe it correctly

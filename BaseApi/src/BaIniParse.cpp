@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <string.h>
+#include <algorithm>
 
 #include "BaGenMacros.h"
 #include "BaIniParse.h"
@@ -236,6 +237,7 @@ public:
       std::string tmpKey(key);
       std::string tmpDef(def);
 
+      std::transform(tmpKey.begin(), tmpKey.end(), tmpKey.begin(), ::tolower);
       return GetString(tmpKey, tmpDef);
    };
 
@@ -257,7 +259,7 @@ public:
    //
    virtual int GetInt(const char *key, int def) {
       std::string val = GetString(key, "!");
-      return BaToNumber(val.c_str(), def);
+      return BaToNumber(val.c_str(), (uint32_t)def);
    };
 
    //

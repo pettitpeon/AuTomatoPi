@@ -65,6 +65,12 @@ void CBaIniParse::CPPTest() {
 
    CPPUNIT_ASSERT(pHdl->GetBool("pizza:ham", false));
    CPPUNIT_ASSERT_EQUAL(pHdl->GetInt("pizza:capres", 1), 0);
+
+
+   CPPUNIT_ASSERT_EQUAL((uint32_t) pHdl->GetInt("LargerThanInt", 0),
+         (uint32_t)2147483650);
+   CPPUNIT_ASSERT_EQUAL(pHdl->GetInt("NegInt", 0), -2);
+
    CPPUNIT_ASSERT_DOUBLES_EQUAL(pHdl->GetDouble("wine:alcohol", 0.0), 12.5, 0.0001);
    CPPUNIT_ASSERT_MESSAGE(pHdl->GetString("extra", "BAD"), pHdl->GetString("extra", "BAD") == "glass");
 
@@ -201,6 +207,8 @@ LOCAL void create_example_ini_file() {
     "\n"
     "Extra     = glass ;\n"
     "Extra2    = plates ;\n"
+    "LargerThanInt = 2147483650;\n"
+    "NegInt = -2;\n"
     "[Pizza]\n"
     "\n"
     "Ham       = yes ;\n"
