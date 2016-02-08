@@ -14,6 +14,7 @@
  */
 
 
+// Todo: document this file
 #ifndef BAUTILS_HPP_
 #define BAUTILS_HPP_
 
@@ -25,7 +26,11 @@ namespace BaPath {
 
 static inline std::string GetDirectory(
       const std::string& path,
+#ifdef _WIN32
+      char delimiter = '\\'
+#else
       char delimiter = '/'
+#endif
             ) {
    //
    // Returns everything, including the trailing path separator, except the filename
@@ -36,8 +41,12 @@ static inline std::string GetDirectory(
 }
 
 static inline std::string GetFilename(
-      const std::string& path,
+      std::string path,
+#ifdef _WIN32
+      char delimiter = '\\'
+#else
       char delimiter = '/'
+#endif
             ) {
    //
    // Returns only the filename part of the path.
@@ -47,8 +56,12 @@ static inline std::string GetFilename(
 }
 
 static inline std::string GetFileExtension(
-      const std::string& path,
+      std::string path,
+#ifdef _WIN32
+      char delimiter = '\\'
+#else
       char delimiter = '/'
+#endif
             ) {
    //
    // Returns the file's extension, if any. The period is considered part
@@ -64,9 +77,13 @@ static inline std::string GetFileExtension(
 }
 
 static inline std::string ChangeFileExtension(
-      const std::string& path,
-      const std::string& ext,
+      std::string path,
+      std::string ext,
+#ifdef _WIN32
+      char delimiter = '\\'
+#else
       char delimiter = '/'
+#endif
             ) {
    //
    // Modifies the filename's extension. The period is considered part

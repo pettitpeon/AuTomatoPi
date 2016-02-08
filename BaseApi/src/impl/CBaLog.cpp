@@ -10,25 +10,33 @@
 #include <iostream>
 #include <mutex>
 #include <ctime>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include "BaUtils.hpp"
 
 #include "CBaLog.h"
 #include "../BaGenMacros.h"
 #include "BaCore.h"
+#include "BaIniParse.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #ifdef __linux
 # define LOGDIR "/var/log/"
+# define CFGDIR "/var/log/config/"
 #else
 # define LOGDIR "C:\\log\\"
+# define CFGDIR "C:\\log\\config\\"
 #endif
 
-#define LOGEXT ".log"
-#define FASTSIZE 81
+#define LOGEXT    ".log"
+#define FASTSIZE  81
 #define CHRONOHRC std::chrono::high_resolution_clock
 #define CHRONO    std::chrono
+#define TAG       "BaLog"
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -75,12 +83,12 @@ void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
                   }
 
 
-                  // todo: Rename file!
-                  p->mTmpName = BaPath::ChangeFileExtension(
-                        p->mName, "_" + std::to_string(p->mFileCnt) + ".log");
+                  // Rename file
+                  p->mTmpName = BaPath::ChangeFileExtension(p->mName,
+                        "_" + std::to_string(p->mFileCnt) + ".log");
                   if (rename(p->mName.c_str(), p->mTmpName.c_str()) == -1) {
                      errno;
-                     // error
+                     // todo: error
                   }
 
                   // todo: check open error!
@@ -120,14 +128,15 @@ bool CBaLog::exit() {
    return true;
 }
 
-CBaLog* CBaLog::Create(std::string name) {
+CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
+      uint16_t maxNoFiles, uint16_t maxBufLength) {
    std::lock_guard<std::mutex> lck(sMtx);
 
    if (name.empty() || !init()) {
       return 0;
    }
 
-   // TODO: name has to contain the fileCount
+   // Always open the numberless file
    name = LOGDIR + name + LOGEXT;
    auto logger = sLoggers.find(name);
    if (logger != sLoggers.end()) {
@@ -135,13 +144,17 @@ CBaLog* CBaLog::Create(std::string name) {
       return logger->second;
    }
 
-   CBaLog *p = new CBaLog(name);
+   // //////////////// Create //////////////
+   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 0, 0);
+   // //////////////// Create //////////////
+
+
    p->mLog.open(p->mName, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
    sLoggers[name] = p;
    return p;
 }
 
-bool CBaLog::Delete(CBaLog *pHdl) {
+bool CBaLog::Delete(CBaLog *pHdl, bool saveCfg) {
    std::lock_guard<std::mutex> lck(sMtx);
 
    CBaLog *p = dynamic_cast<CBaLog*>(pHdl);
@@ -150,11 +163,16 @@ bool CBaLog::Delete(CBaLog *pHdl) {
    }
 
    if (--p->mOpenCnt == 0) {
-      // erase from loggers
+      // Erase from loggers
       sLoggers.erase(p->mName);
       p->flush2Disk();
+      p->mLog.close();
 
-      // todo: save state
+      // Save state
+      if (saveCfg) {
+         p->saveCfg();
+      }
+
       delete p;
    }
 
@@ -182,7 +200,12 @@ bool CBaLog::Log(const char* msg) {
    std::string entry = tmp_4_9_2::put_time(&timem, "%y/%m/%d %H:%M:%S") +
          "." + milliS + "| " + msg;
 
-   mBuf.push_back(entry);
+   // Write to buffer if it is not full
+   if (mMaxBufLength && mBuf.size() < mMaxBufLength) {
+      mBuf.push_back(entry);
+   }
+   // todo: else? log error?
+
    std::cout << entry << std::endl;
    return true;
 }
@@ -210,6 +233,58 @@ inline void CBaLog::flush2Disk() {
       std::cout << msg << std::endl;
    }
 }
+
+bool CBaLog::saveCfg() {
+
+   // Create file-less
+   IBaIniParser *pIni = CBaIniParserCreate(0);
+   std::string s = std::to_string(mMaxFileSizeB);
+
+   // Set tag for section
+   pIni->Set(TAG, "");
+
+   // Set the rest of the values
+   pIni->Set(TAG ":mName", mName.c_str());
+
+   pIni->Set(TAG ":mMaxFileSizeB", s.c_str());
+
+   s = std::to_string(mMaxNoFiles);
+   pIni->Set(TAG ":mMaxNoFiles", s.c_str());
+
+   s = std::to_string(mFileCnt);
+   pIni->Set(TAG ":mFileCnt", s.c_str());
+
+   s = std::to_string(mOpenCnt);
+   pIni->Set(TAG ":mOpenCnt", s.c_str());
+
+   s = std::to_string(mFileSizeB);
+   pIni->Set(TAG ":mFileSizeB",s.c_str());
+
+
+   struct stat info;
+
+   // Check if dir exists
+   if (stat(CFGDIR, &info) != 0) {
+      // Create directory
+      if (mkdir(CFGDIR) != 0) {
+         // not ok
+         return false;
+      }
+   }
+
+   // Generate path
+   s = CFGDIR + BaPath::ChangeFileExtension(BaPath::GetFilename(mName), ".cfg");
+
+   // Open file for saving cfg
+   FILE *pF = fopen(s.c_str(), "w+");
+   if (!pF) {
+      return false;
+   }
+
+   pIni->DumpIni(pF);
+   return fclose(pF) == 0;
+}
+
 
 
 // ////////////////////////////////////////////////////
