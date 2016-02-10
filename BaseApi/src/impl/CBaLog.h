@@ -39,9 +39,9 @@ public:
    // Factory customized
    static CBaLog* Create(
          std::string name,
-         uint32_t  maxFileSizeB = 1048576,
-         uint16_t maxNoFiles   = 3,
-         uint16_t maxBufLength = 0
+         uint32_t    maxFileSizeB = 1048576,
+         uint16_t    maxNoFiles   = 3,
+         uint16_t    maxBufLength = 0
          );
 
    // Factory from config
@@ -52,10 +52,10 @@ public:
    //
    static bool Delete (
          CBaLog* hdl,
-         bool saveCfg = true
+         bool saveCfg = false
          );
 
-   // Hardware PWM setup functions
+   // Logging functions
    virtual bool Log(const char* msg);
    virtual void Logf(const char* fmt, ...);
 
@@ -70,6 +70,7 @@ private:
          );
 
    void flush2Disk();
+   void writeMsg2Disk();
 
 
 
@@ -79,7 +80,7 @@ private:
          int32_t fileSizeB) :
       mName(name), mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles),
       mMaxBufLength(maxBufLength),mFileCnt(fileCnt), mOpenCnt(openCnt),
-      mFileSizeB(fileSizeB), mTmpName(),mLog(), mBuf() {};
+      mFileSizeB(fileSizeB), mTmpName(),mLog(), mBuf(), cameFromCfg(false) {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -92,19 +93,20 @@ private:
 
    // Configuration parameters
    const std::string mName; // name of the log
-   const uint32_t  mMaxFileSizeB; // File size limit in bytes
+   const uint32_t mMaxFileSizeB; // File size limit in bytes
    const uint16_t mMaxNoFiles; // Maximum no. of history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer
 
    // Things to keep track of
    uint16_t mFileCnt; // Actual file count
    uint16_t mOpenCnt; // No. of times the file was opened
-   uint32_t  mFileSizeB; // Actual estimated file size in bytes
+   uint32_t mFileSizeB; // Actual estimated file size in bytes
 
    // Internal temporary variables
    std:: string mTmpName; // name of the new file // TODO describe it correctly
    std::ofstream mLog; // file stream
    std::vector<std::string> mBuf; // Message queue
+   bool cameFromCfg;
 
 
 };

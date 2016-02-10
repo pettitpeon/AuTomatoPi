@@ -39,23 +39,24 @@ void CBaLogTest::tearDown() {
 void CBaLogTest::Test() {
    CPPUNIT_ASSERT(true);
 
-   CBaLog *log1 = CBaLog::Create("TestLog1");
+   CBaLog *log1 = CBaLog::Create("TestLog1", 40, 2, 0);
    log1->Log("msg 1.1");
    log1->Logf("msg 1.%i", 2);
    log1->Logf("msg 1.%i", 3);
    log1->Logf("msg 1.%i", 4);
    log1->Logf("msg 1.%i", 5);
+   CBaLog::Delete(log1);
 
 
-   CBaLog *log2 = CBaLog::Create("TestLog2");
+   CBaLog *log2 = CBaLog::Create("TestLog2", 40, 2, 0);
    log2->Log("msg 2.1");
    log2->Logf("msg 2.%i", 2);
 
-   CBaLog *log3 = CBaLog::Create("TestLog3");
+   CBaLog *log3 = CBaLog::Create("TestLog3", 40, 2, 0);
    log3->Log("LOOOOOOOOOOOOOOOOOOOOOOOOOOOONG msg 3.1");
    log3->Logf("msg 3.%i", 2);
 
-   CBaLog::Delete(log1);
+
    CBaLog::Delete(log2);
    CBaLog::Delete(log3);
 

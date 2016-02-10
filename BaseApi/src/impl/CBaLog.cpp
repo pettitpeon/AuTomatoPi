@@ -13,6 +13,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 #include "BaUtils.hpp"
 
@@ -59,48 +60,10 @@ void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
    while (!sLogdArg.exitTh) {
       { // RAII Scope
          std::lock_guard<std::mutex> lck(sMtx);
-         CBaLog *p = 0;
 
          // iterate loggers
          for (auto &kv : sLoggers) {
-            p = kv.second;
-
-            // Iterate messages in buffer
-            for (auto &msg : p->mBuf) {
-
-               // Check file size. If it is the first line written to the file,
-               // write it to disk anyways.
-               p->mFileSizeB += msg.size();
-               if (msg.size() != p->mFileSizeB && p->mFileSizeB > p->mMaxFileSizeB) {
-                  // Open new file
-                  if (++p->mFileCnt > p->mMaxNoFiles) {
-                     p->mFileCnt = 1;
-                     // Rewrite file
-                  }
-                  p->mLog.close();
-                  if (p->mLog.fail()) {
-                     // error
-                  }
-
-
-                  // Rename file
-                  p->mTmpName = BaPath::ChangeFileExtension(p->mName,
-                        "_" + std::to_string(p->mFileCnt) + ".log");
-                  if (rename(p->mName.c_str(), p->mTmpName.c_str()) == -1) {
-                     errno;
-                     // todo: error
-                  }
-
-                  // todo: check open error!
-                  p->mLog.open(p->mName.c_str(), std::ios_base::binary | std::ios_base::out);
-               }
-
-               // /////////// Log to disc ///////////////////////
-               p->mLog << msg << std::endl;
-               // ///////////////////////////////////////////////
-
-            }
-            kv.second->mBuf.clear();
+            kv.second->flush2Disk();
          }
       }
 
@@ -148,7 +111,7 @@ CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
    }
 
    // //////////////// Create //////////////
-   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 0, 0);
+   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
    // //////////////// Create //////////////
 
    p->mLog.open(p->mName, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
@@ -194,9 +157,15 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
    }
 
    // //////////////// Create //////////////
-   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 0, 0);
+   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
    // //////////////// Create //////////////
 
+   if (!p) {
+      //todo log?
+      return 0;
+   }
+
+   p->cameFromCfg = true;
    p->mLog.open(p->mName, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
    sLoggers[name] = p;
    return p;
@@ -249,7 +218,7 @@ bool CBaLog::Log(const char* msg) {
          "." + milliS + "| " + msg;
 
    // Write to buffer if it is not full
-   if (mMaxBufLength && mBuf.size() < mMaxBufLength) {
+   if (!mMaxBufLength || mBuf.size() < mMaxBufLength) {
       mBuf.push_back(entry);
    }
    // todo: else? log error?
@@ -276,10 +245,52 @@ void CBaLog::Logf(const char* fmt, ...) {
 
 //
 inline void CBaLog::flush2Disk() {
+   // Iterate messages in buffer
    for (auto &msg : mBuf) {
+
+      // Check file size. If it is the first line written to the file,
+      // write it to disk anyways.
+      mFileSizeB += msg.size();
+      if (msg.size() != mFileSizeB && mFileSizeB > mMaxFileSizeB) {
+         // Open new file
+         if (++mFileCnt > mMaxNoFiles) {
+            mFileCnt = 1;
+            // Rewrite file
+         }
+         mLog.close();
+         if (mLog.fail()) {
+            // todo: error
+         }
+
+
+         // Rename file
+         mTmpName = BaPath::ChangeFileExtension(mName,
+               "_" + std::to_string(mFileCnt) + ".log");
+
+         std::cout << mName << " to: " << mTmpName << std::endl;
+
+         // todo: windows does not let rewriting the file!! fix it to make it portable
+         if (rename(mName.c_str(), mTmpName.c_str()) == -1) {
+            errno;
+            std::cout << errno << std::endl;
+            // todo: error
+         }
+
+         // todo: check open error!
+         mLog.open(mName.c_str(), std::ios_base::binary | std::ios_base::out);
+      }
+
+      // /////////// Log to disc ///////////////////////
       mLog << msg << std::endl;
       std::cout << msg << std::endl;
+      // ///////////////////////////////////////////////
+
    }
+   mBuf.clear();
+}
+
+void CBaLog::writeMsg2Disk() {
+
 }
 
 bool CBaLog::saveCfg() {
