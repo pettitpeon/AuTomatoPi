@@ -17,14 +17,16 @@
 #include "BaIniParseTest.h"
 #include "BaIniParse.h"
 #include "BaUtils.hpp"
+#include "CppU.h"
 #include "Extras/iniparser.h"
 #include "Extras/dictionary.h"
 
 #ifdef _WIN32
-# define RESPATH   "res\\BaIniParseTest\\"
+# define RESPATH CPPU_RESPATH "BaIniParseTest\\"
 #else
-# define RESPATH "res/BaIniParseTest/"
+# define RESPATH CPPU_RESPATH "BaIniParseTest/"
 #endif
+
 
 #define EXINI      RESPATH "example.ini"
 #define TWISTEDINI RESPATH "twisted.ini"

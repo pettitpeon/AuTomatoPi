@@ -92,16 +92,14 @@ bool CBaLog::exit() {
 }
 
 //
-CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
-      uint16_t maxNoFiles, uint16_t maxBufLength) {
-   std::lock_guard<std::mutex> lck(sMtx);
+CBaLog* CBaLog::commonCreate(std::string name, int32_t maxFileSizeB,
+      uint16_t maxNoFiles, uint16_t maxBufLength, uint16_t fileCnt,
+      int32_t fileSizeB, bool fromCfg)  {
 
    if (name.empty() || !init()) {
+      // todo Log error
       return 0;
    }
-
-   // Always open the numberless file
-   name = LOGDIR + name + LOGEXT;
 
    // Check if already exists
    auto logger = sLoggers.find(name);
@@ -111,17 +109,31 @@ CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
    }
 
    // //////////////// Create //////////////
-   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
+   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
+         fileSizeB);
+   if (!p) {
+      // todo Log error
+      return 0;
+   }
    // //////////////// Create //////////////
 
-   p->mLog.open(p->mName, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
+   p->mPath = LOGDIR + name + LOGEXT;
+   p->mCameFromCfg = fromCfg;
+   p->mLog.open(p->mPath, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
    sLoggers[name] = p;
    return p;
 }
 
 //
-CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
+CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
+      uint16_t maxNoFiles, uint16_t maxBufLength) {
+   std::lock_guard<std::mutex> lck(sMtx);
 
+   return commonCreate(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
+}
+
+//
+CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
 
    IBaIniParser *pIni = CBaIniParserCreate(cfgFile.c_str());
    if (!pIni) {
@@ -129,48 +141,28 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
       return 0;
    }
 
-   std::string name = pIni->GetString("mName","");
-   uint32_t maxFileSizeB = (uint32_t) pIni->GetInt("mMaxFileSizeB", -1);
-   int32_t  maxNoFiles   = pIni->GetInt("mMaxNoFiles", -1);
-   uint32_t maxBufLength = (uint32_t) pIni->GetInt("mMaxBufLength", -1);
+   std::string name = pIni->GetString(TAG ":mName","");
+   std::string path = pIni->GetString(TAG ":mPath","");
+   uint32_t maxFileSizeB = (uint32_t) pIni->GetInt(TAG ":mMaxFileSizeB", -1);
+   int32_t  maxNoFiles = pIni->GetInt(TAG ":mMaxNoFiles", -1);
+   uint32_t maxBufLength = (uint32_t) pIni->GetInt(TAG ":mMaxBufLength", -1);
+   uint32_t fileSizeB = (uint32_t) pIni->GetInt(TAG ":mFileSizeB", -1);
+   uint16_t fileCnt = (uint16_t) pIni->GetInt(TAG ":mFileCnt", -1);
 
-   if (name == "" || maxFileSizeB == (uint32_t) -1 || maxNoFiles == -1
-         || maxBufLength == (uint32_t) -1) {
+   if (name == "" || path == "" || maxFileSizeB == (uint32_t) -1 ||
+       maxNoFiles == -1 || maxBufLength == (uint32_t) -1 ||
+       fileCnt == (uint16_t) -1) {
       // todo: log?
       return 0;
    }
 
    std::lock_guard<std::mutex> lck(sMtx);
 
-   if (name.empty() || !init()) {
-      return 0;
-   }
-
-   // Always open the numberless file
-   name = LOGDIR + name + LOGEXT;
-
-   // Check if already exists
-   auto logger = sLoggers.find(name);
-   if (logger != sLoggers.end()) {
-      logger->second->mOpenCnt++;
-      return logger->second;
-   }
-
-   // //////////////// Create //////////////
-   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
-   // //////////////// Create //////////////
-
-   if (!p) {
-      //todo log?
-      return 0;
-   }
-
-   p->cameFromCfg = true;
-   p->mLog.open(p->mName, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
-   sLoggers[name] = p;
-   return p;
+   return commonCreate(name, maxFileSizeB, maxNoFiles, maxBufLength,
+         fileCnt, fileSizeB, true);
 }
 
+//
 bool CBaLog::Delete(CBaLog *pHdl, bool saveCfg) {
    std::lock_guard<std::mutex> lck(sMtx);
 
@@ -203,6 +195,9 @@ bool CBaLog::Delete(CBaLog *pHdl, bool saveCfg) {
 
 //
 bool CBaLog::Log(const char* msg) {
+
+   // todo try to replace this with a member lock so that msgs can be buffered
+   // while another log is flushing
    std::lock_guard<std::mutex> lck(sMtx);
    auto nowT = CHRONOHRC::now();
 
@@ -232,6 +227,10 @@ void CBaLog::Logf(const char* fmt, ...) {
    va_list arg;
    va_start(arg, fmt);
    uint16_t size = snprintf(0, 0, fmt, arg);
+
+   // If the string is short, I do not have to create a variable on the stack.
+   // I have a static one already available
+   // todo: Check the reentrancy problem!!! I think the fast msg is not worth it
    if (size >= FASTSIZE) {
       char msg[size + 1];
       vsnprintf(msg, size, fmt, arg);
@@ -262,22 +261,24 @@ inline void CBaLog::flush2Disk() {
             // todo: error
          }
 
-
          // Rename file
-         mTmpName = BaPath::ChangeFileExtension(mName,
+         mTmpPath = BaPath::ChangeFileExtension(mPath,
                "_" + std::to_string(mFileCnt) + ".log");
 
-         std::cout << mName << " to: " << mTmpName << std::endl;
+         std::cout << mPath << " to: " << mTmpPath << std::endl;
 
          // todo: windows does not let rewriting the file!! fix it to make it portable
-         if (rename(mName.c_str(), mTmpName.c_str()) == -1) {
+#ifdef __WIN32
+         remove(mTmpPath.c_str());
+#endif
+         if (rename(mPath.c_str(), mTmpPath.c_str()) == -1) {
             errno;
             std::cout << errno << std::endl;
             // todo: error
          }
 
          // todo: check open error!
-         mLog.open(mName.c_str(), std::ios_base::binary | std::ios_base::out);
+         mLog.open(mPath, std::ios_base::binary | std::ios_base::out);
       }
 
       // /////////// Log to disc ///////////////////////
@@ -289,22 +290,19 @@ inline void CBaLog::flush2Disk() {
    mBuf.clear();
 }
 
-void CBaLog::writeMsg2Disk() {
-
-}
-
 bool CBaLog::saveCfg() {
 
    // Create file-less
    IBaIniParser *pIni = CBaIniParserCreate(0);
-   std::string s = std::to_string(mMaxFileSizeB);
 
    // Set tag for section
    pIni->Set(TAG, "");
 
    // Set the rest of the values
    pIni->Set(TAG ":mName", mName.c_str());
+   pIni->Set(TAG ":mPath", mPath.c_str());
 
+   std::string s = std::to_string(mMaxFileSizeB);
    pIni->Set(TAG ":mMaxFileSizeB", s.c_str());
 
    s = std::to_string(mMaxNoFiles);
@@ -313,12 +311,11 @@ bool CBaLog::saveCfg() {
    s = std::to_string(mFileCnt);
    pIni->Set(TAG ":mFileCnt", s.c_str());
 
-   s = std::to_string(mOpenCnt);
-   pIni->Set(TAG ":mOpenCnt", s.c_str());
-
    s = std::to_string(mFileSizeB);
-   pIni->Set(TAG ":mFileSizeB",s.c_str());
+   pIni->Set(TAG ":mFileSizeB", s.c_str());
 
+   s = std::to_string(mMaxBufLength);
+   pIni->Set(TAG ":mMaxBufLength" ,s.c_str());
 
    struct stat info;
 
@@ -332,7 +329,7 @@ bool CBaLog::saveCfg() {
    }
 
    // Generate path
-   s = CFGDIR + BaPath::ChangeFileExtension(BaPath::GetFilename(mName), ".cfg");
+   s = CFGDIR + mName + ".cfg";
 
    // Open file for saving cfg
    FILE *pF = fopen(s.c_str(), "w+");

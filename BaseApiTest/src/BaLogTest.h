@@ -32,11 +32,14 @@ public:
    CPPUNIT_TEST_SUITE(CBaLogTest);
 
    CPPUNIT_TEST(Test);
+   CPPUNIT_TEST(FromCfg);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
    void Test();
+   void FromCfg();
 };
 
 #endif // BALOGTEST_H_
+

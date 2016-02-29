@@ -15,6 +15,11 @@
 #ifndef CPPU_H_
 #define CPPU_H_
 
+#ifdef _WIN32
+# define CPPU_RESPATH "res\\"
+#else
+# define CPPU_RESPATH "res/"
+#endif
 
 
 

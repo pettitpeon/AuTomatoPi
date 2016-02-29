@@ -16,8 +16,17 @@
 #include "BaLogTest.h"
 #include "BaGenMacros.h"
 #include "BaLog.h"
+#include "CppU.h"
 #include "impl/CBaLog.h"
 
+#ifdef _WIN32
+# define RESPATH CPPU_RESPATH "BaIniParseTest\\"
+#else
+# define RESPATH CPPU_RESPATH "BaIniParseTest/"
+#endif
+
+
+#define LOGCFG RESPATH "TestLog.cgf"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 
@@ -45,10 +54,14 @@ void CBaLogTest::Test() {
    log1->Logf("msg 1.%i", 3);
    log1->Logf("msg 1.%i", 4);
    log1->Logf("msg 1.%i", 5);
-   CBaLog::Delete(log1);
+   CBaLog::Delete(log1, true);
+   log1 = CBaLog::CreateFromCfg("C:\\log\\config\\TestLog1.cfg");
+   log1->Log("msg 1.6");
+   log1->Logf("msg 1.%i", 7);
+   CBaLog::Delete(log1, true);
 
 
-   CBaLog *log2 = CBaLog::Create("TestLog2", 40, 2, 0);
+   CBaLog *log2 = CBaLog::Create("TestLog2", 1024, 2, 0);
    log2->Log("msg 2.1");
    log2->Logf("msg 2.%i", 2);
 
@@ -61,4 +74,11 @@ void CBaLogTest::Test() {
    CBaLog::Delete(log3);
 
 
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaLogTest::FromCfg() {
+   //
 }

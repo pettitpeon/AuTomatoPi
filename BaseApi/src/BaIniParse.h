@@ -9,8 +9,7 @@
  */
 /** @file
  *  Ini/config files parser based on iniparser from N. Devillard
- *  TODO:
- *  Check if case insensitive is good
+ *  TODO: Check if case insensitive is good
  */
 /*------------------------------------------------------------------------------
  */

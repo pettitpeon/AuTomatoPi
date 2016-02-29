@@ -63,6 +63,11 @@ public:
    bool saveCfg();
 
 private:
+   static CBaLog* commonCreate(
+         std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
+         uint16_t maxBufLength, uint16_t fileCnt, int32_t fileSizeB,
+         bool fromCfg = false);
+
    static bool init();
    static bool exit();
    static void logRoutine(
@@ -70,17 +75,13 @@ private:
          );
 
    void flush2Disk();
-   void writeMsg2Disk();
-
-
 
    // Private constructor because a public factory method is used
    CBaLog(std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
-         uint16_t maxBufLength, uint16_t fileCnt, uint16_t openCnt,
-         int32_t fileSizeB) :
-      mName(name), mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles),
-      mMaxBufLength(maxBufLength),mFileCnt(fileCnt), mOpenCnt(openCnt),
-      mFileSizeB(fileSizeB), mTmpName(),mLog(), mBuf(), cameFromCfg(false) {};
+         uint16_t maxBufLength, uint16_t fileCnt, int32_t fileSizeB) :
+      mName(name), mPath(), mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles),
+      mMaxBufLength(maxBufLength),mFileCnt(fileCnt), mFileSizeB(fileSizeB),
+      mOpenCnt(1), mTmpPath(),mLog(), mBuf(), mCameFromCfg(false) {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -93,20 +94,21 @@ private:
 
    // Configuration parameters
    const std::string mName; // name of the log
+   std::string mPath; // Path to the log
    const uint32_t mMaxFileSizeB; // File size limit in bytes
    const uint16_t mMaxNoFiles; // Maximum no. of history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer
 
    // Things to keep track of
    uint16_t mFileCnt; // Actual file count
-   uint16_t mOpenCnt; // No. of times the file was opened
    uint32_t mFileSizeB; // Actual estimated file size in bytes
 
    // Internal temporary variables
-   std:: string mTmpName; // name of the new file // TODO describe it correctly
+   uint16_t mOpenCnt; // No. of times the file was opened
+   std:: string mTmpPath; // name of the new file // TODO describe it correctly
    std::ofstream mLog; // file stream
    std::vector<std::string> mBuf; // Message queue
-   bool cameFromCfg;
+   bool mCameFromCfg;
 
 
 };
