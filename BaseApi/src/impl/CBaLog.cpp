@@ -192,7 +192,6 @@ bool CBaLog::Delete(CBaLog *pHdl, bool saveCfg) {
    return true;
 }
 
-
 //
 bool CBaLog::Log(const char* msg) {
 
