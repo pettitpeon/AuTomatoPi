@@ -56,6 +56,7 @@ LOCAL tm localtime(const std::time_t& rTime);
 LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat);
 }
 
+//
 void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
    while (!sLogdArg.exitTh) {
       { // RAII Scope
@@ -71,6 +72,7 @@ void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
    }
 }
 
+//
 bool CBaLog::init() {
    if (sLogdHdl) {
       return true;
@@ -81,6 +83,7 @@ bool CBaLog::init() {
    return sLogdHdl;
 }
 
+//
 bool CBaLog::exit() {
    if (!sLogdHdl) {
       return true;
@@ -289,6 +292,7 @@ inline void CBaLog::flush2Disk() {
    mBuf.clear();
 }
 
+//
 bool CBaLog::saveCfg() {
 
    // Create file-less
@@ -343,7 +347,6 @@ bool CBaLog::saveCfg() {
 
 
 // ////////////////////////////////////////////////////
-
 // put_time is not implemented yet in 4.9.2 thus the tmp NS
 namespace tmp_4_9_2 {
 LOCAL tm localtime(const std::time_t& rTime) {
