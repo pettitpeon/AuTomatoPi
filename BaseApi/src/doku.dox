@@ -1,7 +1,8 @@
 // This is a documentation
 
 /** @mainpage Base API Documentation
- *  Welcome to the documentation of the Base API
+ *  Welcome to the documentation of the Base API\n
+ *  [Back to GitHub Pages](https://pettitpeon.github.io/rpiapi/)
  *
  *  \section intro_sec Introduction
  *  This is an API
