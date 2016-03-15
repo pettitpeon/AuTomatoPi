@@ -9,8 +9,7 @@
  */
 /** @file
  *  Ini/config files parser based on iniparser from N. Devillard
- *  TODO:
- *  Check if case insensitive is good
+ *  TODO: Check if case insensitive is good
  */
 /*------------------------------------------------------------------------------
  */
@@ -44,7 +43,9 @@ extern "C" {
 #endif
 
 /******************************************************************************/
-/** Create factory for an INI parser
+/** Create factory for an INI parser. If the file pointer is null it will be
+ *  created with an empty dictionary. The data added to the dictionary can later
+ *  be saved to disk with #BaIniParseDumpIni.
  *  @return Handle if success, otherwise, null
  */
 TBaIniParseHdl BaIniParseCreate(
@@ -325,7 +326,9 @@ public:
 };
 
 /******************************************************************************/
-/** Create factory for an INI parser
+/** Create factory for an INI parser. If the file pointer is null it will be
+ *  created with an empty dictionary. The data added to the dictionary can later
+ *  be saved to disk with IBaIniParser::DumpIni().
  *  @return Handle if success, otherwise, null
  */
 extern "C" IBaIniParser * CBaIniParserCreate(
