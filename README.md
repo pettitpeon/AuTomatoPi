@@ -27,4 +27,4 @@
 5. Error handling, logs, status reports
  
 ## Depelopers Documentation
-[Read more](Doc/html/index.html)
+[Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
