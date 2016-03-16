@@ -38,6 +38,7 @@
 #define CHRONOHRC std::chrono::high_resolution_clock
 #define CHRONO    std::chrono
 #define TAG       "BaLog"
+#define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -95,7 +96,7 @@ bool CBaLog::exit() {
 }
 
 //
-CBaLog* CBaLog::commonCreate(std::string name, int32_t maxFileSizeB,
+CBaLog* CBaLog::commonCreate(std::string name, std::string path, int32_t maxFileSizeB,
       uint16_t maxNoFiles, uint16_t maxBufLength, uint16_t fileCnt,
       int32_t fileSizeB, bool fromCfg)  {
 
@@ -120,19 +121,28 @@ CBaLog* CBaLog::commonCreate(std::string name, int32_t maxFileSizeB,
    }
    // //////////////// Create //////////////
 
-   p->mPath = LOGDIR + name + LOGEXT;
-   p->mCameFromCfg = fromCfg;
-   p->mLog.open(p->mPath, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
-   sLoggers[name] = p;
+   if (path == "") {
+      path = LOGDIR;
+   }
+
+   p->mPath = path;
+   p->mFullPath = FULLPATH(p->mPath, p->mName);
+   p->mLog.open(p->mFullPath, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
+   if (p->mLog.fail()) {
+      delete p;
+      return 0;
+      // todo: error
+   }
+   sLoggers[p->mName] = p;
    return p;
 }
 
 //
-CBaLog* CBaLog::Create(std::string name, uint32_t maxFileSizeB,
+CBaLog* CBaLog::Create(std::string name, std::string path, uint32_t maxFileSizeB,
       uint16_t maxNoFiles, uint16_t maxBufLength) {
    std::lock_guard<std::mutex> lck(sMtx);
 
-   return commonCreate(name, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
+   return commonCreate(name, path, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
 }
 
 //
@@ -161,7 +171,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
 
    std::lock_guard<std::mutex> lck(sMtx);
 
-   return commonCreate(name, maxFileSizeB, maxNoFiles, maxBufLength,
+   return commonCreate(name, path, maxFileSizeB, maxNoFiles, maxBufLength,
          fileCnt, fileSizeB, true);
 }
 
@@ -198,9 +208,9 @@ bool CBaLog::Delete(CBaLog *pHdl, bool saveCfg) {
 //
 bool CBaLog::Log(const char* msg) {
 
-   // todo try to replace this with a member lock so that msgs can be buffered
+   // FIXME try to replace this with a member lock so that msgs can be buffered
    // while another log is flushing
-   std::lock_guard<std::mutex> lck(sMtx);
+   std::lock_guard<std::mutex> lck(mMtx);
    auto nowT = CHRONOHRC::now();
 
    std::time_t tt = CHRONOHRC::to_time_t(nowT);
@@ -208,17 +218,17 @@ bool CBaLog::Log(const char* msg) {
    auto ms = CHRONO::duration_cast<CHRONO::milliseconds>(nowT.time_since_epoch());
 
    // Static is allowed because of the mutex
-   static char milliS[4] = {0};
-   snprintf(milliS, 4, "%03d", (int) (ms.count() % 1000));
+   snprintf(mMillis, 4, "%03d", (int) (ms.count() % 1000));
 
    std::string entry = tmp_4_9_2::put_time(&timem, "%y/%m/%d %H:%M:%S") +
-         "." + milliS + "| " + msg;
+         "." + mMillis + "| " + msg;
 
    // Write to buffer if it is not full
    if (!mMaxBufLength || mBuf.size() < mMaxBufLength) {
       mBuf.push_back(entry);
+   } else {
+      // todo: else? log error?
    }
-   // todo: else? log error?
 
    std::cout << entry << std::endl;
    return true;
@@ -258,29 +268,34 @@ inline void CBaLog::flush2Disk() {
             mFileCnt = 1;
             // Rewrite file
          }
+
+         // Close the output stream
          mLog.close();
          if (mLog.fail()) {
             // todo: error
          }
 
          // Rename file
-         mTmpPath = BaPath::ChangeFileExtension(mPath,
+         mTmpPath = BaPath::ChangeFileExtension(mFullPath,
                "_" + std::to_string(mFileCnt) + ".log");
 
-         std::cout << mPath << " to: " << mTmpPath << std::endl;
+         std::cout << mFullPath << " to: " << mTmpPath << std::endl;
 
-         // todo: windows does not let rewriting the file!! fix it to make it portable
+         // Windows does not let rewriting the file!! fix it to make it portable
 #ifdef __WIN32
          remove(mTmpPath.c_str());
 #endif
-         if (rename(mPath.c_str(), mTmpPath.c_str()) == -1) {
+         if (rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
             errno;
             std::cout << errno << std::endl;
             // todo: error
          }
 
          // todo: check open error!
-         mLog.open(mPath, std::ios_base::binary | std::ios_base::out);
+         mLog.open(mFullPath, std::ios_base::binary | std::ios_base::out);
+         if (mLog.fail()) {
+            // todo: error
+         }
       }
 
       // /////////// Log to disc ///////////////////////

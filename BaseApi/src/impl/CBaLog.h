@@ -31,14 +31,11 @@ struct TBaCoreThreadArg;
  */
 class CBaLog {
 public:
-   // Factory with defaults
-//   static CBaLog* Create(
-//         std::string name
-//         );
 
    // Factory customized
    static CBaLog* Create(
          std::string name,
+         std::string path = "",
          uint32_t    maxFileSizeB = 1048576,
          uint16_t    maxNoFiles   = 3,
          uint16_t    maxBufLength = 0
@@ -64,9 +61,9 @@ public:
 
 private:
    static CBaLog* commonCreate(
-         std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
-         uint16_t maxBufLength, uint16_t fileCnt, int32_t fileSizeB,
-         bool fromCfg = false);
+         std::string name, std::string path, int32_t maxFileSizeB,
+         uint16_t maxNoFiles, uint16_t maxBufLength, uint16_t fileCnt,
+         int32_t fileSizeB, bool fromCfg = false);
 
    static bool init();
    static bool exit();
@@ -81,7 +78,7 @@ private:
          uint16_t maxBufLength, uint16_t fileCnt, int32_t fileSizeB) :
       mName(name), mPath(), mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles),
       mMaxBufLength(maxBufLength),mFileCnt(fileCnt), mFileSizeB(fileSizeB),
-      mOpenCnt(1), mTmpPath(),mLog(), mBuf(), mCameFromCfg(false) {};
+      mOpenCnt(1), mFullPath(), mTmpPath(),mLog(), mBuf(), mCameFromCfg(false), mMtx() {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -94,7 +91,7 @@ private:
 
    // Configuration parameters
    const std::string mName; // name of the log
-   std::string mPath; // Path to the log
+   std::string       mPath; // Path to the log
    const uint32_t mMaxFileSizeB; // File size limit in bytes
    const uint16_t mMaxNoFiles; // Maximum no. of history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer
@@ -105,10 +102,13 @@ private:
 
    // Internal temporary variables
    uint16_t mOpenCnt; // No. of times the file was opened
+   std:: string mFullPath; // name of the new file // TODO describe it correctly
    std:: string mTmpPath; // name of the new file // TODO describe it correctly
    std::ofstream mLog; // file stream
    std::vector<std::string> mBuf; // Message queue
    bool mCameFromCfg;
+   char mMillis[4];
+   std::mutex mMtx;
 
 
 };
