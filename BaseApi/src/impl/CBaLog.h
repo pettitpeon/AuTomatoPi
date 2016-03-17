@@ -39,6 +39,8 @@ public:
    static CBaLog* Create(
          std::string name,
          std::string path = "",
+         EBaLogPrio  prioFilt = eBaLogPrio_UpsCrash,
+         bool        toConsole = true,
          uint32_t    maxFileSizeB = 1048576,
          uint16_t    maxNoFiles   = 3,
          uint16_t    maxBufLength = 0
@@ -71,9 +73,9 @@ public:
 
 private:
    static CBaLog* commonCreate(
-         std::string name, std::string path, int32_t maxFileSizeB,
-         uint16_t maxNoFiles, uint16_t maxBufLength, uint16_t fileCnt,
-         int32_t fileSizeB, bool fromCfg = false);
+         std::string name, std::string path, EBaLogPrio prioFilt, bool toConsole,
+         int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
+         uint16_t fileCnt, int32_t fileSizeB, bool fromCfg = false);
 
    static bool init();
    static bool exit();
@@ -86,11 +88,13 @@ private:
    bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
 
    // Private constructor because a public factory method is used
-   CBaLog(std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
-         uint16_t maxBufLength, uint16_t fileCnt, int32_t fileSizeB) :
-      mName(name), mPath(), mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles),
-      mMaxBufLength(maxBufLength),mFileCnt(fileCnt), mFileSizeB(fileSizeB),
-      mOpenCnt(1), mFullPath(), mTmpPath(),mLog(), mBuf(), mCameFromCfg(false), mMtx() {};
+   CBaLog(std::string name, std::string path, EBaLogPrio prioFilt, bool toConsole,
+         int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
+         uint16_t fileCnt, int32_t fileSizeB) :
+      mName(name), mPath(path), mPrioFilt(prioFilt), mToConsole(toConsole),
+      mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles), mMaxBufLength(maxBufLength),
+      mFileCnt(fileCnt), mFileSizeB(fileSizeB), mOpenCnt(1), mFullPath(),
+      mTmpPath(), mLog(), mBuf(), mCameFromCfg(false), mMtx() {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -104,6 +108,8 @@ private:
    // Configuration parameters
    const std::string mName; // name of the log
    std::string       mPath; // Path to the log
+   EBaLogPrio        mPrioFilt;
+   bool              mToConsole;
    const uint32_t mMaxFileSizeB; // File size limit in bytes
    const uint16_t mMaxNoFiles; // Maximum no. of history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer

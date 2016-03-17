@@ -79,8 +79,18 @@ bool CBaLog::init() {
    if (sLogdHdl) {
       return true;
    }
-   sLogdArg.exitTh = false;
 
+   // Check if dir exists
+   struct stat info;
+   if (stat(LOGDIR, &info) != 0) {
+      // Create directory
+      if (mkdir(LOGDIR) != 0) {
+         // not ok
+         return false;
+      }
+   }
+
+   sLogdArg.exitTh = false;
    sLogdHdl = BaCoreCreateThread("BaLogD", logRoutine, &sLogdArg, eBaCorePrio_High);
    return sLogdHdl;
 }
@@ -97,9 +107,10 @@ bool CBaLog::exit() {
 }
 
 //
-CBaLog* CBaLog::commonCreate(std::string name, std::string path, int32_t maxFileSizeB,
-      uint16_t maxNoFiles, uint16_t maxBufLength, uint16_t fileCnt,
-      int32_t fileSizeB, bool fromCfg)  {
+// FIXME: Add a priority filter
+CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prioFilt,
+      bool toConsole, int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
+      uint16_t fileCnt, int32_t fileSizeB, bool fromCfg)  {
 
    if (name.empty() || !init()) {
       // todo Log error
@@ -113,8 +124,12 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, int32_t maxFile
       return logger->second;
    }
 
+   if (path == "") {
+      path = LOGDIR;
+   }
+
    // //////////////// Create //////////////
-   CBaLog *p = new CBaLog(name, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
+   CBaLog *p = new CBaLog(name, path, prioFilt, toConsole, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
          fileSizeB);
    if (!p) {
       // todo Log error
@@ -122,11 +137,7 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, int32_t maxFile
    }
    // //////////////// Create //////////////
 
-   if (path == "") {
-      path = LOGDIR;
-   }
 
-   p->mPath = path;
    p->mFullPath = FULLPATH(p->mPath, p->mName);
    p->mLog.open(p->mFullPath, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
    if (p->mLog.fail()) {
@@ -139,11 +150,12 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, int32_t maxFile
 }
 
 //
-CBaLog* CBaLog::Create(std::string name, std::string path, uint32_t maxFileSizeB,
-      uint16_t maxNoFiles, uint16_t maxBufLength) {
+CBaLog* CBaLog::Create(std::string name, std::string path, EBaLogPrio  prioFilt,
+      bool toConsole, uint32_t maxFileSizeB, uint16_t maxNoFiles,
+      uint16_t maxBufLength) {
    std::lock_guard<std::mutex> lck(sMtx);
 
-   return commonCreate(name, path, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
+   return commonCreate(name, path, prioFilt, toConsole, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
 }
 
 //
@@ -155,8 +167,10 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
       return 0;
    }
 
-   std::string name = pIni->GetString(TAG ":mName","");
-   std::string path = pIni->GetString(TAG ":mPath","");
+   std::string name = pIni->GetString(TAG ":mName", "");
+   std::string path = pIni->GetString(TAG ":mPath", "");
+   EBaLogPrio prioFilt = (EBaLogPrio) pIni->GetInt(TAG ":mPrioFilt", eBaLogPrio_UpsCrash);
+   bool toConsole = pIni->GetBool(TAG ":mToConsole", true);
    uint32_t maxFileSizeB = (uint32_t) pIni->GetInt(TAG ":mMaxFileSizeB", -1);
    int32_t  maxNoFiles = pIni->GetInt(TAG ":mMaxNoFiles", -1);
    uint32_t maxBufLength = (uint32_t) pIni->GetInt(TAG ":mMaxBufLength", -1);
@@ -172,7 +186,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
 
    std::lock_guard<std::mutex> lck(sMtx);
 
-   return commonCreate(name, path, maxFileSizeB, maxNoFiles, maxBufLength,
+   return commonCreate(name, path, prioFilt, toConsole, maxFileSizeB, maxNoFiles, maxBufLength,
          fileCnt, fileSizeB, true);
 }
 
@@ -336,7 +350,13 @@ bool CBaLog::saveCfg() {
    pIni->Set(TAG ":mName", mName.c_str());
    pIni->Set(TAG ":mPath", mPath.c_str());
 
-   std::string s = std::to_string(mMaxFileSizeB);
+   std::string s = std::to_string(mPrioFilt);
+   pIni->Set(TAG ":mPrioFilt", s.c_str());
+
+   pIni->Set(TAG ":mToConsole", mToConsole ? "T" : "F");
+
+
+   s = std::to_string(mMaxFileSizeB);
    pIni->Set(TAG ":mMaxFileSizeB", s.c_str());
 
    s = std::to_string(mMaxNoFiles);
@@ -351,9 +371,10 @@ bool CBaLog::saveCfg() {
    s = std::to_string(mMaxBufLength);
    pIni->Set(TAG ":mMaxBufLength" ,s.c_str());
 
-   struct stat info;
+
 
    // Check if dir exists
+   struct stat info;
    if (stat(CFGDIR, &info) != 0) {
       // Create directory
       if (mkdir(CFGDIR) != 0) {
@@ -377,7 +398,9 @@ bool CBaLog::saveCfg() {
 
 //
 bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
-
+   if (!msg) {
+      return false;
+   }
 
    // Generate time stamp with priority
    // Get the prio
@@ -394,7 +417,7 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
 
    // Get the tag
    // FIXME: Test this under Linux. The stupid snprintf() is not portable!!
-   uint8_t cnt = snprintf(mTag, TAGSZ-1, "%s", tag);
+   uint8_t cnt = snprintf(mTag, TAGSZ-1, "%s", tag ? tag : "");
    mTag[TAGSZ - 1] = 0;
    if (cnt < TAGSZ - 1) {
       SETARR(mTag + cnt, TAGSZ - 1 - cnt, ' ');
@@ -422,6 +445,10 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
 
 //
 bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg) {
+   if (!fmt) {
+      return false;
+   }
+
    uint16_t size = snprintf(0, 0, fmt, arg);
 
    // todo: convert me to to avoid over construction

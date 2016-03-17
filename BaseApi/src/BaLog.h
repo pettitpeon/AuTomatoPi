@@ -19,6 +19,9 @@
  *  Includes
  */
 
+
+// FIXME: determine the tag size
+
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
@@ -78,6 +81,7 @@ public:
          const char* msg
          ) = 0;
 
+   // These function have a limit of 65534 characters per message
    virtual bool LogF(
          EBaLogPrio  prio,
          const char* tag,

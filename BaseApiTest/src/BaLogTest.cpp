@@ -61,11 +61,17 @@ void CBaLogTest::Test() {
 //   CBaLog::Delete(log1, true);
 
 
-   CBaLog *log2 = CBaLog::Create("TestLog2", "", 100024, 2, 0);
+   CBaLog *log2 = CBaLog::Create("TestLog2", "", eBaLogPrio_UpsCrash, true, 100024, 2, 0);
    BaCoreNSleep(100);
+   log2->Log(eBaLogPrio_Trace, "tag", 0);
+   log2->Log(eBaLogPrio_Trace, 0, "msg 2.1");
+   log2->Log(eBaLogPrio_Trace, 0, 0);
+
    log2->Log(eBaLogPrio_Trace, "tagfgfdgfdgg", "msg 2.1");
    log2->Log(eBaLogPrio_Trace, "tag", "msg 2.1");
    log2->LogF(eBaLogPrio_Trace, "tagTag", "msg 2.%i", 2);
+   log2->LogF(eBaLogPrio_Trace, "tagTag", 0, 2);
+   log2->LogF(eBaLogPrio_Trace, 0, "msg 2.%i", 2);
 
    for (int i = 100; i < 2000; ++i) {
       log2->LogF(eBaLogPrio_Trace, "taTaTaTa", "msg 2.%i", i);
@@ -75,7 +81,7 @@ void CBaLogTest::Test() {
       }
    }
 
-   CBaLog *log3 = CBaLog::Create("TestLog3", "", 40, 2, 0);
+   CBaLog *log3 = CBaLog::Create("TestLog3", "", eBaLogPrio_UpsCrash, true, 40, 2, 0);
    log3->Log(eBaLogPrio_Trace, "tag", "LOOOOOOOOOOOOOOOOOOOOOOOOOOOONG msg 3.1");
    log3->LogF(eBaLogPrio_Trace, "tag", "msg 3.%i", 2);
 
