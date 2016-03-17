@@ -19,6 +19,9 @@
  *  Includes
  */
 #include <string>
+#include <mutex>
+
+#include "BaLog.h"
 
 struct TBaCoreThreadArg;
 
@@ -29,7 +32,7 @@ struct TBaCoreThreadArg;
 /*------------------------------------------------------------------------------
  *  C++ Interface
  */
-class CBaLog {
+class CBaLog : public IBaLog {
 public:
 
    // Factory customized
@@ -53,8 +56,15 @@ public:
          );
 
    // Logging functions
-   virtual bool Log(const char* msg);
-   virtual void Logf(const char* fmt, ...);
+   virtual bool Log(EBaLogPrio prio, const char* tag, const char* msg);
+   virtual bool Trace(const char* tag, const char* msg);
+   virtual bool Warning(const char* tag, const char* msg);
+   virtual bool Error(const char* tag, const char* msg);
+
+   virtual bool LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...);
+   virtual bool TraceF(const char* tag, const char* fmt, ...);
+   virtual bool WarningF(const char* tag, const char* fmt, ...);
+   virtual bool ErrorF(const char* tag, const char* fmt, ...);
 
    // Not part of the interface
    bool saveCfg();
@@ -72,6 +82,8 @@ private:
          );
 
    void flush2Disk();
+   bool log(EBaLogPrio prio, const char* tag, const char* msg);
+   bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
 
    // Private constructor because a public factory method is used
    CBaLog(std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
@@ -107,9 +119,9 @@ private:
    std::ofstream mLog; // file stream
    std::vector<std::string> mBuf; // Message queue
    bool mCameFromCfg;
-   char mMillis[4];
    std::mutex mMtx;
-
+   char mMillis[4];
+   char mTag[7];
 
 };
 

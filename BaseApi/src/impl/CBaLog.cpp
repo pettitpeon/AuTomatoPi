@@ -8,7 +8,6 @@
 #include <map>
 #include <vector>
 #include <iostream>
-#include <mutex>
 #include <ctime>
 
 #include <sys/types.h>
@@ -34,11 +33,12 @@
 #endif
 
 #define LOGEXT    ".log"
-#define FASTSIZE  81
+//#define FASTSIZE  81
 #define CHRONOHRC std::chrono::high_resolution_clock
 #define CHRONO    std::chrono
 #define TAG       "BaLog"
 #define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
+#define TAGSZ     7
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -47,7 +47,8 @@ static std::map<std::string, CBaLog*> sLoggers;
 static TBaCoreThreadHdl sLogdHdl = 0;
 static TBaCoreThreadArg sLogdArg = {0};
 static std::mutex sMtx;
-static char sFasMsg[FASTSIZE];
+//static char sFasMsg[FASTSIZE];
+static std::string sPrioTochar[eBaLogPrio_UpsCrash + 1] = {"T", "W", "E", "C"};
 
 /*------------------------------------------------------------------------------
     Local Declarations
@@ -206,56 +207,69 @@ bool CBaLog::Delete(CBaLog *pHdl, bool saveCfg) {
 }
 
 //
-bool CBaLog::Log(const char* msg) {
-
-   // FIXME try to replace this with a member lock so that msgs can be buffered
+bool inline CBaLog::Log(EBaLogPrio prio, const char* tag, const char* msg) {
+   // This uses a member mutex so that msgs can be buffered
    // while another log is flushing
    std::lock_guard<std::mutex> lck(mMtx);
-   auto nowT = CHRONOHRC::now();
-
-   std::time_t tt = CHRONOHRC::to_time_t(nowT);
-   struct tm timem = tmp_4_9_2::localtime(tt);
-   auto ms = CHRONO::duration_cast<CHRONO::milliseconds>(nowT.time_since_epoch());
-
-   // Static is allowed because of the mutex
-   snprintf(mMillis, 4, "%03d", (int) (ms.count() % 1000));
-
-   std::string entry = tmp_4_9_2::put_time(&timem, "%y/%m/%d %H:%M:%S") +
-         "." + mMillis + "| " + msg;
-
-   // Write to buffer if it is not full
-   if (!mMaxBufLength || mBuf.size() < mMaxBufLength) {
-      mBuf.push_back(entry);
-   } else {
-      // todo: else? log error?
-   }
-
-   std::cout << entry << std::endl;
-   return true;
+   return log(prio, tag, msg);
 }
 
 //
-void CBaLog::Logf(const char* fmt, ...) {
+bool inline CBaLog::Trace(const char* tag, const char* msg){
+   std::lock_guard<std::mutex> lck(mMtx);
+   return log(eBaLogPrio_Trace, tag, msg);
+}
+
+//
+bool inline CBaLog::Warning(const char* tag, const char* msg){
+   std::lock_guard<std::mutex> lck(mMtx);
+   return log(eBaLogPrio_Warning, tag, msg);
+}
+
+//
+bool inline CBaLog::Error(const char* tag, const char* msg){
+   std::lock_guard<std::mutex> lck(mMtx);
+   return log(eBaLogPrio_Error, tag, msg);
+}
+
+//
+bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
+   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
-   uint16_t size = snprintf(0, 0, fmt, arg);
+   return logV(prio, tag, fmt, arg);
+}
 
-   // If the string is short, I do not have to create a variable on the stack.
-   // I have a static one already available
-   // todo: Check the reentrancy problem!!! I think the fast msg is not worth it
-   if (size >= FASTSIZE) {
-      char msg[size + 1];
-      vsnprintf(msg, size, fmt, arg);
-      Log(msg);
-   } else {
-      vsnprintf(sFasMsg, FASTSIZE, fmt, arg);
-      Log(sFasMsg);
-   }
+//
+bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
+   std::lock_guard<std::mutex> lck(mMtx);
+   va_list arg;
+   va_start(arg, fmt);
+   return logV(eBaLogPrio_Trace, tag, fmt, arg);
+}
 
+//
+bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
+   std::lock_guard<std::mutex> lck(mMtx);
+   va_list arg;
+   va_start(arg, fmt);
+   return logV(eBaLogPrio_Warning, tag, fmt, arg);
+}
+
+//
+bool inline CBaLog::ErrorF(const char* tag, const char* fmt, ...) {
+   std::lock_guard<std::mutex> lck(mMtx);
+   va_list arg;
+   va_start(arg, fmt);
+   return logV(eBaLogPrio_Error, tag, fmt, arg);
 }
 
 //
 inline void CBaLog::flush2Disk() {
+
+   // Avoid messing around with the buffer while it is being printed
+   std::lock_guard<std::mutex> lck(mMtx);
+
    // Iterate messages in buffer
    for (auto &msg : mBuf) {
 
@@ -268,6 +282,8 @@ inline void CBaLog::flush2Disk() {
             mFileCnt = 1;
             // Rewrite file
          }
+
+         mFileSizeB = 0;
 
          // Close the output stream
          mLog.close();
@@ -359,7 +375,62 @@ bool CBaLog::saveCfg() {
    return fclose(pF) == 0;
 }
 
+//
+bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
 
+
+   // Generate time stamp with priority
+   // Get the prio
+   prio = MINMAX(prio, eBaLogPrio_Trace, eBaLogPrio_UpsCrash);
+
+   // Get the time structure to generate time stamp
+   auto nowT = CHRONOHRC::now();
+   std::time_t tt = CHRONOHRC::to_time_t(nowT);
+   struct tm timeStruct = tmp_4_9_2::localtime(tt);
+
+   // Get the milliseconds
+   auto ms = CHRONO::duration_cast<CHRONO::milliseconds>(nowT.time_since_epoch());
+   snprintf(mMillis, 4, "%03d", (int) (ms.count() % 1000));
+
+   // Get the tag
+   // FIXME: Test this under Linux. The stupid snprintf() is not portable!!
+   uint8_t cnt = snprintf(mTag, TAGSZ-1, "%s", tag);
+   mTag[TAGSZ - 1] = 0;
+   if (cnt < TAGSZ - 1) {
+      SETARR(mTag + cnt, TAGSZ - 1 - cnt, ' ');
+   }
+
+   // Put everything together
+   std::string entry = tmp_4_9_2::put_time(&timeStruct, "%y/%m/%d %H:%M:%S") +
+         "." + mMillis + "|" + sPrioTochar[prio] + "|" + mTag + "| " + msg;
+
+
+   // ////////////////// Write to buffer if it is not full /////////////////////
+   if (!mMaxBufLength || mBuf.size() < mMaxBufLength) {
+      mBuf.push_back(entry);
+   } else {
+      // todo: else? log error?
+      return false;
+   }
+   // //////////////////////////////////////////////////////////////////////////
+
+
+   // TODO: Make this printing optional!
+   std::cout << entry << std::endl;
+   return true;
+}
+
+//
+bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg) {
+   uint16_t size = snprintf(0, 0, fmt, arg);
+
+   // todo: convert me to to avoid over construction
+   // WHAT ABOUT REENTRANCY?
+   char msg[size + 1];
+   vsnprintf(msg, size, fmt, arg);
+   va_end(arg);
+   return log(prio, tag, msg);
+}
 
 // ////////////////////////////////////////////////////
 // put_time is not implemented yet in 4.9.2 thus the tmp NS
