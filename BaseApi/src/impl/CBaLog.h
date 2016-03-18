@@ -19,6 +19,11 @@
  *  Includes
  */
 #include <string>
+#include <mutex>
+#include <vector>
+#include <fstream> // std::ofstream
+
+#include "BaLog.h"
 
 struct TBaCoreThreadArg;
 
@@ -29,16 +34,15 @@ struct TBaCoreThreadArg;
 /*------------------------------------------------------------------------------
  *  C++ Interface
  */
-class CBaLog {
+class CBaLog : public IBaLog {
 public:
-   // Factory with defaults
-//   static CBaLog* Create(
-//         std::string name
-//         );
 
    // Factory customized
    static CBaLog* Create(
          std::string name,
+         std::string path = "",
+         EBaLogPrio  prioFilt = eBaLogPrio_Trace,
+         EBaLogOut   out = eBaLogOut_LogAndConsole,
          uint32_t    maxFileSizeB = 1048576,
          uint16_t    maxNoFiles   = 3,
          uint16_t    maxBufLength = 0
@@ -50,23 +54,30 @@ public:
          );
 
    //
-   static bool Delete (
-         CBaLog* hdl,
+   static bool Destroy (
+         IBaLog* hdl,
          bool saveCfg = false
          );
 
    // Logging functions
-   virtual bool Log(const char* msg);
-   virtual void Logf(const char* fmt, ...);
+   virtual bool Log(EBaLogPrio prio, const char* tag, const char* msg);
+   virtual bool Trace(const char* tag, const char* msg);
+   virtual bool Warning(const char* tag, const char* msg);
+   virtual bool Error(const char* tag, const char* msg);
+
+   virtual bool LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...);
+   virtual bool TraceF(const char* tag, const char* fmt, ...);
+   virtual bool WarningF(const char* tag, const char* fmt, ...);
+   virtual bool ErrorF(const char* tag, const char* fmt, ...);
 
    // Not part of the interface
    bool saveCfg();
 
 private:
    static CBaLog* commonCreate(
-         std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
-         uint16_t maxBufLength, uint16_t fileCnt, int32_t fileSizeB,
-         bool fromCfg = false);
+         std::string name, std::string path, EBaLogPrio prioFilt, EBaLogOut out,
+         int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
+         uint16_t fileCnt, int32_t fileSizeB, bool fromCfg = false);
 
    static bool init();
    static bool exit();
@@ -75,13 +86,17 @@ private:
          );
 
    void flush2Disk();
+   bool log(EBaLogPrio prio, const char* tag, const char* msg);
+   bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
 
    // Private constructor because a public factory method is used
-   CBaLog(std::string name, int32_t maxFileSizeB, uint16_t maxNoFiles,
-         uint16_t maxBufLength, uint16_t fileCnt, int32_t fileSizeB) :
-      mName(name), mPath(), mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles),
-      mMaxBufLength(maxBufLength),mFileCnt(fileCnt), mFileSizeB(fileSizeB),
-      mOpenCnt(1), mTmpPath(),mLog(), mBuf(), mCameFromCfg(false) {};
+   CBaLog(std::string name, std::string path, EBaLogPrio prioFilt, EBaLogOut out,
+         int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
+         uint16_t fileCnt, int32_t fileSizeB) :
+      mName(name), mPath(path), mPrioFilt(prioFilt), mOut(out),
+      mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles), mMaxBufLength(maxBufLength),
+      mFileCnt(fileCnt), mFileSizeB(fileSizeB), mOpenCnt(1), mFullPath(),
+      mTmpPath(), mLog(), mBuf(), mCameFromCfg(false), mMtx() {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -93,8 +108,11 @@ private:
    CBaLog& operator=(const CBaLog&);
 
    // Configuration parameters
-   const std::string mName; // name of the log
-   std::string mPath; // Path to the log
+   // todo: make them dynamic
+   const std::string mName; // Name of the log
+   const std::string mPath; // Path to the log
+   const EBaLogPrio mPrioFilt; // Priority filter, allows messages equal of higher
+   const EBaLogOut mOut; // Output form specifier
    const uint32_t mMaxFileSizeB; // File size limit in bytes
    const uint16_t mMaxNoFiles; // Maximum no. of history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer
@@ -105,11 +123,14 @@ private:
 
    // Internal temporary variables
    uint16_t mOpenCnt; // No. of times the file was opened
-   std:: string mTmpPath; // name of the new file // TODO describe it correctly
+   std:: string mFullPath; // Full path, concatenation of path, name and extension
+   std:: string mTmpPath; // Temp name of the new file
    std::ofstream mLog; // file stream
    std::vector<std::string> mBuf; // Message queue
-   bool mCameFromCfg;
-
+   bool mCameFromCfg; // Flag to remember if it was opened from a cfg file
+   std::mutex mMtx; // Mutex to avoid simultaneous read and write of the buffer
+   char mMillis[4]; // Temp variable to save the milli part of a time-stamp
+   char mTag[7]; // Temp variable to manipulate the tag and pad spaces
 
 };
 

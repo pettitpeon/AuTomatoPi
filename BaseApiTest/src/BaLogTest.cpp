@@ -15,9 +15,10 @@
 #include <iostream>
 #include "BaLogTest.h"
 #include "BaGenMacros.h"
-#include "BaLog.h"
 #include "CppU.h"
 #include "impl/CBaLog.h"
+#include "BaLog.h"
+#include "BaCore.h"
 
 #ifdef _WIN32
 # define RESPATH CPPU_RESPATH "BaIniParseTest\\"
@@ -48,30 +49,50 @@ void CBaLogTest::tearDown() {
 void CBaLogTest::Test() {
    CPPUNIT_ASSERT(true);
 
-   CBaLog *log1 = CBaLog::Create("TestLog1", 40, 2, 0);
-   log1->Log("msg 1.1");
-   log1->Logf("msg 1.%i", 2);
-   log1->Logf("msg 1.%i", 3);
-   log1->Logf("msg 1.%i", 4);
-   log1->Logf("msg 1.%i", 5);
-   CBaLog::Delete(log1, true);
-   log1 = CBaLog::CreateFromCfg("C:\\log\\config\\TestLog1.cfg");
-   log1->Log("msg 1.6");
-   log1->Logf("msg 1.%i", 7);
-   CBaLog::Delete(log1, true);
+//   CBaLog *log1 = CBaLog::Create("TestLog1", "", 40, 2, 0);
+//   log1->Log(eBaLogPrio_Trace, "msg 1.1");
+//   log1->LogF(eBaLogPrio_Trace, "msg 1.%i", 2);
+//   log1->LogF(eBaLogPrio_Trace, "msg 1.%i", 3);
+//   log1->LogF(eBaLogPrio_Trace, "msg 1.%i", 4);
+//   log1->LogF(eBaLogPrio_Warning, "msg 1.%i", 5);
+//   CBaLog::Delete(log1, true);
+//   log1 = CBaLog::CreateFromCfg("C:\\log\\config\\TestLog1.cfg");
+//   log1->Log(eBaLogPrio_Trace, "msg 1.6");
+//   log1->LogF(eBaLogPrio_Trace, "msg 1.%i", 7);
+//   CBaLog::Delete(log1, true);
 
 
-   CBaLog *log2 = CBaLog::Create("TestLog2", 1024, 2, 0);
-   log2->Log("msg 2.1");
-   log2->Logf("msg 2.%i", 2);
+   CBaLog *log2 = CBaLog::Create("TestLog2", "", eBaLogPrio_Trace, eBaLogOut_LogAndConsole, 100024, 2, 0);
+   BaCoreNSleep(100);
+   log2->Log(eBaLogPrio_Trace, "tag", 0);
+   log2->Log(eBaLogPrio_Trace, 0, "msg 2.1");
+   log2->Log(eBaLogPrio_Trace, 0, 0);
 
-   CBaLog *log3 = CBaLog::Create("TestLog3", 40, 2, 0);
-   log3->Log("LOOOOOOOOOOOOOOOOOOOOOOOOOOOONG msg 3.1");
-   log3->Logf("msg 3.%i", 2);
+   log2->Log(eBaLogPrio_Trace, "tagfgfdgfdgg", "msg 2.1");
+   log2->Log(eBaLogPrio_Trace, "tag", "msg 2.1");
+   log2->LogF(eBaLogPrio_Trace, "tagTag", "msg 2.%i", 2);
+   log2->LogF(eBaLogPrio_Trace, "tagTag", 0, 2);
+   log2->LogF(eBaLogPrio_Trace, 0, "msg 2.%i", 2);
+
+   IBaLog *iLog = CBaLogCreateDef("ILog");
+   iLog->LogF(eBaLogPrio_Trace, 0, "iLog 2.%i", 2);
+
+   for (int i = 100; i < 2000; ++i) {
+      log2->LogF(eBaLogPrio_Trace, "taTaTaTa", "msg 2.%i", i);
+      std::cout << i << std::endl;
+      if (i % 300 == 0) {
+         BaCoreSleep(1);
+      }
+   }
+
+   CBaLog *log3 = CBaLog::Create("TestLog3", "", eBaLogPrio_Trace, eBaLogOut_LogAndConsole, 40, 2, 0);
+   log3->Log(eBaLogPrio_Trace, "tag", "LOOOOOOOOOOOOOOOOOOOOOOOOOOOONG msg 3.1");
+   log3->LogF(eBaLogPrio_Trace, "tag", "msg 3.%i", 2);
 
 
-   CBaLog::Delete(log2);
-   CBaLog::Delete(log3);
+   CBaLogDestroy(iLog, false);
+   CBaLog::Destroy(log2);
+   CBaLog::Destroy(log3);
 
 
 }

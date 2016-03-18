@@ -8,13 +8,14 @@
  *   Module description:
  */
 /** @file
- *  General useful functions
+ *  General useful functions\n
+ *   - Path functions
+ *   - Number parsing
  */
 /*------------------------------------------------------------------------------
  */
 
 
-// Todo: document this file
 #ifndef BAUTILS_HPP_
 #define BAUTILS_HPP_
 
@@ -22,77 +23,90 @@
 #include <string>
 #include <istream>
 
+/******************************************************************************/
+/** Namespace to wrap all path functions
+ */
 namespace BaPath {
 
+/******************************************************************************/
+/** Gets everything, including the trailing path separator, except the filename.
+ *  - "/foo/bar/baz.txt" --> "/foo/bar/"
+ *
+ *  @return The directory part of the path (without filename)
+ */
 static inline std::string GetDirectory(
-      const std::string& path,
+      std::string path, ///< [in] Full path
 #ifdef _WIN32
       char delimiter = '\\'
 #else
       char delimiter = '/'
 #endif
             ) {
-   //
-   // Returns everything, including the trailing path separator, except the filename
-   // part of the path.
-   //
-   // "/foo/bar/baz.txt" --> "/foo/bar/"
    return path.substr(0, path.find_last_of(delimiter) + 1);
 }
 
+/******************************************************************************/
+/** Gets only the filename part of the path.
+ *  - "/foo/bar/baz.txt" --> "baz.txt"
+ *
+ *  @return The filename including the extension
+ */
 static inline std::string GetFilename(
-      std::string path,
+      std::string path, ///< [in] Full path
 #ifdef _WIN32
       char delimiter = '\\'
 #else
       char delimiter = '/'
 #endif
             ) {
-   //
-   // Returns only the filename part of the path.
-   //
-   // "/foo/bar/baz.txt" --> "baz.txt"
    return path.substr(path.find_last_of(delimiter) + 1);
 }
 
+/******************************************************************************/
+/** Gets the extension of a path. The period is considered part of the
+ *  extension.
+ *  - "/foo/bar/baz.txt" --> ".txt"
+ *  - "/foo/bar/baz" --> ""
+ *
+ *  @return The extension
+ */
 static inline std::string GetFileExtension(
-      std::string path,
+      std::string path, ///< [in] Full path
 #ifdef _WIN32
       char delimiter = '\\'
 #else
       char delimiter = '/'
 #endif
             ) {
-   //
-   // Returns the file's extension, if any. The period is considered part
-   // of the extension.
-   //
-   // "/foo/bar/baz.txt" --> ".txt"
-   // "/foo/bar/baz" --> ""
    std::string filename = GetFilename(path, delimiter);
    std::string::size_type n = filename.find_last_of('.');
-   if (n != std::string::npos)
-      return filename.substr(n);
-   return std::string();
+
+   // if n == npos, it was not found. Return ""
+   if (n == std::string::npos) {
+      return "";
+   }
+
+   return filename.substr(n);
 }
 
+/******************************************************************************/
+/** Changes the extension of a path. The period is considered part of the
+ *  extension.
+ *  - "/foo/bar/baz.txt", ".dat" --> "/foo/bar/baz.dat"
+ *  - "/foo/bar/baz.txt", "" --> "/foo/bar/baz"A
+ *  - "/foo/bar/baz", ".txt" --> "/foo/bar/baz.txt"
+ *
+ *  @return The path with the new extension
+ */
 static inline std::string ChangeFileExtension(
-      std::string path,
-      std::string ext,
+      std::string path, ///< [in] Full path
+      std::string ext,  ///< [in] Extension to replace
 #ifdef _WIN32
       char delimiter = '\\'
 #else
       char delimiter = '/'
 #endif
             ) {
-   //
-   // Modifies the filename's extension. The period is considered part
-   // of the extension.
-   //
-   // "/foo/bar/baz.txt", ".dat" --> "/foo/bar/baz.dat"
-   // "/foo/bar/baz.txt", "" --> "/foo/bar/baz"
-   // "/foo/bar/baz", ".txt" --> "/foo/bar/baz.txt"
-   //
    std::string filename = GetFilename(path, delimiter);
    return GetDirectory(path, delimiter)
          + filename.substr(0, filename.find_last_of('.'))
