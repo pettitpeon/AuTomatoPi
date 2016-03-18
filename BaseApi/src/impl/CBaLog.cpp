@@ -4,9 +4,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
-#include <fstream> // std::ofstream
 #include <map>
-#include <vector>
 #include <iostream>
 #include <ctime>
 
@@ -107,9 +105,8 @@ bool CBaLog::exit() {
 }
 
 //
-// FIXME: Add a priority filter
 CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prioFilt,
-      bool toConsole, int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
+      EBaLogOut out, int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
       uint16_t fileCnt, int32_t fileSizeB, bool fromCfg)  {
 
    if (name.empty() || !init()) {
@@ -129,7 +126,7 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
    }
 
    // //////////////// Create //////////////
-   CBaLog *p = new CBaLog(name, path, prioFilt, toConsole, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
+   CBaLog *p = new CBaLog(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
          fileSizeB);
    if (!p) {
       // todo Log error
@@ -151,11 +148,11 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
 
 //
 CBaLog* CBaLog::Create(std::string name, std::string path, EBaLogPrio  prioFilt,
-      bool toConsole, uint32_t maxFileSizeB, uint16_t maxNoFiles,
+      EBaLogOut out, uint32_t maxFileSizeB, uint16_t maxNoFiles,
       uint16_t maxBufLength) {
    std::lock_guard<std::mutex> lck(sMtx);
 
-   return commonCreate(name, path, prioFilt, toConsole, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
+   return commonCreate(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
 }
 
 //
@@ -170,7 +167,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
    std::string name = pIni->GetString(TAG ":mName", "");
    std::string path = pIni->GetString(TAG ":mPath", "");
    EBaLogPrio prioFilt = (EBaLogPrio) pIni->GetInt(TAG ":mPrioFilt", eBaLogPrio_UpsCrash);
-   bool toConsole = pIni->GetBool(TAG ":mToConsole", true);
+   EBaLogOut out = (EBaLogOut) pIni->GetInt(TAG ":mOut", eBaLogOut_LogAndConsole);
    uint32_t maxFileSizeB = (uint32_t) pIni->GetInt(TAG ":mMaxFileSizeB", -1);
    int32_t  maxNoFiles = pIni->GetInt(TAG ":mMaxNoFiles", -1);
    uint32_t maxBufLength = (uint32_t) pIni->GetInt(TAG ":mMaxBufLength", -1);
@@ -186,12 +183,12 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
 
    std::lock_guard<std::mutex> lck(sMtx);
 
-   return commonCreate(name, path, prioFilt, toConsole, maxFileSizeB, maxNoFiles, maxBufLength,
+   return commonCreate(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength,
          fileCnt, fileSizeB, true);
 }
 
 //
-bool CBaLog::Delete(CBaLog *pHdl, bool saveCfg) {
+bool CBaLog::Destroy(IBaLog *pHdl, bool saveCfg) {
    std::lock_guard<std::mutex> lck(sMtx);
 
    CBaLog *p = dynamic_cast<CBaLog*>(pHdl);
@@ -251,7 +248,9 @@ bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...)
    std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
-   return logV(prio, tag, fmt, arg);
+   bool ret = logV(prio, tag, fmt, arg);
+   va_end(arg);
+   return ret;
 }
 
 //
@@ -259,7 +258,9 @@ bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
    std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
-   return logV(eBaLogPrio_Trace, tag, fmt, arg);
+   bool ret = logV(eBaLogPrio_Trace, tag, fmt, arg);
+   va_end(arg);
+   return ret;
 }
 
 //
@@ -267,7 +268,9 @@ bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
    std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
-   return logV(eBaLogPrio_Warning, tag, fmt, arg);
+   bool ret = logV(eBaLogPrio_Warning, tag, fmt, arg);
+   va_end(arg);
+   return ret;
 }
 
 //
@@ -275,7 +278,9 @@ bool inline CBaLog::ErrorF(const char* tag, const char* fmt, ...) {
    std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
-   return logV(eBaLogPrio_Error, tag, fmt, arg);
+   bool ret = logV(eBaLogPrio_Error, tag, fmt, arg);
+   va_end(arg);
+   return ret;
 }
 
 //
@@ -316,12 +321,10 @@ inline void CBaLog::flush2Disk() {
          remove(mTmpPath.c_str());
 #endif
          if (rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
-            errno;
-            std::cout << errno << std::endl;
+//            std::cout << errno << std::endl;
             // todo: error
          }
 
-         // todo: check open error!
          mLog.open(mFullPath, std::ios_base::binary | std::ios_base::out);
          if (mLog.fail()) {
             // todo: error
@@ -353,7 +356,8 @@ bool CBaLog::saveCfg() {
    std::string s = std::to_string(mPrioFilt);
    pIni->Set(TAG ":mPrioFilt", s.c_str());
 
-   pIni->Set(TAG ":mToConsole", mToConsole ? "T" : "F");
+   s = std::to_string(mOut);
+   pIni->Set(TAG ":mOut", s.c_str());
 
 
    s = std::to_string(mMaxFileSizeB);
@@ -406,6 +410,12 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
    // Get the prio
    prio = MINMAX(prio, eBaLogPrio_Trace, eBaLogPrio_UpsCrash);
 
+
+   // Priority filter. Only log things equal or higher prio than the filter
+   if (prio < mPrioFilt) {
+      return true;
+   }
+
    // Get the time structure to generate time stamp
    auto nowT = CHRONOHRC::now();
    std::time_t tt = CHRONOHRC::to_time_t(nowT);
@@ -429,7 +439,7 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
 
 
    // ////////////////// Write to buffer if it is not full /////////////////////
-   if (!mMaxBufLength || mBuf.size() < mMaxBufLength) {
+   if ((!mMaxBufLength || mBuf.size() < mMaxBufLength) && (mOut & eBaLogOut_Log)) {
       mBuf.push_back(entry);
    } else {
       // todo: else? log error?
@@ -438,8 +448,11 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
    // //////////////////////////////////////////////////////////////////////////
 
 
-   // TODO: Make this printing optional!
-   std::cout << entry << std::endl;
+   // Write to console if desired
+   if (mOut & eBaLogOut_Console) {
+      std::cout << entry << std::endl;
+   }
+
    return true;
 }
 
@@ -451,11 +464,9 @@ bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
 
    uint16_t size = snprintf(0, 0, fmt, arg);
 
-   // todo: convert me to to avoid over construction
    // WHAT ABOUT REENTRANCY?
    char msg[size + 1];
    vsnprintf(msg, size, fmt, arg);
-   va_end(arg);
    return log(prio, tag, msg);
 }
 
