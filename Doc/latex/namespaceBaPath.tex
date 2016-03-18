@@ -1,0 +1,138 @@
+\hypertarget{namespaceBaPath}{}\section{Ba\+Path Namespace Reference}
+\label{namespaceBaPath}\index{Ba\+Path@{Ba\+Path}}
+
+
+Namespace to wrap all path functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::string \hyperlink{namespaceBaPath_aee6b101395e5f32a76b304aa765de13c}{Get\+Directory} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em Gets everything, including the trailing path separator, except the filename. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{namespaceBaPath_a41d87786f4a43d64094624187ac90dca}{Get\+Filename} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em Gets only the filename part of the path. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}{Get\+File\+Extension} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em Gets the extension of a path. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{namespaceBaPath_a70f965f0c97d211e1f91dc2f16e05195}{Change\+File\+Extension} (std\+::string path, std\+::string ext, char delimiter= \textquotesingle{}/\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em Changes the extension of a path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Namespace to wrap all path functions. 
+
+\subsection{Function Documentation}
+\index{Ba\+Path@{Ba\+Path}!Get\+Directory@{Get\+Directory}}
+\index{Get\+Directory@{Get\+Directory}!Ba\+Path@{Ba\+Path}}
+\subsubsection[{\texorpdfstring{Get\+Directory(std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})}{GetDirectory(std::string path, char delimiter= '/')}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Path\+::\+Get\+Directory (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{path, }
+\item[{char}]{delimiter = {\ttfamily \textquotesingle{}/\textquotesingle{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaPath_aee6b101395e5f32a76b304aa765de13c}{}\label{namespaceBaPath_aee6b101395e5f32a76b304aa765de13c}
+
+
+Gets everything, including the trailing path separator, except the filename. 
+
+
+\begin{DoxyItemize}
+\item \char`\"{}/foo/bar/baz.\+txt\char`\"{} --$>$ \char`\"{}/foo/bar/\char`\"{}
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+The directory part of the path (without filename) 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em path} & Full path \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Change\+File\+Extension().
+
+\index{Ba\+Path@{Ba\+Path}!Get\+Filename@{Get\+Filename}}
+\index{Get\+Filename@{Get\+Filename}!Ba\+Path@{Ba\+Path}}
+\subsubsection[{\texorpdfstring{Get\+Filename(std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})}{GetFilename(std::string path, char delimiter= '/')}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Path\+::\+Get\+Filename (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{path, }
+\item[{char}]{delimiter = {\ttfamily \textquotesingle{}/\textquotesingle{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaPath_a41d87786f4a43d64094624187ac90dca}{}\label{namespaceBaPath_a41d87786f4a43d64094624187ac90dca}
+
+
+Gets only the filename part of the path. 
+
+
+\begin{DoxyItemize}
+\item \char`\"{}/foo/bar/baz.\+txt\char`\"{} --$>$ \char`\"{}baz.\+txt\char`\"{}
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+The filename including the extension 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em path} & Full path \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Change\+File\+Extension(), and Get\+File\+Extension().
+
+\index{Ba\+Path@{Ba\+Path}!Get\+File\+Extension@{Get\+File\+Extension}}
+\index{Get\+File\+Extension@{Get\+File\+Extension}!Ba\+Path@{Ba\+Path}}
+\subsubsection[{\texorpdfstring{Get\+File\+Extension(std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})}{GetFileExtension(std::string path, char delimiter= '/')}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Path\+::\+Get\+File\+Extension (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{path, }
+\item[{char}]{delimiter = {\ttfamily \textquotesingle{}/\textquotesingle{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}{}\label{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}
+
+
+Gets the extension of a path. 
+
+The period is considered part of the extension.
+\begin{DoxyItemize}
+\item \char`\"{}/foo/bar/baz.\+txt\char`\"{} --$>$ \char`\"{}.\+txt\char`\"{}
+\item \char`\"{}/foo/bar/baz\char`\"{} --$>$ \char`\"{}\char`\"{}
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+The extension 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em path} & Full path \\
+\hline
+\end{DoxyParams}
+\index{Ba\+Path@{Ba\+Path}!Change\+File\+Extension@{Change\+File\+Extension}}
+\index{Change\+File\+Extension@{Change\+File\+Extension}!Ba\+Path@{Ba\+Path}}
+\subsubsection[{\texorpdfstring{Change\+File\+Extension(std\+::string path, std\+::string ext, char delimiter= \textquotesingle{}/\textquotesingle{})}{ChangeFileExtension(std::string path, std::string ext, char delimiter= '/')}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Path\+::\+Change\+File\+Extension (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{path, }
+\item[{std\+::string}]{ext, }
+\item[{char}]{delimiter = {\ttfamily \textquotesingle{}/\textquotesingle{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaPath_a70f965f0c97d211e1f91dc2f16e05195}{}\label{namespaceBaPath_a70f965f0c97d211e1f91dc2f16e05195}
+
+
+Changes the extension of a path. 
+
+The period is considered part of the extension.
+\begin{DoxyItemize}
+\item \char`\"{}/foo/bar/baz.\+txt\char`\"{}, \char`\"{}.\+dat\char`\"{} --$>$ \char`\"{}/foo/bar/baz.\+dat\char`\"{}
+\item \char`\"{}/foo/bar/baz.\+txt\char`\"{}, \char`\"{}\char`\"{} --$>$ \char`\"{}/foo/bar/baz\char`\"{}A
+\item \char`\"{}/foo/bar/baz\char`\"{}, \char`\"{}.\+txt\char`\"{} --$>$ \char`\"{}/foo/bar/baz.\+txt\char`\"{}
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+The path with the new extension 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em path} & Full path \\
+\hline
+\mbox{\tt in}  & {\em ext} & Extension to replace \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,233 @@
+\hypertarget{classIBaLog}{}\section{I\+Ba\+Log Class Reference}
+\label{classIBaLog}\index{I\+Ba\+Log@{I\+Ba\+Log}}
+
+
+Logger C++ interface.  
+
+
+
+
+{\ttfamily \#include $<$Ba\+Log.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{Indent}{\bf Logging functions}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classIBaLog_aa5af90c31d02caaf2ce598eb71f774ad}{Log} (\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$msg)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaLog_a3daf158cda6813367b7324ef5171291b}{Trace} (const char $\ast$tag, const char $\ast$msg)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaLog_a47861c723ea82ba833d71a698a972bd0}{Warning} (const char $\ast$tag, const char $\ast$msg)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaLog_a58b60a1b38183c0eea84677cb0ab5853}{Error} (const char $\ast$tag, const char $\ast$msg)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Logging functions with format}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classIBaLog_acdd5c6fa6e76dc3b6611157030e3f70e}{LogF} (\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaLog_ae6823118c084f2fe214b71ad41bad34f}{TraceF} (const char $\ast$tag, const char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaLog_a87c8b30251a2bf6438b75af579782fc9}{WarningF} (const char $\ast$tag, const char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaLog_ac137594e06ef9fd849766a7a5b5647c2}{ErrorF} (const char $\ast$tag, const char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Logger C++ interface. 
+
+\subsection{Member Function Documentation}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!Log@{Log}}
+\index{Log@{Log}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Log(\+E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$msg)=0}{Log(EBaLogPrio prio, const char *tag, const char *msg)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+Log (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+Ba\+Log\+Prio}}]{prio, }
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_aa5af90c31d02caaf2ce598eb71f774ad}{}\label{classIBaLog_aa5af90c31d02caaf2ce598eb71f774ad}
+
+
+Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
+
+The {\ttfamily \hyperlink{classIBaLog_a3daf158cda6813367b7324ef5171291b}{Trace()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prio} & Message priority \\
+\hline
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em msg} & Message to log \\
+\hline
+\end{DoxyParams}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!Trace@{Trace}}
+\index{Trace@{Trace}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Trace(const char $\ast$tag, const char $\ast$msg)=0}{Trace(const char *tag, const char *msg)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+Trace (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_a3daf158cda6813367b7324ef5171291b}{}\label{classIBaLog_a3daf158cda6813367b7324ef5171291b}
+
+
+Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
+
+The {\ttfamily \hyperlink{classIBaLog_a3daf158cda6813367b7324ef5171291b}{Trace()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em msg} & Message to log \\
+\hline
+\end{DoxyParams}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!Warning@{Warning}}
+\index{Warning@{Warning}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Warning(const char $\ast$tag, const char $\ast$msg)=0}{Warning(const char *tag, const char *msg)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+Warning (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_a47861c723ea82ba833d71a698a972bd0}{}\label{classIBaLog_a47861c723ea82ba833d71a698a972bd0}
+
+
+Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
+
+The {\ttfamily \hyperlink{classIBaLog_a3daf158cda6813367b7324ef5171291b}{Trace()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em msg} & Message to log \\
+\hline
+\end{DoxyParams}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!Error@{Error}}
+\index{Error@{Error}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Error(const char $\ast$tag, const char $\ast$msg)=0}{Error(const char *tag, const char *msg)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+Error (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_a58b60a1b38183c0eea84677cb0ab5853}{}\label{classIBaLog_a58b60a1b38183c0eea84677cb0ab5853}
+
+
+Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
+
+The {\ttfamily \hyperlink{classIBaLog_a3daf158cda6813367b7324ef5171291b}{Trace()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em msg} & Message to log \\
+\hline
+\end{DoxyParams}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!LogF@{LogF}}
+\index{LogF@{LogF}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Log\+F(\+E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$fmt,...)=0}{LogF(EBaLogPrio prio, const char *tag, const char *fmt,...)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+LogF (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+Ba\+Log\+Prio}}]{prio, }
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_acdd5c6fa6e76dc3b6611157030e3f70e}{}\label{classIBaLog_acdd5c6fa6e76dc3b6611157030e3f70e}
+
+
+Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
+
+These functions have a limit of 65534 characters per message. The {\ttfamily \hyperlink{classIBaLog_ae6823118c084f2fe214b71ad41bad34f}{Trace\+F()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prio} & Message priority \\
+\hline
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em fmt} & Message to log \\
+\hline
+\end{DoxyParams}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!TraceF@{TraceF}}
+\index{TraceF@{TraceF}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Trace\+F(const char $\ast$tag, const char $\ast$fmt,...)=0}{TraceF(const char *tag, const char *fmt,...)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+TraceF (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_ae6823118c084f2fe214b71ad41bad34f}{}\label{classIBaLog_ae6823118c084f2fe214b71ad41bad34f}
+
+
+Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
+
+These functions have a limit of 65534 characters per message. The {\ttfamily \hyperlink{classIBaLog_ae6823118c084f2fe214b71ad41bad34f}{Trace\+F()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em fmt} & Message to log \\
+\hline
+\end{DoxyParams}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!WarningF@{WarningF}}
+\index{WarningF@{WarningF}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Warning\+F(const char $\ast$tag, const char $\ast$fmt,...)=0}{WarningF(const char *tag, const char *fmt,...)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+WarningF (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_a87c8b30251a2bf6438b75af579782fc9}{}\label{classIBaLog_a87c8b30251a2bf6438b75af579782fc9}
+
+
+Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
+
+These functions have a limit of 65534 characters per message. The {\ttfamily \hyperlink{classIBaLog_ae6823118c084f2fe214b71ad41bad34f}{Trace\+F()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em fmt} & Message to log \\
+\hline
+\end{DoxyParams}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!ErrorF@{ErrorF}}
+\index{ErrorF@{ErrorF}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Error\+F(const char $\ast$tag, const char $\ast$fmt,...)=0}{ErrorF(const char *tag, const char *fmt,...)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+ErrorF (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{tag, }
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_ac137594e06ef9fd849766a7a5b5647c2}{}\label{classIBaLog_ac137594e06ef9fd849766a7a5b5647c2}
+
+
+Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
+
+These functions have a limit of 65534 characters per message. The {\ttfamily \hyperlink{classIBaLog_ae6823118c084f2fe214b71ad41bad34f}{Trace\+F()}} and rest functions have an implied priority \begin{DoxyReturn}{Returns}
+true if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
+\hline
+\mbox{\tt in}  & {\em fmt} & Message to log \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaLog_8h}{Ba\+Log.\+h}\end{DoxyCompactItemize}

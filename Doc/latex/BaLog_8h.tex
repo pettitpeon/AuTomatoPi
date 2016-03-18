@@ -5,8 +5,154 @@
 ...  
 
 
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classIBaLog}{I\+Ba\+Log}
+\begin{DoxyCompactList}\small\item\em Logger C++ interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} \hyperlink{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}{E\+Ba\+Log\+Prio}\hypertarget{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}{}\label{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}
+
+\begin{DoxyCompactList}\small\item\em Message priority or severeness. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{E\+Ba\+Log\+Out} \hyperlink{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}{E\+Ba\+Log\+Out}\hypertarget{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}{}\label{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}
+
+\begin{DoxyCompactList}\small\item\em Logger output enumeration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classIBaLog}{I\+Ba\+Log} $\ast$ \hyperlink{BaLog_8h_aaa3c8543ac0ef1d9574a592f3652f53c}{C\+Ba\+Log\+Create\+Def} (const char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Create factory for a logger with defaults. \end{DoxyCompactList}\item 
+\hyperlink{classIBaLog}{I\+Ba\+Log} $\ast$ \hyperlink{BaLog_8h_ab755d1e05016e3434a94736cdea76958}{C\+Ba\+Log\+Create} (const char $\ast$name, const char $\ast$path, \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio\+Filt, \hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{E\+Ba\+Log\+Out} out, uint32\+\_\+t max\+File\+SizeB, uint16\+\_\+t max\+No\+Files, uint16\+\_\+t max\+Buf\+Length)
+\begin{DoxyCompactList}\small\item\em Create factory for a logger. \end{DoxyCompactList}\item 
+bool \hyperlink{BaLog_8h_a30e2d08098d0fb6c64156cccfdd3a4f2}{C\+Ba\+Log\+Destroy} (\hyperlink{classIBaLog}{I\+Ba\+Log} $\ast$p\+Hdl, bool save\+Cfg)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources of logger. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 ... 
 
+
+
+\subsection{Enumeration Type Documentation}
+\index{Ba\+Log.\+h@{Ba\+Log.\+h}!E\+Ba\+Log\+Prio@{E\+Ba\+Log\+Prio}}
+\index{E\+Ba\+Log\+Prio@{E\+Ba\+Log\+Prio}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{\texorpdfstring{E\+Ba\+Log\+Prio}{EBaLogPrio}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+Ba\+Log\+Prio}}\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}
+
+
+Message priority or severeness. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{e\+Ba\+Log\+Prio\+\_\+\+Trace@{e\+Ba\+Log\+Prio\+\_\+\+Trace}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Trace@{e\+Ba\+Log\+Prio\+\_\+\+Trace}}\item[{\em 
+e\+Ba\+Log\+Prio\+\_\+\+Trace\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02}
+}]0 \index{e\+Ba\+Log\+Prio\+\_\+\+Warning@{e\+Ba\+Log\+Prio\+\_\+\+Warning}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Warning@{e\+Ba\+Log\+Prio\+\_\+\+Warning}}\item[{\em 
+e\+Ba\+Log\+Prio\+\_\+\+Warning\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996}
+}]1 \index{e\+Ba\+Log\+Prio\+\_\+\+Error@{e\+Ba\+Log\+Prio\+\_\+\+Error}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Error@{e\+Ba\+Log\+Prio\+\_\+\+Error}}\item[{\em 
+e\+Ba\+Log\+Prio\+\_\+\+Error\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f}
+}]2 \index{e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash@{e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash@{e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash}}\item[{\em 
+e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f}
+}]3 \end{description}
+\end{Desc}
+\index{Ba\+Log.\+h@{Ba\+Log.\+h}!E\+Ba\+Log\+Out@{E\+Ba\+Log\+Out}}
+\index{E\+Ba\+Log\+Out@{E\+Ba\+Log\+Out}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{\texorpdfstring{E\+Ba\+Log\+Out}{EBaLogOut}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+Ba\+Log\+Out}}\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}
+
+
+Logger output enumeration. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{e\+Ba\+Log\+Out\+\_\+\+Log@{e\+Ba\+Log\+Out\+\_\+\+Log}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Out\+\_\+\+Log@{e\+Ba\+Log\+Out\+\_\+\+Log}}\item[{\em 
+e\+Ba\+Log\+Out\+\_\+\+Log\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140}
+}]1 \index{e\+Ba\+Log\+Out\+\_\+\+Console@{e\+Ba\+Log\+Out\+\_\+\+Console}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Out\+\_\+\+Console@{e\+Ba\+Log\+Out\+\_\+\+Console}}\item[{\em 
+e\+Ba\+Log\+Out\+\_\+\+Console\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76}
+}]2 \index{e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console@{e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console@{e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console}}\item[{\em 
+e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7}
+}]3 \end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{Ba\+Log.\+h@{Ba\+Log.\+h}!C\+Ba\+Log\+Create\+Def@{C\+Ba\+Log\+Create\+Def}}
+\index{C\+Ba\+Log\+Create\+Def@{C\+Ba\+Log\+Create\+Def}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{\texorpdfstring{C\+Ba\+Log\+Create\+Def(const char $\ast$name)}{CBaLogCreateDef(const char *name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Ba\+Log}$\ast$ C\+Ba\+Log\+Create\+Def (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{name}
+\end{DoxyParamCaption}
+)}\hypertarget{BaLog_8h_aaa3c8543ac0ef1d9574a592f3652f53c}{}\label{BaLog_8h_aaa3c8543ac0ef1d9574a592f3652f53c}
+
+
+Create factory for a logger with defaults. 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Name of the logger \\
+\hline
+\end{DoxyParams}
+\index{Ba\+Log.\+h@{Ba\+Log.\+h}!C\+Ba\+Log\+Create@{C\+Ba\+Log\+Create}}
+\index{C\+Ba\+Log\+Create@{C\+Ba\+Log\+Create}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{\texorpdfstring{C\+Ba\+Log\+Create(const char $\ast$name, const char $\ast$path, E\+Ba\+Log\+Prio prio\+Filt, E\+Ba\+Log\+Out out, uint32\+\_\+t max\+File\+Size\+B, uint16\+\_\+t max\+No\+Files, uint16\+\_\+t max\+Buf\+Length)}{CBaLogCreate(const char *name, const char *path, EBaLogPrio prioFilt, EBaLogOut out, uint32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Ba\+Log}$\ast$ C\+Ba\+Log\+Create (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{name, }
+\item[{const char $\ast$}]{path, }
+\item[{{\bf E\+Ba\+Log\+Prio}}]{prio\+Filt, }
+\item[{{\bf E\+Ba\+Log\+Out}}]{out, }
+\item[{uint32\+\_\+t}]{max\+File\+SizeB, }
+\item[{uint16\+\_\+t}]{max\+No\+Files, }
+\item[{uint16\+\_\+t}]{max\+Buf\+Length}
+\end{DoxyParamCaption}
+)}\hypertarget{BaLog_8h_ab755d1e05016e3434a94736cdea76958}{}\label{BaLog_8h_ab755d1e05016e3434a94736cdea76958}
+
+
+Create factory for a logger. 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Name of the logger \\
+\hline
+\mbox{\tt in}  & {\em path} & Directory path for saving the logger \\
+\hline
+\mbox{\tt in}  & {\em prio\+Filt} & Priority filter \\
+\hline
+\mbox{\tt in}  & {\em out} & Output specifier \\
+\hline
+\mbox{\tt in}  & {\em max\+File\+SizeB} & Maximum file size in bytes \\
+\hline
+\mbox{\tt in}  & {\em max\+No\+Files} & Maximum number of files \\
+\hline
+\mbox{\tt in}  & {\em max\+Buf\+Length} & Maximum number of messages in the buffer \\
+\hline
+\end{DoxyParams}
+\index{Ba\+Log.\+h@{Ba\+Log.\+h}!C\+Ba\+Log\+Destroy@{C\+Ba\+Log\+Destroy}}
+\index{C\+Ba\+Log\+Destroy@{C\+Ba\+Log\+Destroy}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{\texorpdfstring{C\+Ba\+Log\+Destroy(\+I\+Ba\+Log $\ast$p\+Hdl, bool save\+Cfg)}{CBaLogDestroy(IBaLog *pHdl, bool saveCfg)}}]{\setlength{\rightskip}{0pt plus 5cm}bool C\+Ba\+Log\+Destroy (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Ba\+Log} $\ast$}]{p\+Hdl, }
+\item[{bool}]{save\+Cfg}
+\end{DoxyParamCaption}
+)}\hypertarget{BaLog_8h_a30e2d08098d0fb6c64156cccfdd3a4f2}{}\label{BaLog_8h_a30e2d08098d0fb6c64156cccfdd3a4f2}
+
+
+Destroy and release resources of logger. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Hdl} & Ba\+Log handle to destroy \\
+\hline
+\mbox{\tt in}  & {\em save\+Cfg} & Flag to specify if the state should be saved in a cfg file \\
+\hline
+\end{DoxyParams}

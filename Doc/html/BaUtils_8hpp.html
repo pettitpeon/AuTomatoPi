@@ -29,6 +29,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -45,29 +46,117 @@
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">BaUtils.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>General useful functions.  
+<p>General useful functions<br />
+.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;istream&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaUtils.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaUtils_8hpp__incl.svg" width="155" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaUtils_8hpp__incl.svg" width="155" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="BaUtils_8hpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceBaPath"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaPath.html">BaPath</a></td></tr>
+<tr class="memdesc:namespaceBaPath"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace to wrap all path functions. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aee6b101395e5f32a76b304aa765de13c"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaPath.html#aee6b101395e5f32a76b304aa765de13c">BaPath::GetDirectory</a> (std::string path, char delimiter= '/')</td></tr>
+<tr class="memdesc:aee6b101395e5f32a76b304aa765de13c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets everything, including the trailing path separator, except the filename.  <a href="namespaceBaPath.html#aee6b101395e5f32a76b304aa765de13c">More...</a><br /></td></tr>
+<tr class="separator:aee6b101395e5f32a76b304aa765de13c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41d87786f4a43d64094624187ac90dca"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaPath.html#a41d87786f4a43d64094624187ac90dca">BaPath::GetFilename</a> (std::string path, char delimiter= '/')</td></tr>
+<tr class="memdesc:a41d87786f4a43d64094624187ac90dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets only the filename part of the path.  <a href="namespaceBaPath.html#a41d87786f4a43d64094624187ac90dca">More...</a><br /></td></tr>
+<tr class="separator:a41d87786f4a43d64094624187ac90dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42b3acac9c048e45a531c9dc4be319f1"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaPath.html#a42b3acac9c048e45a531c9dc4be319f1">BaPath::GetFileExtension</a> (std::string path, char delimiter= '/')</td></tr>
+<tr class="memdesc:a42b3acac9c048e45a531c9dc4be319f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the extension of a path.  <a href="namespaceBaPath.html#a42b3acac9c048e45a531c9dc4be319f1">More...</a><br /></td></tr>
+<tr class="separator:a42b3acac9c048e45a531c9dc4be319f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70f965f0c97d211e1f91dc2f16e05195"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195">BaPath::ChangeFileExtension</a> (std::string path, std::string ext, char delimiter= '/')</td></tr>
+<tr class="memdesc:a70f965f0c97d211e1f91dc2f16e05195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the extension of a path.  <a href="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195">More...</a><br /></td></tr>
+<tr class="separator:a70f965f0c97d211e1f91dc2f16e05195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25c40b6a558aa8194365db78934a577e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a25c40b6a558aa8194365db78934a577e"><td class="memTemplItemLeft" align="right" valign="top">static T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="BaUtils_8hpp.html#a25c40b6a558aa8194365db78934a577e">BaToNumber</a> (std::string s, T def, bool *pError=0)</td></tr>
+<tr class="memdesc:a25c40b6a558aa8194365db78934a577e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts string to number.  <a href="#a25c40b6a558aa8194365db78934a577e">More...</a><br /></td></tr>
+<tr class="separator:a25c40b6a558aa8194365db78934a577e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>General useful functions. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>General useful functions<br />
+. </p>
+<ul>
+<li>Path functions</li>
+<li>Number parsing </li>
+</ul>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a25c40b6a558aa8194365db78934a577e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T BaToNumber </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>def</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>pError</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts string to number. </p>
+<dl class="section return"><dt>Returns</dt><dd>Parsed number on success, otherwise def </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">def</td><td>default to return if conversion fails </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pError</td><td>Optional error flag </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 15 2016 10:16:41 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 18 2016 16:54:55 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

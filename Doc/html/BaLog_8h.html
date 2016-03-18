@@ -29,6 +29,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -45,6 +46,11 @@
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">BaLog.h File Reference</div>  </div>
 </div><!--header-->
@@ -54,12 +60,232 @@
 <a href="#details">More...</a></p>
 
 <p><a href="BaLog_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIBaLog.html">IBaLog</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger C++ interface.  <a href="classIBaLog.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a09a786ca91602cbc857fc99cf5cab56d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09a786ca91602cbc857fc99cf5cab56d"></a>
+typedef enum <a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a09a786ca91602cbc857fc99cf5cab56d">EBaLogPrio</a></td></tr>
+<tr class="memdesc:a09a786ca91602cbc857fc99cf5cab56d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message priority or severeness. <br /></td></tr>
+<tr class="separator:a09a786ca91602cbc857fc99cf5cab56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ababde10f818658c9f0b53104df8b4c14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ababde10f818658c9f0b53104df8b4c14"></a>
+typedef enum <a class="el" href="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4">EBaLogOut</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#ababde10f818658c9f0b53104df8b4c14">EBaLogOut</a></td></tr>
+<tr class="memdesc:ababde10f818658c9f0b53104df8b4c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger output enumeration. <br /></td></tr>
+<tr class="separator:ababde10f818658c9f0b53104df8b4c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aaa3c8543ac0ef1d9574a592f3652f53c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classIBaLog.html">IBaLog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#aaa3c8543ac0ef1d9574a592f3652f53c">CBaLogCreateDef</a> (const char *name)</td></tr>
+<tr class="memdesc:aaa3c8543ac0ef1d9574a592f3652f53c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory for a logger with defaults.  <a href="#aaa3c8543ac0ef1d9574a592f3652f53c">More...</a><br /></td></tr>
+<tr class="separator:aaa3c8543ac0ef1d9574a592f3652f53c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab755d1e05016e3434a94736cdea76958"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classIBaLog.html">IBaLog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#ab755d1e05016e3434a94736cdea76958">CBaLogCreate</a> (const char *name, const char *path, <a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a> prioFilt, <a class="el" href="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4">EBaLogOut</a> out, uint32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength)</td></tr>
+<tr class="memdesc:ab755d1e05016e3434a94736cdea76958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory for a logger.  <a href="#ab755d1e05016e3434a94736cdea76958">More...</a><br /></td></tr>
+<tr class="separator:ab755d1e05016e3434a94736cdea76958"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30e2d08098d0fb6c64156cccfdd3a4f2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a30e2d08098d0fb6c64156cccfdd3a4f2">CBaLogDestroy</a> (<a class="el" href="classIBaLog.html">IBaLog</a> *pHdl, bool saveCfg)</td></tr>
+<tr class="memdesc:a30e2d08098d0fb6c64156cccfdd3a4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy and release resources of logger.  <a href="#a30e2d08098d0fb6c64156cccfdd3a4f2">More...</a><br /></td></tr>
+<tr class="separator:a30e2d08098d0fb6c64156cccfdd3a4f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>... </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ab14f00a81932b8b62d2e8c4a2d7e3916"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Message priority or severeness. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02"></a>eBaLogPrio_Trace&#160;</td><td class="fielddoc">
+<p>0 </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996"></a>eBaLogPrio_Warning&#160;</td><td class="fielddoc">
+<p>1 </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f"></a>eBaLogPrio_Error&#160;</td><td class="fielddoc">
+<p>2 </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f"></a>eBaLogPrio_UpsCrash&#160;</td><td class="fielddoc">
+<p>3 </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="a1f5f5789212a206b457c4446abaf81c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4">EBaLogOut</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logger output enumeration. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140"></a>eBaLogOut_Log&#160;</td><td class="fielddoc">
+<p>1 </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76"></a>eBaLogOut_Console&#160;</td><td class="fielddoc">
+<p>2 </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7"></a>eBaLogOut_LogAndConsole&#160;</td><td class="fielddoc">
+<p>3 </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="aaa3c8543ac0ef1d9574a592f3652f53c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classIBaLog.html">IBaLog</a>* CBaLogCreateDef </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create factory for a logger with defaults. </p>
+<dl class="section return"><dt>Returns</dt><dd>Handle if success, otherwise, null </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the logger </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab755d1e05016e3434a94736cdea76958"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classIBaLog.html">IBaLog</a>* CBaLogCreate </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a>&#160;</td>
+          <td class="paramname"><em>prioFilt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4">EBaLogOut</a>&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>maxFileSizeB</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>maxNoFiles</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>maxBufLength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create factory for a logger. </p>
+<dl class="section return"><dt>Returns</dt><dd>Handle if success, otherwise, null </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the logger </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>Directory path for saving the logger </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prioFilt</td><td>Priority filter </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out</td><td>Output specifier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxFileSizeB</td><td>Maximum file size in bytes </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxNoFiles</td><td>Maximum number of files </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxBufLength</td><td>Maximum number of messages in the buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a30e2d08098d0fb6c64156cccfdd3a4f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CBaLogDestroy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classIBaLog.html">IBaLog</a> *&#160;</td>
+          <td class="paramname"><em>pHdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>saveCfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroy and release resources of logger. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pHdl</td><td>BaLog handle to destroy </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">saveCfg</td><td>Flag to specify if the state should be saved in a cfg file </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 15 2016 10:16:41 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 18 2016 16:54:55 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
