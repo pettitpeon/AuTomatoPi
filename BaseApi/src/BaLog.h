@@ -68,7 +68,7 @@ extern "C" {
 /** Create factory for a logger with defaults
  *  @return Handle if success, otherwise, null
  */
-TBaLogHdl * BaLogCreateDef(
+TBaLogHdl BaLogCreateDef(
       const char *name ///< [in] Name of the logger
       );
 
@@ -76,7 +76,7 @@ TBaLogHdl * BaLogCreateDef(
 /** Create factory for a logger.
  *  @return Handle if success, otherwise, null
  */
-TBaLogHdl * BaLogCreate(
+TBaLogHdl BaLogCreate(
       TBaLogOptions *pOpts ///< [in] Logger options
       );
 
@@ -85,7 +85,7 @@ TBaLogHdl * BaLogCreate(
  *  @return True if success, otherwise, false
  */
 TBaBoolRC BaLogDestroy(
-      TBaLogHdl *pHdl, ///< [in] BaLog handle to destroy
+      TBaLogHdl hdl, ///< [in] BaLog handle to destroy
       TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );
 
@@ -97,29 +97,29 @@ TBaBoolRC BaLogDestroy(
  *  @return true if success, otherwise, false
  */
 TBaBoolRC BaLogLog(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl hdl,    ///< [in] Handle
       EBaLogPrio  prio, ///< [in] Message priority
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* msg   ///< [in] Message to log
       );
 
 TBaBoolRC BaLogTrace(
-      TBaLogHdl *pHdl,  ///< [in] Handle
-      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-      const char* msg   ///< [in] Message to log
+      TBaLogHdl hdl,   ///< [in] Handle
+      const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* msg  ///< [in] Message to log
       );
 
 TBaBoolRC BaLogWarning(
-      TBaLogHdl *pHdl,  ///< [in] Handle
-      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-      const char* msg   ///< [in] Message to log
+      TBaLogHdl hdl,   ///< [in] Handle
+      const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* msg  ///< [in] Message to log
       );
 
 
 TBaBoolRC BaLogError(
-      TBaLogHdl *pHdl,  ///< [in] Handle
-      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-      const char* msg   ///< [in] Message to log
+      TBaLogHdl hdl,   ///< [in] Handle
+      const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* msg  ///< [in] Message to log
       );
 //@}
 

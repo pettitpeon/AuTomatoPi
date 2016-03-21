@@ -9,7 +9,7 @@
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-#define C_HDL_ ((IBaLog*) pHdl)
+#define C_HDL_ ((IBaLog*) hdl)
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -19,23 +19,23 @@
     C Interface
  -----------------------------------------------------------------------------*/
 //
-TBaLogHdl *BaLogCreateDef(const char *name) {
-   return (TBaLogHdl*) CBaLog::Create(name);
+TBaLogHdl BaLogCreateDef(const char *name) {
+   return CBaLog::Create(name);
 }
 
 //
-TBaLogHdl *BaLogCreate(TBaLogOptions *pOpts) {
-   return pOpts ? (TBaLogHdl*) CBaLog::Create(*pOpts) : 0;
+TBaLogHdl BaLogCreate(TBaLogOptions *pOpts) {
+   return pOpts ? CBaLog::Create(*pOpts) : 0;
 }
 
 //
-TBaBoolRC BaLogDestroy(TBaLogHdl *pHdl, TBaBool saveCfg) {
-   return CBaLog::Destroy((IBaLog*)pHdl, saveCfg) ? eBaBoolRC_Success : eBaBoolRC_Error;
+TBaBoolRC BaLogDestroy(TBaLogHdl hld, TBaBool saveCfg) {
+   return CBaLog::Destroy((IBaLog*)hld, saveCfg) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaLogLog(TBaLogHdl *pHdl, EBaLogPrio prio, const char* tag, const char* msg) {
-   if (!pHdl) {
+TBaBoolRC BaLogLog(TBaLogHdl hdl, EBaLogPrio prio, const char* tag, const char* msg) {
+   if (!hdl) {
       return eBaBoolRC_Error;
    }
 
@@ -43,8 +43,8 @@ TBaBoolRC BaLogLog(TBaLogHdl *pHdl, EBaLogPrio prio, const char* tag, const char
 }
 
 //
-TBaBoolRC BaLogTrace(TBaLogHdl *pHdl, const char* tag, const char* msg) {
-   if (!pHdl) {
+TBaBoolRC BaLogTrace(TBaLogHdl hdl, const char* tag, const char* msg) {
+   if (!hdl) {
       return eBaBoolRC_Error;
    }
 
@@ -52,8 +52,8 @@ TBaBoolRC BaLogTrace(TBaLogHdl *pHdl, const char* tag, const char* msg) {
 }
 
 //
-TBaBoolRC BaLogWarning(TBaLogHdl *pHdl, const char* tag, const char* msg) {
-   if (!pHdl) {
+TBaBoolRC BaLogWarning(TBaLogHdl hdl, const char* tag, const char* msg) {
+   if (!hdl) {
       return eBaBoolRC_Error;
    }
 
@@ -61,8 +61,8 @@ TBaBoolRC BaLogWarning(TBaLogHdl *pHdl, const char* tag, const char* msg) {
 }
 
 //
-TBaBoolRC BaLogError(TBaLogHdl *pHdl, const char* tag, const char* msg) {
-   if (!pHdl) {
+TBaBoolRC BaLogError(TBaLogHdl hdl, const char* tag, const char* msg) {
+   if (!hdl) {
       return eBaBoolRC_Error;
    }
 
@@ -70,7 +70,11 @@ TBaBoolRC BaLogError(TBaLogHdl *pHdl, const char* tag, const char* msg) {
 }
 
 //
-TBaBoolRC BaLogLogF(TBaLogHdl *pHdl, EBaLogPrio prio, const char* tag, const char* fmt, ...) {
+TBaBoolRC BaLogLogF(TBaLogHdl hdl, EBaLogPrio prio, const char* tag, const char* fmt, ...) {
+   if (!hdl) {
+      return eBaBoolRC_Error;
+   }
+
    va_list arg;
    va_start(arg, fmt);
    TBaBoolRC ret =  C_HDL_->LogF(prio, tag, fmt, arg) ? eBaBoolRC_Success : eBaBoolRC_Error;
@@ -79,7 +83,11 @@ TBaBoolRC BaLogLogF(TBaLogHdl *pHdl, EBaLogPrio prio, const char* tag, const cha
 }
 
 //
-TBaBoolRC BaLogTraceF(TBaLogHdl *pHdl, const char* tag, const char* fmt, ...) {
+TBaBoolRC BaLogTraceF(TBaLogHdl hdl, const char* tag, const char* fmt, ...) {
+   if (!hdl) {
+      return eBaBoolRC_Error;
+   }
+
    va_list arg;
    va_start(arg, fmt);
    TBaBoolRC ret =  C_HDL_->TraceF(tag, fmt, arg) ? eBaBoolRC_Success : eBaBoolRC_Error;
@@ -88,7 +96,11 @@ TBaBoolRC BaLogTraceF(TBaLogHdl *pHdl, const char* tag, const char* fmt, ...) {
 }
 
 //
-TBaBoolRC BaLogWarningF(TBaLogHdl *pHdl, const char* tag, const char* fmt, ...) {
+TBaBoolRC BaLogWarningF(TBaLogHdl hdl, const char* tag, const char* fmt, ...) {
+   if (!hdl) {
+      return eBaBoolRC_Error;
+   }
+
    va_list arg;
    va_start(arg, fmt);
    TBaBoolRC ret =  C_HDL_->WarningF(tag, fmt, arg) ? eBaBoolRC_Success : eBaBoolRC_Error;
@@ -97,7 +109,11 @@ TBaBoolRC BaLogWarningF(TBaLogHdl *pHdl, const char* tag, const char* fmt, ...) 
 }
 
 //
-TBaBoolRC BaLogErrorF(TBaLogHdl *pHdl, const char* tag, const char* fmt, ...) {
+TBaBoolRC BaLogErrorF(TBaLogHdl hdl, const char* tag, const char* fmt, ...) {
+   if (!hdl) {
+      return eBaBoolRC_Error;
+   }
+
    va_list arg;
    va_start(arg, fmt);
    TBaBoolRC ret =  C_HDL_->ErrorF(tag, fmt, arg) ? eBaBoolRC_Success : eBaBoolRC_Error;
