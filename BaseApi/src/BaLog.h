@@ -18,6 +18,7 @@
 /*------------------------------------------------------------------------------
  *  Includes
  */
+#include "BaBool.h"
 
 
 // FIXME: determine the tag size
@@ -41,6 +42,21 @@ typedef enum EBaLogOut {
    eBaLogOut_LogAndConsole = 3, ///< 3
 } EBaLogOut;
 
+/// Logger options
+typedef struct TBaLogOptions {
+   const char *name; ///< Name of the logger
+   const char *path; ///< Directory path for saving the logger
+   EBaLogPrio  prioFilt; ///< Priority filter
+   EBaLogOut   out; ///< Output specifier
+   uint32_t    maxFileSizeB; ///< Maximum file size in bytes
+   uint16_t    maxNoFiles; ///< Maximum number of files
+   uint16_t    maxBufLength; ///< Maximum number of messages in the buffer
+} TBaLogOptions;
+
+
+/// C logger handle
+typedef void* TBaLogHdl;
+
 /*------------------------------------------------------------------------------
  *  C interface
  */
@@ -48,8 +64,104 @@ typedef enum EBaLogOut {
 extern "C" {
 #endif
 
-void BaLogInit();
+/******************************************************************************/
+/** Create factory for a logger with defaults
+ *  @return Handle if success, otherwise, null
+ */
+TBaLogHdl * BaLogCreateDef(
+      const char *name ///< [in] Name of the logger
+      );
 
+/******************************************************************************/
+/** Create factory for a logger.
+ *  @return Handle if success, otherwise, null
+ */
+TBaLogHdl * BaLogCreate(
+      TBaLogOptions *pOpts ///< [in] Logger options
+      );
+
+/******************************************************************************/
+/** Destroy and release resources of logger
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaLogDestroy(
+      TBaLogHdl *pHdl, ///< [in] BaLog handle to destroy
+      TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
+      );
+
+/// @name Logging functions
+//@{
+/******************************************************************************/
+/** Logs a message into the logger and adds a @c tag and a time stamp.
+ *  The @c Trace() and rest functions have an implied priority
+ *  @return true if success, otherwise, false
+ */
+TBaBoolRC BaLogLog(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      EBaLogPrio  prio, ///< [in] Message priority
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* msg   ///< [in] Message to log
+      );
+
+TBaBoolRC BaLogTrace(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* msg   ///< [in] Message to log
+      );
+
+TBaBoolRC BaLogWarning(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* msg   ///< [in] Message to log
+      );
+
+
+TBaBoolRC BaLogError(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* msg   ///< [in] Message to log
+      );
+//@}
+
+
+/// @name Logging functions with format
+//@{
+/***************************************************************************/
+/** Logs a message into the logger like @c printf() and adds a @c tag and a
+ *  time stamp. These functions have a limit of 65534 characters per message.
+ *  The @c TraceF() and rest functions have an implied priority
+ *  @return true if success, otherwise, false
+ */
+TBaBoolRC BaLogLogF(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      EBaLogPrio  prio, ///< [in] Message priority
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* fmt,  ///< [in] Message format
+      ...               ///> [in] Format arguments
+      );
+
+TBaBoolRC BaLogTraceF(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* fmt,  ///< [in] Message format
+      ...               ///> [in] Format arguments
+      );
+
+TBaBoolRC BaLogWarningF(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* fmt,  ///< [in] Message format
+      ...               ///> [in] Format arguments
+      );
+
+
+TBaBoolRC BaLogErrorF(
+      TBaLogHdl *pHdl,  ///< [in] Handle
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* fmt,  ///< [in] Message format
+      ...               ///> [in] Format arguments
+      );
+//@}
 
 #ifdef __cplusplus
 } // extern c
@@ -102,23 +214,23 @@ public:
    virtual bool LogF(
          EBaLogPrio  prio, ///< [in] Message priority
          const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt,  ///< [in] Message to log
-         ...
+         const char* fmt,  ///< [in] Message format
+         ...               ///> [in] Format arguments
          ) = 0;
    virtual bool TraceF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt, ///< [in] Message to log
-         ...
+         const char* fmt,  ///< [in] Message format
+         ...               ///> [in] Format arguments
          ) = 0;
    virtual bool WarningF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt, ///< [in] Message to log
-         ...
+         const char* fmt,  ///< [in] Message format
+         ...               ///> [in] Format arguments
          ) = 0;
    virtual bool ErrorF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt, ///< [in] Message to log
-         ...
+         const char* fmt,  ///< [in] Message format
+         ...               ///> [in] Format arguments
          ) = 0;
    //@}
 
@@ -140,22 +252,16 @@ extern "C" IBaLog * CBaLogCreateDef(
  *  @return Handle if success, otherwise, null
  */
 extern "C" IBaLog * CBaLogCreate(
-      const char *name, ///< [in] Name of the logger
-      const char *path, ///< [in] Directory path for saving the logger
-      EBaLogPrio  prioFilt, ///< [in] Priority filter
-      EBaLogOut   out, ///< [in] Output specifier
-      uint32_t    maxFileSizeB, ///< [in] Maximum file size in bytes
-      uint16_t    maxNoFiles, ///< [in] Maximum number of files
-      uint16_t    maxBufLength ///< [in] Maximum number of messages in the buffer
+      TBaLogOptions *pOpts ///< [in] Logger options
       );
 
 /******************************************************************************/
 /** Destroy and release resources of logger
  *  @return True if success, otherwise, false
  */
-extern "C" bool CBaLogDestroy(
+extern "C" TBaBoolRC CBaLogDestroy(
       IBaLog *pHdl, ///< [in] BaLog handle to destroy
-      bool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
+      TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );
 
 #endif // __cplusplus

@@ -82,6 +82,7 @@ bool CBaLog::init() {
    struct stat info;
    if (stat(LOGDIR, &info) != 0) {
       // Create directory
+      // FIXME: Im onot portable
       if (mkdir(LOGDIR) != 0) {
          // not ok
          return false;
@@ -153,6 +154,14 @@ CBaLog* CBaLog::Create(std::string name, std::string path, EBaLogPrio  prioFilt,
    std::lock_guard<std::mutex> lck(sMtx);
 
    return commonCreate(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
+}
+
+//
+CBaLog* CBaLog::Create(TBaLogOptions &rOpts) {
+   std::lock_guard<std::mutex> lck(sMtx);
+
+   return commonCreate(rOpts.name, rOpts.path, rOpts.prioFilt, rOpts.out,
+         rOpts.maxFileSizeB, rOpts.maxNoFiles, rOpts.maxBufLength, 1, 1, 0);
 }
 
 //
@@ -245,7 +254,6 @@ bool inline CBaLog::Error(const char* tag, const char* msg){
 
 //
 bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(prio, tag, fmt, arg);
@@ -255,7 +263,6 @@ bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...)
 
 //
 bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(eBaLogPrio_Trace, tag, fmt, arg);
@@ -265,7 +272,6 @@ bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
 
 //
 bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(eBaLogPrio_Warning, tag, fmt, arg);
@@ -275,7 +281,6 @@ bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
 
 //
 bool inline CBaLog::ErrorF(const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(eBaLogPrio_Error, tag, fmt, arg);
@@ -381,6 +386,7 @@ bool CBaLog::saveCfg() {
    struct stat info;
    if (stat(CFGDIR, &info) != 0) {
       // Create directory
+      // TODO: fix non portable
       if (mkdir(CFGDIR) != 0) {
          // not ok
          return false;
@@ -464,9 +470,10 @@ bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
 
    uint16_t size = snprintf(0, 0, fmt, arg);
 
-   // WHAT ABOUT REENTRANCY?
+   // WHAT ABOUT REENTRANCY? No problema!
    char msg[size + 1];
    vsnprintf(msg, size, fmt, arg);
+   std::lock_guard<std::mutex> lck(mMtx);
    return log(prio, tag, msg);
 }
 

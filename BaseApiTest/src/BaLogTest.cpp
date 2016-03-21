@@ -90,7 +90,7 @@ void CBaLogTest::Test() {
    log3->LogF(eBaLogPrio_Trace, "tag", "msg 3.%i", 2);
 
 
-   CBaLogDestroy(iLog, false);
+   CBaLogDestroy(iLog, eBaBool_false);
    CBaLog::Destroy(log2);
    CBaLog::Destroy(log3);
 

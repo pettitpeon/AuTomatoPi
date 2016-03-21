@@ -48,6 +48,10 @@ public:
          uint16_t    maxBufLength = 0
          );
 
+   static CBaLog* Create(
+         TBaLogOptions &rOpts
+         );
+
    // Factory from config
    static CBaLog* CreateFromCfg(
          std::string cfgFile
@@ -72,6 +76,7 @@ public:
 
    // Not part of the interface
    bool saveCfg();
+   bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
 
 private:
    static CBaLog* commonCreate(
@@ -87,7 +92,7 @@ private:
 
    void flush2Disk();
    bool log(EBaLogPrio prio, const char* tag, const char* msg);
-   bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
+
 
    // Private constructor because a public factory method is used
    CBaLog(std::string name, std::string path, EBaLogPrio prioFilt, EBaLogOut out,
