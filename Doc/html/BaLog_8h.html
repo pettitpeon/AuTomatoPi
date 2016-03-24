@@ -58,11 +58,20 @@
 
 <p>...  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for BaLog.h:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaLog_8h__incl.svg" width="86" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
 <p><a href="BaLog_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTBaLogOptions.html">TBaLogOptions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger options.  <a href="structTBaLogOptions.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIBaLog.html">IBaLog</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger C++ interface.  <a href="classIBaLog.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -77,21 +86,64 @@ typedef enum <a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916
 typedef enum <a class="el" href="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4">EBaLogOut</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#ababde10f818658c9f0b53104df8b4c14">EBaLogOut</a></td></tr>
 <tr class="memdesc:ababde10f818658c9f0b53104df8b4c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger output enumeration. <br /></td></tr>
 <tr class="separator:ababde10f818658c9f0b53104df8b4c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa27a02534e598108695a1a2eb967a396"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa27a02534e598108695a1a2eb967a396"></a>
+typedef struct <a class="el" href="structTBaLogOptions.html">TBaLogOptions</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#aa27a02534e598108695a1a2eb967a396">TBaLogOptions</a></td></tr>
+<tr class="memdesc:aa27a02534e598108695a1a2eb967a396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger options. <br /></td></tr>
+<tr class="separator:aa27a02534e598108695a1a2eb967a396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc4e99ec41825c3604bc4995a45b315"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafc4e99ec41825c3604bc4995a45b315"></a>
+typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a></td></tr>
+<tr class="memdesc:aafc4e99ec41825c3604bc4995a45b315"><td class="mdescLeft">&#160;</td><td class="mdescRight">C logger handle. <br /></td></tr>
+<tr class="separator:aafc4e99ec41825c3604bc4995a45b315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:af6156879d4b92295f4c5722e45703e56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#af6156879d4b92295f4c5722e45703e56">BaLogCreateDef</a> (const char *name)</td></tr>
+<tr class="memdesc:af6156879d4b92295f4c5722e45703e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory for a logger with defaults.  <a href="#af6156879d4b92295f4c5722e45703e56">More...</a><br /></td></tr>
+<tr class="separator:af6156879d4b92295f4c5722e45703e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac78e664158e30fbaeac6c6346bf79a52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#ac78e664158e30fbaeac6c6346bf79a52">BaLogCreate</a> (<a class="el" href="structTBaLogOptions.html">TBaLogOptions</a> *pOpts)</td></tr>
+<tr class="memdesc:ac78e664158e30fbaeac6c6346bf79a52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory for a logger.  <a href="#ac78e664158e30fbaeac6c6346bf79a52">More...</a><br /></td></tr>
+<tr class="separator:ac78e664158e30fbaeac6c6346bf79a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09d5f6fde7f2c12d949a050208c1782f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a09d5f6fde7f2c12d949a050208c1782f">BaLogDestroy</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> hdl, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> saveCfg)</td></tr>
+<tr class="memdesc:a09d5f6fde7f2c12d949a050208c1782f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy and release resources of logger.  <a href="#a09d5f6fde7f2c12d949a050208c1782f">More...</a><br /></td></tr>
+<tr class="separator:a09d5f6fde7f2c12d949a050208c1782f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa3c8543ac0ef1d9574a592f3652f53c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classIBaLog.html">IBaLog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#aaa3c8543ac0ef1d9574a592f3652f53c">CBaLogCreateDef</a> (const char *name)</td></tr>
 <tr class="memdesc:aaa3c8543ac0ef1d9574a592f3652f53c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory for a logger with defaults.  <a href="#aaa3c8543ac0ef1d9574a592f3652f53c">More...</a><br /></td></tr>
 <tr class="separator:aaa3c8543ac0ef1d9574a592f3652f53c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab755d1e05016e3434a94736cdea76958"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classIBaLog.html">IBaLog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#ab755d1e05016e3434a94736cdea76958">CBaLogCreate</a> (const char *name, const char *path, <a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a> prioFilt, <a class="el" href="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4">EBaLogOut</a> out, uint32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength)</td></tr>
-<tr class="memdesc:ab755d1e05016e3434a94736cdea76958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory for a logger.  <a href="#ab755d1e05016e3434a94736cdea76958">More...</a><br /></td></tr>
-<tr class="separator:ab755d1e05016e3434a94736cdea76958"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30e2d08098d0fb6c64156cccfdd3a4f2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a30e2d08098d0fb6c64156cccfdd3a4f2">CBaLogDestroy</a> (<a class="el" href="classIBaLog.html">IBaLog</a> *pHdl, bool saveCfg)</td></tr>
-<tr class="memdesc:a30e2d08098d0fb6c64156cccfdd3a4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy and release resources of logger.  <a href="#a30e2d08098d0fb6c64156cccfdd3a4f2">More...</a><br /></td></tr>
-<tr class="separator:a30e2d08098d0fb6c64156cccfdd3a4f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1795e483ffdaa5a8d896170b67117d7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classIBaLog.html">IBaLog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a1795e483ffdaa5a8d896170b67117d7b">CBaLogCreate</a> (<a class="el" href="structTBaLogOptions.html">TBaLogOptions</a> *pOpts)</td></tr>
+<tr class="memdesc:a1795e483ffdaa5a8d896170b67117d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory for a logger.  <a href="#a1795e483ffdaa5a8d896170b67117d7b">More...</a><br /></td></tr>
+<tr class="separator:a1795e483ffdaa5a8d896170b67117d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23eaf1e1b68017855826ecaceb718264"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a23eaf1e1b68017855826ecaceb718264">CBaLogDestroy</a> (<a class="el" href="classIBaLog.html">IBaLog</a> *pHdl, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> saveCfg)</td></tr>
+<tr class="memdesc:a23eaf1e1b68017855826ecaceb718264"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy and release resources of logger.  <a href="#a23eaf1e1b68017855826ecaceb718264">More...</a><br /></td></tr>
+<tr class="separator:a23eaf1e1b68017855826ecaceb718264"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Logging functions</div></td></tr>
+<tr class="memitem:a29f561d88507bc151a80b98f9d3a9db7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a29f561d88507bc151a80b98f9d3a9db7">BaLogLog</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> hdl, <a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a> prio, const char *tag, const char *msg)</td></tr>
+<tr class="memdesc:a29f561d88507bc151a80b98f9d3a9db7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger and adds a <code>tag</code> and a time stamp.  <a href="#a29f561d88507bc151a80b98f9d3a9db7">More...</a><br /></td></tr>
+<tr class="separator:a29f561d88507bc151a80b98f9d3a9db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebe3a86a3ac6e898415f8ba13121354e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#aebe3a86a3ac6e898415f8ba13121354e">BaLogTrace</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> hdl, const char *tag, const char *msg)</td></tr>
+<tr class="memdesc:aebe3a86a3ac6e898415f8ba13121354e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger and adds a <code>tag</code> and a time stamp.  <a href="#aebe3a86a3ac6e898415f8ba13121354e">More...</a><br /></td></tr>
+<tr class="separator:aebe3a86a3ac6e898415f8ba13121354e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a507ec70afef472d4ed523b677ab5752f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a507ec70afef472d4ed523b677ab5752f">BaLogWarning</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> hdl, const char *tag, const char *msg)</td></tr>
+<tr class="memdesc:a507ec70afef472d4ed523b677ab5752f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger and adds a <code>tag</code> and a time stamp.  <a href="#a507ec70afef472d4ed523b677ab5752f">More...</a><br /></td></tr>
+<tr class="separator:a507ec70afef472d4ed523b677ab5752f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aa4d7877444a12bab73a67ebde720e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a7aa4d7877444a12bab73a67ebde720e8">BaLogError</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> hdl, const char *tag, const char *msg)</td></tr>
+<tr class="memdesc:a7aa4d7877444a12bab73a67ebde720e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger and adds a <code>tag</code> and a time stamp.  <a href="#a7aa4d7877444a12bab73a67ebde720e8">More...</a><br /></td></tr>
+<tr class="separator:a7aa4d7877444a12bab73a67ebde720e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Logging functions with format</div></td></tr>
+<tr class="memitem:aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc">BaLogLogF</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *pHdl, <a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a> prio, const char *tag, const char *fmt,...)</td></tr>
+<tr class="memdesc:aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp.  <a href="#aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc">More...</a><br /></td></tr>
+<tr class="separator:aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a097c24a068da006bc670a1bb5911ad36"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a097c24a068da006bc670a1bb5911ad36">BaLogTraceF</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *pHdl, const char *tag, const char *fmt,...)</td></tr>
+<tr class="memdesc:a097c24a068da006bc670a1bb5911ad36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp.  <a href="#a097c24a068da006bc670a1bb5911ad36">More...</a><br /></td></tr>
+<tr class="separator:a097c24a068da006bc670a1bb5911ad36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69ee0c30e3d1d7b81abb4f81c730edcd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a69ee0c30e3d1d7b81abb4f81c730edcd">BaLogWarningF</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *pHdl, const char *tag, const char *fmt,...)</td></tr>
+<tr class="memdesc:a69ee0c30e3d1d7b81abb4f81c730edcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp.  <a href="#a69ee0c30e3d1d7b81abb4f81c730edcd">More...</a><br /></td></tr>
+<tr class="separator:a69ee0c30e3d1d7b81abb4f81c730edcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60a0064a2537bd04e6ea4e6f1fe9dec7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLog_8h.html#a60a0064a2537bd04e6ea4e6f1fe9dec7">BaLogErrorF</a> (<a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *pHdl, const char *tag, const char *fmt,...)</td></tr>
+<tr class="memdesc:a60a0064a2537bd04e6ea4e6f1fe9dec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp.  <a href="#a60a0064a2537bd04e6ea4e6f1fe9dec7">More...</a><br /></td></tr>
+<tr class="separator:a60a0064a2537bd04e6ea4e6f1fe9dec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>... </p>
@@ -150,6 +202,482 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="af6156879d4b92295f4c5722e45703e56"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> BaLogCreateDef </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create factory for a logger with defaults. </p>
+<dl class="section return"><dt>Returns</dt><dd>Handle if success, otherwise, null </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the logger </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac78e664158e30fbaeac6c6346bf79a52"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> BaLogCreate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTBaLogOptions.html">TBaLogOptions</a> *&#160;</td>
+          <td class="paramname"><em>pOpts</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create factory for a logger. </p>
+<dl class="section return"><dt>Returns</dt><dd>Handle if success, otherwise, null </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pOpts</td><td>Logger options </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a09d5f6fde7f2c12d949a050208c1782f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogDestroy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a>&#160;</td>
+          <td class="paramname"><em>saveCfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroy and release resources of logger. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdl</td><td>BaLog handle to destroy </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">saveCfg</td><td>Flag to specify if the state should be saved in a cfg file </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a29f561d88507bc151a80b98f9d3a9db7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogLog </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a>&#160;</td>
+          <td class="paramname"><em>prio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger and adds a <code>tag</code> and a time stamp. </p>
+<p>The <code>Trace()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prio</td><td>Message priority </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Message to log </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aebe3a86a3ac6e898415f8ba13121354e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogTrace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger and adds a <code>tag</code> and a time stamp. </p>
+<p>The <code>Trace()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Message to log </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a507ec70afef472d4ed523b677ab5752f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogWarning </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger and adds a <code>tag</code> and a time stamp. </p>
+<p>The <code>Trace()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Message to log </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7aa4d7877444a12bab73a67ebde720e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogError </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger and adds a <code>tag</code> and a time stamp. </p>
+<p>The <code>Trace()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Message to log </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogLogF </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *&#160;</td>
+          <td class="paramname"><em>pHdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a>&#160;</td>
+          <td class="paramname"><em>prio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp. </p>
+<p>These functions have a limit of 65534 characters per message. The <code>TraceF()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pHdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prio</td><td>Message priority </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>Message format </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Referenced by <a class="el" href="BaLog_8h.html#a7aa4d7877444a12bab73a67ebde720e8">BaLogError()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a097c24a068da006bc670a1bb5911ad36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogTraceF </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *&#160;</td>
+          <td class="paramname"><em>pHdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp. </p>
+<p>These functions have a limit of 65534 characters per message. The <code>TraceF()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pHdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>Message format </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Referenced by <a class="el" href="BaLog_8h.html#a7aa4d7877444a12bab73a67ebde720e8">BaLogError()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a69ee0c30e3d1d7b81abb4f81c730edcd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogWarningF </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *&#160;</td>
+          <td class="paramname"><em>pHdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp. </p>
+<p>These functions have a limit of 65534 characters per message. The <code>TraceF()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pHdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>Message format </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Referenced by <a class="el" href="BaLog_8h.html#a7aa4d7877444a12bab73a67ebde720e8">BaLogError()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a60a0064a2537bd04e6ea4e6f1fe9dec7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaLogErrorF </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315">TBaLogHdl</a> *&#160;</td>
+          <td class="paramname"><em>pHdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message into the logger like <code>printf()</code> and adds a <code>tag</code> and a time stamp. </p>
+<p>These functions have a limit of 65534 characters per message. The <code>TraceF()</code> and rest functions have an implied priority </p><dl class="section return"><dt>Returns</dt><dd>true if success, otherwise, false </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pHdl</td><td>Handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Optional tag of maximum 6 chars + 7th terminating null </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>Message format </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Referenced by <a class="el" href="BaLog_8h.html#a7aa4d7877444a12bab73a67ebde720e8">BaLogError()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aaa3c8543ac0ef1d9574a592f3652f53c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -175,56 +703,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab755d1e05016e3434a94736cdea76958"></a>
+<a class="anchor" id="a1795e483ffdaa5a8d896170b67117d7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classIBaLog.html">IBaLog</a>* CBaLogCreate </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="structTBaLogOptions.html">TBaLogOptions</a> *&#160;</td>
+          <td class="paramname"><em>pOpts</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916">EBaLogPrio</a>&#160;</td>
-          <td class="paramname"><em>prioFilt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4">EBaLogOut</a>&#160;</td>
-          <td class="paramname"><em>out</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>maxFileSizeB</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>maxNoFiles</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>maxBufLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -233,25 +721,19 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Handle if success, otherwise, null </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the logger </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>Directory path for saving the logger </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">prioFilt</td><td>Priority filter </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">out</td><td>Output specifier </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maxFileSizeB</td><td>Maximum file size in bytes </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maxNoFiles</td><td>Maximum number of files </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maxBufLength</td><td>Maximum number of messages in the buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pOpts</td><td>Logger options </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a30e2d08098d0fb6c64156cccfdd3a4f2"></a>
+<a class="anchor" id="a23eaf1e1b68017855826ecaceb718264"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool CBaLogDestroy </td>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> CBaLogDestroy </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classIBaLog.html">IBaLog</a> *&#160;</td>
           <td class="paramname"><em>pHdl</em>, </td>
@@ -259,7 +741,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
+          <td class="paramtype"><a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a>&#160;</td>
           <td class="paramname"><em>saveCfg</em>&#160;</td>
         </tr>
         <tr>
@@ -285,7 +767,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 18 2016 16:54:55 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 24 2016 12:37:28 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

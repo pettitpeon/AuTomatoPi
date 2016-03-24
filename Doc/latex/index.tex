@@ -1,3 +1,10 @@
-Welcome to the documentation of the Base A\+PI~\newline
-\href{https://pettitpeon.github.io/rpiapi/}{\tt Back to Git\+Hub Pages}\hypertarget{index_intro_sec}{}\section{Introduction}\label{index_intro_sec}
-This is an A\+PI 
+\href{https://pettitpeon.github.io/rpiapi/}{\tt Back to Git\+Hub Pages}~\newline
+ Welcome to the documentation of the Base A\+PI.~\newline
+ This A\+PI is meant to facilitate the programming of the Raspberry Pi (R) by providing libraries. This documentation is meant to explain how to use the libraries or A\+P\+Is rather than its internal functioning. Therefore the target group is programmers willing to use the A\+PI rather than further developing it.\hypertarget{index_intro_sec}{}\section{Basic Architecture}\label{index_intro_sec}
+This A\+PI tries to provide two interface flavors for each of each libraries\+:
+\begin{DoxyItemize}
+\item A flat C-\/\+A\+PI, and
+\item a C++ pure abstract interface with C-\/style constructors and destructors.
+\end{DoxyItemize}
+
+This way it is easier to please both C and C++ programmers. Depending on convenience, either the C++ A\+PI is a wrapper of the C A\+PI, or vice versa. Therefore, there is no point in using one or the other for performance reasons unless explicitly stated in the function description.~\newline

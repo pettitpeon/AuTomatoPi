@@ -38,6 +38,8 @@ structTBaCoreThreadArg.html
 structTBaCoreThreadArg-members.html
 structTBaCoreThreadInfo.html
 structTBaCoreThreadInfo-members.html
+structTBaLogOptions.html
+structTBaLogOptions-members.html
 namespaceBaPath.html
 graph_legend.html
 dir_68267d1309a1af8e8297ef4c3efbcdba.html
@@ -78,6 +80,7 @@ BaCom_8h__incl.svg
 BaCore_8h__incl.svg
 BaGpio_8h__incl.svg
 BaIniParse_8h__incl.svg
+BaLog_8h__incl.svg
 BaUtils_8hpp__incl.svg
 graph_legend.svg
 inherit_graph_0.svg
@@ -85,3 +88,4 @@ inherit_graph_1.svg
 inherit_graph_2.svg
 inherit_graph_3.svg
 inherit_graph_4.svg
+inherit_graph_5.svg

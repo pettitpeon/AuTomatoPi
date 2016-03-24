@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BaseApi: Base API Documentation</title>
+<title>BaseApi: RPIAPI Base API Documentation</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,18 +37,24 @@
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">Base API Documentation </div>  </div>
+<div class="title">RPIAPI Base API Documentation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Welcome to the documentation of the Base API<br />
-<a href="https://pettitpeon.github.io/rpiapi/">Back to GitHub Pages</a></p>
+<div class="textblock"><p><a href="https://pettitpeon.github.io/rpiapi/">Back to GitHub Pages</a><br />
+ Welcome to the documentation of the Base API.<br />
+ This API is meant to facilitate the programming of the Raspberry Pi (R) by providing libraries. This documentation is meant to explain how to use the libraries or APIs rather than its internal functioning. Therefore the target group is programmers willing to use the API rather than further developing it.</p>
 <h1><a class="anchor" id="intro_sec"></a>
-Introduction</h1>
-<p>This is an API </p>
+Basic Architecture</h1>
+<p>This API tries to provide two interface flavors for each of each libraries:</p><ul>
+<li>A flat C-API, and</li>
+<li>a C++ pure abstract interface with C-style constructors and destructors.</li>
+</ul>
+<p>This way it is easier to please both C and C++ programmers. Depending on convenience, either the C++ API is a wrapper of the C API, or vice versa. Therefore, there is no point in using one or the other for performance reasons unless explicitly stated in the function description.<br />
+</p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 18 2016 16:54:55 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 24 2016 12:37:28 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
