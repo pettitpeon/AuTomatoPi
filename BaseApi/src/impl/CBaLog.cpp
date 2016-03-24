@@ -1,19 +1,34 @@
 /*------------------------------------------------------------------------------
-    Includes
+ *                             (c) 2015 by Ivan Peon
+ *                             All rights reserved
+ *------------------------------------------------------------------------------
+ *   Module   : CBalog.cpp
+ *   Date     : Dec 9, 2015
+ *------------------------------------------------------------------------------
+ */
+
+
+/*------------------------------------------------------------------------------
+    C Includes
  -----------------------------------------------------------------------------*/
 #include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
-#include <map>
-#include <iostream>
-#include <ctime>
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 
-#include "BaUtils.hpp"
+/*------------------------------------------------------------------------------
+    C++ Includes
+ -----------------------------------------------------------------------------*/
+#include <map>
+#include <iostream>
+#include <ctime>
 
+/*------------------------------------------------------------------------------
+    Local Includes
+ -----------------------------------------------------------------------------*/
+#include "BaUtils.hpp"
 #include "CBaLog.h"
 #include "../BaGenMacros.h"
 #include "BaCore.h"
@@ -30,13 +45,19 @@
 # define CFGDIR "C:\\log\\config\\"
 #endif
 
+// Portable make dir
+#ifdef _WIN32
+# define _MKDIR(dir) mkdir(dir)
+#else
+# define _MKDIR(dir) mkdir(dir, 0660)
+#endif
+
 #define LOGEXT    ".log"
-//#define FASTSIZE  81
 #define CHRONOHRC std::chrono::high_resolution_clock
 #define CHRONO    std::chrono
 #define TAG       "BaLog"
-#define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
 #define TAGSZ     7
+#define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -45,7 +66,6 @@ static std::map<std::string, CBaLog*> sLoggers;
 static TBaCoreThreadHdl sLogdHdl = 0;
 static TBaCoreThreadArg sLogdArg = {0};
 static std::mutex sMtx;
-//static char sFasMsg[FASTSIZE];
 static std::string sPrioTochar[eBaLogPrio_UpsCrash + 1] = {"T", "W", "E", "C"};
 
 /*------------------------------------------------------------------------------
@@ -55,6 +75,10 @@ namespace tmp_4_9_2 {
 LOCAL tm localtime(const std::time_t& rTime);
 LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat);
 }
+
+/*------------------------------------------------------------------------------
+    Implementation
+ -----------------------------------------------------------------------------*/
 
 //
 void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
@@ -82,8 +106,7 @@ bool CBaLog::init() {
    struct stat info;
    if (stat(LOGDIR, &info) != 0) {
       // Create directory
-      // FIXME: Im onot portable
-      if (mkdir(LOGDIR) != 0) {
+      if (_MKDIR(LOGDIR) != 0) {
          // not ok
          return false;
       }
@@ -386,8 +409,7 @@ bool CBaLog::saveCfg() {
    struct stat info;
    if (stat(CFGDIR, &info) != 0) {
       // Create directory
-      // TODO: fix non portable
-      if (mkdir(CFGDIR) != 0) {
+      if (_MKDIR(CFGDIR) != 0) {
          // not ok
          return false;
       }
@@ -477,7 +499,9 @@ bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
    return log(prio, tag, msg);
 }
 
-// ////////////////////////////////////////////////////
+/*------------------------------------------------------------------------------
+    Local functions
+ -----------------------------------------------------------------------------*/
 // put_time is not implemented yet in 4.9.2 thus the tmp NS
 namespace tmp_4_9_2 {
 LOCAL tm localtime(const std::time_t& rTime) {
@@ -504,6 +528,5 @@ LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat) {
 }
 } // NS tmp_4_9_2
 
-// ////////////////////////////////////////////////////
 
 
