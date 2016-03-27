@@ -26,10 +26,12 @@
 #include <stdio.h> // rename()
 
 /******************************************************************************/
-/** Namespace to wrap all file system
+/** Namespace to wrap all file system functions
  */
 namespace BaFS {
 
+/// @name Base API File System
+//@{
 /******************************************************************************/
 /** Portable mkdir(), creates a directory
  *  @return Normal mkdir() return value
@@ -52,7 +54,7 @@ static inline int MkDir(
  */
 static inline int Rename(
       std::string path, ///< [in] Path of file or directory
-      std::string newPath ///< [in] Path of file or directory
+      std::string newPath ///< [in] New file or directory path
       ) {
 #ifdef _WIN32
    remove(path.c_str());
@@ -84,14 +86,18 @@ static inline bool Exists(
    struct stat desc;
    return stat(path.c_str(), &desc) == 0;
 }
+//@}
 
 } // BaFS
+
 
 /******************************************************************************/
 /** Namespace to wrap all path functions
  */
 namespace BaPath {
 
+/// @name Base API Path
+//@{
 /******************************************************************************/
 /** Gets everything, including the trailing path separator, except the filename.
  *  - "/foo/bar/baz.txt" --> "/foo/bar/"
@@ -176,7 +182,7 @@ static inline std::string ChangeFileExtension(
          + filename.substr(0, filename.find_last_of('.'))
          + ext;
 }
-
+//@}
 }  // namespace BaPath
 
 /******************************************************************************/
