@@ -22,6 +22,70 @@
 #if defined(__cplusplus)
 #include <string>
 #include <istream>
+#include <sys/stat.h> // mkdir()
+#include <stdio.h> // rename()
+
+/******************************************************************************/
+/** Namespace to wrap all file system
+ */
+namespace BaFS {
+
+/******************************************************************************/
+/** Portable mkdir(), creates a directory
+ *  @return Normal mkdir() return value
+ */
+static inline int MkDir(
+      std::string dir, ///< [in] Path of directory to be created
+      int per = 0660 ///< [in] Permissions with default read/write for owner and group
+      ) {
+#ifdef _WIN32
+   return mkdir(dir.c_str());
+#else
+   return mkdir(dir.c_str(), per);
+#endif
+}
+
+/******************************************************************************/
+/** Portable rename(). Standardizes the function by ALWAYS overwriting if the
+ *  other file exists.
+ *  @return Normal rename() return value
+ */
+static inline int Rename(
+      std::string path, ///< [in] Path of file or directory
+      std::string newPath ///< [in] Path of file or directory
+      ) {
+#ifdef _WIN32
+   remove(path.c_str());
+#endif
+   return rename(path.c_str(), newPath.c_str());
+}
+
+/******************************************************************************/
+/** Gets the file size in bytes
+ *  @return file size in bytes
+ */
+static inline uint32_t Size(
+      std::string path ///< [in] Path of file
+      ) {
+   struct stat desc;
+   if (stat(path.c_str(), &desc) == 0) {
+
+   }
+   return desc.st_size;
+}
+
+/******************************************************************************/
+/** Tests if a file or directory exists
+ *  @return true if exists, otherwise, false
+ */
+static inline bool Exists(
+      std::string path ///< [in] Path of file or directory
+      ) {
+   struct stat desc;
+   return stat(path.c_str(), &desc) == 0;
+}
+
+} // BaFS
 
 /******************************************************************************/
 /** Namespace to wrap all path functions

@@ -31,12 +31,21 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaLogTest);
 
-   CPPUNIT_TEST(Test);
-   CPPUNIT_TEST(FromCfg);
+   CPPUNIT_TEST(CreateReuseDestroy);
+   CPPUNIT_TEST(Tags);
+   CPPUNIT_TEST(Prios);
+
+//   CPPUNIT_TEST(Test);
+//   CPPUNIT_TEST(FromCfg);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
+
+   void CreateReuseDestroy();
+   void Tags();
+   void Prios();
+
    void Test();
    void FromCfg();
 };

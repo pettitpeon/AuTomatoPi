@@ -43,7 +43,7 @@ public:
          std::string path = "",
          EBaLogPrio  prioFilt = eBaLogPrio_Trace,
          EBaLogOut   out = eBaLogOut_LogAndConsole,
-         uint32_t    maxFileSizeB = 1048576,
+         uint32_t    maxFileSizeB = 1048576, // 1 MiB
          uint16_t    maxNoFiles   = 3,
          uint16_t    maxBufLength = 0
          );
@@ -63,6 +63,9 @@ public:
          bool saveCfg = false
          );
 
+   // Info function
+   virtual void GetLogInfo(TBaLogInfo *pInfo);
+
    // Logging functions
    virtual bool Log(EBaLogPrio prio, const char* tag, const char* msg);
    virtual bool Trace(const char* tag, const char* msg);
@@ -73,6 +76,9 @@ public:
    virtual bool TraceF(const char* tag, const char* fmt, ...);
    virtual bool WarningF(const char* tag, const char* fmt, ...);
    virtual bool ErrorF(const char* tag, const char* fmt, ...);
+
+   //
+   virtual void Flush();
 
    // Not part of the interface
    bool saveCfg();
@@ -90,7 +96,8 @@ private:
          TBaCoreThreadArg *pArg
          );
 
-   void flush2Disk();
+   static void getCfgPath(std::string &rNamePath);
+
    bool log(EBaLogPrio prio, const char* tag, const char* msg);
 
 

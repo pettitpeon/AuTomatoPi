@@ -106,8 +106,10 @@ public:
          /* Detect multi-line */
          if (line[len]=='\\') {
             /* Multi-line value */
-            last=len ;
-            continue ;
+            // Fixme: there is an issue with windows paths and multi-lines =(
+//            last=len ;
+//            continue ;
+            last=0;
          } else {
             last=0 ;
          }
@@ -313,7 +315,8 @@ public:
          return it->second;
       }
 
-      Dump(stdout); //todo: erase
+      // Entry not found
+//      Dump(stdout); // For testing and debugging
       return rDef;
    }
 

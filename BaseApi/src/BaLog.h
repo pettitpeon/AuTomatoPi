@@ -53,6 +53,17 @@ typedef struct TBaLogOptions {
    uint16_t    maxBufLength; ///< Maximum number of messages in the buffer
 } TBaLogOptions;
 
+/// Logger information
+typedef struct TBaLogInfo {
+   const char *name; ///< Name of the logger
+   const char *fullPath; ///< Directory path for saving the logger
+   EBaLogPrio  prioFilt; ///< Priority filter
+   EBaLogOut   out; ///< Output specifier
+   uint32_t    maxFileSizeB; ///< Maximum file size in bytes
+   uint16_t    maxNoFiles; ///< Maximum number of files
+   uint16_t    maxBufLength; ///< Maximum number of messages in the buffer
+   uint32_t    fileSizeB; ///< File size of current file in bytes
+} TBaLogInfo;
 
 /// C logger handle
 typedef void* TBaLogHdl;
@@ -176,6 +187,21 @@ TBaBoolRC BaLogErrorF(
 class IBaLog {
 public:
 
+   virtual void Flush() = 0;
+
+   /// @name Getter
+   //@{
+   /***************************************************************************/
+   /** Gets the information and options.
+    *  The const char pointers of the TBaLogInfo struct must not be changed or
+    *  mangled with. They point to internal memory. Also they invalidated when
+    *  the logger instance is destroyed. Accessing the freed memory results in
+    *  undefined behavior.
+    */
+   virtual void GetLogInfo(
+         TBaLogInfo *pInfo ///< [out] Pointer to preallocated structure
+         ) = 0;
+   //@}
 
    /// @name Logging functions
    //@{
