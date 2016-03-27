@@ -10,6 +10,12 @@ Logger C++ interface.
 {\ttfamily \#include $<$Ba\+Log.\+h$>$}
 
 \subsection*{Public Member Functions}
+\begin{Indent}{\bf Getter}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classIBaLog_a9c05a439e0442e4ada9a041390a5f736}{Get\+Log\+Info} (\hyperlink{structTBaLogInfo}{T\+Ba\+Log\+Info} $\ast$p\+Info)=0
+\begin{DoxyCompactList}\small\item\em Gets the information and options. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
 \begin{Indent}{\bf Logging functions}\par
 \begin{DoxyCompactItemize}
 \item 
@@ -40,6 +46,22 @@ virtual bool \hyperlink{classIBaLog_ac137594e06ef9fd849766a7a5b5647c2}{ErrorF} (
 Logger C++ interface. 
 
 \subsection{Member Function Documentation}
+\index{I\+Ba\+Log@{I\+Ba\+Log}!Get\+Log\+Info@{Get\+Log\+Info}}
+\index{Get\+Log\+Info@{Get\+Log\+Info}!I\+Ba\+Log@{I\+Ba\+Log}}
+\subsubsection[{\texorpdfstring{Get\+Log\+Info(\+T\+Ba\+Log\+Info $\ast$p\+Info)=0}{GetLogInfo(TBaLogInfo *pInfo)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void I\+Ba\+Log\+::\+Get\+Log\+Info (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+Ba\+Log\+Info} $\ast$}]{p\+Info}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaLog_a9c05a439e0442e4ada9a041390a5f736}{}\label{classIBaLog_a9c05a439e0442e4ada9a041390a5f736}
+
+
+Gets the information and options. 
+
+The const char pointers of the \hyperlink{structTBaLogInfo}{T\+Ba\+Log\+Info} struct must not be changed or mangled with. They point to internal memory. Also they invalidated when the logger instance is destroyed. Accessing the freed memory results in undefined behavior. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em p\+Info} & Pointer to preallocated structure \\
+\hline
+\end{DoxyParams}
 \index{I\+Ba\+Log@{I\+Ba\+Log}!Log@{Log}}
 \index{Log@{Log}!I\+Ba\+Log@{I\+Ba\+Log}}
 \subsubsection[{\texorpdfstring{Log(\+E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$msg)=0}{Log(EBaLogPrio prio, const char *tag, const char *msg)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Log\+::\+Log (

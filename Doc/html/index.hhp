@@ -38,8 +38,11 @@ structTBaCoreThreadArg.html
 structTBaCoreThreadArg-members.html
 structTBaCoreThreadInfo.html
 structTBaCoreThreadInfo-members.html
+structTBaLogInfo.html
+structTBaLogInfo-members.html
 structTBaLogOptions.html
 structTBaLogOptions-members.html
+namespaceBaFS.html
 namespaceBaPath.html
 graph_legend.html
 dir_68267d1309a1af8e8297ef4c3efbcdba.html
@@ -89,3 +92,4 @@ inherit_graph_2.svg
 inherit_graph_3.svg
 inherit_graph_4.svg
 inherit_graph_5.svg
+inherit_graph_6.svg

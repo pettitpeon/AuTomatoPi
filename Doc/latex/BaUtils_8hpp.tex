@@ -8,19 +8,40 @@ General useful functions~\newline
 
 {\ttfamily \#include $<$string$>$}\\*
 {\ttfamily \#include $<$istream$>$}\\*
+{\ttfamily \#include $<$sys/stat.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
 Include dependency graph for Ba\+Utils.\+hpp\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=188pt]{BaUtils_8hpp__incl}
+\includegraphics[width=331pt]{BaUtils_8hpp__incl}
 \end{center}
 \end{figure}
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
+ \hyperlink{namespaceBaFS}{Ba\+FS}
+\begin{DoxyCompactList}\small\item\em Namespace to wrap all file system functions. \end{DoxyCompactList}\item 
  \hyperlink{namespaceBaPath}{Ba\+Path}
 \begin{DoxyCompactList}\small\item\em Namespace to wrap all path functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\static T \hyperlink{BaUtils_8hpp_a25c40b6a558aa8194365db78934a577e}{Ba\+To\+Number} (std\+::string s, T def, bool $\ast$p\+Error=0)
+\begin{DoxyCompactList}\small\item\em Converts string to number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}{\bf Base A\+PI File System}\par
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}{Ba\+F\+S\+::\+Mk\+Dir} (std\+::string dir, int per=0660)
+\begin{DoxyCompactList}\small\item\em Portable mkdir(), creates a directory. \end{DoxyCompactList}\item 
+static int \hyperlink{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}{Ba\+F\+S\+::\+Rename} (std\+::string path, std\+::string new\+Path)
+\begin{DoxyCompactList}\small\item\em Portable rename(). \end{DoxyCompactList}\item 
+static uint32\+\_\+t \hyperlink{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}{Ba\+F\+S\+::\+Size} (std\+::string path)
+\begin{DoxyCompactList}\small\item\em Gets the file size in bytes. \end{DoxyCompactList}\item 
+static bool \hyperlink{namespaceBaFS_a73d165c90a00491cfe0b9ce3b5fe5c58}{Ba\+F\+S\+::\+Exists} (std\+::string path)
+\begin{DoxyCompactList}\small\item\em Tests if a file or directory exists. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Base A\+PI Path}\par
 \begin{DoxyCompactItemize}
 \item 
 static std\+::string \hyperlink{namespaceBaPath_aee6b101395e5f32a76b304aa765de13c}{Ba\+Path\+::\+Get\+Directory} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
@@ -30,9 +51,8 @@ static std\+::string \hyperlink{namespaceBaPath_a41d87786f4a43d64094624187ac90dc
 static std\+::string \hyperlink{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}{Ba\+Path\+::\+Get\+File\+Extension} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
 \begin{DoxyCompactList}\small\item\em Gets the extension of a path. \end{DoxyCompactList}\item 
 static std\+::string \hyperlink{namespaceBaPath_a70f965f0c97d211e1f91dc2f16e05195}{Ba\+Path\+::\+Change\+File\+Extension} (std\+::string path, std\+::string ext, char delimiter= \textquotesingle{}/\textquotesingle{})
-\begin{DoxyCompactList}\small\item\em Changes the extension of a path. \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename T $>$ }\\static T \hyperlink{BaUtils_8hpp_a25c40b6a558aa8194365db78934a577e}{Ba\+To\+Number} (std\+::string s, T def, bool $\ast$p\+Error=0)
-\begin{DoxyCompactList}\small\item\em Converts string to number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Changes the extension of a path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
 
 
 \subsection{Detailed Description}
