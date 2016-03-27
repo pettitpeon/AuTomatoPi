@@ -12,6 +12,9 @@
  */
 /*------------------------------------------------------------------------------
  */
+#include <sys/stat.h>
+//#include <unistd.h>
+
 #include <iostream>
 #include "BaLogTest.h"
 #include "BaGenMacros.h"
@@ -19,6 +22,7 @@
 #include "impl/CBaLog.h"
 #include "BaLog.h"
 #include "BaCore.h"
+#include "BaUtils.hpp"
 
 #ifdef _WIN32
 # define RESPATH CPPU_RESPATH "BaIniParseTest\\"
@@ -28,6 +32,13 @@
 
 
 #define LOGCFG RESPATH "TestLog.cgf"
+#define ASS             CPPUNIT_ASSERT
+#define ASS_EQ          CPPUNIT_ASSERT_EQUAL
+
+#define STAMPSZ         32
+
+
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 
@@ -41,6 +52,193 @@ void CBaLogTest::setUp() {
 /*  ...
  */
 void CBaLogTest::tearDown() {
+}
+
+
+/* ****************************************************************************/
+/*  Test creation, normal logging, destruction saving the state and reuse
+ */
+void CBaLogTest::CreateReuseDestroy() {
+   // Create default log, Should be overwritten and not appended
+   TBaLogInfo info;
+   CBaLog *pDef = CBaLog::Create("LogDef");
+   ASS(pDef);
+
+   // Check that the file was overwritten
+   pDef->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+   uint32_t sz = BaFS::Size(fullPath);
+   ASS_EQ((uint32_t)0, info.fileSizeB);
+   ASS_EQ((uint32_t)0, sz);
+
+   // Log some messages
+   ASS(pDef->Trace("DefTag", "35"));
+   ASS(pDef->Trace("DefTag", "70"));
+   ASS(pDef->Trace("DefTag", "106"));
+   pDef->Flush();
+
+   // Get info and check file size
+   pDef->GetLogInfo(&info);
+   ASS_EQ(info.fileSizeB, (uint32_t)STAMPSZ * 3 + 3 + 3 + 4); // 106
+
+   // Destroy and save state, file should remain
+   ASS(CBaLog::Destroy(pDef, true));
+   pDef = 0;
+   ASS(BaFS::Exists(fullPath));
+
+   // Check the file size of the remaining file
+   sz = BaFS::Size(fullPath);
+   ASS_EQ(info.fileSizeB, sz);
+
+   // Retrieve the same log without overwriting it
+   pDef = CBaLog::CreateFromCfg("LogDef");
+   ASS(pDef);
+
+   // Check that the size is still the same
+   pDef->GetLogInfo(&info);
+   ASS_EQ(info.fileSizeB, sz);
+
+   // Log two more messages
+   ASS(pDef->Trace("DefTag", "142"));
+   ASS(pDef->Trace("DefTag", "178"));
+
+   // Destroy without saving it to the CFG. File should remain
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   sz = BaFS::Size(fullPath);
+
+   // Test the final size
+   ASS_EQ((uint32_t)178, sz);
+}
+
+/* ****************************************************************************/
+/*  Test the tags are written properly
+ */
+void CBaLogTest::Tags() {
+   // Create default log
+   TBaLogInfo info;
+   CBaLog *pDef = CBaLog::Create("LogDef");
+   ASS(pDef);
+
+   // Get the log info and save the full path. It is not available after
+   // destruction
+   pDef->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+
+   // Log some messages
+   ASS(pDef->Trace(0,           "35"));
+   ASS(pDef->Trace("Def",       "70"));
+   ASS(pDef->Trace("DefTag",    "106"));
+   ASS(pDef->Trace("DefTagg",   "142"));
+   ASS(pDef->Trace("DefTagggg", "178"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)178, BaFS::Size(fullPath));
+}
+
+/* ****************************************************************************/
+/*  Test the priorities are written properly
+ */
+void CBaLogTest::Prios() {
+   // Create default log
+   TBaLogInfo info;
+   CBaLog *pDef = CBaLog::Create("LogDef");
+   ASS(pDef);
+
+   // Get the log info and save the full path. It is not available after
+   // destruction
+   pDef->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("DefTag",              "35"));
+   ASS(pDef->Warning("DefTag",            "70"));
+   ASS(pDef->Error("DefTag",             "106"));
+   ASS(pDef->Log(eBaLogPrio_UpsCrash, "DefTag",                    "142"));
+   ASS(pDef->Log((EBaLogPrio)(eBaLogPrio_UpsCrash + 20), "DefTag", "178"));
+   ASS(pDef->Log((EBaLogPrio)(eBaLogPrio_Trace - 1), "DefTag",     "214"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)214, BaFS::Size(fullPath));
+
+   // Create again underflow
+   pDef = CBaLog::Create("LogDef", "", (EBaLogPrio)(eBaLogPrio_Trace - 1));
+   ASS(pDef);
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("DefTag",              "35"));
+   ASS(pDef->Warning("DefTag",            "70"));
+   ASS(pDef->Error("DefTag",             "106"));
+   ASS(pDef->Log(eBaLogPrio_UpsCrash, "DefTag", "142"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)142, BaFS::Size(fullPath));
+
+   // Create again
+   pDef = CBaLog::Create("LogDef", "", eBaLogPrio_Warning);
+   ASS(pDef);
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("DefTag",    "0")); // No traces
+   ASS(pDef->Warning("DefTag", "35"));
+   ASS(pDef->Error("DefTag",   "70"));
+   ASS(pDef->Log(eBaLogPrio_UpsCrash, "DefTag", "106"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)106, BaFS::Size(fullPath));
+
+   // Create again
+   pDef = CBaLog::Create("LogDef", "", eBaLogPrio_Error);
+   ASS(pDef);
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("DefTag",    "0")); // No traces
+   ASS(pDef->Warning("DefTag",  "0")); // No traces
+   ASS(pDef->Error("DefTag",   "35"));
+   ASS(pDef->Log(eBaLogPrio_UpsCrash, "DefTag", "70"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)70, BaFS::Size(fullPath));
+
+   // Create again
+   pDef = CBaLog::Create("LogDef", "", eBaLogPrio_UpsCrash);
+   ASS(pDef);
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("DefTag",   "0")); // No traces
+   ASS(pDef->Warning("DefTag", "0")); // No traces
+   ASS(pDef->Error("DefTag",   "0")); // No traces
+   ASS(pDef->Log(eBaLogPrio_UpsCrash, "DefTag", "35"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+
+   // Create again overflow
+   pDef = CBaLog::Create("LogDef", "", (EBaLogPrio)(eBaLogPrio_UpsCrash + 1));
+   ASS(pDef);
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("DefTag",   "0")); // No traces
+   ASS(pDef->Warning("DefTag", "0")); // No traces
+   ASS(pDef->Error("DefTag",   "0")); // No traces
+   ASS(pDef->Log(eBaLogPrio_UpsCrash, "DefTag", "35"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
 }
 
 /* ****************************************************************************/
@@ -90,7 +288,7 @@ void CBaLogTest::Test() {
    log3->LogF(eBaLogPrio_Trace, "tag", "msg 3.%i", 2);
 
 
-   CBaLogDestroy(iLog, false);
+   CBaLogDestroy(iLog, eBaBool_false);
    CBaLog::Destroy(log2);
    CBaLog::Destroy(log3);
 

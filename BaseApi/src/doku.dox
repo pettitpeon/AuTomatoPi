@@ -1,10 +1,23 @@
 // This is a documentation
 
-/** @mainpage Base API Documentation
- *  Welcome to the documentation of the Base API\n
- *  [Back to GitHub Pages](https://pettitpeon.github.io/rpiapi/)
+/** @mainpage RPIAPI Base API Documentation
+ * [Back to GitHub Pages](https://pettitpeon.github.io/rpiapi/)\n
  *
- *  \section intro_sec Introduction
- *  This is an API
+ *  Welcome to the documentation of the Base API.\n
+ *
+ *  This API is meant to facilitate the programming of the Raspberry Pi (R) by
+ *  providing libraries. This documentation is meant to explain how to use the
+ *  libraries or APIs rather than its internal functioning. Therefore the target
+ *  group is programmers willing to use the API rather than further developing it.
+ *
+ *  \section intro_sec Basic Architecture
+ *  This API tries to provide two interface flavors for each of each libraries:
+ *   - A flat C-API, and
+ *   - a C++ pure abstract interface with C-style constructors and destructors.
+ *
+ *  This way it is easier to please both C and C++ programmers. Depending on
+ *  convenience, either the C++ API is a wrapper of the C API, or vice versa.
+ *  Therefore, there is no point in using one or the other for performance
+ *  reasons unless explicitly stated in the function description.\n
  *
  *  */

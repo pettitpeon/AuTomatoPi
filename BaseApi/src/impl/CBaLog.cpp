@@ -1,19 +1,33 @@
 /*------------------------------------------------------------------------------
-    Includes
+ *                             (c) 2015 by Ivan Peon
+ *                             All rights reserved
+ *------------------------------------------------------------------------------
+ *   Module   : CBalog.cpp
+ *   Date     : Dec 9, 2015
+ *------------------------------------------------------------------------------
+ */
+
+
+/*------------------------------------------------------------------------------
+    C Includes
  -----------------------------------------------------------------------------*/
-#include <stdio.h>
+//#include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
+//#include <sys/types.h>
+#include <errno.h>
+
+/*------------------------------------------------------------------------------
+    C++ Includes
+ -----------------------------------------------------------------------------*/
 #include <map>
 #include <iostream>
 #include <ctime>
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
-
+/*------------------------------------------------------------------------------
+    Local Includes
+ -----------------------------------------------------------------------------*/
 #include "BaUtils.hpp"
-
 #include "CBaLog.h"
 #include "../BaGenMacros.h"
 #include "BaCore.h"
@@ -31,12 +45,13 @@
 #endif
 
 #define LOGEXT    ".log"
-//#define FASTSIZE  81
+#define CFGEXT    ".cfg"
 #define CHRONOHRC std::chrono::high_resolution_clock
 #define CHRONO    std::chrono
 #define TAG       "BaLog"
-#define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
 #define TAGSZ     7
+#define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
+#define STRNOTFOUND    std::string::npos     // Return value for string not found
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -45,7 +60,6 @@ static std::map<std::string, CBaLog*> sLoggers;
 static TBaCoreThreadHdl sLogdHdl = 0;
 static TBaCoreThreadArg sLogdArg = {0};
 static std::mutex sMtx;
-//static char sFasMsg[FASTSIZE];
 static std::string sPrioTochar[eBaLogPrio_UpsCrash + 1] = {"T", "W", "E", "C"};
 
 /*------------------------------------------------------------------------------
@@ -56,6 +70,10 @@ LOCAL tm localtime(const std::time_t& rTime);
 LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat);
 }
 
+/*------------------------------------------------------------------------------
+    Implementation
+ -----------------------------------------------------------------------------*/
+
 //
 void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
    while (!sLogdArg.exitTh) {
@@ -64,11 +82,19 @@ void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
 
          // iterate loggers
          for (auto &kv : sLoggers) {
-            kv.second->flush2Disk();
+            kv.second->Flush();
          }
       }
 
       BaCoreMSleep(50);
+   }
+}
+
+void CBaLog::getCfgPath(std::string &rNamePath) {
+
+   // If only name (without extension), add the default path and extension
+   if (rNamePath.find('.', 0) == STRNOTFOUND) {
+      rNamePath = CFGDIR + rNamePath + CFGEXT;
    }
 }
 
@@ -82,7 +108,7 @@ bool CBaLog::init() {
    struct stat info;
    if (stat(LOGDIR, &info) != 0) {
       // Create directory
-      if (mkdir(LOGDIR) != 0) {
+      if (BaFS::MkDir(LOGDIR) != 0) {
          // not ok
          return false;
       }
@@ -121,9 +147,13 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
       return logger->second;
    }
 
+   // Set default
    if (path == "") {
       path = LOGDIR;
    }
+
+   // Limit the priorities
+   prioFilt = MINMAX(prioFilt, eBaLogPrio_Trace, eBaLogPrio_UpsCrash);
 
    // //////////////// Create //////////////
    CBaLog *p = new CBaLog(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
@@ -136,12 +166,20 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
 
 
    p->mFullPath = FULLPATH(p->mPath, p->mName);
-   p->mLog.open(p->mFullPath, std::ios_base::binary | std::ios_base::out | std::ios_base::app);
+   std::ios_base::openmode om = std::ios_base::binary | std::ios_base::out;
+   if (fromCfg) {
+      om |= std::ios_base::app;
+   }
+
+   // //////////////// Open ////////////////
+   p->mLog.open(p->mFullPath, om);
    if (p->mLog.fail()) {
       delete p;
       return 0;
       // todo: error
    }
+   // //////////////// Open ////////////////
+
    sLoggers[p->mName] = p;
    return p;
 }
@@ -152,11 +190,23 @@ CBaLog* CBaLog::Create(std::string name, std::string path, EBaLogPrio  prioFilt,
       uint16_t maxBufLength) {
    std::lock_guard<std::mutex> lck(sMtx);
 
-   return commonCreate(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, 1, 1, 0);
+   return commonCreate(name, path, prioFilt, out, maxFileSizeB, maxNoFiles,
+         maxBufLength, 1, 0, false);
+}
+
+//
+CBaLog* CBaLog::Create(TBaLogOptions &rOpts) {
+   std::lock_guard<std::mutex> lck(sMtx);
+
+   return commonCreate(rOpts.name, rOpts.path, rOpts.prioFilt, rOpts.out,
+         rOpts.maxFileSizeB, rOpts.maxNoFiles, rOpts.maxBufLength, 1, 0, false);
 }
 
 //
 CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
+
+   // Get the real path
+   getCfgPath(cfgFile);
 
    IBaIniParser *pIni = CBaIniParserCreate(cfgFile.c_str());
    if (!pIni) {
@@ -199,7 +249,7 @@ bool CBaLog::Destroy(IBaLog *pHdl, bool saveCfg) {
    if (--p->mOpenCnt == 0) {
       // Erase from loggers
       sLoggers.erase(p->mName);
-      p->flush2Disk();
+      p->Flush();
       p->mLog.close();
 
       // Save state
@@ -215,6 +265,22 @@ bool CBaLog::Destroy(IBaLog *pHdl, bool saveCfg) {
    }
 
    return true;
+}
+
+//
+void CBaLog::GetLogInfo(TBaLogInfo *pInfo) {
+   if (!pInfo) {
+      return;
+   }
+
+   pInfo->name = mName.c_str();
+   pInfo->fullPath = mFullPath.c_str();
+   pInfo->prioFilt = mPrioFilt;
+   pInfo->out = mOut;
+   pInfo->maxFileSizeB = mMaxFileSizeB;
+   pInfo->maxNoFiles = mMaxNoFiles;
+   pInfo->maxBufLength = mMaxBufLength;
+   pInfo->fileSizeB = mFileSizeB;
 }
 
 //
@@ -245,7 +311,6 @@ bool inline CBaLog::Error(const char* tag, const char* msg){
 
 //
 bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(prio, tag, fmt, arg);
@@ -255,7 +320,6 @@ bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...)
 
 //
 bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(eBaLogPrio_Trace, tag, fmt, arg);
@@ -265,7 +329,6 @@ bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
 
 //
 bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(eBaLogPrio_Warning, tag, fmt, arg);
@@ -275,7 +338,6 @@ bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
 
 //
 bool inline CBaLog::ErrorF(const char* tag, const char* fmt, ...) {
-   std::lock_guard<std::mutex> lck(mMtx);
    va_list arg;
    va_start(arg, fmt);
    bool ret = logV(eBaLogPrio_Error, tag, fmt, arg);
@@ -284,7 +346,7 @@ bool inline CBaLog::ErrorF(const char* tag, const char* fmt, ...) {
 }
 
 //
-inline void CBaLog::flush2Disk() {
+inline void CBaLog::Flush() {
 
    // Avoid messing around with the buffer while it is being printed
    std::lock_guard<std::mutex> lck(mMtx);
@@ -294,7 +356,8 @@ inline void CBaLog::flush2Disk() {
 
       // Check file size. If it is the first line written to the file,
       // write it to disk anyways.
-      mFileSizeB += msg.size();
+      // Every line has an extra LF character at the end.
+      mFileSizeB += msg.size() + 1;
       if (msg.size() != mFileSizeB && mFileSizeB > mMaxFileSizeB) {
          // Open new file
          if (++mFileCnt > mMaxNoFiles) {
@@ -316,11 +379,7 @@ inline void CBaLog::flush2Disk() {
 
          std::cout << mFullPath << " to: " << mTmpPath << std::endl;
 
-         // Windows does not let rewriting the file!! fix it to make it portable
-#ifdef __WIN32
-         remove(mTmpPath.c_str());
-#endif
-         if (rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
+         if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
 //            std::cout << errno << std::endl;
             // todo: error
          }
@@ -333,7 +392,7 @@ inline void CBaLog::flush2Disk() {
 
       // /////////// Log to disc ///////////////////////
       mLog << msg << std::endl;
-      std::cout << msg << std::endl;
+//      std::cout << msg << std::endl; // For testing and debugging
       // ///////////////////////////////////////////////
 
    }
@@ -381,7 +440,7 @@ bool CBaLog::saveCfg() {
    struct stat info;
    if (stat(CFGDIR, &info) != 0) {
       // Create directory
-      if (mkdir(CFGDIR) != 0) {
+      if (BaFS::MkDir(CFGDIR) != 0) {
          // not ok
          return false;
       }
@@ -427,7 +486,7 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
 
    // Get the tag
    // FIXME: Test this under Linux. The stupid snprintf() is not portable!!
-   uint8_t cnt = snprintf(mTag, TAGSZ-1, "%s", tag ? tag : "");
+   uint8_t cnt = snprintf(mTag, TAGSZ, "%s", tag ? tag : "");
    mTag[TAGSZ - 1] = 0;
    if (cnt < TAGSZ - 1) {
       SETARR(mTag + cnt, TAGSZ - 1 - cnt, ' ');
@@ -464,13 +523,16 @@ bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
 
    uint16_t size = snprintf(0, 0, fmt, arg);
 
-   // WHAT ABOUT REENTRANCY?
+   // WHAT ABOUT REENTRANCY? No problema!
    char msg[size + 1];
    vsnprintf(msg, size, fmt, arg);
+   std::lock_guard<std::mutex> lck(mMtx);
    return log(prio, tag, msg);
 }
 
-// ////////////////////////////////////////////////////
+/*------------------------------------------------------------------------------
+    Local functions
+ -----------------------------------------------------------------------------*/
 // put_time is not implemented yet in 4.9.2 thus the tmp NS
 namespace tmp_4_9_2 {
 LOCAL tm localtime(const std::time_t& rTime) {
@@ -497,6 +559,5 @@ LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat) {
 }
 } // NS tmp_4_9_2
 
-// ////////////////////////////////////////////////////
 
 

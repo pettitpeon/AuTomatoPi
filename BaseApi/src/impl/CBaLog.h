@@ -43,9 +43,13 @@ public:
          std::string path = "",
          EBaLogPrio  prioFilt = eBaLogPrio_Trace,
          EBaLogOut   out = eBaLogOut_LogAndConsole,
-         uint32_t    maxFileSizeB = 1048576,
+         uint32_t    maxFileSizeB = 1048576, // 1 MiB
          uint16_t    maxNoFiles   = 3,
          uint16_t    maxBufLength = 0
+         );
+
+   static CBaLog* Create(
+         TBaLogOptions &rOpts
          );
 
    // Factory from config
@@ -59,6 +63,9 @@ public:
          bool saveCfg = false
          );
 
+   // Info function
+   virtual void GetLogInfo(TBaLogInfo *pInfo);
+
    // Logging functions
    virtual bool Log(EBaLogPrio prio, const char* tag, const char* msg);
    virtual bool Trace(const char* tag, const char* msg);
@@ -70,8 +77,12 @@ public:
    virtual bool WarningF(const char* tag, const char* fmt, ...);
    virtual bool ErrorF(const char* tag, const char* fmt, ...);
 
+   //
+   virtual void Flush();
+
    // Not part of the interface
    bool saveCfg();
+   bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
 
 private:
    static CBaLog* commonCreate(
@@ -85,9 +96,10 @@ private:
          TBaCoreThreadArg *pArg
          );
 
-   void flush2Disk();
+   static void getCfgPath(std::string &rNamePath);
+
    bool log(EBaLogPrio prio, const char* tag, const char* msg);
-   bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
+
 
    // Private constructor because a public factory method is used
    CBaLog(std::string name, std::string path, EBaLogPrio prioFilt, EBaLogOut out,
