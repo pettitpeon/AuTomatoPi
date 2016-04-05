@@ -1,0 +1,153 @@
+Nice to see this, helped me much, since I was just working on this.
+Short remark:
+
+# NOTE: remember to put single quotes around complex types:
+# Example  std::list<int>  list1
+# (gdb) p_list list1 int
+#      --> works
+# Example  std::list< std::string >  list1
+# (gdb) p_list list1 std::string
+#      --> syntax error
+# (gdb) whatis list1
+#      type = std::list<std::basic_string<char,
+std::char_traits<char>, std::allocator<char>
+>,std::allocator<std::basic_string<char, std::char_traits<char>,
+std::allocator<char> > > >
+# (gdb) p_list list1 'std::basic_string<char, std::char_traits<char>,
+std::allocator<char> >'
+#      --> works, please note the single quotes
+
+
+I found an older set of macros, which at least worked for gcc 3.2. It
+doesn't need so many macro parameters, since the STL classes were
+implemented differently and it was easier to debug: one trick was to
+notice a data pointer in the class "list" with the correct type, so
+that a cast from _List_node_base to _List_node<_Tp> is done by gdb,
+please see below. Same worked with std::map.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+set print pretty on
+set print object on
+set print demangle on
+#set overload-resolution on
+
+
+################################################
+# Commands for STL vector ######################
+################################################
+define stl_vector_len
+  output $arg0._M_finish-$arg0._M_start
+  echo \n
+end
+
+document stl_vector_len
+  Print the vector's length
+end
+
+###############################################
+define stl_vector_pos
+  p *($arg0._M_start + $arg1)
+  echo \n
+end
+
+document stl_vector_pos
+  Print the vector's element at specified position
+end
+
+###############################################
+define stl_vector
+  whatis $arg0
+  p *$arg0._M_start@($arg0._M_finish-$arg0._M_start)
+end
+
+document stl_vector
+  Print all the vector's elements
+end
+
+##################################################
+# Commands for STL map ###########################
+##################################################
+define stl_map_len
+  output $arg0._M_t._M_node_count
+  echo \n
+end
+
+document stl_map_len
+  Print the number of elements stored in the map
+end
+
+###############################################
+define stl_map
+  whatis $arg0
+  tree $arg0 $arg0._M_t._M_header->_M_parent
+end
+
+document stl_map
+  Print the map's elements
+end
+
+define tree
+# $arg0: map
+# $arg1: current root node
+
+  if $arg1->_M_left
+    tree $arg0 $arg1->_M_left
+  end
+
+# The header pointer has the needed type i.e.
+# std::_Rb_tree_node<std::pair<T1 const, T2> > *
+# whereas the node is of type (std::_Rb_tree_node_base *). So we copy
+# the node pointer temporarily to the header pointer to have the
+# correct output
+  set $header=$arg0._M_t._M_header
+  set variable $arg0._M_t._M_header=$arg1
+  print $arg0._M_t._M_header._M_value_field
+  set variable $arg0._M_t._M_header=$header
+
+  if $arg1->_M_right
+    tree $arg0 $arg1->_M_right
+  end
+end
+
+document tree
+  Auxiliary function used by stl_map
+end
+
+###################################################
+# Commands for STL list ###########################
+###################################################
+define stl_list_len
+  set $count=0
+  set $head=$arg0._M_node
+  set $next=$arg0._M_node._M_next
+  while $next != $head
+    set $next=$next._M_next
+    set $count= $count + 1
+  end
+  output $count
+  echo \n
+end
+
+document stl_list_len
+  Print the list's length
+end
+
+###############################################
+define stl_list
+  whatis $arg0
+
+  set $head=$arg0._M_node
+  set $next=$arg0._M_node._M_next
+  while $next != $head
+    # trick using the _M_node pointer for type conversion to the
+correct type
+    set variable $arg0._M_node=$next
+    print $arg0._M_node._M_data
+    set $next=$next._M_next
+  end
+  set variable $arg0._M_node=$head
+end
+
+document stl_list
+  Print the list's elements
+end
