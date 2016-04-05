@@ -57,7 +57,7 @@ static inline int Rename(
       std::string newPath ///< [in] New file or directory path
       ) {
 #ifdef _WIN32
-   remove(path.c_str());
+   remove(newPath.c_str());
 #endif
    return rename(path.c_str(), newPath.c_str());
 }

@@ -32,6 +32,7 @@
 #include "../BaGenMacros.h"
 #include "BaCore.h"
 #include "BaIniParse.h"
+//#include "dbg/BaDbgMacros.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -99,7 +100,7 @@ void CBaLog::getCfgPath(std::string &rNamePath) {
 }
 
 //
-bool CBaLog::init() {
+bool CBaLog::init(bool disableThread) {
    if (sLogdHdl) {
       return true;
    }
@@ -115,7 +116,11 @@ bool CBaLog::init() {
    }
 
    sLogdArg.exitTh = false;
-   sLogdHdl = BaCoreCreateThread("BaLogD", logRoutine, &sLogdArg, eBaCorePrio_High);
+   if (disableThread) {
+      sLogdHdl = BaCoreCreateThread("BaLogD", logRoutine, &sLogdArg, eBaCorePrio_High);
+   } else {
+      sLogdHdl = (void*)-1;
+   }
    return sLogdHdl;
 }
 
@@ -125,7 +130,9 @@ bool CBaLog::exit() {
       return true;
    }
 
-   BaCoreDestroyThread(sLogdHdl, 100);
+   if (sLogdHdl != (void*)-1) {
+      BaCoreDestroyThread(sLogdHdl, 100);
+   }
    sLogdHdl = 0;
    return true;
 }
@@ -133,9 +140,9 @@ bool CBaLog::exit() {
 //
 CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prioFilt,
       EBaLogOut out, int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
-      uint16_t fileCnt, int32_t fileSizeB, bool fromCfg)  {
+      uint16_t fileCnt, int32_t fileSizeB, bool fromCfg, bool disableThread)  {
 
-   if (name.empty() || !init()) {
+   if (name.empty() || !init(disableThread)) {
       // todo Log error
       return 0;
    }
@@ -187,23 +194,24 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
 //
 CBaLog* CBaLog::Create(std::string name, std::string path, EBaLogPrio  prioFilt,
       EBaLogOut out, uint32_t maxFileSizeB, uint16_t maxNoFiles,
-      uint16_t maxBufLength) {
+      uint16_t maxBufLength, bool disableThread) {
    std::lock_guard<std::mutex> lck(sMtx);
 
    return commonCreate(name, path, prioFilt, out, maxFileSizeB, maxNoFiles,
-         maxBufLength, 1, 0, false);
+         maxBufLength, 0, 0, false, disableThread);
 }
 
 //
-CBaLog* CBaLog::Create(TBaLogOptions &rOpts) {
+CBaLog* CBaLog::Create(const TBaLogOptions &rOpts, bool disableThread) {
    std::lock_guard<std::mutex> lck(sMtx);
 
    return commonCreate(rOpts.name, rOpts.path, rOpts.prioFilt, rOpts.out,
-         rOpts.maxFileSizeB, rOpts.maxNoFiles, rOpts.maxBufLength, 1, 0, false);
+         rOpts.maxFileSizeB, rOpts.maxNoFiles, rOpts.maxBufLength, 0, 0, false,
+         disableThread);
 }
 
 //
-CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
+CBaLog* CBaLog::CreateFromCfg(std::string cfgFile, bool disableThread) {
 
    // Get the real path
    getCfgPath(cfgFile);
@@ -234,7 +242,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile) {
    std::lock_guard<std::mutex> lck(sMtx);
 
    return commonCreate(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength,
-         fileCnt, fileSizeB, true);
+         fileCnt, fileSizeB, true, disableThread);
 }
 
 //
@@ -354,18 +362,16 @@ inline void CBaLog::Flush() {
    // Iterate messages in buffer
    for (auto &msg : mBuf) {
 
-      // Check file size. If it is the first line written to the file,
-      // write it to disk anyways.
+      // Check file size. If it is the first line, write it to disk anyways.
       // Every line has an extra LF character at the end.
       mFileSizeB += msg.size() + 1;
-      if (msg.size() != mFileSizeB && mFileSizeB > mMaxFileSizeB) {
+      if (msg.size() + 1 != mFileSizeB && mFileSizeB > mMaxFileSizeB) {
          // Open new file
+
          if (++mFileCnt > mMaxNoFiles) {
             mFileCnt = 1;
             // Rewrite file
          }
-
-         mFileSizeB = 0;
 
          // Close the output stream
          mLog.close();
@@ -374,16 +380,20 @@ inline void CBaLog::Flush() {
          }
 
          // Rename file
-         mTmpPath = BaPath::ChangeFileExtension(mFullPath,
-               "_" + std::to_string(mFileCnt) + ".log");
+         if (mMaxNoFiles > 0) {
+            mTmpPath = BaPath::ChangeFileExtension(mFullPath,
+                  "_" + std::to_string(mFileCnt) + ".log");
 
-         std::cout << mFullPath << " to: " << mTmpPath << std::endl;
+            // Fixme: erase, this is only for debugging
+            std::cout << mFullPath << " to: " << mTmpPath << std::endl;
 
-         if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
-//            std::cout << errno << std::endl;
-            // todo: error
+            if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
+               std::cout << errno << std::endl;
+               // todo: error
+            }
          }
 
+         mFileSizeB = msg.size() + 1;
          mLog.open(mFullPath, std::ios_base::binary | std::ios_base::out);
          if (mLog.fail()) {
             // todo: error
@@ -418,7 +428,6 @@ bool CBaLog::saveCfg() {
    s = std::to_string(mOut);
    pIni->Set(TAG ":mOut", s.c_str());
 
-
    s = std::to_string(mMaxFileSizeB);
    pIni->Set(TAG ":mMaxFileSizeB", s.c_str());
 
@@ -433,7 +442,6 @@ bool CBaLog::saveCfg() {
 
    s = std::to_string(mMaxBufLength);
    pIni->Set(TAG ":mMaxBufLength" ,s.c_str());
-
 
 
    // Check if dir exists
@@ -498,11 +506,13 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
 
 
    // ////////////////// Write to buffer if it is not full /////////////////////
-   if ((!mMaxBufLength || mBuf.size() < mMaxBufLength) && (mOut & eBaLogOut_Log)) {
-      mBuf.push_back(entry);
-   } else {
-      // todo: else? log error?
-      return false;
+   if (mOut & eBaLogOut_Log) {
+      if (!mMaxBufLength || mBuf.size() < mMaxBufLength) {
+         mBuf.push_back(entry);
+      } else {
+         // todo: else? log error?
+         return false;
+      }
    }
    // //////////////////////////////////////////////////////////////////////////
 

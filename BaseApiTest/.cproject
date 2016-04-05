@@ -25,14 +25,11 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.43541900" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.2094831045" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.996964125" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 								</option>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.715553302" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__"/>
-								</option>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.715553302" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false"/>
 								<option id="gnu.c.compiler.option.dialect.std.1919181236" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.dialect.flags.209140897" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.243377597" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -41,8 +38,6 @@
 								<option id="gnu.cpp.compiler.option.optimization.level.1762662349" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1245856241" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1483359512" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
 								</option>
@@ -54,14 +49,11 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.653571971" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1023349002" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.168023713" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/LinDebugStatic}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/LinDebugStatic}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/WinDebugStatic}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.917126627" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="cppunit-1.12.1"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="&quot;${workspace_loc:/BaseApiTest/BaApi}&quot;"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="BaseApi"/>
-									<listOptionValue builtIn="false" value="pthread"/>
-									<listOptionValue builtIn="false" value="rt"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1752742973" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -70,12 +62,7 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.2098097594" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.275817991" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
-								<option id="gnu.both.asm.option.include.paths.236925785" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
-								</option>
+								<option id="gnu.both.asm.option.include.paths.236925785" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.434227960" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
@@ -86,23 +73,7 @@
 					</sourceEntries>
 				</configuration>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="BaseApi;cdt.managedbuild.config.gnu.cross.lib.debug.926602796.1946321314" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
-					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/static"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/Static"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
-					</externalSetting>
-				</externalSettings>
-				<externalSettings containerId="cppunit-1.12.1;cdt.managedbuild.config.gnu.cross.lib.debug.1175729937" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
-					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cppunit-1.12.1"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cppunit-1.12.1/Debug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cppunit-1.12.1" srcPrefixMapping="" srcRootPath=""/>
-					</externalSetting>
-				</externalSettings>
-			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.release.1744839448">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.release.1744839448" moduleId="org.eclipse.cdt.core.settings" name="LinRelease">
@@ -128,10 +99,9 @@
 								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.586048222" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.426279090" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.196059989" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.dialect.std.1618187723" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.559848693" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -140,8 +110,6 @@
 								<option id="gnu.cpp.compiler.option.optimization.level.1004365569" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1627077079" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.460125188" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
 								</option>
@@ -151,14 +119,11 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1263431964" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1134892186" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.libs.413579611" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="cppunit-1.12.1"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="&quot;${workspace_loc:/BaseApiTest/BaApi}&quot;"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="BaseApi"/>
-									<listOptionValue builtIn="false" value="pthread"/>
-									<listOptionValue builtIn="false" value="rt"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.497979510" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/Release}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/Release}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/WinDebugStatic}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1116552224" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -167,12 +132,7 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1847784422" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1229596452" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
-								<option id="gnu.both.asm.option.include.paths.739163195" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
-								</option>
+								<option id="gnu.both.asm.option.include.paths.739163195" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1163540323" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
@@ -183,22 +143,7 @@
 					</sourceEntries>
 				</configuration>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="BaseApi;cdt.managedbuild.config.gnu.cross.lib.release.2023765414" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
-					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
-					</externalSetting>
-				</externalSettings>
-				<externalSettings containerId="cppunit-1.12.1;cdt.managedbuild.config.gnu.cross.lib.release.736549948" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
-					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cppunit-1.12.1"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cppunit-1.12.1/Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="cppunit-1.12.1" srcPrefixMapping="" srcRootPath=""/>
-					</externalSetting>
-				</externalSettings>
-			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.146385879">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.146385879" moduleId="org.eclipse.cdt.core.settings" name="WinDebug">
@@ -230,9 +175,10 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1946188229" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.2060427455" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.577566348" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.dialect.std.1827458408" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.dialect.flags.1861566850" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
@@ -242,8 +188,8 @@
 								<option id="gnu.cpp.compiler.option.optimization.level.62730583" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.542766590" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1088111131" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
 								</option>
@@ -258,8 +204,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/WinDebugStatic}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1248565012" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="BaseApi"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="cppunit-1.12.1"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="BaseApi"/>
 								</option>
 								<option id="gnu.cpp.link.option.nostart.390809942" name="Do not use standard start files (-nostartfiles)" superClass="gnu.cpp.link.option.nostart" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.nodeflibs.2083670045" name="Do not use default libraries (-nodefaultlibs)" superClass="gnu.cpp.link.option.nodeflibs" value="false" valueType="boolean"/>
@@ -273,9 +219,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.229916141" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
 							<tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.cross.assembler.886384127" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.412839579" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1940576469" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -287,18 +231,12 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="BaseApi;cdt.managedbuild.config.gnu.cross.lib.debug.926602796.1946321314.1722010637" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
 				<externalSettings containerId="cppunit-1.12.1;cdt.managedbuild.config.gnu.cross.lib.debug.822650820.110008006" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cppunit-1.12.1"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/cppunit-1.12.1/WinDebugStatic"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="cppunit-1.12.1" srcPrefixMapping="" srcRootPath=""/>
-					</externalSetting>
-				</externalSettings>
-				<externalSettings containerId="BaseApi;cdt.managedbuild.config.gnu.cross.lib.debug.926602796.1946321314.1722010637" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
-					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/Static Win64"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 			</storageModule>

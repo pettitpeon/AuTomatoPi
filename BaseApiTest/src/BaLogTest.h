@@ -34,6 +34,8 @@ public:
    CPPUNIT_TEST(CreateReuseDestroy);
    CPPUNIT_TEST(Tags);
    CPPUNIT_TEST(Prios);
+   CPPUNIT_TEST(LogVsPrint);
+   CPPUNIT_TEST(FilesAndSizesOpts);
 
 //   CPPUNIT_TEST(Test);
 //   CPPUNIT_TEST(FromCfg);
@@ -45,6 +47,8 @@ public:
    void CreateReuseDestroy();
    void Tags();
    void Prios();
+   void LogVsPrint();
+   void FilesAndSizesOpts();
 
    void Test();
    void FromCfg();

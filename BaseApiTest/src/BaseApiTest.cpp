@@ -8,8 +8,9 @@
  *   Module description:
  */
 
-#include <iostream>
+#include <unistd.h>
 #include <stdio.h>
+#include <iostream>
 
 #include "cppunit/TestRunner.h"
 #include "cppunit/TestResult.h"
@@ -33,6 +34,9 @@ enum TTestSelection {
    eFullRegistry  = 0x4,
 };
 
+// Global variable with current working directory
+char gCWD[1024];
+
 static TTestSelection sSelection =
 //      eSingleTests;
       eSingleSuites;
@@ -46,8 +50,20 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite);
 /* ***************************************************************************/
 /*  ...
 **/
-int main() {
+int main(int argc, char* argv[]) {
    setbuf(stdout, 0); // this disables buffering for stdout.
+
+   // Print arguments
+   for(int i = 0; i < argc; i++) {
+      std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
+   }
+
+   // Get the working directory
+   gCWD[1024 - 1] = 0;
+   std::cout << "CWD: " << getcwd(gCWD, 1024) << std::endl;
+
+
+
 
    CPPUNIT_NS::ProgressListener progressListener;
    CPPUNIT_NS::TestResult result;

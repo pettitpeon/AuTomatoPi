@@ -25,9 +25,11 @@
 #include "BaUtils.hpp"
 
 #ifdef _WIN32
-# define RESPATH CPPU_RESPATH "BaIniParseTest\\"
+# define RESPATH CPPU_RESPATH "BaLogTest\\"
+# define OPTSDIR RESPATH      "opts\\"
 #else
-# define RESPATH CPPU_RESPATH "BaIniParseTest/"
+# define RESPATH CPPU_RESPATH "BaLogTest/"
+# define OPTSDIR RESPATH      "opts/"
 #endif
 
 
@@ -52,8 +54,12 @@ void CBaLogTest::setUp() {
 /*  ...
  */
 void CBaLogTest::tearDown() {
+   remove(OPTSDIR "LogOpts.log");
+   remove(OPTSDIR "LogOpts_1.log");
+   remove(OPTSDIR "LogOpts_2.log");
+   remove(OPTSDIR "LogOpts_3.log");
+   rmdir(OPTSDIR);
 }
-
 
 /* ****************************************************************************/
 /*  Test creation, normal logging, destruction saving the state and reuse
@@ -239,6 +245,149 @@ void CBaLogTest::Prios() {
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
    ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+}
+
+/* ****************************************************************************/
+/*  Test if it is logged and or printed to console
+ */
+void CBaLogTest::LogVsPrint() {
+   // Create default log
+   TBaLogInfo info;
+   CBaLog *pDef = CBaLog::Create("LogDef", "", eBaLogPrio_Trace, eBaLogOut_LogAndConsole);
+   ASS(pDef);
+
+   // Get the log info and save the full path. It is not available after
+   // destruction
+   pDef->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+
+   // Log some messages
+   ASS(pDef->Trace("DefTag", "35"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+
+   // Create again
+   pDef = CBaLog::Create("LogDef", "", eBaLogPrio_Trace, eBaLogOut_Log);
+   ASS(pDef);
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("LogDef", "35")); // No traces
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+
+   // Create again
+   pDef = CBaLog::Create("LogPrint", "", eBaLogPrio_Trace, eBaLogOut_Console);
+   ASS(pDef);
+   pDef->GetLogInfo(&info);
+   fullPath = info.fullPath;
+
+   // Test all prios and out of range
+   ASS(pDef->Trace("LogPrt", "0")); // No traces
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)0, BaFS::Size(fullPath));
+}
+
+/* ****************************************************************************/
+/*  Test the files, file sizes, and buffer options
+ *  // FIXME: check the files that the correct number of files are created
+ */
+void CBaLogTest::FilesAndSizesOpts() {
+   // Create default log
+   TBaLogInfo info;
+   TBaLogOptions opts;
+
+   opts.name = "LogOpts";
+   opts.path = OPTSDIR;
+   opts.prioFilt = eBaLogPrio_Trace;
+   opts.out = eBaLogOut_LogAndConsole;
+   opts.maxFileSizeB = 0; // Maximum 1 entry per file
+   opts.maxNoFiles = 0;   // Maximum 0 extra files
+   opts.maxBufLength = 0; // No buffer limit
+
+   // Directory does not exist
+   CBaLog *pObj = CBaLog::Create(opts, true);
+   ASS(!pObj);
+
+   // Try again with directory
+   ASS(BaFS::MkDir(OPTSDIR) == 0);
+   pObj = CBaLog::Create(opts);
+   ASS(pObj);
+   pObj->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+
+   // Log some messages
+   ASS(pObj->Trace("LogOpt",   "35"));
+   ASS(pObj->Trace("LogOpt",  " 36"));
+   ASS(pObj->Trace("LogOpt", "  37"));
+   pObj->Flush();
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pObj));
+   pObj = 0;
+   ASS_EQ((uint32_t)37, BaFS::Size(fullPath));
+   ASS(!BaFS::Exists(OPTSDIR "LogOpts_1.log"));
+
+   // New options
+   opts.maxFileSizeB = 0; // Maximum 1 entry per file
+   opts.maxNoFiles   = 0; // Maximum 0 extra files
+   opts.maxBufLength = 1; // No buffer limit of 1
+   pObj = CBaLog::Create(opts, true);
+   ASS(pObj);
+
+   // Log some messages
+   ASS(pObj->Trace("LogOpt",   "35"));
+   ASS(!pObj->Trace("LogOpt",  "0")); // This one is logged before flushing
+   pObj->Flush();
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pObj));
+   pObj = 0;
+   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+
+   // New options
+   opts.maxFileSizeB = 100; // Maximum 100 entries per file
+   opts.maxNoFiles   =   3; // Maximum 3 extra files
+   opts.maxBufLength = 100; // No buffer limit of 100
+   pObj = CBaLog::Create(opts, true);
+   ASS(pObj);
+
+   // Log some messages file 1
+   ASS(pObj->Trace("LogOpt",  "35"));
+   ASS(pObj->Trace("LogOpt",  "70"));
+   pObj->Flush();
+
+   // Log some messages file 2
+   ASS(pObj->Trace("LogOpt",   "35"));
+   ASS(pObj->Trace("LogOpt",  " 71"));
+   pObj->Flush();
+
+   // Log some messages file 3
+   ASS(pObj->Trace("LogOpt",    "35"));
+   ASS(pObj->Trace("LogOpt",  "  72"));
+   pObj->Flush();
+
+   // Log some messages file 0
+   ASS(pObj->Trace("LogOpt",  "35"));
+   ASS(pObj->Trace("LogOpt",  "70"));
+   pObj->Flush();
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pObj));
+   pObj = 0;
+   ASS_EQ((uint32_t)70, BaFS::Size(fullPath));
+   ASS_EQ((uint32_t)70, BaFS::Size(OPTSDIR "LogOpts_1.log"));
+   ASS_EQ((uint32_t)71, BaFS::Size(OPTSDIR "LogOpts_2.log"));
+   ASS_EQ((uint32_t)72, BaFS::Size(OPTSDIR "LogOpts_3.log"));
+   ASS(!BaFS::Exists(OPTSDIR "LogOpts_4.log"));
 }
 
 /* ****************************************************************************/

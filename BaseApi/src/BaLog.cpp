@@ -24,7 +24,7 @@ TBaLogHdl BaLogCreateDef(const char *name) {
 }
 
 //
-TBaLogHdl BaLogCreate(TBaLogOptions *pOpts) {
+TBaLogHdl BaLogCreate(const TBaLogOptions *pOpts) {
    return pOpts ? CBaLog::Create(*pOpts) : 0;
 }
 
@@ -132,7 +132,7 @@ IBaLog * CBaLogCreateDef(const char *name) {
 }
 
 //
-IBaLog * CBaLogCreate(TBaLogOptions *pOpts) {
+IBaLog * CBaLogCreate(const TBaLogOptions *pOpts) {
    return pOpts ? CBaLog::Create(*pOpts) : 0;
 }
 
