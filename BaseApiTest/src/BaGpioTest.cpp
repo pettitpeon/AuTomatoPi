@@ -137,6 +137,7 @@ void CBaGpioTest::SoftwarePWM() {
 void CBaGpioTest::NormalOperations() {
    std::cout << "Hello GPIO test\n";
    CPPUNIT_ASSERT(spGpio->SetOut());
+   spGpio->Reset(); // TODO: Check, It was added extra on Windows
    CPPUNIT_ASSERT(!spGpio->Get());
    CPPUNIT_ASSERT(spGpio->Set());
    CPPUNIT_ASSERT(spGpio->Get());

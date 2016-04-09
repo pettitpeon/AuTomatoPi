@@ -18,6 +18,10 @@
 #ifndef GENMACROS_H_
 #define GENMACROS_H_
 
+#ifdef _NDEBUG
+# include "dbg/BaDbgMacros.h"
+#endif
+
 /// Used to signalize a local function in the implementation file of a C-API
 #define LOCAL static
 

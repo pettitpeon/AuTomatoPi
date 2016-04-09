@@ -35,6 +35,7 @@
 								<option id="gnu.c.compiler.option.dialect.flags.986456974" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1772528044" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1467847081" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="/BaseApi/src"/>
@@ -46,6 +47,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.2017432344" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.595274018" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1600357166" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.135556620" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
@@ -198,6 +200,7 @@
 								<option id="gnu.c.compiler.option.dialect.flags.1149552677" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.149687535" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.967388123" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="/BaseApi/src"/>
@@ -209,6 +212,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1811002663" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1359911029" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1753023659" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.614201464" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
@@ -279,6 +283,7 @@
 								<option id="gnu.c.compiler.option.dialect.flags.901941838" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.2109380122" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1871391965" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/impl}&quot;"/>
@@ -291,6 +296,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1111504890" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.2021063666" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1786982710" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.1305331368" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>

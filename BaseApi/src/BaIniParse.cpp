@@ -107,8 +107,11 @@ public:
          if (line[len]=='\\') {
             /* Multi-line value */
             // Fixme: there is an issue with windows paths and multi-lines =(
-//            last=len ;
-//            continue ;
+            // This issue has to be looked at under windows
+#ifdef __linux
+            last=len ;
+            continue ;
+#endif
             last=0;
          } else {
             last=0 ;

@@ -32,7 +32,7 @@
 #include "../BaGenMacros.h"
 #include "BaCore.h"
 #include "BaIniParse.h"
-//#include "dbg/BaDbgMacros.h"
+#include "dbg/BaDbgMacros.h"
 
 /*------------------------------------------------------------------------------
     Defines

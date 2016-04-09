@@ -53,6 +53,9 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite);
 int main(int argc, char* argv[]) {
    setbuf(stdout, 0); // this disables buffering for stdout.
 
+#ifdef _NDEBUG
+   std::cout << "Debugging mode" << std::endl;
+#endif
    // Print arguments
    for(int i = 0; i < argc; i++) {
       std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
@@ -61,9 +64,6 @@ int main(int argc, char* argv[]) {
    // Get the working directory
    gCWD[1024 - 1] = 0;
    std::cout << "CWD: " << getcwd(gCWD, 1024) << std::endl;
-
-
-
 
    CPPUNIT_NS::ProgressListener progressListener;
    CPPUNIT_NS::TestResult result;
@@ -104,7 +104,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
    pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaGpioTest::suite());
 //   pSuite->addTest(CBaCoreTest::suite());
-//   pSuite->addTest(CBaIniParse::suite());
+   pSuite->addTest(CBaIniParse::suite());
    return pSuite;
 }
 

@@ -23,6 +23,7 @@
 #include "BaLog.h"
 #include "BaCore.h"
 #include "BaUtils.hpp"
+#include "dbg/BaDbgMacros.h"
 
 #ifdef _WIN32
 # define RESPATH CPPU_RESPATH "BaLogTest\\"
