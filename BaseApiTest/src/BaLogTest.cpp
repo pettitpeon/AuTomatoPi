@@ -15,6 +15,9 @@
 #include <sys/stat.h>
 //#include <unistd.h>
 
+//#include <stdio.h>
+
+
 #include <iostream>
 #include "BaLogTest.h"
 #include "BaGenMacros.h"
@@ -28,9 +31,11 @@
 #ifdef _WIN32
 # define RESPATH CPPU_RESPATH "BaLogTest\\"
 # define OPTSDIR RESPATH      "opts\\"
+# define STRSDIR RESPATH      "stress\\"
 #else
 # define RESPATH CPPU_RESPATH "BaLogTest/"
 # define OPTSDIR RESPATH      "opts/"
+# define STRSDIR RESPATH      "stress/"
 #endif
 
 
@@ -40,8 +45,13 @@
 
 #define STAMPSZ         32
 
+typedef struct TTemp {
+   CBaLog* pLog;
+   const char* tag;
+} TTemp;
 
-
+static void stresserRout(TBaCoreThreadArg *pArg);
+static void stresser4Rout(TBaCoreThreadArg *pArg);
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 
@@ -60,6 +70,16 @@ void CBaLogTest::tearDown() {
    remove(OPTSDIR "LogOpts_2.log");
    remove(OPTSDIR "LogOpts_3.log");
    rmdir(OPTSDIR);
+
+   remove(STRSDIR "LogStress.log");
+   std::string name;
+   for(uint32_t i = 0; i < 20; i++) {
+      name = STRSDIR + ("strs4_" + std::to_string(i) + ".log");
+      remove(name.c_str());
+
+   }
+
+   rmdir(STRSDIR);
 }
 
 /* ****************************************************************************/
@@ -299,7 +319,6 @@ void CBaLogTest::LogVsPrint() {
 
 /* ****************************************************************************/
 /*  Test the files, file sizes, and buffer options
- *  // FIXME: check the files that the correct number of files are created
  */
 void CBaLogTest::FilesAndSizesOpts() {
    // Create default log
@@ -315,12 +334,12 @@ void CBaLogTest::FilesAndSizesOpts() {
    opts.maxBufLength = 0; // No buffer limit
 
    // Directory does not exist
-   CBaLog *pObj = CBaLog::Create(opts, true);
+   CBaLog *pObj = CBaLog::Create(opts);
    ASS(!pObj);
 
    // Try again with directory
    ASS(BaFS::MkDir(OPTSDIR) == 0);
-   pObj = CBaLog::Create(opts);
+   pObj = CBaLog::Create(opts, true);
    ASS(pObj);
    pObj->GetLogInfo(&info);
    std::string fullPath(info.fullPath);
@@ -392,6 +411,92 @@ void CBaLogTest::FilesAndSizesOpts() {
 }
 
 /* ****************************************************************************/
+/*  Stress the damn logger!
+ */
+void CBaLogTest::Stress() {
+   // Create default log
+   TBaLogInfo info;
+   TBaLogOptions opts;
+   TBaCoreThreadHdl stresser1 = 0;
+   TBaCoreThreadHdl stresser2 = 0;
+   TBaCoreThreadHdl stresser3 = 0;
+   TBaCoreThreadHdl stresser4 = 0;
+   TBaCoreThreadArg thArg1;
+   TBaCoreThreadArg thArg2;
+   TBaCoreThreadArg thArg3;
+   TBaCoreThreadArg thArg4;
+
+   TTemp arg1;
+   TTemp arg2;
+   TTemp arg3;
+
+   BaFS::MkDir(STRSDIR);
+
+   opts.name = "LogStress";
+   opts.path = STRSDIR;
+   opts.prioFilt = eBaLogPrio_Trace;
+   opts.out = eBaLogOut_Log;
+   opts.maxFileSizeB =  1024*1024; // 1 MiB
+   opts.maxNoFiles   =  3;    // Maximum 0 extra files
+   opts.maxBufLength = 1000;  // No buffer limit
+
+   // Create loggers
+   CBaLog* pObj = CBaLog::Create(opts);
+   ASS(pObj);
+   pObj->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+   std::vector<CBaLog*> loggers(20);
+   std::string name;
+   for(uint32_t i = 0; i < loggers.size(); i++) {
+      name = "strs4_" + std::to_string(i);
+      loggers[i] = CBaLog::Create(name, opts.path, opts.prioFilt, opts.out);
+      ASS(loggers[i]);
+   }
+
+   // 1. stresser
+   arg1.pLog = pObj;
+   arg1.tag = "stres1";
+   thArg1.exitTh = eBaBool_false;
+   thArg1.pArg = &arg1;
+   stresser1 = BaCoreCreateThread("logStresser1", stresserRout, &thArg1, eBaCorePrio_Normal);
+
+   // 2. stresser
+   arg2.pLog = pObj;
+   arg2.tag = "stres2";
+   thArg2.exitTh = eBaBool_false;
+   thArg2.pArg = &arg2;
+   stresser2 = BaCoreCreateThread("logStresser2", stresserRout, &thArg2, eBaCorePrio_Normal);
+
+   // 3. stresser
+   arg3.pLog = pObj;
+   arg3.tag = "stres3";
+   thArg3.exitTh = eBaBool_false;
+   thArg3.pArg = &arg3;
+   stresser3 = BaCoreCreateThread("logStresser3", stresserRout, &thArg3, eBaCorePrio_Normal);
+
+   // 4. stresser
+   thArg4.exitTh = false;
+   thArg4.pArg = &loggers;
+   stresser4 = BaCoreCreateThread("logStresser4", stresser4Rout, &thArg4, eBaCorePrio_Normal);
+
+   // Wait and stop all threads
+   BaCoreSleep(5);
+   BaCoreDestroyThread(stresser1, 100);
+   BaCoreDestroyThread(stresser2, 100);
+   BaCoreDestroyThread(stresser3, 100);
+   BaCoreDestroyThread(stresser4, 100);
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pObj));
+   for(uint32_t i = 0; i < loggers.size(); i++) {
+      CBaLog::Destroy(loggers[i]);
+   }
+   pObj = 0;
+   uint64_t size = BaFS::DirSize(STRSDIR, (uint32_t)-1);
+   std::cout << size << std::endl;
+}
+
+/* ****************************************************************************/
 /*  ...
  */
 void CBaLogTest::Test() {
@@ -451,3 +556,34 @@ void CBaLogTest::Test() {
 void CBaLogTest::FromCfg() {
    //
 }
+
+static void stresserRout(TBaCoreThreadArg *pArg) {
+   CBaLog* pObj = ((TTemp*) pArg->pArg)->pLog;
+   const char* tag = ((TTemp*) pArg->pArg)->tag;
+   int i = 0;
+   for (i = 0; i < 5000 && !pArg->exitTh; ++i) {
+      pObj->TraceF(tag, "Message No. %04i", i);
+      if (i % 50 == 0) {
+         BaCoreMSleep(50);
+      }
+   }
+
+   std::cout << i << std::endl;
+}
+
+static void stresser4Rout(TBaCoreThreadArg *pArg) {
+   std::vector<CBaLog*> &loggers = *((std::vector<CBaLog*>*) pArg->pArg);
+   int i = 0;
+   uint32_t j = 0;
+   for (i = 0; i < 5000 && !pArg->exitTh; ++i) {
+      for (j = 0; j < loggers.size(); ++j) {
+         loggers[j]->TraceF("stres4", "Message No. %04i", i);
+      }
+      if (i % 50 == 0) {
+         BaCoreMSleep(50);
+      }
+   }
+
+   std::cout << i << std::endl;
+}
+

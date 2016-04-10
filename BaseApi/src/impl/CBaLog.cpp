@@ -11,7 +11,6 @@
 /*------------------------------------------------------------------------------
     C Includes
  -----------------------------------------------------------------------------*/
-//#include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
 //#include <sys/types.h>
@@ -117,7 +116,7 @@ bool CBaLog::init(bool disableThread) {
 
    sLogdArg.exitTh = false;
    if (disableThread) {
-      sLogdHdl = BaCoreCreateThread("BaLogD", logRoutine, &sLogdArg, eBaCorePrio_High);
+      sLogdHdl = BaCoreCreateThread("BaLogD", logRoutine, &sLogdArg, eBaCorePrio_Highest);
    } else {
       sLogdHdl = (void*)-1;
    }
@@ -356,8 +355,10 @@ bool inline CBaLog::ErrorF(const char* tag, const char* fmt, ...) {
 //
 inline void CBaLog::Flush() {
 
+
    // Avoid messing around with the buffer while it is being printed
    std::lock_guard<std::mutex> lck(mMtx);
+
 
    // Iterate messages in buffer
    for (auto &msg : mBuf) {

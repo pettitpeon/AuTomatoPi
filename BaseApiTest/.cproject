@@ -208,6 +208,7 @@
 								<option id="gnu.c.compiler.option.debugging.level.2060427455" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.577566348" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
 								</option>
@@ -223,6 +224,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.542766590" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1088111131" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1/include}&quot;"/>
 								</option>
@@ -241,6 +243,7 @@
 								</option>
 								<option id="gnu.cpp.link.option.libs.1248565012" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="cppunit-1.12.1"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="BaseApi"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="baseapi"/>
 								</option>
 								<option id="gnu.cpp.link.option.nostart.390809942" name="Do not use standard start files (-nostartfiles)" superClass="gnu.cpp.link.option.nostart" value="false" valueType="boolean"/>
@@ -256,6 +259,7 @@
 							<tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.cross.assembler.886384127" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.412839579" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cppunit-1.12.1}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1940576469" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -267,7 +271,13 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="BaseApi;cdt.managedbuild.config.gnu.cross.lib.debug.926602796.1946321314.1722010637" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+				<externalSettings containerId="BaseApi;cdt.managedbuild.config.gnu.cross.lib.debug.926602796.1946321314.1722010637" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/WinDebugStatic"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
+					</externalSetting>
+				</externalSettings>
 				<externalSettings containerId="cppunit-1.12.1;cdt.managedbuild.config.gnu.cross.lib.debug.822650820.110008006" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/cppunit-1.12.1"/>
