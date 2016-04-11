@@ -31,6 +31,7 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaLogTest);
 
+   CPPUNIT_TEST(Test);
    CPPUNIT_TEST(CreateReuseDestroy);
    CPPUNIT_TEST(Tags);
    CPPUNIT_TEST(Prios);
@@ -53,7 +54,6 @@ public:
    void Stress();
 
    void Test();
-   void FromCfg();
 };
 
 #endif // BALOGTEST_H_

@@ -385,8 +385,8 @@ inline void CBaLog::Flush() {
             mTmpPath = BaPath::ChangeFileExtension(mFullPath,
                   "_" + std::to_string(mFileCnt) + ".log");
 
-            // Fixme: erase, this is only for debugging
-            std::cout << mFullPath << " to: " << mTmpPath << std::endl;
+            // this is only for debugging
+//            std::cout << mFullPath << " to: " << mTmpPath << std::endl;
 
             if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
                std::cout << errno << std::endl;

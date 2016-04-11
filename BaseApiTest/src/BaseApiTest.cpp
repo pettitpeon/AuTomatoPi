@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <iostream>
+#include <chrono>
 
 #include "cppunit/TestRunner.h"
 #include "cppunit/TestResult.h"
@@ -39,8 +40,8 @@ char gCWD[1024];
 
 static TTestSelection sSelection =
 //      eSingleTests;
-      eSingleSuites;
-//      eFullRegistry;
+//      eSingleSuites;
+      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -51,11 +52,15 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite);
 /*  ...
 **/
 int main(int argc, char* argv[]) {
-   setbuf(stdout, 0); // this disables buffering for stdout.
+   auto start = std::chrono::system_clock::now();
+
+   // This disables buffering for stdout.
+   setbuf(stdout, 0);
 
 #ifdef _NDEBUG
    std::cout << "Debugging mode" << std::endl;
 #endif
+
    // Print arguments
    for(int i = 0; i < argc; i++) {
       std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
@@ -91,7 +96,9 @@ int main(int argc, char* argv[]) {
 
    testRunner.run(result);
    compOut.write();
+   std::chrono::duration<double> durSec = std::chrono::system_clock::now() - start;
 
+   std::cout << "Duration: " << durSec.count() << " s" <<std::endl;
 	return 0;
 }
 
@@ -115,4 +122,5 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite) {
    pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaCoreTest>("ThreadsSpecialCases", &CBaCoreTest::ThreadsSpecialCases));
    return pSuite;
 }
+
 

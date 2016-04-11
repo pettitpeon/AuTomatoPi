@@ -8,7 +8,7 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  Defines for unit tests
  */
 /*------------------------------------------------------------------------------
  */
@@ -21,11 +21,9 @@
 # define CPPU_RESPATH "res/"
 #endif
 
-// STL macros
-//#define STL_VEC_SZ(V) (V._M_impl._M_finish - V._M_impl._M_start)
-//#define STL_MAP_SZ(M) (M._M_t._M_impl._M_node_count)
-//
-//#define TestMAP sLoggers._M_t._M_impl._M_node_count
-
+// Shorter names
+#define ASS             CPPUNIT_ASSERT
+#define ASS_MSG         CPPUNIT_ASSERT_MESSAGE
+#define ASS_EQ          CPPUNIT_ASSERT_EQUAL
 
 #endif /* CPPU_H_ */

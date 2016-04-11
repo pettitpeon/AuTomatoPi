@@ -21,8 +21,6 @@
 #include "BaBool.h"
 
 
-// FIXME: determine the tag size
-
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
