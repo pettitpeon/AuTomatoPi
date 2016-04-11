@@ -7,6 +7,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/Debug"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/LinDebugDynamic"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
@@ -34,6 +35,7 @@
 								<option id="gnu.c.compiler.option.dialect.flags.986456974" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1772528044" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1467847081" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="/BaseApi/src"/>
@@ -45,6 +47,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.2017432344" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.595274018" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1600357166" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.135556620" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
@@ -73,6 +76,10 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="dbg" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/dbg"/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -83,6 +90,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/Release"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/LinReleaseDynamic"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
@@ -149,6 +157,10 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="dbg" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/dbg"/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -160,6 +172,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/static"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/Static"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/LinDebugStatic"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
@@ -187,6 +200,7 @@
 								<option id="gnu.c.compiler.option.dialect.flags.1149552677" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.149687535" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.967388123" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="/BaseApi/src"/>
@@ -198,6 +212,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1811002663" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1359911029" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1753023659" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.614201464" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
@@ -226,6 +241,10 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="dbg" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/dbg"/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -235,7 +254,7 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/BaseApi"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/Static Win64"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/BaseApi/WinDebugStatic"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="BaseApi" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
@@ -255,7 +274,14 @@
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.1618513380" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="" valueType="string"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.713776624" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="C:\SysGCC\mingw-w64\i686-4.9.2-posix-dwarf-rt_v4-rev4\mingw32" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.3416998" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/BaseApi}/WinDebugStatic" id="cdt.managedbuild.builder.gnu.cross.2088861052" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/BaseApi}/WinDebugStatic" id="cdt.managedbuild.builder.gnu.cross.2088861052" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="LinDebugDynamic"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="LinReleaseDynamic"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="LinDebugStatic"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="WinDebugStatic"/>
+								</outputEntries>
+							</builder>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.cross.c.compiler.1579790268" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1799016018" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.507856521" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
@@ -263,9 +289,11 @@
 								<option id="gnu.c.compiler.option.dialect.flags.901941838" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.2109380122" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1871391965" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="/BaseApi/src"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/impl}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.564752859" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -274,6 +302,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1111504890" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.2021063666" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_USE_MATH_DEFINES=1"/>
+									<listOptionValue builtIn="false" value="_NDEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1786982710" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.1305331368" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
@@ -296,12 +325,16 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1389567397" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
 							<tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.cross.assembler.1091208253" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.985402638" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BaseApi/src/impl}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/impl}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.10093574" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>

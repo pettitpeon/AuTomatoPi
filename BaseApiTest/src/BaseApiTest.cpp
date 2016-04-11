@@ -8,8 +8,10 @@
  *   Module description:
  */
 
-#include <iostream>
+#include <unistd.h>
 #include <stdio.h>
+#include <iostream>
+#include <chrono>
 
 #include "cppunit/TestRunner.h"
 #include "cppunit/TestResult.h"
@@ -33,10 +35,13 @@ enum TTestSelection {
    eFullRegistry  = 0x4,
 };
 
+// Global variable with current working directory
+char gCWD[1024];
+
 static TTestSelection sSelection =
 //      eSingleTests;
-      eSingleSuites;
-//      eFullRegistry;
+//      eSingleSuites;
+      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -46,8 +51,24 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite);
 /* ***************************************************************************/
 /*  ...
 **/
-int main() {
-   setbuf(stdout, 0); // this disables buffering for stdout.
+int main(int argc, char* argv[]) {
+   auto start = std::chrono::system_clock::now();
+
+   // This disables buffering for stdout.
+   setbuf(stdout, 0);
+
+#ifdef _NDEBUG
+   std::cout << "Debugging mode" << std::endl;
+#endif
+
+   // Print arguments
+   for(int i = 0; i < argc; i++) {
+      std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
+   }
+
+   // Get the working directory
+   gCWD[1024 - 1] = 0;
+   std::cout << "CWD: " << getcwd(gCWD, 1024) << std::endl;
 
    CPPUNIT_NS::ProgressListener progressListener;
    CPPUNIT_NS::TestResult result;
@@ -75,7 +96,9 @@ int main() {
 
    testRunner.run(result);
    compOut.write();
+   std::chrono::duration<double> durSec = std::chrono::system_clock::now() - start;
 
+   std::cout << "Duration: " << durSec.count() << " s" <<std::endl;
 	return 0;
 }
 
@@ -99,4 +122,5 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite) {
    pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaCoreTest>("ThreadsSpecialCases", &CBaCoreTest::ThreadsSpecialCases));
    return pSuite;
 }
+
 

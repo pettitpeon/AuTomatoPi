@@ -21,8 +21,6 @@
 #include "BaBool.h"
 
 
-// FIXME: determine the tag size
-
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
@@ -49,7 +47,7 @@ typedef struct TBaLogOptions {
    EBaLogPrio  prioFilt; ///< Priority filter
    EBaLogOut   out; ///< Output specifier
    uint32_t    maxFileSizeB; ///< Maximum file size in bytes
-   uint16_t    maxNoFiles; ///< Maximum number of files
+   uint16_t    maxNoFiles; ///< Maximum number of extra files
    uint16_t    maxBufLength; ///< Maximum number of messages in the buffer
 } TBaLogOptions;
 
@@ -60,7 +58,7 @@ typedef struct TBaLogInfo {
    EBaLogPrio  prioFilt; ///< Priority filter
    EBaLogOut   out; ///< Output specifier
    uint32_t    maxFileSizeB; ///< Maximum file size in bytes
-   uint16_t    maxNoFiles; ///< Maximum number of files
+   uint16_t    maxNoFiles; ///< Maximum number of extra files
    uint16_t    maxBufLength; ///< Maximum number of messages in the buffer
    uint32_t    fileSizeB; ///< File size of current file in bytes
 } TBaLogInfo;
@@ -88,7 +86,7 @@ TBaLogHdl BaLogCreateDef(
  *  @return Handle if success, otherwise, null
  */
 TBaLogHdl BaLogCreate(
-      TBaLogOptions *pOpts ///< [in] Logger options
+      const TBaLogOptions *pOpts ///< [in] Logger options
       );
 
 /******************************************************************************/
@@ -278,7 +276,7 @@ extern "C" IBaLog * CBaLogCreateDef(
  *  @return Handle if success, otherwise, null
  */
 extern "C" IBaLog * CBaLogCreate(
-      TBaLogOptions *pOpts ///< [in] Logger options
+      const TBaLogOptions *pOpts ///< [in] Logger options
       );
 
 /******************************************************************************/

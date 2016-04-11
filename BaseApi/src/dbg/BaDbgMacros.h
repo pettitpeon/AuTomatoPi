@@ -2,28 +2,27 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : CppU.h
- *   Date     : 14.10.2015
+ *   Module   : BaDbgMacros.h
+ *   Date     : 14.03.2016
  *------------------------------------------------------------------------------
  *   Module description:
  */
 /** @file
- *  Defines for unit tests
+ *  Macros for debugging STL
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef CPPU_H_
-#define CPPU_H_
+#ifndef DADBGMACROS_H_
+#define DADBGMACROS_H_
 
-#ifdef _WIN32
-# define CPPU_RESPATH "res\\"
-#else
-# define CPPU_RESPATH "res/"
-#endif
+// String macros
+#define STL_STRING(S)    (S._M_dataplus._M_p)
 
-// Shorter names
-#define ASS             CPPUNIT_ASSERT
-#define ASS_MSG         CPPUNIT_ASSERT_MESSAGE
-#define ASS_EQ          CPPUNIT_ASSERT_EQUAL
+// Vector macros
+#define STL_VEC_SZ(V)    (V._M_impl._M_finish - V._M_impl._M_start)
+#define STL_VEC_PS(V, P) (*(mBuf._M_impl._M_start + P))
 
-#endif /* CPPU_H_ */
+// Map macros
+#define STL_MAP_SZ(M)    (M._M_t._M_impl._M_node_count)
+
+#endif /* DADBGMACROS_H_ */

@@ -44,17 +44,23 @@ public:
          EBaLogPrio  prioFilt = eBaLogPrio_Trace,
          EBaLogOut   out = eBaLogOut_LogAndConsole,
          uint32_t    maxFileSizeB = 1048576, // 1 MiB
-         uint16_t    maxNoFiles   = 3,
-         uint16_t    maxBufLength = 0
+         uint16_t    maxNoFiles   = 3, // max No of extra files
+         uint16_t    maxBufLength = 0,
+         bool disableThread = false // Disable the internal worker thread to
+         // manually flush the loggerS
          );
 
    static CBaLog* Create(
-         TBaLogOptions &rOpts
+         const TBaLogOptions &rOpts,
+         bool disableThread = false // Disable the internal worker thread to
+         // manually flush the loggerS
          );
 
    // Factory from config
    static CBaLog* CreateFromCfg(
-         std::string cfgFile
+         std::string cfgFile,
+         bool disableThread = false // Disable the internal worker thread to
+         // manually flush the loggerS
          );
 
    //
@@ -88,9 +94,9 @@ private:
    static CBaLog* commonCreate(
          std::string name, std::string path, EBaLogPrio prioFilt, EBaLogOut out,
          int32_t maxFileSizeB, uint16_t maxNoFiles, uint16_t maxBufLength,
-         uint16_t fileCnt, int32_t fileSizeB, bool fromCfg = false);
+         uint16_t fileCnt, int32_t fileSizeB, bool fromCfg, bool disableThread);
 
-   static bool init();
+   static bool init(bool disableThreadDebug);
    static bool exit();
    static void logRoutine(
          TBaCoreThreadArg *pArg
@@ -126,7 +132,7 @@ private:
    const EBaLogPrio mPrioFilt; // Priority filter, allows messages equal of higher
    const EBaLogOut mOut; // Output form specifier
    const uint32_t mMaxFileSizeB; // File size limit in bytes
-   const uint16_t mMaxNoFiles; // Maximum no. of history files
+   const uint16_t mMaxNoFiles; // Maximum no. of extra history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer
 
    // Things to keep track of

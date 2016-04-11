@@ -31,9 +31,13 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaLogTest);
 
+   CPPUNIT_TEST(Test);
    CPPUNIT_TEST(CreateReuseDestroy);
    CPPUNIT_TEST(Tags);
    CPPUNIT_TEST(Prios);
+   CPPUNIT_TEST(LogVsPrint);
+   CPPUNIT_TEST(FilesAndSizesOpts);
+   CPPUNIT_TEST(Stress);
 
 //   CPPUNIT_TEST(Test);
 //   CPPUNIT_TEST(FromCfg);
@@ -45,10 +49,13 @@ public:
    void CreateReuseDestroy();
    void Tags();
    void Prios();
+   void LogVsPrint();
+   void FilesAndSizesOpts();
+   void Stress();
 
    void Test();
-   void FromCfg();
 };
 
 #endif // BALOGTEST_H_
+
 

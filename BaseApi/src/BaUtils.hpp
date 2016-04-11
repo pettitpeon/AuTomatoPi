@@ -20,10 +20,13 @@
 #define BAUTILS_HPP_
 
 #if defined(__cplusplus)
-#include <string>
-#include <istream>
 #include <sys/stat.h> // mkdir()
 #include <stdio.h> // rename()
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+#include <string>
+#include <istream>
 
 /******************************************************************************/
 /** Namespace to wrap all file system functions
@@ -57,7 +60,7 @@ static inline int Rename(
       std::string newPath ///< [in] New file or directory path
       ) {
 #ifdef _WIN32
-   remove(path.c_str());
+   remove(newPath.c_str());
 #endif
    return rename(path.c_str(), newPath.c_str());
 }
@@ -71,9 +74,64 @@ static inline uint32_t Size(
       ) {
    struct stat desc;
    if (stat(path.c_str(), &desc) == 0) {
-
+      return desc.st_size;
    }
-   return desc.st_size;
+
+   return 0;
+}
+
+/******************************************************************************/
+/** Gets the directory size in bytes recursively with a maximum depth
+ *  @return directory size in bytes
+ */
+static inline uint64_t DirSize(
+      std::string path, ///< [in] Path of directory
+      uint32_t maxDepth = (uint32_t)-1 ///< [in] Optional maximum depth
+      ) {
+
+   // When maximum depth is reached, stop
+   if (maxDepth == 0) {
+      return 0;
+   }
+
+   DIR *d;
+   struct dirent *de; // directory entry
+   uint64_t total = 0;
+   struct stat info;
+#ifdef _WIN32
+      char del = '\\';
+#else
+      char del = '/';
+#endif
+
+   d = opendir(path.c_str());
+   if (!d) {
+      return 0;
+   }
+
+   std::string file;
+   for (de = readdir(d); de != 0; de = readdir(d)) {
+
+      // Skip "." and ".."
+      if ((strcmp(de->d_name, "..") == 0) || (strcmp(de->d_name, ".") == 0)) {
+         continue;
+      }
+
+      // Get the file info
+      file = path + de->d_name;
+      if(stat( file.c_str(), &info ) == 0) {
+
+         // Check if is directory and recurse
+         if( info.st_mode & S_IFDIR ) {
+            total += DirSize(file + del, --maxDepth);
+         } else {
+            total += info.st_size;
+         }
+      }
+   }
+
+   closedir(d);
+   return total;
 }
 
 /******************************************************************************/
