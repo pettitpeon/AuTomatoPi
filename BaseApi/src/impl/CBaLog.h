@@ -27,6 +27,7 @@
 
 struct TBaCoreThreadArg;
 
+#define BASYSLOG(tag, fmt, ...) CBaLog::SysLog(tag, __LINE__, fmt, __VA_ARGS__)
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
@@ -67,6 +68,15 @@ public:
    static bool Destroy (
          IBaLog* hdl,
          bool saveCfg = false
+         );
+
+   //
+   static void SysLog(
+         const char *tag,
+         int line,
+         const char
+         *fmt,
+         ...
          );
 
    // Info function

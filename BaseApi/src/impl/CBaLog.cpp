@@ -15,6 +15,10 @@
 #include <time.h>
 //#include <sys/types.h>
 #include <errno.h>
+#ifdef __linux
+# include <syslog.h>
+#endif
+
 
 /*------------------------------------------------------------------------------
     C++ Includes
@@ -90,6 +94,7 @@ void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
    }
 }
 
+//
 void CBaLog::getCfgPath(std::string &rNamePath) {
 
    // If only name (without extension), add the default path and extension
@@ -105,11 +110,10 @@ bool CBaLog::init(bool disableThread) {
    }
 
    // Check if dir exists
-   struct stat info;
-   if (stat(LOGDIR, &info) != 0) {
+   if (!BaFS::Exists(LOGDIR)) {
       // Create directory
       if (BaFS::MkDir(LOGDIR) != 0) {
-         // not ok
+         SysLog(TAG, __LINE__, "Could not create dir: %s", LOGDIR);
          return false;
       }
    }
@@ -142,7 +146,6 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
       uint16_t fileCnt, int32_t fileSizeB, bool fromCfg, bool disableThread)  {
 
    if (name.empty() || !init(disableThread)) {
-      // todo Log error
       return 0;
    }
 
@@ -165,7 +168,7 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
    CBaLog *p = new CBaLog(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
          fileSizeB);
    if (!p) {
-      // todo Log error
+      SysLog(TAG, __LINE__, "Could not create logger");
       return 0;
    }
    // //////////////// Create //////////////
@@ -272,6 +275,22 @@ bool CBaLog::Destroy(IBaLog *pHdl, bool saveCfg) {
    }
 
    return true;
+}
+
+//
+void CBaLog::SysLog(const char *tag, int line, const char *fmt, ...) {
+   va_list arg;
+   va_start(arg, fmt);
+   std::string s = BaFString(fmt, arg);
+   va_end(arg);
+
+   // FIXME: limit tag
+#ifdef __linux
+   syslog(LOG_ERR, "%s(%d): %s", tag, line, s.c_str());
+   closelog();
+#else
+   printf("%s(%d): %s\n", tag, line, s.c_str());
+#endif
 }
 
 //
@@ -532,9 +551,11 @@ bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
       return false;
    }
 
-   uint16_t size = snprintf(0, 0, fmt, arg);
+   // FIXME: Bug in size
+   uint16_t size = vsnprintf(0, 0, fmt, arg);
 
    // WHAT ABOUT REENTRANCY? No problema!
+   // Not using the FString function to be as quick as possible
    char msg[size + 1];
    vsnprintf(msg, size, fmt, arg);
    std::lock_guard<std::mutex> lck(mMtx);
@@ -569,6 +590,4 @@ LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat) {
    return buffer;
 }
 } // NS tmp_4_9_2
-
-
 

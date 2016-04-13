@@ -44,35 +44,38 @@ typedef struct TTemp {
 static void stresserRout(TBaCoreThreadArg *pArg);
 static void stresser4Rout(TBaCoreThreadArg *pArg);
 
+static int sInit = 0;
+
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 
 /* ****************************************************************************/
 /*  ...
  */
 void CBaLogTest::setUp() {
+   sInit++;
 }
 
 /* ****************************************************************************/
 /*  ...
  */
 void CBaLogTest::tearDown() {
-   remove(OPTSDIR "LogOpts.log");
-   remove(OPTSDIR "LogOpts_1.log");
-   remove(OPTSDIR "LogOpts_2.log");
-   remove(OPTSDIR "LogOpts_3.log");
-   rmdir(OPTSDIR);
+   sInit--;
+}
 
-   remove(STRSDIR "LogStress.log");
-   std::string name;
-   for(uint32_t i = 0; i < LOGRS_SZ; i++) {
-      name = STRSDIR + ("strs4_" + std::to_string(i) + ".log");
-      remove(name.c_str());
+/* ****************************************************************************/
+/*  Initialize resources
+ */
+void CBaLogTest::Init() {
+   BaFS::MkDir(RESPATH);
+   BaFS::MkDir(STRSDIR);
+}
 
-   }
-   rmdir(STRSDIR);
-
-   remove(RESPATH "LogDef.log");
-   remove(RESPATH "LogPrint.log");
+/* ****************************************************************************/
+/*  For quick tests
+ */
+void CBaLogTest::Test() {
+   CPPUNIT_ASSERT(true);
+   CBaLog::SysLog("tag", __LINE__, "%s", "Message");
 }
 
 /* ****************************************************************************/
@@ -423,8 +426,6 @@ void CBaLogTest::Stress() {
    TTemp arg2;
    TTemp arg3;
 
-   BaFS::MkDir(STRSDIR);
-
    opts.name = "LogStress";
    opts.path = STRSDIR;
    opts.prioFilt = eBaLogPrio_Trace;
@@ -499,11 +500,33 @@ void CBaLogTest::Stress() {
 }
 
 /* ****************************************************************************/
+/*  SysLog
+ */
+void CBaLogTest::SysLog() {
+   CBaLog::SysLog("SL_Test", __LINE__, "%s", "Test message");
+}
+
+/* ****************************************************************************/
 /*  For quick tests
  */
-void CBaLogTest::Test() {
-   CPPUNIT_ASSERT(true);
+void CBaLogTest::Exit() {
+   remove(OPTSDIR "LogOpts.log");
+   remove(OPTSDIR "LogOpts_1.log");
+   remove(OPTSDIR "LogOpts_2.log");
+   remove(OPTSDIR "LogOpts_3.log");
+   rmdir(OPTSDIR);
 
+   remove(STRSDIR "LogStress.log");
+   std::string name;
+   for(uint32_t i = 0; i < LOGRS_SZ; i++) {
+      name = STRSDIR + ("strs4_" + std::to_string(i) + ".log");
+      remove(name.c_str());
+
+   }
+   rmdir(STRSDIR);
+   remove(RESPATH "LogDef.log");
+   remove(RESPATH "LogPrint.log");
+   rmdir(RESPATH);
 }
 
 //
