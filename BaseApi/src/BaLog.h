@@ -117,7 +117,7 @@ TBaBoolRC BaLogDestroy(
 //@{
 /******************************************************************************/
 /** Logs a message into the logger and adds a @c tag and a time stamp.
- *  The @c Trace() and rest functions have an implied priority
+ *  The @c Trace() and family functions have an implied priority
  *  @return true if success, otherwise, false
  */
 TBaBoolRC BaLogLog(
@@ -153,7 +153,7 @@ TBaBoolRC BaLogError(
 /***************************************************************************/
 /** Logs a message into the logger like @c printf() and adds a @c tag and a
  *  time stamp. These functions have a limit of 65534 characters per message.
- *  The @c TraceF() and rest functions have an implied priority
+ *  The @c TraceF() and family functions have an implied priority
  *  @return true if success, otherwise, false
  */
 TBaBoolRC BaLogLogF(
@@ -177,7 +177,6 @@ TBaBoolRC BaLogWarningF(
       const char* fmt,  ///< [in] Message format
       ...               ///> [in] Format arguments
       );
-
 
 TBaBoolRC BaLogErrorF(
       TBaLogHdl *pHdl,  ///< [in] Handle
@@ -220,7 +219,7 @@ public:
    //@{
    /***************************************************************************/
    /** Logs a message into the logger and adds a @c tag and a time stamp.
-    *  The @c Trace() and rest functions have an implied priority
+    *  The @c Trace() and family functions have an implied priority
     *  @return true if success, otherwise, false
     */
    virtual bool Log(
@@ -247,7 +246,7 @@ public:
    /***************************************************************************/
    /** Logs a message into the logger like @c printf() and adds a @c tag and a
     *  time stamp. These functions have a limit of 65534 characters per message.
-    *  The @c TraceF() and rest functions have an implied priority
+    *  The @c TraceF() and family functions have an implied priority
     *  @return true if success, otherwise, false
     */
    virtual bool LogF(
