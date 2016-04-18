@@ -28,32 +28,37 @@ class CBaLogTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
+   void startSuite() {};
+
 
    CPPUNIT_TEST_SUITE(CBaLogTest);
 
+   CPPUNIT_TEST(Init);
    CPPUNIT_TEST(Test);
    CPPUNIT_TEST(CreateReuseDestroy);
+   CPPUNIT_TEST(TracesF);
    CPPUNIT_TEST(Tags);
    CPPUNIT_TEST(Prios);
    CPPUNIT_TEST(LogVsPrint);
    CPPUNIT_TEST(FilesAndSizesOpts);
    CPPUNIT_TEST(Stress);
-
-//   CPPUNIT_TEST(Test);
-//   CPPUNIT_TEST(FromCfg);
+   CPPUNIT_TEST(SysLog);
+   CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
-
+   void Init();
+   void Test();
    void CreateReuseDestroy();
+   void TracesF();
    void Tags();
    void Prios();
    void LogVsPrint();
    void FilesAndSizesOpts();
    void Stress();
-
-   void Test();
+   void SysLog();
+   void Exit();
 };
 
 #endif // BALOGTEST_H_

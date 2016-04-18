@@ -69,6 +69,13 @@ public:
          bool saveCfg = false
          );
 
+   //
+   static void SysLog(
+         const char* tag,
+         int line,
+         const char* msg
+         );
+
    // Info function
    virtual void GetLogInfo(TBaLogInfo *pInfo);
 
@@ -105,7 +112,6 @@ private:
    static void getCfgPath(std::string &rNamePath);
 
    bool log(EBaLogPrio prio, const char* tag, const char* msg);
-
 
    // Private constructor because a public factory method is used
    CBaLog(std::string name, std::string path, EBaLogPrio prioFilt, EBaLogOut out,

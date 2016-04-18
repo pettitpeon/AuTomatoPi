@@ -68,8 +68,8 @@ public:
 
 
       if (!pIp || !(in = fopen(file, "r"))) {
-         // todo: no printf
 //         fprintf(stderr, "iniparser: cannot open %s\n", file);
+         // fixme: log error
          return 0;
       }
 
@@ -82,10 +82,13 @@ public:
       while (fgets(line+last, ASCIILINESZ-last, in) != NULL) {
          lineno++ ;
          len = (int)strlen(line)-1;
-         if (len == 0) { continue; }
-         /* Safety check against buffer overflows */
-         if (line[len]!='\n' && !feof(in)) {
-            // todo: no printf
+         if (len == 0) {
+            continue;
+         }
+
+         // Safety check against buffer overflows
+         if (line[len] != '\n' && !feof(in)) {
+            // fixme: log error
 //            fprintf(stderr, "iniparser: input line too long in %s (%d)\n",
 //                  file, lineno);
             Destroy(pIp);
@@ -141,6 +144,7 @@ public:
       }
 
       if (errs) {
+         // fixme: log the error count
          Destroy(pIp);
          pIp = 0;
       }

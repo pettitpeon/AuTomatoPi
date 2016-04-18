@@ -44,35 +44,38 @@ typedef struct TTemp {
 static void stresserRout(TBaCoreThreadArg *pArg);
 static void stresser4Rout(TBaCoreThreadArg *pArg);
 
+static int sInit = 0;
+
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 
 /* ****************************************************************************/
 /*  ...
  */
 void CBaLogTest::setUp() {
+   sInit++;
 }
 
 /* ****************************************************************************/
 /*  ...
  */
 void CBaLogTest::tearDown() {
-   remove(OPTSDIR "LogOpts.log");
-   remove(OPTSDIR "LogOpts_1.log");
-   remove(OPTSDIR "LogOpts_2.log");
-   remove(OPTSDIR "LogOpts_3.log");
-   rmdir(OPTSDIR);
+   sInit--;
+}
 
-   remove(STRSDIR "LogStress.log");
-   std::string name;
-   for(uint32_t i = 0; i < LOGRS_SZ; i++) {
-      name = STRSDIR + ("strs4_" + std::to_string(i) + ".log");
-      remove(name.c_str());
+/* ****************************************************************************/
+/*  Initialize resources
+ */
+void CBaLogTest::Init() {
+   Exit();
+   BaFS::MkDir(RESPATH);
+   BaFS::MkDir(STRSDIR);
+}
 
-   }
-   rmdir(STRSDIR);
-
-   remove(RESPATH "LogDef.log");
-   remove(RESPATH "LogPrint.log");
+/* ****************************************************************************/
+/*  For quick tests
+ */
+void CBaLogTest::Test() {
+   CPPUNIT_ASSERT(true);
 }
 
 /* ****************************************************************************/
@@ -129,6 +132,33 @@ void CBaLogTest::CreateReuseDestroy() {
 
    // Test the final size
    ASS_EQ((uint32_t)178, sz);
+}
+
+/* ****************************************************************************/
+/*  Test the format functions
+ */
+void CBaLogTest::TracesF() {
+   // Create default log
+   TBaLogInfo info;
+   CBaLog *pDef = CBaLog::Create("LogDef", RESPATH);
+   ASS(pDef);
+
+   // Get the log info and save the full path. It is not available after
+   // destruction
+   pDef->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+
+   // Log some messages
+   ASS(pDef->TraceF(0,           "%s", "35"));
+   ASS(pDef->TraceF("Def",       "%s", "70"));
+   ASS(pDef->TraceF("DefTag",    "%s", "106"));
+   ASS(pDef->TraceF("DefTagg",   "%s", "142"));
+   ASS(pDef->TraceF("DefTagggg", "%s", "178"));
+
+   // Destroy and test size
+   ASS(CBaLog::Destroy(pDef));
+   pDef = 0;
+   ASS_EQ((uint32_t)178, BaFS::Size(fullPath));
 }
 
 /* ****************************************************************************/
@@ -423,8 +453,6 @@ void CBaLogTest::Stress() {
    TTemp arg2;
    TTemp arg3;
 
-   BaFS::MkDir(STRSDIR);
-
    opts.name = "LogStress";
    opts.path = STRSDIR;
    opts.prioFilt = eBaLogPrio_Trace;
@@ -499,11 +527,37 @@ void CBaLogTest::Stress() {
 }
 
 /* ****************************************************************************/
+/*  SysLog
+ */
+void CBaLogTest::SysLog() {
+   BASYSLOG(0, "%s", "Message");
+   BASYSLOG("", "%s", "Message");
+   BASYSLOG("tag", "%s", "Message");
+   BASYSLOG("tagtag", "%s", "Message");
+   BASYSLOG("tagtagtag", "%s", "Message");
+}
+
+/* ****************************************************************************/
 /*  For quick tests
  */
-void CBaLogTest::Test() {
-   CPPUNIT_ASSERT(true);
+void CBaLogTest::Exit() {
+   remove(OPTSDIR "LogOpts.log");
+   remove(OPTSDIR "LogOpts_1.log");
+   remove(OPTSDIR "LogOpts_2.log");
+   remove(OPTSDIR "LogOpts_3.log");
+   rmdir(OPTSDIR);
 
+   remove(STRSDIR "LogStress.log");
+   std::string name;
+   for(uint32_t i = 0; i < LOGRS_SZ; i++) {
+      name = STRSDIR + ("strs4_" + std::to_string(i) + ".log");
+      remove(name.c_str());
+
+   }
+   rmdir(STRSDIR);
+   remove(RESPATH "LogDef.log");
+   remove(RESPATH "LogPrint.log");
+   rmdir(RESPATH);
 }
 
 //

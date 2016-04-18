@@ -15,6 +15,10 @@
 #include <time.h>
 //#include <sys/types.h>
 #include <errno.h>
+#ifdef __linux
+# include <syslog.h>
+#endif
+
 
 /*------------------------------------------------------------------------------
     C++ Includes
@@ -70,6 +74,8 @@ LOCAL tm localtime(const std::time_t& rTime);
 LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat);
 }
 
+LOCAL void reTag(const char* tagIn, char* tagOut);
+
 /*------------------------------------------------------------------------------
     Implementation
  -----------------------------------------------------------------------------*/
@@ -90,6 +96,7 @@ void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
    }
 }
 
+//
 void CBaLog::getCfgPath(std::string &rNamePath) {
 
    // If only name (without extension), add the default path and extension
@@ -105,11 +112,10 @@ bool CBaLog::init(bool disableThread) {
    }
 
    // Check if dir exists
-   struct stat info;
-   if (stat(LOGDIR, &info) != 0) {
+   if (!BaFS::Exists(LOGDIR)) {
       // Create directory
       if (BaFS::MkDir(LOGDIR) != 0) {
-         // not ok
+         BASYSLOG(TAG, "Could not create dir: %s", LOGDIR);
          return false;
       }
    }
@@ -142,7 +148,6 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
       uint16_t fileCnt, int32_t fileSizeB, bool fromCfg, bool disableThread)  {
 
    if (name.empty() || !init(disableThread)) {
-      // todo Log error
       return 0;
    }
 
@@ -165,7 +170,7 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
    CBaLog *p = new CBaLog(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
          fileSizeB);
    if (!p) {
-      // todo Log error
+      SysLog(TAG, __LINE__, "Could not create logger");
       return 0;
    }
    // //////////////// Create //////////////
@@ -180,9 +185,9 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
    // //////////////// Open ////////////////
    p->mLog.open(p->mFullPath, om);
    if (p->mLog.fail()) {
+      BASYSLOG(TAG, "Cannot open log file: %s", p->mFullPath.c_str());
       delete p;
       return 0;
-      // todo: error
    }
    // //////////////// Open ////////////////
 
@@ -217,7 +222,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile, bool disableThread) {
 
    IBaIniParser *pIni = CBaIniParserCreate(cfgFile.c_str());
    if (!pIni) {
-      // todo: log?
+      // todo: log? Ini parser should log
       return 0;
    }
 
@@ -234,7 +239,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile, bool disableThread) {
    if (name == "" || path == "" || maxFileSizeB == (uint32_t) -1 ||
        maxNoFiles == -1 || maxBufLength == (uint32_t) -1 ||
        fileCnt == (uint16_t) -1) {
-      // todo: log?
+      BASYSLOG(TAG, "Invalid config file: %s", cfgFile.c_str());
       return 0;
    }
 
@@ -272,6 +277,19 @@ bool CBaLog::Destroy(IBaLog *pHdl, bool saveCfg) {
    }
 
    return true;
+}
+
+//
+void inline CBaLog::SysLog(const char *tag, int line, const char *msg) {
+
+   char tagOut[TAGSZ];
+   reTag(tag, tagOut);
+#ifdef __linux
+   syslog(LOG_ERR, "%s(%d): %s", tagOut, line, msg);
+   closelog();
+#else
+   printf("%s(%d): %s\n", tagOut, line, msg);
+#endif
 }
 
 //
@@ -367,8 +385,8 @@ inline void CBaLog::Flush() {
       // Every line has an extra LF character at the end.
       mFileSizeB += msg.size() + 1;
       if (msg.size() + 1 != mFileSizeB && mFileSizeB > mMaxFileSizeB) {
-         // Open new file
 
+         // Open new file
          if (++mFileCnt > mMaxNoFiles) {
             mFileCnt = 1;
             // Rewrite file
@@ -377,7 +395,8 @@ inline void CBaLog::Flush() {
          // Close the output stream
          mLog.close();
          if (mLog.fail()) {
-            // todo: error
+            // fixme this could be cyclic!
+            BASYSLOG(TAG, "Cannot close log: %s", mFullPath.c_str());
          }
 
          // Rename file
@@ -390,14 +409,16 @@ inline void CBaLog::Flush() {
 
             if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
                std::cout << errno << std::endl;
-               // todo: error
+               // fixme this could be cyclic!
+               BASYSLOG(TAG, "Cannot rename log: %s", mFullPath.c_str());
             }
          }
 
          mFileSizeB = msg.size() + 1;
          mLog.open(mFullPath, std::ios_base::binary | std::ios_base::out);
          if (mLog.fail()) {
-            // todo: error
+            // fixme this could be cyclic!
+            BASYSLOG(TAG, "Cannot open log: %s", mFullPath.c_str());
          }
       }
 
@@ -494,12 +515,7 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
    snprintf(mMillis, 4, "%03d", (int) (ms.count() % 1000));
 
    // Get the tag
-   // FIXME: Test this under Linux. The stupid snprintf() is not portable!!
-   uint8_t cnt = snprintf(mTag, TAGSZ, "%s", tag ? tag : "");
-   mTag[TAGSZ - 1] = 0;
-   if (cnt < TAGSZ - 1) {
-      SETARR(mTag + cnt, TAGSZ - 1 - cnt, ' ');
-   }
+   reTag(tag, mTag);
 
    // Put everything together
    std::string entry = tmp_4_9_2::put_time(&timeStruct, "%y/%m/%d %H:%M:%S") +
@@ -532,10 +548,11 @@ bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
       return false;
    }
 
-   uint16_t size = snprintf(0, 0, fmt, arg);
+   // Get the required size + 1 for the ending null
+   uint16_t size = vsnprintf(0, 0, fmt, arg) + 1;
 
-   // WHAT ABOUT REENTRANCY? No problema!
-   char msg[size + 1];
+   // Not using the FString function to be as quick as possible
+   char msg[size];
    vsnprintf(msg, size, fmt, arg);
    std::lock_guard<std::mutex> lck(mMtx);
    return log(prio, tag, msg);
@@ -570,5 +587,12 @@ LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat) {
 }
 } // NS tmp_4_9_2
 
+// Condition the tag to be TAGSZ and pad with spaces
+LOCAL void inline reTag(const char* tagIn, char* tagOut) {
+   uint8_t cnt = snprintf(tagOut, TAGSZ, "%s", tagIn ? tagIn : "");
+   tagOut[TAGSZ - 1] = 0;
+   if (cnt < TAGSZ - 1) {
+      SETARR(tagOut + cnt, TAGSZ - 1 - cnt, ' ');
+   }
 
-
+}
