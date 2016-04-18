@@ -36,11 +36,13 @@ public:
    CPPUNIT_TEST(Init);
    CPPUNIT_TEST(Test);
    CPPUNIT_TEST(CreateReuseDestroy);
+   CPPUNIT_TEST(TracesF);
    CPPUNIT_TEST(Tags);
    CPPUNIT_TEST(Prios);
    CPPUNIT_TEST(LogVsPrint);
    CPPUNIT_TEST(FilesAndSizesOpts);
    CPPUNIT_TEST(Stress);
+   CPPUNIT_TEST(SysLog);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
@@ -49,6 +51,7 @@ public:
    void Init();
    void Test();
    void CreateReuseDestroy();
+   void TracesF();
    void Tags();
    void Prios();
    void LogVsPrint();

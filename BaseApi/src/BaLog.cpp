@@ -4,6 +4,7 @@
 #include <stdarg.h>
 
 #include "CBaLog.h"
+#include "BaUtils.hpp"
 
 
 /*------------------------------------------------------------------------------
@@ -18,6 +19,16 @@
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
+
+//
+void BaLogSysLog(const char *tag, int line, const char *fmt, ...) {
+   va_list arg;
+   va_start(arg, fmt);
+   std::string s = BaFString(fmt, arg);
+   va_end(arg);
+   CBaLog::SysLog(tag, line, s.c_str());
+}
+
 //
 TBaLogHdl BaLogCreateDef(const char *name) {
    return CBaLog::Create(name);

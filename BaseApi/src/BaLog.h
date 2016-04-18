@@ -20,6 +20,11 @@
  */
 #include "BaBool.h"
 
+/*------------------------------------------------------------------------------
+ *  Defines
+ */
+/// Syslog macro that includes the line number
+#define BASYSLOG(tag, fmt, ...) BaLogSysLog(tag, __LINE__, fmt, __VA_ARGS__)
 
 /*------------------------------------------------------------------------------
  *  Type definitions
@@ -72,6 +77,16 @@ typedef void* TBaLogHdl;
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/******************************************************************************/
+/** ...
+ */
+void BaLogSysLog(
+      const char *tag,
+      int line,
+      const char *fmt,
+      ...
+      );
 
 /******************************************************************************/
 /** Create factory for a logger with defaults

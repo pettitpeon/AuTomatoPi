@@ -27,7 +27,6 @@
 
 struct TBaCoreThreadArg;
 
-#define BASYSLOG(tag, fmt, ...) CBaLog::SysLog(tag, __LINE__, fmt, __VA_ARGS__)
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
@@ -72,11 +71,9 @@ public:
 
    //
    static void SysLog(
-         const char *tag,
+         const char* tag,
          int line,
-         const char
-         *fmt,
-         ...
+         const char* msg
          );
 
    // Info function
@@ -115,7 +112,6 @@ private:
    static void getCfgPath(std::string &rNamePath);
 
    bool log(EBaLogPrio prio, const char* tag, const char* msg);
-
 
    // Private constructor because a public factory method is used
    CBaLog(std::string name, std::string path, EBaLogPrio prioFilt, EBaLogOut out,
