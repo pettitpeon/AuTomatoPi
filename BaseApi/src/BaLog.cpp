@@ -21,12 +21,17 @@
  -----------------------------------------------------------------------------*/
 
 //
-void BaLogSysLog(const char *tag, int line, const char *fmt, ...) {
+void BaLogSysLogF(const char *tag, int line, const char *fmt, ...) {
    va_list arg;
    va_start(arg, fmt);
    std::string s = BaFString(fmt, arg);
    va_end(arg);
    CBaLog::SysLog(tag, line, s.c_str());
+}
+
+//
+void BaLogSysLog(const char *tag, int line, const char *msg) {
+   CBaLog::SysLog(tag, line, msg);
 }
 
 //

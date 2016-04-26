@@ -24,7 +24,7 @@
  *  Defines
  */
 /// Syslog macro that includes the line number
-#define BASYSLOG(tag, fmt, ...) BaLogSysLog(tag, __LINE__, fmt, __VA_ARGS__)
+#define BASYSLOG(tag, fmt, ...) BaLogSysLogF(tag, __LINE__, fmt, __VA_ARGS__)
 
 /*------------------------------------------------------------------------------
  *  Type definitions
@@ -79,13 +79,23 @@ extern "C" {
 #endif
 
 /******************************************************************************/
-/** ...
+/** Logs a message into the syslog like @c printf() and adds a @c tag and a
+ *  time stamp.
+ */
+void BaLogSysLogF(
+      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      int line,        ///< [in] Line number, useful for debugging
+      const char *fmt, ///< [in] Message format
+      ...              ///< [in] Format arguments
+      );
+
+/******************************************************************************/
+/** Logs a message into the syslog and adds a @c tag and a time stamp.
  */
 void BaLogSysLog(
-      const char *tag,
-      int line,
-      const char *fmt,
-      ...
+      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      int line,        ///< [in] Line number, useful for debugging
+      const char *msg  ///< [in] Message to log
       );
 
 /******************************************************************************/
@@ -109,7 +119,7 @@ TBaLogHdl BaLogCreate(
  *  @return True if success, otherwise, false
  */
 TBaBoolRC BaLogDestroy(
-      TBaLogHdl hdl, ///< [in] BaLog handle to destroy
+      TBaLogHdl hdl,  ///< [in] BaLog handle to destroy
       TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );
 
@@ -117,7 +127,7 @@ TBaBoolRC BaLogDestroy(
 //@{
 /******************************************************************************/
 /** Logs a message into the logger and adds a @c tag and a time stamp.
- *  The @c Trace() and family functions have an implied priority
+ *  The @c BaLogTrace() and family functions have an implied priority
  *  @return true if success, otherwise, false
  */
 TBaBoolRC BaLogLog(
@@ -153,7 +163,7 @@ TBaBoolRC BaLogError(
 /***************************************************************************/
 /** Logs a message into the logger like @c printf() and adds a @c tag and a
  *  time stamp. These functions have a limit of 65534 characters per message.
- *  The @c TraceF() and family functions have an implied priority
+ *  The @c BaLogTraceF() and family functions have an implied priority
  *  @return true if success, otherwise, false
  */
 TBaBoolRC BaLogLogF(
@@ -161,28 +171,28 @@ TBaBoolRC BaLogLogF(
       EBaLogPrio  prio, ///< [in] Message priority
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+      ...               ///< [in] Format arguments
       );
 
 TBaBoolRC BaLogTraceF(
       TBaLogHdl *pHdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+      ...               ///< [in] Format arguments
       );
 
 TBaBoolRC BaLogWarningF(
       TBaLogHdl *pHdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+      ...               ///< [in] Format arguments
       );
 
 TBaBoolRC BaLogErrorF(
       TBaLogHdl *pHdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+      ...               ///< [in] Format arguments
       );
 //@}
 
@@ -253,22 +263,22 @@ public:
          EBaLogPrio  prio, ///< [in] Message priority
          const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
          const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         ...               ///< [in] Format arguments
          ) = 0;
    virtual bool TraceF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         const char* fmt, ///< [in] Message format
+         ...              ///< [in] Format arguments
          ) = 0;
    virtual bool WarningF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         const char* fmt, ///< [in] Message format
+         ...              ///< [in] Format arguments
          ) = 0;
    virtual bool ErrorF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         const char* fmt, ///< [in] Message format
+         ...              ///< [in] Format arguments
          ) = 0;
    //@}
 

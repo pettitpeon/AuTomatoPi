@@ -396,7 +396,12 @@ inline void CBaLog::Flush() {
          mLog.close();
          if (mLog.fail()) {
             // fixme this could be cyclic!
-            BASYSLOG(TAG, "Cannot close log: %s", mFullPath.c_str());
+//            if (!mMsgState.Get()) {
+               BASYSLOG(TAG, "Cannot close log: %s", mFullPath.c_str());
+//               mMsgState.Reset();
+//            }
+         } else {
+//            mMsgState.Reset();
          }
 
          // Rename file
@@ -411,7 +416,11 @@ inline void CBaLog::Flush() {
                std::cout << errno << std::endl;
                // fixme this could be cyclic!
                BASYSLOG(TAG, "Cannot rename log: %s", mFullPath.c_str());
+               mMsg._L_SETSYSLOGF(TAG, "Cannot rename log: %s", mFullPath.c_str());
+            } else {
+               mMsg.Reset();
             }
+
          }
 
          mFileSizeB = msg.size() + 1;
