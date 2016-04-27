@@ -8,7 +8,14 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  Logger API. Handles logging to files and to syslog. The logger state can be
+ *  saved to an .ini file to be retrieved later. Among other this API offers:@n
+ *   - Priority filter
+ *   - Logging to console and/or file
+ *   - Message buffering for better performance
+ *   - Manual flushing
+ *   - File size limit
+ *   - Ring files
  */
 /*------------------------------------------------------------------------------
  */
@@ -78,26 +85,8 @@ typedef void* TBaLogHdl;
 extern "C" {
 #endif
 
-/******************************************************************************/
-/** Logs a message into the syslog like @c printf() and adds a @c tag and a
- *  time stamp.
- */
-void BaLogSysLogF(
-      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-      int line,        ///< [in] Line number, useful for debugging
-      const char *fmt, ///< [in] Message format
-      ...              ///< [in] Format arguments
-      );
-
-/******************************************************************************/
-/** Logs a message into the syslog and adds a @c tag and a time stamp.
- */
-void BaLogSysLog(
-      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-      int line,        ///< [in] Line number, useful for debugging
-      const char *msg  ///< [in] Message to log
-      );
-
+/// @name Factory
+//@{
 /******************************************************************************/
 /** Create factory for a logger with defaults
  *  @return Handle if success, otherwise, null
@@ -122,6 +111,7 @@ TBaBoolRC BaLogDestroy(
       TBaLogHdl hdl,  ///< [in] BaLog handle to destroy
       TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );
+//@}
 
 /// @name Logging functions
 //@{
@@ -136,20 +126,16 @@ TBaBoolRC BaLogLog(
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* msg   ///< [in] Message to log
       );
-
 TBaBoolRC BaLogTrace(
       TBaLogHdl hdl,   ///< [in] Handle
       const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* msg  ///< [in] Message to log
       );
-
 TBaBoolRC BaLogWarning(
       TBaLogHdl hdl,   ///< [in] Handle
       const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* msg  ///< [in] Message to log
       );
-
-
 TBaBoolRC BaLogError(
       TBaLogHdl hdl,   ///< [in] Handle
       const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
@@ -167,32 +153,67 @@ TBaBoolRC BaLogError(
  *  @return true if success, otherwise, false
  */
 TBaBoolRC BaLogLogF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl   hdl,  ///< [in] Handle
       EBaLogPrio  prio, ///< [in] Message priority
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
       ...               ///< [in] Format arguments
       );
-
 TBaBoolRC BaLogTraceF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl   hdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
       ...               ///< [in] Format arguments
       );
-
 TBaBoolRC BaLogWarningF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl   hdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
       ...               ///< [in] Format arguments
       );
-
 TBaBoolRC BaLogErrorF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl   hdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
       ...               ///< [in] Format arguments
+      );
+//@}
+
+/// @name Getter
+//@{
+/***************************************************************************/
+/** Gets the information and options.
+ *  The const char pointers of the TBaLogInfo struct must not be changed or
+ *  mangled with. They point to internal memory. Also they invalidated when
+ *  the logger instance is destroyed. Accessing the freed memory results in
+ *  undefined behavior.
+ */
+void BaLogGetLogInfo(
+      TBaLogHdl hdl,  ///< [in] Handle
+      TBaLogInfo *pInfo ///< [out] Pointer to preallocated structure
+      );
+//@}
+
+/// @name Syslog logging
+//@{
+/******************************************************************************/
+/** Logs a message into the syslog like @c printf() and adds a @c tag and a
+ *  time stamp.
+ */
+void BaLogSysLogF(
+      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      int line,        ///< [in] Line number, useful for debugging
+      const char *fmt, ///< [in] Message format
+      ...              ///< [in] Format arguments
+      );
+
+/******************************************************************************/
+/** Logs a message into the syslog and adds a @c tag and a time stamp.
+ */
+void BaLogSysLog(
+      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      int line,        ///< [in] Line number, useful for debugging
+      const char *msg  ///< [in] Message to log
       );
 //@}
 
@@ -287,6 +308,15 @@ public:
    virtual ~IBaLog() {};
 };
 
+/// @name C++ Factory
+//@{
+/******************************************************************************/
+/** Sets the a TBaLogOptions structure to default values
+ */
+extern "C" void CBaLogSetDef(
+      TBaLogOptions *pOpts ///< [out] Pointer to struct
+      );
+
 /******************************************************************************/
 /** Create factory for a logger with defaults
  *  @return Handle if success, otherwise, null
@@ -311,6 +341,7 @@ extern "C" TBaBoolRC CBaLogDestroy(
       IBaLog *pHdl, ///< [in] BaLog handle to destroy
       TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );
+//@}
 
 #endif // __cplusplus
 #endif // BALOG_H_

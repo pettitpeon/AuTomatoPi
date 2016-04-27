@@ -18,6 +18,7 @@
 /*------------------------------------------------------------------------------
  *  Includes
  */
+#include "BaMsg.h"
 #include "BaLog.h"
 
 #define _L_SETSYSLOGF(tag, fmt, ...) SetSysLogF(tag, __LINE__, fmt, __VA_ARGS__)
@@ -50,11 +51,21 @@ public:
          ...
          );
 
+   virtual void SetPrint(
+         const char *msg
+         );
+
    virtual void SetSysLogF(
          const char *tag,
          int line,
          const char *fmt,
          ...
+         );
+
+   virtual void SetSysLog(
+         const char *tag,
+         int line,
+         const char *msg
          );
 
    virtual void SetLogF(
@@ -65,7 +76,15 @@ public:
          ...
          );
 
+   virtual void SetLog(
+         IBaLog* pLog,
+         EBaLogPrio prio,
+         const char *tag,
+         const char *msg
+         );
+
    virtual void Reset() { mSet = false; };
+   virtual bool Get() { return mSet; };
 
    CBaMsg() : mSet(false) {};
 

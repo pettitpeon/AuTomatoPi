@@ -19,6 +19,7 @@
 #include "CBaMsg.h"
 #include "BaUtils.hpp"
 
+//
 void CBaMsg::SetPrintF(const char *fmt, ...) {
    if(!mSet) {
       va_list arg;
@@ -29,6 +30,15 @@ void CBaMsg::SetPrintF(const char *fmt, ...) {
    }
 }
 
+//
+void CBaMsg::SetPrint(const char *msg) {
+   if(!mSet) {
+      fputs(msg, stdout);
+      mSet = true;
+   }
+}
+
+//
 void CBaMsg::SetSysLogF(const char *tag, int line, const char *fmt, ...) {
    if(!mSet) {
       va_list arg;
@@ -40,6 +50,14 @@ void CBaMsg::SetSysLogF(const char *tag, int line, const char *fmt, ...) {
    }
 }
 
+void CBaMsg::SetSysLog(const char *tag, int line, const char *msg) {
+   if(!mSet) {
+      BaLogSysLog(tag, line, msg);
+      mSet = true;
+   }
+}
+
+//
 void CBaMsg::SetLogF(IBaLog* pLog, EBaLogPrio prio, const char *tag, const char *fmt, ...) {
    if(pLog && !mSet) {
       va_list arg;
@@ -47,6 +65,14 @@ void CBaMsg::SetLogF(IBaLog* pLog, EBaLogPrio prio, const char *tag, const char 
       std::string s = BaFString(fmt, arg);
       va_end(arg);
       pLog->Log(prio, tag, s.c_str());
+      mSet = true;
+   }
+}
+
+//
+void CBaMsg::SetLog(IBaLog* pLog, EBaLogPrio prio, const char *tag, const char *msg) {
+   if(pLog && !mSet) {
+      pLog->Log(prio, tag, msg);
       mSet = true;
    }
 }
