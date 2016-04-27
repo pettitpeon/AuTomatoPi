@@ -8,9 +8,9 @@
  *   Module description:
  */
 /** @file
- *  API for messages with state. A message with state can be set and rest. If it
- *  is set, it cannot be set again before reseting it. These messages are mainly
- *  used to avoid cyclic messages
+ *  API for messages with state. A message with state can be set and reset.
+ *  If it is set, it cannot be set again before reseting it. These messages are
+ *  mainly used to avoid cyclic messages.
  */
 /*------------------------------------------------------------------------------
  */
