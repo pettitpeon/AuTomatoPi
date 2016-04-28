@@ -2,7 +2,7 @@
 \label{BaCom_8h}\index{Ba\+Com.\+h@{Ba\+Com.\+h}}
 
 
-Communications A\+PI.  
+Communications A\+P\+I.  
 
 
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
@@ -16,46 +16,51 @@ Include dependency graph for Ba\+Com.\+h\+:\nopagebreak
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{BaCom_8h_a560d10625971945890a829c2cfd32769}{B\+A\+C\+O\+M\+\_\+\+S\+E\+R\+I\+A\+L\+D\+EV}~\char`\"{}/dev/tty\+A\+M\+A0\char`\"{}\hypertarget{BaCom_8h_a560d10625971945890a829c2cfd32769}{}\label{BaCom_8h_a560d10625971945890a829c2cfd32769}
+\hypertarget{BaCom_8h_a560d10625971945890a829c2cfd32769}{}\#define \hyperlink{BaCom_8h_a560d10625971945890a829c2cfd32769}{B\+A\+C\+O\+M\+\_\+\+S\+E\+R\+I\+A\+L\+D\+E\+V}~\char`\"{}/dev/tty\+A\+M\+A0\char`\"{}\label{BaCom_8h_a560d10625971945890a829c2cfd32769}
 
 \begin{DoxyCompactList}\small\item\em Serial device path. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef enum \hyperlink{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}{E\+Ba\+Com\+Baud} \hyperlink{BaCom_8h_a0c2d065555852132f1e554bba19040db}{E\+Ba\+Com\+Baud}\hypertarget{BaCom_8h_a0c2d065555852132f1e554bba19040db}{}\label{BaCom_8h_a0c2d065555852132f1e554bba19040db}
+\hypertarget{BaCom_8h_a0c2d065555852132f1e554bba19040db}{}typedef enum \hyperlink{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}{E\+Ba\+Com\+Baud} \hyperlink{BaCom_8h_a0c2d065555852132f1e554bba19040db}{E\+Ba\+Com\+Baud}\label{BaCom_8h_a0c2d065555852132f1e554bba19040db}
 
 \begin{DoxyCompactList}\small\item\em Baud enumeration. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}{}enum \hyperlink{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}{E\+Ba\+Com\+Baud} \label{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}
+\begin{DoxyCompactList}\small\item\em Baud enumeration. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{Indent}{\bf Init/\+Exit Functions}\par
 \begin{DoxyCompactItemize}
 \item 
 T\+Ba\+Com\+Ser\+Hdl \hyperlink{BaCom_8h_afd029cee32185ec1613ba18b144439a2}{Ba\+Com\+Ser\+Init} (const char $\ast$device, \hyperlink{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}{E\+Ba\+Com\+Baud} baud)
 \begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}{Ba\+Com\+Ser\+Exit} (T\+Ba\+Com\+Ser\+Hdl hdl)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}{Ba\+Com\+Ser\+Exit} (T\+Ba\+Com\+Ser\+Hdl hdl)
 \begin{DoxyCompactList}\small\item\em Frees resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
 \subsection{Detailed Description}
-Communications A\+PI. 
+Communications A\+P\+I. 
 
 
 \begin{DoxyItemize}
-\item I2C
-\item S\+PI
+\item I2\+C
+\item S\+P\+I
 \item Serial 
 \end{DoxyItemize}
 
 \subsection{Function Documentation}
-\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Init@{Ba\+Com\+Ser\+Init}}
+\hypertarget{BaCom_8h_afd029cee32185ec1613ba18b144439a2}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Init@{Ba\+Com\+Ser\+Init}}
 \index{Ba\+Com\+Ser\+Init@{Ba\+Com\+Ser\+Init}!Ba\+Com.\+h@{Ba\+Com.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Com\+Ser\+Init(const char $\ast$device, E\+Ba\+Com\+Baud baud)}{BaComSerInit(const char *device, EBaComBaud baud)}}]{\setlength{\rightskip}{0pt plus 5cm}T\+Ba\+Com\+Ser\+Hdl Ba\+Com\+Ser\+Init (
+\subsubsection[{Ba\+Com\+Ser\+Init(const char $\ast$device, E\+Ba\+Com\+Baud baud)}]{\setlength{\rightskip}{0pt plus 5cm}T\+Ba\+Com\+Ser\+Hdl Ba\+Com\+Ser\+Init (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{device, }
 \item[{{\bf E\+Ba\+Com\+Baud}}]{baud}
 \end{DoxyParamCaption}
-)}\hypertarget{BaCom_8h_afd029cee32185ec1613ba18b144439a2}{}\label{BaCom_8h_afd029cee32185ec1613ba18b144439a2}
+)}\label{BaCom_8h_afd029cee32185ec1613ba18b144439a2}
 
 
 Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
@@ -65,18 +70,18 @@ Handle on success, otherwise error
 \end{DoxyReturn}
 
 \begin{DoxyParams}{Parameters}
-{\em device} & Device path, e.\+g. B\+A\+C\+O\+M\+\_\+\+S\+E\+R\+I\+A\+L\+D\+EV \\
+{\em device} & Device path, e.\+g. B\+A\+C\+O\+M\+\_\+\+S\+E\+R\+I\+A\+L\+D\+E\+V \\
 \hline
 {\em baud} & Baud rate \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Exit@{Ba\+Com\+Ser\+Exit}}
+\hypertarget{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Exit@{Ba\+Com\+Ser\+Exit}}
 \index{Ba\+Com\+Ser\+Exit@{Ba\+Com\+Ser\+Exit}!Ba\+Com.\+h@{Ba\+Com.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Com\+Ser\+Exit(\+T\+Ba\+Com\+Ser\+Hdl hdl)}{BaComSerExit(TBaComSerHdl hdl)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Com\+Ser\+Exit (
+\subsubsection[{Ba\+Com\+Ser\+Exit(\+T\+Ba\+Com\+Ser\+Hdl hdl)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+Ser\+Exit (
 \begin{DoxyParamCaption}
 \item[{T\+Ba\+Com\+Ser\+Hdl}]{hdl}
 \end{DoxyParamCaption}
-)}\hypertarget{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}{}\label{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}
+)}\label{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}
 
 
 Frees resources. 

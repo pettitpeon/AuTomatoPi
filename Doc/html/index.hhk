@@ -59,11 +59,13 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a1d944ec09e121ad1d73c342ef0040a7a"><param name="Name" value="BaCoreUSleep"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html"><param name="Name" value="BaFS"></OBJECT>
   <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#aafa79b524a4f13b6531cf79b1f73774e"><param name="Name" value="DirSize"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#a73d165c90a00491cfe0b9ce3b5fe5c58"><param name="Name" value="Exists"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#a9e6346a9784d4de1dbda3c79ef8bb72b"><param name="Name" value="MkDir"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#ad729f83dfe589df3058696c6db6452c9"><param name="Name" value="Rename"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#a526ea62172fcaa4003dd437863c6604c"><param name="Name" value="Size"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a0f53b34a2fb1568c4af4d228bc4f8708"><param name="Name" value="BaFString"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaGenMacros_8h.html"><param name="Name" value="BaGenMacros.h"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaGenMacros_8h.html#a65784f44e83fca19bb1dd56db5137cf2"><param name="Name" value="ARRAYSIZE"></OBJECT>
@@ -143,8 +145,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a1211d49fa57e912fb47fc1f29d6ec666"><param name="Name" value="BaIniParseGetString"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#ae8e2fe9002a556cd48c55427da291479"><param name="Name" value="BaIniParseReset"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a87077a113ba63b256fcfbbf0d1242797"><param name="Name" value="BaIniParseSet"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a1a30a7497071bfa8a66ab8cdc339e27f"><param name="Name" value="CBaIniParserCreate"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#ae0473ef7ae8e9e51597ac35d9af0374f"><param name="Name" value="CBaIniParserDestroy"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a20f257ac13e000d1b4451244173cdaf2"><param name="Name" value="IBaIniParserCreate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#ac602f997d7583090e6112abeba61d606"><param name="Name" value="IBaIniParserDestroy"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a4aa7524aede4de49e1b9e3d9c4e4a6bc"><param name="Name" value="TBaIniParseHdl"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a441bf1490f51fd14eb8429f00527e88e"><param name="Name" value="BaIniParseCreate"></OBJECT>
@@ -162,20 +164,22 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a87077a113ba63b256fcfbbf0d1242797"><param name="Name" value="BaIniParseSet"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html"><param name="Name" value="BaLog.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ac78e664158e30fbaeac6c6346bf79a52"><param name="Name" value="BaLogCreate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a6b1ffed50a45e2e133e49cb3cf257ecb"><param name="Name" value="BaLogCreate"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#af6156879d4b92295f4c5722e45703e56"><param name="Name" value="BaLogCreateDef"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a09d5f6fde7f2c12d949a050208c1782f"><param name="Name" value="BaLogDestroy"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a7aa4d7877444a12bab73a67ebde720e8"><param name="Name" value="BaLogError"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a60a0064a2537bd04e6ea4e6f1fe9dec7"><param name="Name" value="BaLogErrorF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ab881cb9e04a68b8efd2133576c7c67ef"><param name="Name" value="BaLogErrorF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a2a57f2cc30056b3a22c273ffcc9c4170"><param name="Name" value="BaLogGetLogInfo"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a29f561d88507bc151a80b98f9d3a9db7"><param name="Name" value="BaLogLog"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc"><param name="Name" value="BaLogLogF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a5f7f57a015591273626052ef24692f99"><param name="Name" value="BaLogLogF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a966ef64c4dd65b99d3e55181c08de141"><param name="Name" value="BaLogSetDefOpts"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ac5a96c8041f103bb7cd077f50e82067c"><param name="Name" value="BaLogSysLog"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a943924b60ee5be50728cfc0617577e82"><param name="Name" value="BaLogSysLogF"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aebe3a86a3ac6e898415f8ba13121354e"><param name="Name" value="BaLogTrace"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a097c24a068da006bc670a1bb5911ad36"><param name="Name" value="BaLogTraceF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a0e9074fa70e0b606383e7cb68dca0197"><param name="Name" value="BaLogTraceF"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a507ec70afef472d4ed523b677ab5752f"><param name="Name" value="BaLogWarning"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a69ee0c30e3d1d7b81abb4f81c730edcd"><param name="Name" value="BaLogWarningF"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a1795e483ffdaa5a8d896170b67117d7b"><param name="Name" value="CBaLogCreate"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aaa3c8543ac0ef1d9574a592f3652f53c"><param name="Name" value="CBaLogCreateDef"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a23eaf1e1b68017855826ecaceb718264"><param name="Name" value="CBaLogDestroy"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a0e14b7303a851831ba7f3026094306ea"><param name="Name" value="BaLogWarningF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ac52a0fffb7812cd89d5051bf713ffd62"><param name="Name" value="BASYSLOG"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ababde10f818658c9f0b53104df8b4c14"><param name="Name" value="EBaLogOut"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76"><param name="Name" value="eBaLogOut_Console"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140"><param name="Name" value="eBaLogOut_Log"></OBJECT>
@@ -185,21 +189,60 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02"><param name="Name" value="eBaLogPrio_Trace"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f"><param name="Name" value="eBaLogPrio_UpsCrash"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996"><param name="Name" value="eBaLogPrio_Warning"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a4013a3ae15510f1dccddeeb93059b7dc"><param name="Name" value="IBaLogCreate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a130e5b022a85c189b84bfd799642bb8b"><param name="Name" value="IBaLogCreateDef"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a5681107fcf8c49bf0ebb3e762996b55e"><param name="Name" value="IBaLogDestroy"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aafc4e99ec41825c3604bc4995a45b315"><param name="Name" value="TBaLogHdl"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ab966a9c1dfd235ba9f32bd1b1d6734ba"><param name="Name" value="TBaLogInfo"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aa27a02534e598108695a1a2eb967a396"><param name="Name" value="TBaLogOptions"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ac78e664158e30fbaeac6c6346bf79a52"><param name="Name" value="BaLogCreate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a6b1ffed50a45e2e133e49cb3cf257ecb"><param name="Name" value="BaLogCreate"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#af6156879d4b92295f4c5722e45703e56"><param name="Name" value="BaLogCreateDef"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a09d5f6fde7f2c12d949a050208c1782f"><param name="Name" value="BaLogDestroy"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a7aa4d7877444a12bab73a67ebde720e8"><param name="Name" value="BaLogError"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a60a0064a2537bd04e6ea4e6f1fe9dec7"><param name="Name" value="BaLogErrorF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ab881cb9e04a68b8efd2133576c7c67ef"><param name="Name" value="BaLogErrorF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a2a57f2cc30056b3a22c273ffcc9c4170"><param name="Name" value="BaLogGetLogInfo"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a29f561d88507bc151a80b98f9d3a9db7"><param name="Name" value="BaLogLog"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aa6aa8439fa3cab1ce6b7d8e5a8d3d7cc"><param name="Name" value="BaLogLogF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a5f7f57a015591273626052ef24692f99"><param name="Name" value="BaLogLogF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a966ef64c4dd65b99d3e55181c08de141"><param name="Name" value="BaLogSetDefOpts"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ac5a96c8041f103bb7cd077f50e82067c"><param name="Name" value="BaLogSysLog"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a943924b60ee5be50728cfc0617577e82"><param name="Name" value="BaLogSysLogF"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aebe3a86a3ac6e898415f8ba13121354e"><param name="Name" value="BaLogTrace"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a097c24a068da006bc670a1bb5911ad36"><param name="Name" value="BaLogTraceF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a0e9074fa70e0b606383e7cb68dca0197"><param name="Name" value="BaLogTraceF"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a507ec70afef472d4ed523b677ab5752f"><param name="Name" value="BaLogWarning"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a69ee0c30e3d1d7b81abb4f81c730edcd"><param name="Name" value="BaLogWarningF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a0e14b7303a851831ba7f3026094306ea"><param name="Name" value="BaLogWarningF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html"><param name="Name" value="BaMsg.h"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a747950cb6c947a1b8f87d7b24f9dffb0"><param name="Name" value="BaMsgCreate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aff9865961ff4eac198947bbca0f57bc2"><param name="Name" value="BaMsgDestroy"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a97a02ca07716761fa22be88b52314a76"><param name="Name" value="BaMsgGet"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a3a1e777dc423ee4faabffc481d4ab715"><param name="Name" value="BaMsgReset"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#ab8f315eeec9e46af1e6e515caee7b991"><param name="Name" value="BaMsgSetLog"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aa5c9afb0933a7a21900ae19bd319bb13"><param name="Name" value="BaMsgSetLogF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a947780e175568fa8f12109a1ca743ded"><param name="Name" value="BaMsgSetPrint"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aa8eb770fb5565bdaea8e6f8d6abac22d"><param name="Name" value="BaMsgSetPrintF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a79951ff6b5999141a69a4c6cbb32478a"><param name="Name" value="BAMSGSETSYSLOG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#ae73c6be7d2b46e617ab2d2c222094b1f"><param name="Name" value="BaMsgSetSysLog"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a5ddf02d5c03db476fd91d87b1e3a8e6e"><param name="Name" value="BAMSGSETSYSLOGF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#ab285acd845753344b3da6db1e60c80a2"><param name="Name" value="BaMsgSetSysLogF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a4abd8e9092520542acb0a246d1454c67"><param name="Name" value="IBaMsgCreate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a051e0750bf7aaa7339cffe55253dee36"><param name="Name" value="IBaMsgDestroy"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a6210311bfa675d85ec0d390244b4b2f0"><param name="Name" value="IBAMSGSETSYSLOG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a7758072566268146bb4c3171c6174afb"><param name="Name" value="IBAMSGSETSYSLOGF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aafa53fd0800007ea7994e44ad13a887a"><param name="Name" value="TBaMsgHdl"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a747950cb6c947a1b8f87d7b24f9dffb0"><param name="Name" value="BaMsgCreate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aff9865961ff4eac198947bbca0f57bc2"><param name="Name" value="BaMsgDestroy"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a97a02ca07716761fa22be88b52314a76"><param name="Name" value="BaMsgGet"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a3a1e777dc423ee4faabffc481d4ab715"><param name="Name" value="BaMsgReset"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#ab8f315eeec9e46af1e6e515caee7b991"><param name="Name" value="BaMsgSetLog"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aa5c9afb0933a7a21900ae19bd319bb13"><param name="Name" value="BaMsgSetLogF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a947780e175568fa8f12109a1ca743ded"><param name="Name" value="BaMsgSetPrint"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aa8eb770fb5565bdaea8e6f8d6abac22d"><param name="Name" value="BaMsgSetPrintF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#ae73c6be7d2b46e617ab2d2c222094b1f"><param name="Name" value="BaMsgSetSysLog"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a79951ff6b5999141a69a4c6cbb32478a"><param name="Name" value="BAMSGSETSYSLOG"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a5ddf02d5c03db476fd91d87b1e3a8e6e"><param name="Name" value="BAMSGSETSYSLOGF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#ab285acd845753344b3da6db1e60c80a2"><param name="Name" value="BaMsgSetSysLogF"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaPath.html"><param name="Name" value="BaPath"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195"><param name="Name" value="ChangeFileExtension"></OBJECT>
@@ -207,11 +250,14 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaPath.html#a42b3acac9c048e45a531c9dc4be319f1"><param name="Name" value="GetFileExtension"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaPath.html#a41d87786f4a43d64094624187ac90dca"><param name="Name" value="GetFilename"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#ac52a0fffb7812cd89d5051bf713ffd62"><param name="Name" value="BASYSLOG"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a25c40b6a558aa8194365db78934a577e"><param name="Name" value="BaToNumber"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html"><param name="Name" value="BaUtils.hpp"></OBJECT>
   <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a0f53b34a2fb1568c4af4d228bc4f8708"><param name="Name" value="BaFString"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a25c40b6a558aa8194365db78934a577e"><param name="Name" value="BaToNumber"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a70f965f0c97d211e1f91dc2f16e05195"><param name="Name" value="ChangeFileExtension"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#aafa79b524a4f13b6531cf79b1f73774e"><param name="Name" value="DirSize"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a73d165c90a00491cfe0b9ce3b5fe5c58"><param name="Name" value="Exists"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#aee6b101395e5f32a76b304aa765de13c"><param name="Name" value="GetDirectory"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a42b3acac9c048e45a531c9dc4be319f1"><param name="Name" value="GetFileExtension"></OBJECT>
@@ -220,17 +266,17 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#ad729f83dfe589df3058696c6db6452c9"><param name="Name" value="Rename"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaUtils_8hpp.html#a526ea62172fcaa4003dd437863c6604c"><param name="Name" value="Size"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a1a30a7497071bfa8a66ab8cdc339e27f"><param name="Name" value="CBaIniParserCreate"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#ae0473ef7ae8e9e51597ac35d9af0374f"><param name="Name" value="CBaIniParserDestroy"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a1795e483ffdaa5a8d896170b67117d7b"><param name="Name" value="CBaLogCreate"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#aaa3c8543ac0ef1d9574a592f3652f53c"><param name="Name" value="CBaLogCreateDef"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a23eaf1e1b68017855826ecaceb718264"><param name="Name" value="CBaLogDestroy"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195"><param name="Name" value="ChangeFileExtension"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195"><param name="Name" value="BaPath"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195"><param name="Name" value="BaUtils.hpp"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaGpio.html#a2567239d643262d9c595d4bf9f435957"><param name="Name" value="CleanUp"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#aafa79b524a4f13b6531cf79b1f73774e"><param name="Name" value="DirSize"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#aafa79b524a4f13b6531cf79b1f73774e"><param name="Name" value="BaFS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html#aafa79b524a4f13b6531cf79b1f73774e"><param name="Name" value="BaUtils.hpp"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaIniParser.html#a9ba24fa3062966de7e68558d4dde1210"><param name="Name" value="Dump"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaIniParser.html#ac7c44f2ec3373a93f69bd4a465cfa2a7"><param name="Name" value="DumpIni"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaIniParser.html#a0e35971f968cd1d498d2c0e51e96af2e"><param name="Name" value="DumpIniSec"></OBJECT>
@@ -330,6 +376,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaIniParser.html#a0ca9abb74bbddfc4ec2f1a4b67454189"><param name="Name" value="Reset"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaIniParser.html#ad60d8188d917a3fb43326be775e87b08"><param name="Name" value="Set"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#a20f257ac13e000d1b4451244173cdaf2"><param name="Name" value="IBaIniParserCreate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaIniParse_8h.html#ac602f997d7583090e6112abeba61d606"><param name="Name" value="IBaIniParserDestroy"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaLog.html"><param name="Name" value="IBaLog"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaLog.html#a58b60a1b38183c0eea84677cb0ab5853"><param name="Name" value="Error"></OBJECT>
@@ -342,6 +390,13 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaLog.html#a47861c723ea82ba833d71a698a972bd0"><param name="Name" value="Warning"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaLog.html#a87c8b30251a2bf6438b75af579782fc9"><param name="Name" value="WarningF"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a4013a3ae15510f1dccddeeb93059b7dc"><param name="Name" value="IBaLogCreate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a130e5b022a85c189b84bfd799642bb8b"><param name="Name" value="IBaLogCreateDef"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaLog_8h.html#a5681107fcf8c49bf0ebb3e762996b55e"><param name="Name" value="IBaLogDestroy"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a4abd8e9092520542acb0a246d1454c67"><param name="Name" value="IBaMsgCreate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a051e0750bf7aaa7339cffe55253dee36"><param name="Name" value="IBaMsgDestroy"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a6210311bfa675d85ec0d390244b4b2f0"><param name="Name" value="IBAMSGSETSYSLOG"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#a7758072566268146bb4c3171c6174afb"><param name="Name" value="IBAMSGSETSYSLOGF"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaGpio.html#af8f837eef2a5db810723753d2ddfec0b"><param name="Name" value="InitHWPWM"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaGenMacros_8h.html#aa0746d479d8433b89404db6bd60f5449"><param name="Name" value="INRANGE"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structTBaCoreThreadInfo.html#ab3b8ba12748c55ac4763b010fd3cfc42"><param name="Name" value="isRunning"></OBJECT>
@@ -475,6 +530,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structTBaLogOptions.html#a65b3088b1dad26b245cb844dc9f118c5"><param name="Name" value="path"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structTBaLogOptions.html#a2265aa7cf3a19c655fa6aab98351100b"><param name="Name" value="prioFilt"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaMsg_8h.html#aafa53fd0800007ea7994e44ad13a887a"><param name="Name" value="TBaMsgHdl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structTBaCoreThreadInfo.html#a3565a7e3bb7e8fbd01bb99c8cbbf2b7c"><param name="Name" value="tid"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaLog.html#a3daf158cda6813367b7324ef5171291b"><param name="Name" value="Trace"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classIBaLog.html#ae6823118c084f2fe214b71ad41bad34f"><param name="Name" value="TraceF"></OBJECT>
