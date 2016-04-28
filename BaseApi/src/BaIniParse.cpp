@@ -333,12 +333,12 @@ private:
 };
 
 //
-IBaIniParser * CBaIniParserCreate(const char *file) {
+IBaIniParser * IBaIniParserCreate(const char *file) {
    return CBaIniParser::Create(file);
 }
 
 //
-bool CBaIniParserDestroy(IBaIniParser *pHdl) {
+bool IBaIniParserDestroy(IBaIniParser *pHdl) {
    return CBaIniParser::Destroy(pHdl);
 }
 
@@ -347,12 +347,12 @@ bool CBaIniParserDestroy(IBaIniParser *pHdl) {
  -----------------------------------------------------------------------------*/
 //
 TBaIniParseHdl BaIniParseCreate(const char *file) {
-   return CBaIniParserCreate(file);
+   return IBaIniParserCreate(file);
 }
 
 //
 TBaBoolRC BaIniParseDestroy(TBaIniParseHdl hdl) {
-   return CBaIniParserDestroy(C_HDL_) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return IBaIniParserDestroy(C_HDL_) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //

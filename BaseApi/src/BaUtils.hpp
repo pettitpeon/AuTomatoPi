@@ -267,7 +267,7 @@ static inline T BaToNumber(
 }
 
 /******************************************************************************/
-/** Creates a string formated C-style
+/** Creates a string formated C-style with a maximum length of 65534 chars
  *  @return formated string
  */
 static inline std::string BaFString(
@@ -290,7 +290,7 @@ static inline std::string BaFString(
 }
 
 /******************************************************************************/
-/** Creates a string formated C-style
+/** Creates a string formated C-style with a maximum length of 65534 chars
  *  @return formated string
  */
 static inline std::string BaFString(

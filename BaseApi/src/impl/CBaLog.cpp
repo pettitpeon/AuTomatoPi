@@ -56,6 +56,7 @@
 #define TAGSZ     7
 #define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
 #define STRNOTFOUND    std::string::npos     // Return value for string not found
+#define SYSLOG_        _L_SETSYSLOGF
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -220,7 +221,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile, bool disableThread) {
    // Get the real path
    getCfgPath(cfgFile);
 
-   IBaIniParser *pIni = CBaIniParserCreate(cfgFile.c_str());
+   IBaIniParser *pIni = IBaIniParserCreate(cfgFile.c_str());
    if (!pIni) {
       // todo: log? Ini parser should log
       return 0;
@@ -395,8 +396,9 @@ inline void CBaLog::Flush() {
          // Close the output stream
          mLog.close();
          if (mLog.fail()) {
-            // fixme this could be cyclic!
-            BASYSLOG(TAG, "Cannot close log: %s", mFullPath.c_str());
+            mLogCloseFailed.SYSLOG_(TAG, "Cannot close log: %s", mFullPath.c_str());
+         } else {
+            mLogCloseFailed.Reset();
          }
 
          // Rename file
@@ -409,16 +411,19 @@ inline void CBaLog::Flush() {
 
             if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
                std::cout << errno << std::endl;
-               // fixme this could be cyclic!
-               BASYSLOG(TAG, "Cannot rename log: %s", mFullPath.c_str());
+               mRenameFailed.SYSLOG_(TAG, "Cannot rename log: %s", mFullPath.c_str());
+            } else {
+               mRenameFailed.Reset();
             }
+
          }
 
          mFileSizeB = msg.size() + 1;
          mLog.open(mFullPath, std::ios_base::binary | std::ios_base::out);
          if (mLog.fail()) {
-            // fixme this could be cyclic!
-            BASYSLOG(TAG, "Cannot open log: %s", mFullPath.c_str());
+            mLogOpenFailed.SYSLOG_(TAG, "Cannot open log: %s", mFullPath.c_str());
+         } else {
+            mLogOpenFailed.Reset();
          }
       }
 
@@ -435,7 +440,7 @@ inline void CBaLog::Flush() {
 bool CBaLog::saveCfg() {
 
    // Create file-less
-   IBaIniParser *pIni = CBaIniParserCreate(0);
+   IBaIniParser *pIni = IBaIniParserCreate(0);
 
    // Set tag for section
    pIni->Set(TAG, "");

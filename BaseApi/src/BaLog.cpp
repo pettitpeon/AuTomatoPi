@@ -21,17 +21,21 @@
  -----------------------------------------------------------------------------*/
 
 //
-void BaLogSysLog(const char *tag, int line, const char *fmt, ...) {
-   va_list arg;
-   va_start(arg, fmt);
-   std::string s = BaFString(fmt, arg);
-   va_end(arg);
-   CBaLog::SysLog(tag, line, s.c_str());
+TBaLogHdl BaLogCreateDef(const char *name) {
+   return CBaLog::Create(name);
 }
 
 //
-TBaLogHdl BaLogCreateDef(const char *name) {
-   return CBaLog::Create(name);
+void BaLogSetDefOpts(TBaLogOptions *pOpts ) {
+   if (pOpts) {
+      pOpts->name = "";
+      pOpts->path = "";
+      pOpts->prioFilt = eBaLogPrio_Trace;
+      pOpts->out = eBaLogOut_LogAndConsole;
+      pOpts->maxFileSizeB = 1048576; // 1 MiB
+      pOpts->maxNoFiles = 3;
+      pOpts->maxBufLength = 0;
+   }
 }
 
 //
@@ -132,23 +136,42 @@ TBaBoolRC BaLogErrorF(TBaLogHdl hdl, const char* tag, const char* fmt, ...) {
    return ret;
 }
 
+//
+void BaLogGetLogInfo(TBaLogHdl hdl, TBaLogInfo *pInfo) {
+   C_HDL_->GetLogInfo(pInfo);
+}
+
+//
+void BaLogSysLogF(const char *tag, int line, const char *fmt, ...) {
+   va_list arg;
+   va_start(arg, fmt);
+   std::string s = BaFString(fmt, arg);
+   va_end(arg);
+   CBaLog::SysLog(tag, line, s.c_str());
+}
+
+//
+void BaLogSysLog(const char *tag, int line, const char *msg) {
+   CBaLog::SysLog(tag, line, msg);
+}
+
 
 /*------------------------------------------------------------------------------
     C++ Factories
  -----------------------------------------------------------------------------*/
 
 //
-IBaLog * CBaLogCreateDef(const char *name) {
+IBaLog * IBaLogCreateDef(const char *name) {
    return CBaLog::Create(name);
 }
 
 //
-IBaLog * CBaLogCreate(const TBaLogOptions *pOpts) {
+IBaLog * IBaLogCreate(const TBaLogOptions *pOpts) {
    return pOpts ? CBaLog::Create(*pOpts) : 0;
 }
 
 //
-TBaBoolRC CBaLogDestroy(IBaLog *pHdl, TBaBool saveCfg) {
+TBaBoolRC IBaLogDestroy(IBaLog *pHdl, TBaBool saveCfg) {
    return CBaLog::Destroy(pHdl, saveCfg);
 }
 

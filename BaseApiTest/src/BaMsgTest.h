@@ -2,8 +2,8 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaLogTest.h
- *   Date     : Dec 9, 2015
+ *   Module   : BaMsgTest.h
+ *   Date     : Apr 27, 2016
  *------------------------------------------------------------------------------
  *   Module description:
  */
@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BALOGTEST_H_
-#define BALOGTEST_H_
+#ifndef BAMSGTEST_H_
+#define BAMSGTEST_H_
 
 /*------------------------------------------------------------------------------
  *  Includes
@@ -24,23 +24,16 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-class CBaLogTest : public CppUnit::TestCase {
+
+class CBaMsgTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
 
-   CPPUNIT_TEST_SUITE(CBaLogTest);
+   CPPUNIT_TEST_SUITE(CBaMsgTest);
 
    CPPUNIT_TEST(Init);
-   CPPUNIT_TEST(Test);
-   CPPUNIT_TEST(CreateReuseDestroy);
-   CPPUNIT_TEST(TracesF);
-   CPPUNIT_TEST(Tags);
-   CPPUNIT_TEST(Prios);
-   CPPUNIT_TEST(LogVsPrint);
-   CPPUNIT_TEST(FilesAndSizesOpts);
-   CPPUNIT_TEST(Stress);
-   CPPUNIT_TEST(SysLog);
+   CPPUNIT_TEST(TestImpl);
    CPPUNIT_TEST(TestIface);
    CPPUNIT_TEST(Exit);
 
@@ -48,19 +41,10 @@ public:
 
 public:
    void Init();
-   void Test();
-   void CreateReuseDestroy();
-   void TracesF();
-   void Tags();
-   void Prios();
-   void LogVsPrint();
-   void FilesAndSizesOpts();
-   void Stress();
-   void SysLog();
+   void TestImpl();
    void TestIface();
    void Exit();
 };
 
-#endif // BALOGTEST_H_
-
+#endif // BAMSGTEST_H_
 

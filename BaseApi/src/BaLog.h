@@ -8,7 +8,14 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  Logger API. Handles logging to files and to syslog. The logger state can be
+ *  saved to an .ini file to be retrieved later. Among other this API offers:@n
+ *   - Priority filter
+ *   - Logging to console and/or file
+ *   - Message buffering for better performance
+ *   - Manual flushing
+ *   - File size limit
+ *   - Ring files
  */
 /*------------------------------------------------------------------------------
  */
@@ -24,7 +31,7 @@
  *  Defines
  */
 /// Syslog macro that includes the line number
-#define BASYSLOG(tag, fmt, ...) BaLogSysLog(tag, __LINE__, fmt, __VA_ARGS__)
+#define BASYSLOG(tag, fmt, ...) BaLogSysLogF(tag, __LINE__, fmt, __VA_ARGS__)
 
 /*------------------------------------------------------------------------------
  *  Type definitions
@@ -78,16 +85,8 @@ typedef void* TBaLogHdl;
 extern "C" {
 #endif
 
-/******************************************************************************/
-/** ...
- */
-void BaLogSysLog(
-      const char *tag,
-      int line,
-      const char *fmt,
-      ...
-      );
-
+/// @name Factory
+//@{
 /******************************************************************************/
 /** Create factory for a logger with defaults
  *  @return Handle if success, otherwise, null
@@ -105,20 +104,29 @@ TBaLogHdl BaLogCreate(
       );
 
 /******************************************************************************/
+/** Sets the a TBaLogOptions structure to default values
+ */
+void BaLogSetDefOpts(
+      TBaLogOptions *pOpts ///< [out] Pointer to struct
+      );
+
+/******************************************************************************/
 /** Destroy and release resources of logger
  *  @return True if success, otherwise, false
  */
 TBaBoolRC BaLogDestroy(
-      TBaLogHdl hdl, ///< [in] BaLog handle to destroy
+      TBaLogHdl hdl,  ///< [in] BaLog handle to destroy
       TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );
+//@}
 
 /// @name Logging functions
 //@{
 /******************************************************************************/
 /** Logs a message into the logger and adds a @c tag and a time stamp.
- *  The @c Trace() and rest functions have an implied priority
- *  @return true if success, otherwise, false
+ *  The @c BaLogTrace() and family functions have an implied priority
+ *  @return true if success, otherwise, false. False if buffer is full or @c msg
+ *  is null
  */
 TBaBoolRC BaLogLog(
       TBaLogHdl hdl,    ///< [in] Handle
@@ -126,20 +134,16 @@ TBaBoolRC BaLogLog(
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* msg   ///< [in] Message to log
       );
-
 TBaBoolRC BaLogTrace(
       TBaLogHdl hdl,   ///< [in] Handle
       const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* msg  ///< [in] Message to log
       );
-
 TBaBoolRC BaLogWarning(
       TBaLogHdl hdl,   ///< [in] Handle
       const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* msg  ///< [in] Message to log
       );
-
-
 TBaBoolRC BaLogError(
       TBaLogHdl hdl,   ///< [in] Handle
       const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
@@ -153,37 +157,72 @@ TBaBoolRC BaLogError(
 /***************************************************************************/
 /** Logs a message into the logger like @c printf() and adds a @c tag and a
  *  time stamp. These functions have a limit of 65534 characters per message.
- *  The @c TraceF() and rest functions have an implied priority
- *  @return true if success, otherwise, false
+ *  The @c BaLogTraceF() and family functions have an implied priority
+ *  @return true if success, otherwise, false. False if buffer is full or @c fmt
+ *  is null
  */
 TBaBoolRC BaLogLogF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl   hdl,  ///< [in] Handle
       EBaLogPrio  prio, ///< [in] Message priority
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+      ...               ///< [in] Format arguments
       );
-
 TBaBoolRC BaLogTraceF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl   hdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+      ...               ///< [in] Format arguments
       );
-
 TBaBoolRC BaLogWarningF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
+      TBaLogHdl   hdl,  ///< [in] Handle
       const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
       const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+      ...               ///< [in] Format arguments
+      );
+TBaBoolRC BaLogErrorF(
+      TBaLogHdl   hdl,  ///< [in] Handle
+      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      const char* fmt,  ///< [in] Message format
+      ...               ///< [in] Format arguments
+      );
+//@}
+
+/// @name Getter
+//@{
+/***************************************************************************/
+/** Gets the information and options.
+ *  The const char pointers of the TBaLogInfo struct must not be changed or
+ *  mangled with. They point to internal memory. Also they invalidated when
+ *  the logger instance is destroyed. Accessing the freed memory results in
+ *  undefined behavior.
+ */
+void BaLogGetLogInfo(
+      TBaLogHdl hdl,  ///< [in] Handle
+      TBaLogInfo *pInfo ///< [out] Pointer to preallocated structure
+      );
+//@}
+
+/// @name Syslog logging
+//@{
+/******************************************************************************/
+/** Logs a message into the syslog like @c printf() and adds a @c tag and a
+ *  time stamp.
+ */
+void BaLogSysLogF(
+      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      int line,        ///< [in] Line number, useful for debugging
+      const char *fmt, ///< [in] Message format
+      ...              ///< [in] Format arguments
       );
 
-
-TBaBoolRC BaLogErrorF(
-      TBaLogHdl *pHdl,  ///< [in] Handle
-      const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-      const char* fmt,  ///< [in] Message format
-      ...               ///> [in] Format arguments
+/******************************************************************************/
+/** Logs a message into the syslog and adds a @c tag and a time stamp.
+ */
+void BaLogSysLog(
+      const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+      int line,        ///< [in] Line number, useful for debugging
+      const char *msg  ///< [in] Message to log
       );
 //@}
 
@@ -220,8 +259,9 @@ public:
    //@{
    /***************************************************************************/
    /** Logs a message into the logger and adds a @c tag and a time stamp.
-    *  The @c Trace() and rest functions have an implied priority
-    *  @return true if success, otherwise, false
+    *  The @c Trace() and family functions have an implied priority
+    *  @return true if success, otherwise, false. False if buffer is full or
+    *  @c msg is null
     */
    virtual bool Log(
          EBaLogPrio  prio, ///< [in] Message priority
@@ -247,29 +287,30 @@ public:
    /***************************************************************************/
    /** Logs a message into the logger like @c printf() and adds a @c tag and a
     *  time stamp. These functions have a limit of 65534 characters per message.
-    *  The @c TraceF() and rest functions have an implied priority
-    *  @return true if success, otherwise, false
+    *  The @c TraceF() and family functions have an implied priority
+    *  @return true if success, otherwise, false. False if buffer is full or
+    *  @c fmt is null
     */
    virtual bool LogF(
          EBaLogPrio  prio, ///< [in] Message priority
          const char* tag,  ///< [in] Optional tag of maximum 6 chars + 7th terminating null
          const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         ...               ///< [in] Format arguments
          ) = 0;
    virtual bool TraceF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         const char* fmt, ///< [in] Message format
+         ...              ///< [in] Format arguments
          ) = 0;
    virtual bool WarningF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         const char* fmt, ///< [in] Message format
+         ...              ///< [in] Format arguments
          ) = 0;
    virtual bool ErrorF(
          const char* tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char* fmt,  ///< [in] Message format
-         ...               ///> [in] Format arguments
+         const char* fmt, ///< [in] Message format
+         ...              ///< [in] Format arguments
          ) = 0;
    //@}
 
@@ -278,11 +319,13 @@ public:
    virtual ~IBaLog() {};
 };
 
+/// @name C++ Factory
+//@{
 /******************************************************************************/
 /** Create factory for a logger with defaults
  *  @return Handle if success, otherwise, null
  */
-extern "C" IBaLog * CBaLogCreateDef(
+extern "C" IBaLog * IBaLogCreateDef(
       const char *name ///< [in] Name of the logger
       );
 
@@ -290,7 +333,7 @@ extern "C" IBaLog * CBaLogCreateDef(
 /** Create factory for a logger.
  *  @return Handle if success, otherwise, null
  */
-extern "C" IBaLog * CBaLogCreate(
+extern "C" IBaLog * IBaLogCreate(
       const TBaLogOptions *pOpts ///< [in] Logger options
       );
 
@@ -298,10 +341,11 @@ extern "C" IBaLog * CBaLogCreate(
 /** Destroy and release resources of logger
  *  @return True if success, otherwise, false
  */
-extern "C" TBaBoolRC CBaLogDestroy(
+extern "C" TBaBoolRC IBaLogDestroy(
       IBaLog *pHdl, ///< [in] BaLog handle to destroy
       TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );
+//@}
 
 #endif // __cplusplus
 #endif // BALOG_H_
