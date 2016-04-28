@@ -104,6 +104,13 @@ TBaLogHdl BaLogCreate(
       );
 
 /******************************************************************************/
+/** Sets the a TBaLogOptions structure to default values
+ */
+void BaLogSetDefOpts(
+      TBaLogOptions *pOpts ///< [out] Pointer to struct
+      );
+
+/******************************************************************************/
 /** Destroy and release resources of logger
  *  @return True if success, otherwise, false
  */
@@ -311,17 +318,10 @@ public:
 /// @name C++ Factory
 //@{
 /******************************************************************************/
-/** Sets the a TBaLogOptions structure to default values
- */
-extern "C" void CBaLogSetDef(
-      TBaLogOptions *pOpts ///< [out] Pointer to struct
-      );
-
-/******************************************************************************/
 /** Create factory for a logger with defaults
  *  @return Handle if success, otherwise, null
  */
-extern "C" IBaLog * CBaLogCreateDef(
+extern "C" IBaLog * IBaLogCreateDef(
       const char *name ///< [in] Name of the logger
       );
 
@@ -329,7 +329,7 @@ extern "C" IBaLog * CBaLogCreateDef(
 /** Create factory for a logger.
  *  @return Handle if success, otherwise, null
  */
-extern "C" IBaLog * CBaLogCreate(
+extern "C" IBaLog * IBaLogCreate(
       const TBaLogOptions *pOpts ///< [in] Logger options
       );
 
@@ -337,7 +337,7 @@ extern "C" IBaLog * CBaLogCreate(
 /** Destroy and release resources of logger
  *  @return True if success, otherwise, false
  */
-extern "C" TBaBoolRC CBaLogDestroy(
+extern "C" TBaBoolRC IBaLogDestroy(
       IBaLog *pHdl, ///< [in] BaLog handle to destroy
       TBaBool saveCfg ///< [in] Flag to specify if the state should be saved in a cfg file
       );

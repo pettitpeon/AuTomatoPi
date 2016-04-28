@@ -331,7 +331,7 @@ public:
  *  be saved to disk with IBaIniParser::DumpIni().
  *  @return Handle if success, otherwise, null
  */
-extern "C" IBaIniParser * CBaIniParserCreate(
+extern "C" IBaIniParser * IBaIniParserCreate(
       const char *file ///< [in] Path to file
       );
 
@@ -339,7 +339,7 @@ extern "C" IBaIniParser * CBaIniParserCreate(
 /** Destroy and release resources of INI parser
  *  @return True if success, otherwise, false
  */
-extern "C" bool CBaIniParserDestroy(
+extern "C" bool IBaIniParserDestroy(
       IBaIniParser *pHdl ///< [in] INI parser handle to destroy
       );
 

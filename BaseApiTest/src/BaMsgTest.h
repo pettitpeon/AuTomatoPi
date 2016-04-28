@@ -34,6 +34,7 @@ public:
 
    CPPUNIT_TEST(Init);
    CPPUNIT_TEST(TestImpl);
+   CPPUNIT_TEST(TestIface);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
@@ -46,3 +47,4 @@ public:
 };
 
 #endif // BAMSGTEST_H_
+

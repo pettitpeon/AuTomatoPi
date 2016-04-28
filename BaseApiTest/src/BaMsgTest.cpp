@@ -13,6 +13,8 @@
 /*------------------------------------------------------------------------------
  */
 
+#include <unistd.h>
+
 #include "BaMsgTest.h"
 #include "impl/CBaMsg.h"
 #include "CppU.h"
@@ -52,10 +54,10 @@ void CBaMsgTest::Init() {
 void CBaMsgTest::TestImpl() {
    CBaMsg msg;
    TBaLogOptions logOpt;
-   CBaLogSetDef(&logOpt);
+   BaLogSetDefOpts(&logOpt);
    logOpt.name = "msglog";
    logOpt.path = RESPATH;
-   IBaLog * pLog = CBaLogCreate(&logOpt);
+   IBaLog * pLog = IBaLogCreate(&logOpt);
    ASS(pLog);
 
    // To console
@@ -68,8 +70,8 @@ void CBaMsgTest::TestImpl() {
 
    // To syslog
    ASS(!msg.Get());
-   msg.SetSysLogF("tag", __LINE__, "%s", "Set message");
-   msg.SetSysLogF("tag", __LINE__, "%s", "Set message");
+   msg._L_SETSYSLOGF("tag", "%s", "Set message");
+   msg._L_SETSYSLOGF("tag", "%s", "Set message");
    ASS(msg.Get());
    msg.Reset();
    ASS(!msg.Get());
@@ -82,8 +84,54 @@ void CBaMsgTest::TestImpl() {
    msg.Reset();
    ASS(!msg.Get());
 
-   ASS(CBaLogDestroy(pLog, eBaBool_false));
+   ASS(IBaLogDestroy(pLog, eBaBool_false));
    ASS_EQ((uint32_t)44, BaFS::Size(RESPATH "msglog.log"));
+}
+
+/* ****************************************************************************/
+/*  Initialize resources
+ */
+void CBaMsgTest::TestIface() {
+   IBaMsg *pMsg = 0;
+   TBaMsgHdl msg = BaMsgCreate();
+   TBaLogOptions logOpt;
+   BaLogSetDefOpts(&logOpt);
+   logOpt.name = "msglog";
+   logOpt.path = RESPATH;
+   IBaLog * pLog = IBaLogCreate(&logOpt);
+   ASS(pLog);
+
+   // To console
+   ASS(!BaMsgGet(msg));
+   BaMsgSetPrintF(msg, "%s\n", "Set message");
+   BaMsgSetPrintF(msg, "%s\n", "Set message");
+   ASS(BaMsgGet(msg));
+   BaMsgReset(msg);
+   ASS(!BaMsgGet(msg));
+
+   // To syslog
+   ASS(!BaMsgGet(msg));
+   BAMSGSETSYSLOGF(msg, "tag", "%s", "Set message");
+   BAMSGSETSYSLOGF(msg, "tag", "%s", "Set message");
+   ASS(BaMsgGet(msg));
+   BaMsgReset(msg);
+   ASS(!BaMsgGet(msg));
+
+   // To log
+   ASS(!BaMsgGet(msg));
+   BaMsgSetLogF(msg, pLog, eBaLogPrio_Trace, "tag", "%s", "Set message");
+   BaMsgSetLogF(msg, pLog, eBaLogPrio_Trace, "tag", "%s", "Set message");
+   ASS(BaMsgGet(msg));
+   BaMsgReset(msg);
+   ASS(!BaMsgGet(msg));
+
+   ASS(BaMsgDestroy(msg));
+   ASS(IBaLogDestroy(pLog, eBaBool_false));
+   ASS_EQ((uint32_t)44, BaFS::Size(RESPATH "msglog.log"));
+
+   pMsg = IBaMsgCreate();
+   ASS(pMsg);
+   ASS(IBaMsgDestroy(pMsg));
 }
 
 /* ****************************************************************************/

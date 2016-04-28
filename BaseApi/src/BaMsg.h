@@ -40,7 +40,7 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-/// C logger handle
+/// C message handle
 typedef void* TBaMsgHdl;
 
 /*------------------------------------------------------------------------------
@@ -53,13 +53,13 @@ extern "C" {
 /// @name Factory
 //@{
 /******************************************************************************/
-/** Create factory for a msg.
+/** Create factory for a message with state.
  *  @return Handle if success, otherwise, null
  */
 TBaMsgHdl BaMsgCreate();
 
 /******************************************************************************/
-/** Destroy and release resources of msg
+/** Destroy and release resources of message with state
  *  @return True if success, otherwise, false
  */
 TBaBoolRC BaMsgDestroy(
@@ -252,14 +252,14 @@ public:
 /** Create factory for a message with state.
  *  @return Handle if success, otherwise, null
  */
-extern "C" IBaMsg * CBaMsgCreate(
+extern "C" IBaMsg * IBaMsgCreate(
       );
 
 /******************************************************************************/
 /** Destroy and release resources of Message with state
  *  @return True if success, otherwise, false
  */
-extern "C" TBaBoolRC CBaMsgDestroy(
+extern "C" TBaBoolRC IBaMsgDestroy(
       IBaMsg *pHdl ///< [in] BaLog handle to destroy
       );
 //@}

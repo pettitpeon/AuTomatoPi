@@ -220,7 +220,7 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile, bool disableThread) {
    // Get the real path
    getCfgPath(cfgFile);
 
-   IBaIniParser *pIni = CBaIniParserCreate(cfgFile.c_str());
+   IBaIniParser *pIni = IBaIniParserCreate(cfgFile.c_str());
    if (!pIni) {
       // todo: log? Ini parser should log
       return 0;
@@ -444,7 +444,7 @@ inline void CBaLog::Flush() {
 bool CBaLog::saveCfg() {
 
    // Create file-less
-   IBaIniParser *pIni = CBaIniParserCreate(0);
+   IBaIniParser *pIni = IBaIniParserCreate(0);
 
    // Set tag for section
    pIni->Set(TAG, "");

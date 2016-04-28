@@ -59,7 +59,7 @@ void CBaIniParse::CPPTest() {
 
    CPPUNIT_ASSERT(true);
    create_example_ini_file();
-   IBaIniParser *pHdl = CBaIniParserCreate(EXINI);
+   IBaIniParser *pHdl = IBaIniParserCreate(EXINI);
    CPPUNIT_ASSERT(pHdl);
 
    pHdl->Dump(stdout);
@@ -113,19 +113,19 @@ void CBaIniParse::TwistedIni() {
    dictionary   *pOrgHdl = 0;
    std::string   tmp;
 
-   CPPUNIT_ASSERT(!CBaIniParserCreate("You/Shall/Not/Path"));
+   CPPUNIT_ASSERT(!IBaIniParserCreate("You/Shall/Not/Path"));
    CPPUNIT_ASSERT(!iniparser_load("You/Shall/Not/Path"));
-   CPPUNIT_ASSERT(!CBaIniParserCreate(ERRORINI));
+   CPPUNIT_ASSERT(!IBaIniParserCreate(ERRORINI));
    CPPUNIT_ASSERT(!iniparser_load(ERRORINI));
 
    CPPUNIT_ASSERT(!iniparser_load(OFKEYINI));
-   CPPUNIT_ASSERT(!CBaIniParserCreate(OFKEYINI));
+   CPPUNIT_ASSERT(!IBaIniParserCreate(OFKEYINI));
 
 
-   CPPUNIT_ASSERT(!CBaIniParserCreate(OFVALINI));
+   CPPUNIT_ASSERT(!IBaIniParserCreate(OFVALINI));
    CPPUNIT_ASSERT(!iniparser_load(OFVALINI));
 
-   pNewHdl = CBaIniParserCreate(TWISTEDINI);
+   pNewHdl = IBaIniParserCreate(TWISTEDINI);
    pOrgHdl = iniparser_load(TWISTEDINI);
    CPPUNIT_ASSERT(pNewHdl);
    CPPUNIT_ASSERT(pOrgHdl);
@@ -148,12 +148,12 @@ void CBaIniParse::TwistedIni() {
    CPPUNIT_ASSERT_MESSAGE(pNewHdl->GetString("multi line key", ""),
          tmp == iniparser_getstring(pOrgHdl,"multi line key", ""));
 
-   CPPUNIT_ASSERT(CBaIniParserDestroy(pNewHdl));
+   CPPUNIT_ASSERT(IBaIniParserDestroy(pNewHdl));
    iniparser_freedict(pOrgHdl);
    pNewHdl = 0;
    pOrgHdl = 0;
 
-   pNewHdl = CBaIniParserCreate(0);
+   pNewHdl = IBaIniParserCreate(0);
    pOrgHdl = dictionary_new(10);
    CPPUNIT_ASSERT(pNewHdl);
    CPPUNIT_ASSERT(pOrgHdl);

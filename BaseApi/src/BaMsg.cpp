@@ -5,22 +5,24 @@
  *   Module   : BaMsg.cpp
  *   Date     : Apr 26, 2016
  *------------------------------------------------------------------------------
- *   Module description:
  */
-/* * @file
- *  ...
- */
-/*------------------------------------------------------------------------------
- */
+
+// C includes
 #include <stdarg.h>
 
+// Local includes
 #include "BaMsg.h"
 #include "CBaMsg.h"
 #include "BaUtils.hpp"
 
-
+/*------------------------------------------------------------------------------
+ *  Defines
+ */
 #define C_HDL_ ((IBaMsg*) hdl)
 
+/*------------------------------------------------------------------------------
+ *  C Interface
+ */
 //
 TBaMsgHdl BaMsgCreate() {
    return (TBaMsgHdl) new CBaMsg();
@@ -28,7 +30,7 @@ TBaMsgHdl BaMsgCreate() {
 
 //
 TBaBoolRC BaMsgDestroy(TBaMsgHdl hdl) {
-   return CBaMsgDestroy(C_HDL_);
+   return IBaMsgDestroy(C_HDL_);
 }
 
 //
@@ -85,13 +87,16 @@ TBaBool BaMsgGet(TBaMsgHdl hdl) {
    return C_HDL_->Get();
 }
 
+/*------------------------------------------------------------------------------
+ *  C++ Interface
+ */
 //
-IBaMsg * CBaMsgCreate() {
+IBaMsg * IBaMsgCreate() {
    return (IBaMsg*) new CBaMsg();
 }
 
 //
-TBaBoolRC CBaMsgDestroy(
+TBaBoolRC IBaMsgDestroy(
       IBaMsg *pHdl
       ) {
    CBaMsg *p = dynamic_cast<CBaMsg*>(pHdl);
