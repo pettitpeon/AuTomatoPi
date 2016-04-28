@@ -125,7 +125,8 @@ TBaBoolRC BaLogDestroy(
 /******************************************************************************/
 /** Logs a message into the logger and adds a @c tag and a time stamp.
  *  The @c BaLogTrace() and family functions have an implied priority
- *  @return true if success, otherwise, false
+ *  @return true if success, otherwise, false. False if buffer is full or @c msg
+ *  is null
  */
 TBaBoolRC BaLogLog(
       TBaLogHdl hdl,    ///< [in] Handle
@@ -157,7 +158,8 @@ TBaBoolRC BaLogError(
 /** Logs a message into the logger like @c printf() and adds a @c tag and a
  *  time stamp. These functions have a limit of 65534 characters per message.
  *  The @c BaLogTraceF() and family functions have an implied priority
- *  @return true if success, otherwise, false
+ *  @return true if success, otherwise, false. False if buffer is full or @c fmt
+ *  is null
  */
 TBaBoolRC BaLogLogF(
       TBaLogHdl   hdl,  ///< [in] Handle
@@ -258,7 +260,8 @@ public:
    /***************************************************************************/
    /** Logs a message into the logger and adds a @c tag and a time stamp.
     *  The @c Trace() and family functions have an implied priority
-    *  @return true if success, otherwise, false
+    *  @return true if success, otherwise, false. False if buffer is full or
+    *  @c msg is null
     */
    virtual bool Log(
          EBaLogPrio  prio, ///< [in] Message priority
@@ -285,7 +288,8 @@ public:
    /** Logs a message into the logger like @c printf() and adds a @c tag and a
     *  time stamp. These functions have a limit of 65534 characters per message.
     *  The @c TraceF() and family functions have an implied priority
-    *  @return true if success, otherwise, false
+    *  @return true if success, otherwise, false. False if buffer is full or
+    *  @c fmt is null
     */
    virtual bool LogF(
          EBaLogPrio  prio, ///< [in] Message priority

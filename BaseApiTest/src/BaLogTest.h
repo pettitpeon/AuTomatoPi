@@ -41,6 +41,7 @@ public:
    CPPUNIT_TEST(FilesAndSizesOpts);
    CPPUNIT_TEST(Stress);
    CPPUNIT_TEST(SysLog);
+   CPPUNIT_TEST(TestIface);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
@@ -56,6 +57,7 @@ public:
    void FilesAndSizesOpts();
    void Stress();
    void SysLog();
+   void TestIface();
    void Exit();
 };
 

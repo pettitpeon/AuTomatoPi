@@ -56,6 +56,7 @@
 #define TAGSZ     7
 #define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
 #define STRNOTFOUND    std::string::npos     // Return value for string not found
+#define SYSLOG_        _L_SETSYSLOGF
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -395,13 +396,9 @@ inline void CBaLog::Flush() {
          // Close the output stream
          mLog.close();
          if (mLog.fail()) {
-            // fixme this could be cyclic!
-//            if (!mMsgState.Get()) {
-               BASYSLOG(TAG, "Cannot close log: %s", mFullPath.c_str());
-//               mMsgState.Reset();
-//            }
+            mLogCloseFailed.SYSLOG_(TAG, "Cannot close log: %s", mFullPath.c_str());
          } else {
-//            mMsgState.Reset();
+            mLogCloseFailed.Reset();
          }
 
          // Rename file
@@ -414,11 +411,9 @@ inline void CBaLog::Flush() {
 
             if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
                std::cout << errno << std::endl;
-               // fixme this could be cyclic!
-               BASYSLOG(TAG, "Cannot rename log: %s", mFullPath.c_str());
-               mMsg._L_SETSYSLOGF(TAG, "Cannot rename log: %s", mFullPath.c_str());
+               mRenameFailed.SYSLOG_(TAG, "Cannot rename log: %s", mFullPath.c_str());
             } else {
-               mMsg.Reset();
+               mRenameFailed.Reset();
             }
 
          }
@@ -426,8 +421,9 @@ inline void CBaLog::Flush() {
          mFileSizeB = msg.size() + 1;
          mLog.open(mFullPath, std::ios_base::binary | std::ios_base::out);
          if (mLog.fail()) {
-            // fixme this could be cyclic!
-            BASYSLOG(TAG, "Cannot open log: %s", mFullPath.c_str());
+            mLogOpenFailed.SYSLOG_(TAG, "Cannot open log: %s", mFullPath.c_str());
+         } else {
+            mLogOpenFailed.Reset();
          }
       }
 

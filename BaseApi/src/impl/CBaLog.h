@@ -121,7 +121,8 @@ private:
       mName(name), mPath(path), mPrioFilt(prioFilt), mOut(out),
       mMaxFileSizeB(maxFileSizeB), mMaxNoFiles(maxNoFiles), mMaxBufLength(maxBufLength),
       mFileCnt(fileCnt), mFileSizeB(fileSizeB), mOpenCnt(1), mFullPath(),
-      mTmpPath(), mLog(), mBuf(), mCameFromCfg(false), mMtx(), mMsg() {};
+      mTmpPath(), mLog(), mBuf(), mCameFromCfg(false), mMtx(), mLogCloseFailed(),
+      mRenameFailed(), mLogOpenFailed() {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaLog() {};
@@ -157,7 +158,9 @@ private:
    char mMillis[4]; // Temp variable to save the milli part of a time-stamp
    char mTag[7]; // Temp variable to manipulate the tag and pad spaces
 
-   CBaMsg mMsg;
+   CBaMsg mLogCloseFailed;
+   CBaMsg mRenameFailed;
+   CBaMsg mLogOpenFailed;
 
 };
 

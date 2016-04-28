@@ -149,6 +149,7 @@ void CBaLogTest::TracesF() {
    std::string fullPath(info.fullPath);
 
    // Log some messages
+   ASS(!pDef->TraceF("tag", 0));
    ASS(pDef->TraceF(0,           "%s", "35"));
    ASS(pDef->TraceF("Def",       "%s", "70"));
    ASS(pDef->TraceF("DefTag",    "%s", "106"));
@@ -535,6 +536,13 @@ void CBaLogTest::SysLog() {
    BASYSLOG("tag", "%s", "Message");
    BASYSLOG("tagtag", "%s", "Message");
    BASYSLOG("tagtagtag", "%s", "Message");
+}
+
+/* ****************************************************************************/
+/*  Test the interface
+ */
+void CBaLogTest::TestIface() {
+   // todo
 }
 
 /* ****************************************************************************/
