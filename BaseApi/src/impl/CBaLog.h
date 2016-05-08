@@ -91,7 +91,7 @@ public:
    virtual bool WarningF(const char* tag, const char* fmt, ...);
    virtual bool ErrorF(const char* tag, const char* fmt, ...);
 
-   //
+   // Force flush to disk
    virtual void Flush();
 
    // Not part of the interface

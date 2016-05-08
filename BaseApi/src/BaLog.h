@@ -30,7 +30,7 @@
 /*------------------------------------------------------------------------------
  *  Defines
  */
-/// Syslog macro that includes the line number
+/// Syslog macro that includes the line number.
 #define BASYSLOG(tag, fmt, ...) BaLogSysLogF(tag, __LINE__, fmt, __VA_ARGS__)
 
 /*------------------------------------------------------------------------------
@@ -203,11 +203,21 @@ void BaLogGetLogInfo(
       );
 //@}
 
+/***************************************************************************/
+/** Forces flush to disk
+ */
+void BaLogFlush(
+      TBaLogHdl hdl ///< [in] Handle
+      );
+
 /// @name Syslog logging
 //@{
 /******************************************************************************/
 /** Logs a message into the syslog like @c printf() and adds a @c tag and a
- *  time stamp.
+ *  time stamp. The syslog should be used to log critical errors, or when a
+ *  normal logger fails. The @c line parameter is for debugging. It is
+ *  recommended to use the #BASYSLOG macro in order to use the line information
+ *  correctly
  */
 void BaLogSysLogF(
       const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
@@ -218,6 +228,10 @@ void BaLogSysLogF(
 
 /******************************************************************************/
 /** Logs a message into the syslog and adds a @c tag and a time stamp.
+ *  The syslog should be used to log critical errors, or when a
+ *  normal logger fails. The @c line parameter is for debugging. It is
+ *  recommended to use the #BASYSLOG macro in order to use the line information
+ *  correctly
  */
 void BaLogSysLog(
       const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
@@ -238,8 +252,6 @@ void BaLogSysLog(
  */
 class IBaLog {
 public:
-
-   virtual void Flush() = 0;
 
    /// @name Getter
    //@{
@@ -313,6 +325,11 @@ public:
          ...              ///< [in] Format arguments
          ) = 0;
    //@}
+
+   /***************************************************************************/
+   /** Forces a flush to disk
+    */
+   virtual void Flush() = 0;
 
    // In interfaces and abstract classes, ALWAYS declare a virtual destructor,
    // and implement / inline it

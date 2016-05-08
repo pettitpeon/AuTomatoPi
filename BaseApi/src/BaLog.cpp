@@ -142,6 +142,11 @@ void BaLogGetLogInfo(TBaLogHdl hdl, TBaLogInfo *pInfo) {
 }
 
 //
+void BaLogFlush(TBaLogHdl hdl) {
+   C_HDL_->Flush();
+}
+
+//
 void BaLogSysLogF(const char *tag, int line, const char *fmt, ...) {
    va_list arg;
    va_start(arg, fmt);
