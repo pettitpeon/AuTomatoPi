@@ -18,6 +18,9 @@
 /*------------------------------------------------------------------------------
  *  Includes
  */
+#include "BaBool.h"
+#include "BaLog.h"
+#include "BaCore.h"
 
 /*------------------------------------------------------------------------------
  *  Defines
@@ -40,13 +43,55 @@ extern "C" {
 /******************************************************************************/
 /** ...
  */
-void BaApiInit();
+TBaBoolRC BaApiInit();
 
 /******************************************************************************/
 /** ...
  */
-void BaApiExit();
+TBaBoolRC BaApiExit();
+
+/******************************************************************************/
+/** ...
+ */
+TBaBoolRC BaApiInitLoggerDef(
+      const char* name
+      );
+
+/******************************************************************************/
+/** ...
+ */
+TBaBoolRC BaApiInitLogger(
+      TBaLogHdl hdl
+      );
+
+/******************************************************************************/
+/** ...
+ */
+TBaBoolRC BaApiExitLogger();
 //@}
+
+/******************************************************************************/
+/** ...
+ */
+TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...);
+
+
+typedef struct TBaApiCtrlTaskOpts {
+   const char* name;
+   EBaCorePrio prio;
+   uint32_t cyleTimeMs;
+   TBaBoolRC (* init  )(void*);
+   TBaBoolRC (* start )(void*);
+   void      (* update)(void*);
+   TBaBoolRC (* end   )(void*);
+   TBaBoolRC (* exit  )(void*);
+} TBaApiCtrlTaskOpts;
+
+/******************************************************************************/
+/** ...
+ */
+void BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) ;
+
 
 #ifdef __cplusplus
 } // extern c

@@ -339,7 +339,7 @@ bool inline CBaLog::Error(const char* tag, const char* msg){
 bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
    va_list arg;
    va_start(arg, fmt);
-   bool ret = logV(prio, tag, fmt, arg);
+   bool ret = LogV(prio, tag, fmt, arg);
    va_end(arg);
    return ret;
 }
@@ -348,7 +348,7 @@ bool inline CBaLog::LogF(EBaLogPrio prio, const char* tag, const char* fmt, ...)
 bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
    va_list arg;
    va_start(arg, fmt);
-   bool ret = logV(eBaLogPrio_Trace, tag, fmt, arg);
+   bool ret = LogV(eBaLogPrio_Trace, tag, fmt, arg);
    va_end(arg);
    return ret;
 }
@@ -357,7 +357,7 @@ bool inline CBaLog::TraceF(const char* tag, const char* fmt, ...) {
 bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
    va_list arg;
    va_start(arg, fmt);
-   bool ret = logV(eBaLogPrio_Warning, tag, fmt, arg);
+   bool ret = LogV(eBaLogPrio_Warning, tag, fmt, arg);
    va_end(arg);
    return ret;
 }
@@ -366,7 +366,7 @@ bool inline CBaLog::WarningF(const char* tag, const char* fmt, ...) {
 bool inline CBaLog::ErrorF(const char* tag, const char* fmt, ...) {
    va_list arg;
    va_start(arg, fmt);
-   bool ret = logV(eBaLogPrio_Error, tag, fmt, arg);
+   bool ret = LogV(eBaLogPrio_Error, tag, fmt, arg);
    va_end(arg);
    return ret;
 }
@@ -548,7 +548,7 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
 }
 
 //
-bool inline CBaLog::logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg) {
+bool inline CBaLog::LogV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg) {
    if (!fmt) {
       return false;
    }
