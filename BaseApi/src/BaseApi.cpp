@@ -109,16 +109,41 @@ TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
 }
 
 //
-void BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
+TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
    if (!pOpts) {
-      return;
+      return eBaBoolRC_Error;
    }
 
-   if (!pOpts->init(0) || !pOpts->start(0)) {
-      return;
+   if (!pOpts->init(pOpts->initArg) || !pOpts->start(pOpts->startArg)) {
+      return eBaBoolRC_Error;
    }
 
-   TBaCoreThreadHdl hdl = BaCoreCreateThread(pOpts->name, ctrlTaskRout, 0, pOpts->prio);
+   TBaCoreThreadHdl hdl = 0; //BaCoreCreateThread(pOpts->name, ctrlTaskRout, 0, pOpts->prio);
+
+   pid_t pid = fork();
+
+   /* An error occurred */
+   if (pid < 0) {
+      printf("Parent talking: Error\n");
+
+   }
+
+   /* Success: Let the parent terminate */
+   if (pid > 0) {
+      printf("Parent talking: I am you father\n");
+   }
+
+   if (pid == 0) {
+      printf("NOOOO!!\n");
+      exit(EXIT_SUCCESS);
+   }
+
+   /* On success: The child process becomes session leader */
+//   if (setsid() < 0) {
+//      exit(EXIT_FAILURE);
+//   }
+
+   return hdl ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //

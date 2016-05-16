@@ -80,17 +80,23 @@ typedef struct TBaApiCtrlTaskOpts {
    const char* name;
    EBaCorePrio prio;
    uint32_t cyleTimeMs;
+
    TBaBoolRC (* init  )(void*);
+   void* initArg;
    TBaBoolRC (* start )(void*);
+   void* startArg;
    void      (* update)(void*);
+   void* updateArg;
    TBaBoolRC (* end   )(void*);
+   void* endArg;
    TBaBoolRC (* exit  )(void*);
+   void* exittArg;
 } TBaApiCtrlTaskOpts;
 
 /******************************************************************************/
 /** ...
  */
-void BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts);
+TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts);
 
 /******************************************************************************/
 /** ...
