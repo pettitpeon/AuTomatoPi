@@ -542,11 +542,66 @@ void CBaLogTest::SysLog() {
 /*  Test the interface
  */
 void CBaLogTest::TestIface() {
-   // todo
+   // Create default log, Should be overwritten and not appended
+   TBaLogInfo info;
+   IBaLog *pDef = IBaLogCreateDef("LogDef");
+   ASS(pDef);
+
+   // Check that the file was overwritten
+   pDef->GetLogInfo(&info);
+   std::string fullPath(info.fullPath);
+   uint32_t sz = BaFS::Size(fullPath);
+   ASS_EQ((uint32_t)0, info.fileSizeB);
+   ASS_EQ((uint32_t)0, sz);
+
+   // Log some messages
+   ASS(pDef->Trace("DefTag", "35"));
+   ASS(pDef->Trace("DefTag", "70"));
+   ASS(pDef->Trace("DefTag", "106"));
+   pDef->Flush();
+
+   // Get info and check file size
+   pDef->GetLogInfo(&info);
+   ASS_EQ(info.fileSizeB, (uint32_t)STAMPSZ * 3 + 3 + 3 + 4); // 106
+
+   // Destroy and save state, file should remain
+   ASS(IBaLogDestroy(pDef, true));
+   pDef = 0;
+   ASS(BaFS::Exists(fullPath));
+   remove(fullPath.c_str());
+
+   // Create with C API
+   TBaLogOptions opts;
+   info.fullPath = 0;
+   BaLogSetDefOpts(&opts);
+   opts.name = "LogDef";
+   opts.path = RESPATH;
+   TBaLogHdl hdl = BaLogCreate(&opts);
+
+   // Get info
+   BaLogGetLogInfo(hdl, &info);
+   fullPath = info.fullPath;
+   sz = BaFS::Size(fullPath);
+   ASS_EQ((uint32_t)0, info.fileSizeB);
+   ASS_EQ((uint32_t)0, sz);
+
+   // Log some
+   ASS(BaLogError(hdl, "tag", "35"));
+   ASS(BaLogWarning(hdl, "tag", "70"));
+   BaLogFlush(hdl);
+
+   // Get info and check file size
+   BaLogGetLogInfo(hdl, &info);
+   ASS_EQ(info.fileSizeB, (uint32_t)STAMPSZ * 2 + 3 + 3); // 70
+
+   // Destroy and save state, file should remain
+   ASS(BaLogDestroy(hdl, true));
+   hdl = 0;
+   ASS(BaFS::Exists(fullPath));
 }
 
 /* ****************************************************************************/
-/*  For quick tests
+/*  Release resources
  */
 void CBaLogTest::Exit() {
    remove(OPTSDIR "LogOpts.log");
@@ -568,7 +623,7 @@ void CBaLogTest::Exit() {
    rmdir(RESPATH);
 }
 
-//
+// Stresser routine
 static void stresserRout(TBaCoreThreadArg *pArg) {
    CBaLog* pObj = ((TTemp*) pArg->pArg)->pLog;
    const char* tag = ((TTemp*) pArg->pArg)->tag;
@@ -585,7 +640,7 @@ static void stresserRout(TBaCoreThreadArg *pArg) {
    std::cout << i << std::endl;
 }
 
-//
+// Stresser routine for logger 4
 static void stresser4Rout(TBaCoreThreadArg *pArg) {
    std::vector<CBaLog*> &loggers = *((std::vector<CBaLog*>*) pArg->pArg);
    int i = 0;

@@ -91,12 +91,12 @@ public:
    virtual bool WarningF(const char* tag, const char* fmt, ...);
    virtual bool ErrorF(const char* tag, const char* fmt, ...);
 
-   //
+   // Force flush to disk
    virtual void Flush();
 
    // Not part of the interface
    bool saveCfg();
-   bool logV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
+   bool LogV(EBaLogPrio prio, const char* tag, const char* fmt, va_list arg);
 
 private:
    static CBaLog* commonCreate(
