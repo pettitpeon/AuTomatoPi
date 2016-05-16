@@ -8,7 +8,7 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  stub
  */
 /*------------------------------------------------------------------------------
  */
@@ -90,7 +90,12 @@ typedef struct TBaApiCtrlTaskOpts {
 /******************************************************************************/
 /** ...
  */
-void BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) ;
+void BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts);
+
+/******************************************************************************/
+/** ...
+ */
+int BaApiDaemonize();
 
 
 #ifdef __cplusplus
