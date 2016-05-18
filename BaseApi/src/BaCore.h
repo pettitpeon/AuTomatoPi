@@ -152,8 +152,34 @@ TBaBoolRC BaCoreGetThreadInfo(
       );
 //@} Multi-threading
 
+/******************************************************************************/
+/** Set the priority of the calling process. TODO: unit test
+ *  @return Error or success
+ */
+TBaBoolRC BaCoreSetOwnProcPrio(
+      EBaCorePrio prio    ///< [in] New priority
+      );
+
+/******************************************************************************/
+/** Get the priority of the calling process. TODO: unit test
+ *  @return the priority
+ */
+EBaCorePrio BaCoreGetOwnProcPrio();
+
+// ///////////////
+const char* BaCoreGetOwnName();
+
+int BaCoreReadPidFile(const char *progName);
+
+TBaBoolRC BaCoreTestPidFile(const char *progName);
+
+int BaCoreWritePidFile(const char *progName);
+
+int BaCoreRemovePidFile(const char *progName);
+// ///////////////
 
 #ifdef __cplusplus
 }
 #endif
 #endif // _BACORE_H
+

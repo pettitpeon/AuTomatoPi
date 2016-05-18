@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <signal.h>
+#include <sched.h>
 
 // Portability headers
 #if __linux
@@ -17,6 +19,7 @@
 #endif
 
 //#include <iostream> // uncomment for debugging
+#include <fstream>      // std::ifstream
 #include <chrono>
 #include <thread>
 #include <mutex>
@@ -28,6 +31,7 @@
  */
 #include "BaCore.h"
 #include "BaGenMacros.h"
+#include "BaUtils.hpp"
 
 /*------------------------------------------------------------------------------
  *  Defines and macros
@@ -35,7 +39,11 @@
 #define TAG "BaCore"
 #define CHRONO_ std::chrono
 #define SYSCLOCK_ CHRONO_::system_clock
-
+#if __linux
+# define PIDPATH "/var/run/BaseApi/"
+#elif __WIN32
+# define PIDPATH "\\var\\run\\BaseApi\\"
+#endif
 
 /*------------------------------------------------------------------------------
  *  Type definitions
@@ -69,6 +77,7 @@ typedef struct TThreadDesc {
 LOCAL TDuration timed(TBaCoreFun func, void* pArg);
 LOCAL void threadRoutine(TThreadDesc *pDesc);
 LOCAL int prio2Prio(EBaCorePrio prio);
+LOCAL EBaCorePrio prioFromPrio(int prio);
 
 /*------------------------------------------------------------------------------
  *  Interface implementation
@@ -199,6 +208,138 @@ TBaBoolRC BaCoreGetThreadInfo(TBaCoreThreadHdl hdl, TBaCoreThreadInfo *pInfo) {
    return eBaBoolRC_Success;
 }
 
+//
+TBaBoolRC BaCoreSetOwnProcPrio(EBaCorePrio prio) {
+
+   // Define the priority and scheduler
+   int8_t sched = SCHED_OTHER;
+   struct sched_param schedPrio;
+#ifdef __linux
+   schedPrio.__sched_priority = prio2Prio(prio);
+   // Set the soft real-time scheduler if required
+   sched = prio > eBaCorePrio_Highest ? SCHED_FIFO : SCHED_OTHER;
+#elif __WIN32
+   schedPrio.sched_priority = prio2Prio(prio);
+#endif
+
+   int ret = sched_setscheduler(0, sched, &schedPrio);
+   return ret == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+EBaCorePrio BaCoreGetOwnProcPrio() {
+   // In windows it is only a stub
+#ifdef __WIN32
+   return eBaCorePrio_Normal;
+#else
+   struct sched_param schedPrio;
+   sched_getparam(0, &schedPrio);
+   return prioFromPrio(schedPrio.__sched_priority);
+#endif
+
+}
+
+//
+const char* BaCoreGetOwnName() {
+#ifdef __linux
+   extern char *__progname;
+   return __progname;
+#else
+   static std::string name = "";
+   if (name == "") {
+      TCHAR szFileName[MAX_PATH];
+      GetModuleFileName(NULL, szFileName, MAX_PATH );
+      name = BaPath::GetFilename(szFileName);
+   }
+   return name.c_str();
+#endif
+}
+
+
+//
+int BaCoreReadPidFile(const char *progName) {
+   std::string pidfile = PIDPATH;
+   pidfile.append(progName);
+   std::ifstream file(pidfile);
+
+   pid_t pid = 0;
+
+   // Check error
+   if(!(file >> pid)) {
+      return -1;
+   }
+
+   return pid;
+}
+
+//
+TBaBoolRC BaCoreTestPidFile(const char *progName) {
+   if (!progName) {
+      return -1;
+   }
+   std::string pidfile = PIDPATH;
+   pidfile.append(progName);
+
+   int free2Go = 1;
+   int youreRunnign = 0;
+
+   pid_t pid = BaCoreReadPidFile(pidfile.c_str());
+
+   if ((pid < 0) || (pid == getpid())) {
+      return eBaBoolRC_Success;
+   }
+
+   // Fake kill
+#ifdef __WIN32
+
+#else
+   if (kill(pid, 0) && errno == ESRCH) {
+      // process not running!
+      return eBaBoolRC_Success;
+   }
+#endif
+
+   // Process in PID is running
+   // TODO: check if it is another instance of yourself
+
+   return eBaBoolRC_Error;
+}
+
+//
+int BaCoreWritePidFile(const char *progName) {
+   if (!progName) {
+      return -1;
+   }
+
+   if (!BaFS::Exists(PIDPATH)) {
+      BaFS::MkDir(PIDPATH);
+   }
+
+   std::string pidfile = PIDPATH;
+   pidfile.append(progName);
+   std::ofstream myfile (pidfile);
+
+   if (!myfile.is_open()) {
+      return -1;
+   }
+
+   pid_t pid = getpid();
+   myfile << pid << std::endl;
+   myfile.close();
+   return pid;
+}
+
+//
+int BaCoreRemovePidFile(const char *progName) {
+   if (!progName) {
+      return -1;
+   }
+   std::string pidfile = PIDPATH;
+   pidfile.append(progName);
+   return unlink(pidfile.c_str());
+}
+
+
 /*------------------------------------------------------------------------------
  *  Local functions
  */
@@ -292,9 +433,57 @@ LOCAL int prio2Prio(EBaCorePrio prio) {
 }
 
 //
+LOCAL EBaCorePrio prioFromPrio(int prio) {
+   //  Linux
+   // Scheduler  def min max
+   // SCHED_FIFO      1  99
+   // SCHED_OTHER 0  -20 19
+   //  Windows, Only SCHED_OTHER available
+   // Min -15
+   // Max  15
+
+
+#ifdef __linux
+//      case eBaCorePrio_Minimum:    return -20;
+//      case eBaCorePrio_Low:        return -10;
+//      case eBaCorePrio_Normal:     return   0;
+//      case eBaCorePrio_High:       return  10;
+//      case eBaCorePrio_Highest:    return  19;
+//      case eBaCorePrio_RT_Normal:  return  20;
+//      case eBaCorePrio_RT_High:    return  45;
+//      case eBaCorePrio_RT_Highest: return  70;
+   if (prio ==  0) return eBaCorePrio_Normal;
+   if (prio == 20) return eBaCorePrio_RT_Normal;
+
+   if (prio < -10) return eBaCorePrio_Minimum;
+   if (prio <   0) return eBaCorePrio_Low;
+   if (prio <  10) return eBaCorePrio_High;
+   if (prio <  20) return eBaCorePrio_Highest;
+
+   if (prio <  50) return eBaCorePrio_RT_High;
+   return eBaCorePrio_RT_Highest;
+
+#elif __WIN32
+   switch (prio) {
+      case THREAD_PRIORITY_IDLE:              return eBaCorePrio_Minimum;
+      case THREAD_PRIORITY_LOWEST:            return eBaCorePrio_Low;
+      case THREAD_PRIORITY_NORMAL:            return eBaCorePrio_Normal;
+      case THREAD_PRIORITY_ABOVE_NORMAL:      return eBaCorePrio_High;
+      case THREAD_PRIORITY_HIGHEST:           return eBaCorePrio_Highest;
+      case THREAD_PRIORITY_TIME_CRITICAL - 6: return eBaCorePrio_RT_Normal;
+      case THREAD_PRIORITY_TIME_CRITICAL - 3: return eBaCorePrio_RT_High;
+      case THREAD_PRIORITY_TIME_CRITICAL:     return eBaCorePrio_RT_Highest;
+      default : return eBaCorePrio_Normal;
+   }
+#endif
+
+}
+
+//
 LOCAL TDuration timed(TBaCoreFun func, void* pArg) {
    const TTimePoint start = std::chrono::high_resolution_clock::now();
    func(pArg);
    const TTimePoint end = std::chrono::high_resolution_clock::now();
    return end - start;
 }
+

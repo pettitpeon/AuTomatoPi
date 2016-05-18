@@ -20,6 +20,7 @@
 #include "BaseApi.h"
 
 LOCAL TBaBoolRC initStart(void* arg);
+LOCAL void update(void *arg);
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaTestTest );
 
@@ -44,10 +45,16 @@ void CBaTestTest::Test() {
    TBaApiCtrlTaskOpts opts;
    memset(&opts, 0, sizeof(opts));
    opts.init = initStart;
-   opts.start = initStart;
+   opts.update = update;
+   opts.exit = initStart;
+   opts.cyleTimeMs = 1000;
 
    BaApiStartCtrlTask(&opts);
+   BaCoreSleep(5);
+   BaApiStopCtrlTask();
+   BaCoreSleep(5);
 
+   CPPUNIT_ASSERT(true);
 }
 
 LOCAL TBaBoolRC initStart(void *arg) {
@@ -57,4 +64,10 @@ LOCAL TBaBoolRC initStart(void *arg) {
    return eBaBoolRC_Success;
 }
 
+LOCAL void update(void *arg) {
+
+   puts("update");
+
+   return;
+}
 

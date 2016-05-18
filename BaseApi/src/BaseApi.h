@@ -83,14 +83,10 @@ typedef struct TBaApiCtrlTaskOpts {
 
    TBaBoolRC (* init  )(void*);
    void* initArg;
-   TBaBoolRC (* start )(void*);
-   void* startArg;
    void      (* update)(void*);
    void* updateArg;
-   TBaBoolRC (* end   )(void*);
-   void* endArg;
    TBaBoolRC (* exit  )(void*);
-   void* exittArg;
+   void* exitArg;
 } TBaApiCtrlTaskOpts;
 
 /******************************************************************************/
@@ -98,10 +94,7 @@ typedef struct TBaApiCtrlTaskOpts {
  */
 TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts);
 
-/******************************************************************************/
-/** ...
- */
-int BaApiDaemonize();
+TBaBoolRC BaApiStopCtrlTask();
 
 
 #ifdef __cplusplus
