@@ -29,7 +29,21 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
+///
+typedef struct TBaApiCtrlTaskOpts {
+   const char* name; ///< Task name
+   EBaCorePrio prio; ///< Task priority
+   uint32_t cyleTimeMs; ///< Desired cycle time in ms
 
+   TBaBoolRC (*init)(void*); ///< Optional initialization function
+   void* initArg; ///< Optional arguments init function
+   void (*update)(void*); ///<
+   void* updateArg; ///< Optional arguments update function
+   TBaBoolRC (*exit)(void*); ///< Optional exit function
+   void* exitArg; ///< Optional arguments exit function
+
+   TBaLogHdl log;
+} TBaApiCtrlTaskOpts;
 
 /*------------------------------------------------------------------------------
  *  C interface
@@ -75,27 +89,37 @@ TBaBoolRC BaApiExitLogger();
  */
 TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...);
 
-
-typedef struct TBaApiCtrlTaskOpts {
-   const char* name;
-   EBaCorePrio prio;
-   uint32_t cyleTimeMs;
-
-   TBaBoolRC (* init  )(void*);
-   void* initArg;
-   void      (* update)(void*);
-   void* updateArg;
-   TBaBoolRC (* exit  )(void*);
-   void* exitArg;
-} TBaApiCtrlTaskOpts;
+/// @name Control task
+//@{
+/******************************************************************************/
+/** Starts the one and only control task as a new process
+ *  @return Error or success
+ */
+TBaBoolRC BaApiStartCtrlTask(
+      TBaApiCtrlTaskOpts* pOpts ///< [in] Task options
+      );
 
 /******************************************************************************/
-/** ...
+/** Stops the one and only control task
+ *  @return Error or success
  */
-TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts);
-
 TBaBoolRC BaApiStopCtrlTask();
 
+/******************************************************************************/
+/** Starts the one and only control thread as a new thread. This is mainly for
+ *  debugging and development. For proper releases use #BaApiStartCtrlTask().
+ *  @return Error or success
+ */
+TBaBoolRC BaApiStartCtrlThread(
+      TBaApiCtrlTaskOpts* pOpts ///< [in] Task options
+      );
+
+/******************************************************************************/
+/** Stops the one and only control thread
+ *  @return Error or success
+ */
+TBaBoolRC BaApiStopCtrlThread();
+//@}
 
 #ifdef __cplusplus
 } // extern c

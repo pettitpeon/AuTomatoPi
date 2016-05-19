@@ -48,6 +48,13 @@ void CBaTestTest::Test() {
    opts.update = update;
    opts.exit = initStart;
    opts.cyleTimeMs = 1000;
+   opts.prio = eBaCorePrio_RT_Normal;
+
+
+   BaApiStartCtrlThread(&opts);
+   BaCoreSleep(5);
+   BaApiStopCtrlThread();
+   BaCoreSleep(5);
 
    BaApiStartCtrlTask(&opts);
    BaCoreSleep(5);
