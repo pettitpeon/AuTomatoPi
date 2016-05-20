@@ -36,6 +36,7 @@
 #include "BaCore.h"
 #include "BaIniParse.h"
 #include "dbg/BaDbgMacros.h"
+#include <BaTmpTime.hpp>
 
 /*------------------------------------------------------------------------------
     Defines
@@ -70,10 +71,6 @@ static std::string sPrioTochar[eBaLogPrio_UpsCrash + 1] = {"T", "W", "E", "C"};
 /*------------------------------------------------------------------------------
     Local Declarations
  -----------------------------------------------------------------------------*/
-namespace tmp_4_9_2 {
-LOCAL tm localtime(const std::time_t& rTime);
-LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat);
-}
 
 LOCAL void reTag(const char* tagIn, char* tagOut);
 
@@ -566,32 +563,6 @@ bool inline CBaLog::LogV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
-// put_time is not implemented yet in 4.9.2 thus the tmp NS
-namespace tmp_4_9_2 {
-LOCAL tm localtime(const std::time_t& rTime) {
-   std::tm tm_snapshot;
-#ifdef __WIN32
-   localtime_s(&tm_snapshot, &rTime);
-#else
-   localtime_r(&rTime, &tm_snapshot); // POSIX
-#endif
-   return tm_snapshot;
-}
-
-
-// To simplify things the return value is just a string. I.e. by design!
-LOCAL std::string put_time(const std::tm* pDateTime, const char* cTimeFormat) {
-   const size_t size = 1024;
-   char buffer[size];
-
-   if (!std::strftime(buffer, size, cTimeFormat, pDateTime)) {
-      return cTimeFormat;
-   }
-
-   return buffer;
-}
-} // NS tmp_4_9_2
-
 // Condition the tag to be TAGSZ and pad with spaces
 LOCAL void inline reTag(const char* tagIn, char* tagOut) {
    uint8_t cnt = snprintf(tagOut, TAGSZ, "%s", tagIn ? tagIn : "");

@@ -32,6 +32,7 @@
 #include "BaCore.h"
 #include "BaGenMacros.h"
 #include "BaUtils.hpp"
+#include <BaTmpTime.hpp>
 
 /*------------------------------------------------------------------------------
  *  Defines and macros
@@ -39,6 +40,8 @@
 #define TAG "BaCore"
 #define CHRONO_ std::chrono
 #define SYSCLOCK_ CHRONO_::system_clock
+#define CHRONOHRC CHRONO_::high_resolution_clock
+
 #if __linux
 # define PIDPATH "/var/run/BaseApi/"
 #elif __WIN32
@@ -74,6 +77,7 @@ typedef struct TThreadDesc {
  /*------------------------------------------------------------------------------
   *  Local functions and static variables
   */
+
 LOCAL TDuration timed(TBaCoreFun func, void* pArg);
 LOCAL void threadRoutine(TThreadDesc *pDesc);
 LOCAL int prio2Prio(EBaCorePrio prio);
@@ -96,6 +100,30 @@ int64_t BaCoreTimedMs(TBaCoreFun fun, void* pArg) {
 //
 int64_t BaCoreTimedUs(TBaCoreFun fun, void* pArg) {
    return CHRONO_::duration_cast<CHRONO_::microseconds>(timed(fun, pArg)).count();
+}
+
+//
+void BaCoreGetTStamp(TBaCoreTimeStamp *pStamp) {
+   auto nowT = CHRONOHRC::now();
+   pStamp->tt = CHRONOHRC::to_time_t(nowT);
+   pStamp->micros = CHRONO_::duration_cast<CHRONO_::microseconds>(nowT.time_since_epoch()).count() % 1000000;
+   pStamp->millis = pStamp->micros % 1000;
+}
+
+//
+const char* BaCoreGetTStampStr(const TBaCoreTimeStamp *pStamp) {
+   if (!pStamp) {
+      return 0;
+   }
+
+   struct tm timeStruct = tmp_4_9_2::localtime(pStamp->tt);
+   std::string entry = tmp_4_9_2::put_time(&timeStruct, "%y/%m/%d %H:%M:%S") +
+         "." + std::to_string(pStamp->millis);
+
+   char * p = (char *) malloc(22);
+   strncpy(p, entry.c_str(), 22-1);
+   p[22 - 1] = 0;
+   return 0;
 }
 
 //
@@ -257,10 +285,13 @@ const char* BaCoreGetOwnName() {
 
 
 //
-int BaCoreReadPidFile(const char *progName) {
-   std::string pidfile = PIDPATH;
-   pidfile.append(progName);
-   std::ifstream file(pidfile);
+pid_t BaCoreReadPidFile(const char *progName, TBaBool internal) {
+   if (!progName) {
+      return -1;
+   }
+
+   std::string pidPath = PIDPATH;
+   std::ifstream file(internal ? pidPath + progName : progName);
 
    pid_t pid = 0;
 
@@ -280,10 +311,7 @@ TBaBoolRC BaCoreTestPidFile(const char *progName) {
    std::string pidfile = PIDPATH;
    pidfile.append(progName);
 
-   int free2Go = 1;
-   int youreRunnign = 0;
-
-   pid_t pid = BaCoreReadPidFile(pidfile.c_str());
+   pid_t pid = BaCoreReadPidFile(pidfile.c_str(), eBaBool_true);
 
    if ((pid < 0) || (pid == getpid())) {
       return eBaBoolRC_Success;
@@ -306,9 +334,9 @@ TBaBoolRC BaCoreTestPidFile(const char *progName) {
 }
 
 //
-int BaCoreWritePidFile(const char *progName) {
+TBaBoolRC BaCoreWritePidFile(const char *progName) {
    if (!progName) {
-      return -1;
+      return eBaBoolRC_Error;
    }
 
    if (!BaFS::Exists(PIDPATH)) {
@@ -320,23 +348,24 @@ int BaCoreWritePidFile(const char *progName) {
    std::ofstream myfile (pidfile);
 
    if (!myfile.is_open()) {
-      return -1;
+      // todo: log?
+      return eBaBoolRC_Error;
    }
 
    pid_t pid = getpid();
    myfile << pid << std::endl;
    myfile.close();
-   return pid;
+   return myfile.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
 }
 
 //
-int BaCoreRemovePidFile(const char *progName) {
+TBaBoolRC BaCoreRemovePidFile(const char *progName) {
    if (!progName) {
-      return -1;
+      return eBaBoolRC_Error;
    }
    std::string pidfile = PIDPATH;
    pidfile.append(progName);
-   return unlink(pidfile.c_str());
+   return unlink(pidfile.c_str()) == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 

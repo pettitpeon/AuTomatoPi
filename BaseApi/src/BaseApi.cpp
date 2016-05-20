@@ -27,6 +27,7 @@
 #include "BaseApi.h"
 #include "CBaLog.h"
 #include "BaGenMacros.h"
+#include "BaLogMacros.h"
 
 /*------------------------------------------------------------------------------
  *  Defines
@@ -35,9 +36,6 @@
 #define CTRLTASK "BaseApiCtrlTask"
 #define DEFDIR "/"
 #define MINSAMPTIME_US 10000
-#define TRACE_(fmt, ...) BaApiLogF(eBaLogPrio_Trace, TAG, fmt, ##__VA_ARGS__)
-#define WARN_(fmt, ...) BaApiLogF(eBaLogPrio_Warning, TAG, fmt, ##__VA_ARGS__)
-#define ERROR_(fmt, ...) BaApiLogF(eBaLogPrio_Error, TAG, fmt, ##__VA_ARGS__)
 
 /*------------------------------------------------------------------------------
  *  Type definitions
@@ -144,42 +142,48 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
    return eBaBoolRC_Error;
 #else
    if (!pOpts || sStats.imRunning || !pOpts->update) {
-      // todo: log?
+      WARN_("Bad options or already running");
       return eBaBoolRC_Error;
    }
 
-   if (pOpts->init && !pOpts->init(pOpts->initArg)) {
-      if (pOpts->exit) {
-         pOpts->exit(pOpts->exitArg);
-      }
-      // todo: log?
-      return eBaBoolRC_Error;
-   }
-
+   // Initialize the general logger. If the user already initialized it
+   // somewhere else, this will have no effect
    if(pOpts->log) {
       BaApiInitLogger(pOpts->log);
    } else {
       BaApiInitLoggerDef(CTRLTASK);
    }
 
-   if (!BaCoreTestPidFile(CTRLTASK)) {
-      ERROR_("Process already running");
+   if (pOpts->init && !pOpts->init(pOpts->initArg)) {
+      if (pOpts->exit) {
+         pOpts->exit(pOpts->exitArg);
+      }
+      WARN_("User init failed");
+      return eBaBoolRC_Error;
    }
 
+   if (!BaCoreTestPidFile(CTRLTASK)) {
+      ERROR_("Process already running");
+      // todo: return
+   }
+
+   // Reset exit flag
    sExit = 0;
 
+   // Set signals before forking to the child inherits the signals
    if (!registerSignals()) {
       return eBaBoolRC_Error;
    }
 
-   // Lets replicate
+   // Lets replicate. Block future replications with the flag
    sStats.imRunning = true;
    pid_t pid = fork();
 
    // An error occurred, return
    if (pid < 0) {
       unregisterSignals();
-      TRACE_("Parent talking: Error");
+      ERROR_("Fork failed");
+      BASYSLOG(TAG, "Fork failed");
       resetStats(sStats);
       return eBaBoolRC_Success;
    }
@@ -187,7 +191,7 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
    // Success: Let the parent return
    if (pid > 0) {
       unregisterSignals();
-      TRACE_("Luke, I am you father");
+      TRACE_("Fork successful: Luke, I am you father");
       resetStats(sStats);
       return eBaBoolRC_Success;
    }
@@ -235,9 +239,17 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
 
 //
 TBaBoolRC BaApiStopCtrlTask() {
-   int rc = kill(BaCoreReadPidFile(CTRLTASK), SIGRTMIN);
+   int pid = BaCoreReadPidFile(CTRLTASK, eBaBool_true);
+   if (pid != -1) {
+      if (kill(pid, SIGRTMIN) == 0) {
+         return eBaBool_true;
+      }
+      ERROR_("Kill failed");
+   } else {
+      WARN_("Failed to read the PID of %s", CTRLTASK);
+   }
    resetStats(sStats);
-   return rc == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return eBaBoolRC_Error;
 }
 
 //

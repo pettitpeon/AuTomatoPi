@@ -31,7 +31,7 @@
  *  Defines
  */
 /// Syslog macro that includes the line number.
-#define BASYSLOG(tag, fmt, ...) BaLogSysLogF(tag, __LINE__, fmt, __VA_ARGS__)
+#define BASYSLOG(tag, fmt, ...) BaLogSysLogF(tag, __LINE__, fmt, ##__VA_ARGS__)
 
 /*------------------------------------------------------------------------------
  *  Type definitions

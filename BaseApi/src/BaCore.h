@@ -29,6 +29,13 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
+/// Time stamp structure
+typedef struct TBaCoreTimeStamp {
+   time_t tt;
+   uint32_t micros;
+   uint32_t millis;
+} TBaCoreTimeStamp;
+
 
 /// Thread priority and scheduler. RT is FIFO
 // Windows does not have RT
@@ -115,6 +122,14 @@ int64_t BaCoreTimedUs(
       TBaCoreFun fun, ///< [in] Function to be timed
       void* pArg      ///< [in] Function arguments
       );
+
+void BaCoreGetTStamp(
+      TBaCoreTimeStamp *pStamp ///< [out] Time stamp
+      );
+
+const char* BaCoreGetTStampStr(
+      const TBaCoreTimeStamp *pStamp
+      );
 //@} Timing functions
 
 
@@ -152,6 +167,8 @@ TBaBoolRC BaCoreGetThreadInfo(
       );
 //@} Multi-threading
 
+/// @name Other getter setters
+//@{
 /******************************************************************************/
 /** Set the priority of the calling process. TODO: unit test
  *  @return Error or success
@@ -166,17 +183,52 @@ TBaBoolRC BaCoreSetOwnProcPrio(
  */
 EBaCorePrio BaCoreGetOwnProcPrio();
 
-// ///////////////
+/******************************************************************************/
+/** Gets the name of the calling process. Mangling with the returned pointer
+ *  leads to undefined behavior, please do not mess with it
+ *  @return The name of the calling process
+ */
 const char* BaCoreGetOwnName();
+//@} Other getter setters
 
-int BaCoreReadPidFile(const char *progName);
+/// @name PID Files
+//@{
+/******************************************************************************/
+/** Tries to read the PID from an internal program, or from a path
+ *  @return on success, the PID, otherwise, -1
+ */
+pid_t BaCoreReadPidFile(
+      const char *progName, ///< [in] Internal program name or path to PID file
+      TBaBool internal /**< [in] Flag to signal that the program was created
+      with this API */
+      );
 
-TBaBoolRC BaCoreTestPidFile(const char *progName);
+/******************************************************************************/
+/** TODO: Checks if the internal program is running
+ *  @return Success or error
+ */
+TBaBoolRC BaCoreTestPidFile(
+      const char *progName
+      );
 
-int BaCoreWritePidFile(const char *progName);
+/******************************************************************************/
+/** Writes the PID file of an internal program. The own name can be read with
+ *  #BaCoreGetOwnName().
+ *  @return Success or error
+ */
+TBaBoolRC BaCoreWritePidFile(
+      const char *progName ///< [in] Internal program name
+      );
 
-int BaCoreRemovePidFile(const char *progName);
-// ///////////////
+/******************************************************************************/
+/** Remover the PID file of an internal program. The own name can be read with
+ *  #BaCoreGetOwnName().
+ *  @return Success or error
+ */
+TBaBoolRC BaCoreRemovePidFile(
+      const char *progName ///< [in] Internal program name
+      );
+//@} PID Files
 
 #ifdef __cplusplus
 }
