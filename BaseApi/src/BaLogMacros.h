@@ -8,7 +8,8 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  This header defines macros for logging more easily. They expect that TAG
+ *  is previously defined
  */
 /*------------------------------------------------------------------------------
  */

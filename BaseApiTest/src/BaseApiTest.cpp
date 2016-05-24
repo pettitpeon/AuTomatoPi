@@ -3,128 +3,87 @@
  *                             All rights reserved
  *------------------------------------------------------------------------------
  *   Module   : BaseApiTest.cpp
- *   Date     : 23/06/2015
+ *   Date     : May 24, 2016
  *------------------------------------------------------------------------------
  *   Module description:
  */
-
-#include <unistd.h>
-#include <stdio.h>
+/** @file
+ *  ...
+ */
+/*------------------------------------------------------------------------------
+ */
 #include <iostream>
-#include <chrono>
-
-#include "cppunit/TestRunner.h"
-#include "cppunit/TestResult.h"
-#include "cppunit/TestResultCollector.h"
-#include "cppunit/CompilerOutputter.h"
-#include "cppunit/extensions/TestFactoryRegistry.h"
+#include "BaseApiTest.h"
+#include "BaseApi.h"
+#include "BaLogMacros.h"
 #include "BaGenMacros.h"
-#include "ProgressListener.h"
 
-#include "TestTemplate.h"
-#include "BaCoreTest.h"
-#include "BaGpioTest.h"
-#include "BaComTest.h"
-#include "BaLogTest.h"
-#include "BaIniParseTest.h"
-#include "BaMsgTest.h"
-#include "BaTestTest.h"
+#define TAG "test"
 
-//
-enum TTestSelection {
-   eSingleTests   = 0x1,
-   eSingleSuites  = 0x2,
-   eFullRegistry  = 0x4,
-};
+LOCAL TBaBoolRC initStart(void* arg);
+LOCAL void update(void *arg);
 
-// Global variable with current working directory
-char gCWD[1024];
+CPPUNIT_TEST_SUITE_REGISTRATION( CBaseApiTest );
 
-static TTestSelection sSelection =
-//      eSingleTests;
-      eSingleSuites;
-//      eFullRegistry;
-
-
-LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
-LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite);
-
-
-/* ***************************************************************************/
+/* ****************************************************************************/
 /*  ...
-**/
-int main(int argc, char* argv[]) {
-   auto start = std::chrono::system_clock::now();
-
-   // This disables buffering for stdout.
-   setbuf(stdout, 0);
-
-#ifdef _NDEBUG
-   std::cout << "Debugging mode" << std::endl;
-#endif
-
-   // Print arguments
-   for(int i = 0; i < argc; i++) {
-      std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
-   }
-
-   // Get the working directory
-   gCWD[1024 - 1] = 0;
-   std::cout << "CWD: " << getcwd(gCWD, 1024) << std::endl;
-
-   CPPUNIT_NS::ProgressListener progressListener;
-   CPPUNIT_NS::TestResult result;
-   CPPUNIT_NS::TestRunner testRunner;
-   CPPUNIT_NS::TestResultCollector resultCollector;
-   CPPUNIT_NS::TestSuite  *pSuite = new CPPUNIT_NS::TestSuite( "SingleTests" );
-   CPPUNIT_NS::CompilerOutputter compOut(&resultCollector, std::cout, "%p:%l:");
-
-   result.addListener(&progressListener);
-   result.addListener(&resultCollector);
-
-   switch (sSelection) {
-      case eSingleTests:
-         testRunner.addTest(AddTests(pSuite));
-         break;
-      case eSingleSuites:
-         testRunner.addTest(AddSuites(pSuite));
-         break;
-      case eFullRegistry:
-         /* no break */
-      default:
-         testRunner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
-         break;
-   }
-
-   testRunner.run(result);
-   compOut.write();
-   std::chrono::duration<double> durSec = std::chrono::system_clock::now() - start;
-
-   std::cout << "Duration: " << durSec.count() << " s" <<std::endl;
-	return 0;
+ */
+void CBaseApiTest::setUp() {
 }
 
-/* ***************************************************************************/
+/* ****************************************************************************/
 /*  ...
-**/
-LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
-//   pSuite->addTest(CTestTemplate::suite());
-//   pSuite->addTest(CBaComTest::suite());
-//   pSuite->addTest(CBaLogTest::suite());
-//   pSuite->addTest(CBaGpioTest::suite());
-//   pSuite->addTest(CBaCoreTest::suite());
-//   pSuite->addTest(CBaIniParse::suite());
-//   pSuite->addTest(CBaMsgTest::suite());
-   pSuite->addTest(CBaTestTest::suite());
-   return pSuite;
+ */
+void CBaseApiTest::tearDown() {
 }
 
-/* ***************************************************************************/
+/* ****************************************************************************/
 /*  ...
-**/
-LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite) {
-   pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaCoreTest>("ThreadsSpecialCases", &CBaCoreTest::ThreadsSpecialCases));
-   return pSuite;
+ */
+void CBaseApiTest::Init() {
+
 }
 
 
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaseApiTest::Test() {
+   CPPUNIT_ASSERT(true);
+   TBaApiCtrlTaskOpts opts = {0};
+   opts.init = initStart;
+   opts.update = update;
+   opts.exit = initStart;
+   opts.cyleTimeMs = 1000;
+   opts.prio = eBaCorePrio_RT_Normal;
+
+
+   BaApiStartCtrlThread(&opts);
+   BaCoreSleep(5);
+   BaApiStopCtrlThread();
+   BaCoreSleep(5);
+
+   BaApiStartCtrlTask(&opts);
+   BaCoreSleep(5);
+   BaApiStopCtrlTask();
+   BaCoreSleep(5);
+
+   CPPUNIT_ASSERT(true);
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaseApiTest::Exit() {
+
+}
+
+LOCAL TBaBoolRC initStart(void *arg) {
+   TRACE_("initStart");
+   return eBaBoolRC_Success;
+}
+
+LOCAL void update(void *arg) {
+   TRACE_("update");
+   return;
+}

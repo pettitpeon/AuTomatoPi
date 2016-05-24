@@ -29,18 +29,19 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-///
+/// Options structure for the control task started with #BaApiStartCtrlTask()
 typedef struct TBaApiCtrlTaskOpts {
    const char* name; ///< Task name
    EBaCorePrio prio; ///< Task priority
    uint32_t cyleTimeMs; ///< Desired cycle time in ms
 
    TBaBoolRC (*init)(void*); ///< Optional initialization function
-   void* initArg; ///< Optional arguments init function
-   void (*update)(void*); ///<
-   void* updateArg; ///< Optional arguments update function
+   void* initArg; ///< Optional argument init function
+   void (*update)(void*); /**< Function that will be called cyclically every
+    #cyleTimeMs */
+   void* updateArg; ///< Optional argument update function
    TBaBoolRC (*exit)(void*); ///< Optional exit function
-   void* exitArg; ///< Optional arguments exit function
+   void* exitArg; ///< Optional argument exit function
 
    TBaLogHdl log;
 } TBaApiCtrlTaskOpts;
@@ -55,44 +56,55 @@ extern "C" {
 /// @name Resource management
 //@{
 /******************************************************************************/
-/** ...
+/** todo: stub
+ *  @return Error or success
  */
 TBaBoolRC BaApiInit();
 
 /******************************************************************************/
-/** ...
+/** todo: stub
+ *  @return Error or success
  */
 TBaBoolRC BaApiExit();
 
 /******************************************************************************/
-/** ...
+/** Initializes the logger that will be used throughout this API with default
+ *  options.
+ *  @return Error or success
  */
 TBaBoolRC BaApiInitLoggerDef(
       const char* name
       );
 
 /******************************************************************************/
-/** ...
+/** Initializes the logger that will be used throughout this API
+ *  @return Error or success
  */
 TBaBoolRC BaApiInitLogger(
       TBaLogHdl hdl
       );
 
 /******************************************************************************/
-/** ...
+/** Releases the resources of the general logger
+ *  @return Error or success
  */
 TBaBoolRC BaApiExitLogger();
 //@}
 
 /******************************************************************************/
-/** ...
+/** Logging function that uses the the logger initialized with
+ *  #BaApiInitLogger() or #BaApiInitLoggerDef()
+ *  @return Error or success
  */
 TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...);
 
 /// @name Control task
 //@{
 /******************************************************************************/
-/** Starts the one and only control task as a new process
+/** Starts the one and only control task as a new process. This also
+ *  automatically initializes the default logger if it not previously
+ *  initialized via #BaApiInitLogger(). If a specialized logger is required, one
+ *  could initialize it in the init() callback
  *  @return Error or success
  */
 TBaBoolRC BaApiStartCtrlTask(

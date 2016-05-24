@@ -18,10 +18,10 @@
 #include <string.h>
 
 // Portability headers
-#if __linux
+#ifdef __linux
 
 #elif __WIN32
-
+# include <windows.h>
 #endif
 
 #include "BaseApi.h"
@@ -51,6 +51,7 @@ typedef struct TStats {
  */
 LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg);
 LOCAL void signalHdlr(int sig);
+LOCAL TBaBoolRC checkCtrlStart(TBaApiCtrlTaskOpts* pOpts);
 LOCAL TBaBoolRC registerSignals();
 LOCAL TBaBoolRC unregisterSignals();
 LOCAL void resetStats(TStats &rStats);
@@ -138,29 +139,12 @@ TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
 
 //
 TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
+   if (!checkCtrlStart(pOpts)) {
+      return eBaBoolRC_Error;
+   }
 #ifdef __WIN32
    return eBaBoolRC_Error;
 #else
-   if (!pOpts || sStats.imRunning || !pOpts->update) {
-      WARN_("Bad options or already running");
-      return eBaBoolRC_Error;
-   }
-
-   // Initialize the general logger. If the user already initialized it
-   // somewhere else, this will have no effect
-   if(pOpts->log) {
-      BaApiInitLogger(pOpts->log);
-   } else {
-      BaApiInitLoggerDef(CTRLTASK);
-   }
-
-   if (pOpts->init && !pOpts->init(pOpts->initArg)) {
-      if (pOpts->exit) {
-         pOpts->exit(pOpts->exitArg);
-      }
-      WARN_("User init failed");
-      return eBaBoolRC_Error;
-   }
 
    if (!BaCoreTestPidFile(CTRLTASK)) {
       ERROR_("Process already running");
@@ -172,11 +156,11 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
 
    // Set signals before forking to the child inherits the signals
    if (!registerSignals()) {
+      resetStats(sStats);
       return eBaBoolRC_Error;
    }
 
    // Lets replicate. Block future replications with the flag
-   sStats.imRunning = true;
    pid_t pid = fork();
 
    // An error occurred, return
@@ -239,6 +223,10 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
 
 //
 TBaBoolRC BaApiStopCtrlTask() {
+#ifdef __WIN32
+   return eBaBoolRC_Error;
+#else
+
    int pid = BaCoreReadPidFile(CTRLTASK, eBaBool_true);
    if (pid != -1) {
       if (kill(pid, SIGRTMIN) == 0) {
@@ -250,24 +238,15 @@ TBaBoolRC BaApiStopCtrlTask() {
    }
    resetStats(sStats);
    return eBaBoolRC_Error;
+#endif
 }
 
 //
 TBaBoolRC BaApiStartCtrlThread(TBaApiCtrlTaskOpts* pOpts) {
-
-   // todo: copy options locally?
-   if (!pOpts || sStats.imRunning || !pOpts->update) {
-      // todo: log?
+   if (!checkCtrlStart(pOpts)) {
       return eBaBoolRC_Error;
    }
 
-   if (pOpts->init && !pOpts->init(pOpts->initArg)) {
-      if (pOpts->exit) {
-         pOpts->exit(pOpts->exitArg);
-      }
-      // todo: log?
-      return eBaBoolRC_Error;
-   }
 
    sStats.imRunning = true;
    sCtrlThreadArg.pArg = pOpts;
@@ -288,7 +267,34 @@ TBaBoolRC BaApiStopCtrlThread() {
 }
 
 //
+LOCAL TBaBoolRC checkCtrlStart(TBaApiCtrlTaskOpts* pOpts) {
+   // todo: copy options locally?
+
+   // Initialize the general logger. If the user already initialized it
+   // somewhere else, this will have no effect
+   if(pOpts->log) {
+      BaApiInitLogger(pOpts->log);
+   } else {
+      BaApiInitLoggerDef(CTRLTASK);
+   }
+
+   if (pOpts->init && !pOpts->init(pOpts->initArg)) {
+      if (pOpts->exit) {
+         pOpts->exit(pOpts->exitArg);
+      }
+      WARN_("User init failed");
+      return eBaBoolRC_Error;
+   }
+
+   sStats.imRunning = true;
+   return eBaBoolRC_Success;
+}
+
+//
 LOCAL TBaBoolRC registerSignals() {
+#ifdef __WIN32
+   return eBaBoolRC_Error;
+#else
    int rc = 0;
    struct sigaction act = {0};
    act.sa_handler = signalHdlr;
@@ -296,26 +302,24 @@ LOCAL TBaBoolRC registerSignals() {
    // Termination signals from user
    rc  = sigaction(SIGTERM,  &act, 0); // Polite termination signal
    rc |= sigaction(SIGINT,   &act, 0); // Interrupt. 'Ctrl-C'
-//   rc |= sigaction(SIGQUIT,  &act, 0); // Quit. Produces core dump, 'Ctrl-\'
-//   rc |= sigaction(SIGUSR1,  &act, 0); // User signal 1
-//   rc |= sigaction(SIGUSR2,  &act, 0); // User signal 2
    rc |= sigaction(SIGRTMIN, &act, 0); // User real-time signal
    return rc == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+#endif
 }
 
 //
 LOCAL TBaBoolRC unregisterSignals() {
+#ifdef __WIN32
+   return eBaBoolRC_Error;
+#else
    int rc = 0;
    struct sigaction act = {0};
    act.sa_handler = SIG_DFL;
    rc  = sigaction(SIGTERM , &act, 0); // Polite termination signal
    rc |= sigaction(SIGINT,   &act, 0); // Interrupt. 'Ctrl-C'
-//   rc |= sigaction(SIGQUIT,  &act, 0); // Quit. Produces core dump, 'Ctrl-\'
-//   rc |= sigaction(SIGUSR1,  &act, 0); // User signal 1
-//   rc |= sigaction(SIGUSR2,  &act, 0); // User signal 2
    rc |= sigaction(SIGRTMIN, &act, 0); // User real-time signal
-
    return rc == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+#endif
 }
 
 //

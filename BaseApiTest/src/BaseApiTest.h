@@ -2,8 +2,8 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaTestTest.h
- *   Date     : Dec 7, 2015
+ *   Module   : BaseApiTest.h
+ *   Date     : May 24, 2016
  *------------------------------------------------------------------------------
  *   Module description:
  */
@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BATESTTEST_H_
-#define BATESTTEST_H_
+#ifndef BASEAPITEST_H_
+#define BASEAPITEST_H_
 
 /*------------------------------------------------------------------------------
  *  Includes
@@ -24,19 +24,23 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-class CBaTestTest : public CppUnit::TestCase {
+class CBaseApiTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
 
-   CPPUNIT_TEST_SUITE(CBaTestTest);
+   CPPUNIT_TEST_SUITE(CBaseApiTest);
 
+   CPPUNIT_TEST(Init);
    CPPUNIT_TEST(Test);
+   CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
+   void Init();
    void Test();
+   void Exit();
 };
 
-#endif // BATESTTEST_H_
+#endif // BASEAPITEST_H_
