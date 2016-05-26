@@ -151,7 +151,7 @@ LOCAL void update(void *arg) {
    TBaApiCtrlTaskStats stats;
    BaApiGetCtrlTaskStats(&stats);
    TRACE_("update(%s): cnt=%llu, dur=%llu us, cycle=%llu us",
-         stats.imRunning ? "T" : "F", stats.updCnt, stats.actDurUs, stats.lastCycleUs);
+         stats.imRunning ? "T" : "F", stats.updCnt, stats.lastDurUs, stats.lastCycleUs);
    BaCoreMSleep(1);
    return;
 }

@@ -8,7 +8,10 @@
  *   Module description:
  */
 /** @file
- *  stub
+ *  Includes the following:
+ *  - API wide logger
+ *  - Control task
+ *
  */
 /*------------------------------------------------------------------------------
  */
@@ -34,7 +37,9 @@ typedef struct TBaApiCtrlTaskOpts {
    const char* name; ///< Task name
    EBaCorePrio prio; ///< Task priority
    uint32_t cyleTimeMs; ///< Desired cycle time in ms
+   TBaLogDesc log; ///< The logger descriptor union
 
+   // Control task callbacks
    TBaBoolRC (*init)(void*); ///< Optional initialization function
    void* initArg; ///< Optional argument init function
    void (*update)(void*); /**< Function that will be called cyclically every
@@ -42,17 +47,14 @@ typedef struct TBaApiCtrlTaskOpts {
    void* updateArg; ///< Optional argument update function
    TBaBoolRC (*exit)(void*); ///< Optional exit function
    void* exitArg; ///< Optional argument exit function
-
-   TBaLogDesc log; ///< The logger descriptors
-
 } TBaApiCtrlTaskOpts;
 
-///
+/// Control task statistics
 typedef struct TBaApiCtrlTaskStats {
-   TBaBool  imRunning;
-   uint64_t updCnt;
-   uint64_t actDurUs;
-   uint64_t lastCycleUs;
+   TBaBool  imRunning; ///< The task is running
+   uint64_t updCnt; ///<  No. of updates so far
+   uint64_t lastDurUs; ///< Duration of the last @c update()
+   uint64_t lastCycleUs; ///< Duration of the last cycle (including sleep)
 } TBaApiCtrlTaskStats;
 
 /*------------------------------------------------------------------------------
@@ -62,7 +64,7 @@ typedef struct TBaApiCtrlTaskStats {
 extern "C" {
 #endif
 
-/// @name Resource management
+/// @name Resource Management
 //@{
 /******************************************************************************/
 /** todo: stub
@@ -112,7 +114,7 @@ TBaBoolRC BaApiLogF(
       ... ///< [in] Variable arguments
       );
 
-/// @name Control task
+/// @name Control Task
 //@{
 /******************************************************************************/
 /** Starts the one and only control task as a new process. This also
@@ -122,7 +124,7 @@ TBaBoolRC BaApiLogF(
  *  @return Error or success
  */
 TBaBoolRC BaApiStartCtrlTask(
-      TBaApiCtrlTaskOpts* pOpts ///< [in] Task options
+      const TBaApiCtrlTaskOpts* pOpts ///< [in] Task options
       );
 
 /******************************************************************************/
@@ -137,7 +139,7 @@ TBaBoolRC BaApiStopCtrlTask();
  *  @return Error or success
  */
 TBaBoolRC BaApiStartCtrlThread(
-      TBaApiCtrlTaskOpts* pOpts ///< [in] Task options
+      const TBaApiCtrlTaskOpts* pOpts ///< [in] Task options
       );
 
 /******************************************************************************/
@@ -158,12 +160,6 @@ TBaBoolRC BaApiGetCtrlTaskStats(
 
 #ifdef __cplusplus
 } // extern c
-
-/*------------------------------------------------------------------------------
- *  C++ Interface
- */
-
-// Cpp factory
 
 #endif // __cplusplus
 #endif /* BASEAPI_H_ */

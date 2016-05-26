@@ -50,7 +50,7 @@ typedef std::chrono::duration<std::chrono::system_clock::rep, std::chrono::syste
  */
 LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg);
 LOCAL void signalHdlr(int sig);
-LOCAL TBaBoolRC checkCtrlStart(TBaApiCtrlTaskOpts* pOpts);
+LOCAL TBaBoolRC checkCtrlStart(const TBaApiCtrlTaskOpts* pOpts);
 LOCAL TBaBoolRC registerSignals();
 LOCAL TBaBoolRC unregisterSignals();
 LOCAL void resetStats(TBaApiCtrlTaskStats &rStats);
@@ -141,7 +141,7 @@ TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
 }
 
 //
-TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
+TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    if (!checkCtrlStart(pOpts)) {
       return eBaBoolRC_Error;
    }
@@ -201,14 +201,14 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
    void *pArg = pOpts->updateArg;
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !pArg->exitTh; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
+   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
       start = std::chrono::high_resolution_clock::now();
 
-      sStats.actDurUs = BaCoreTimedUs(updFun, pArg);
-      if (sStats.actDurUs + MINSLEEP_US > sampTimeUs) {
+      sStats.lastDurUs = BaCoreTimedUs(updFun, pArg);
+      if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
          BaCoreUSleep(MINSLEEP_US);
       } else {
-         BaCoreUSleep(sampTimeUs - sStats.actDurUs);
+         BaCoreUSleep(sampTimeUs - sStats.lastDurUs);
       }
    }
    // ////////////////////////////////////////////////////////////////////
@@ -250,14 +250,13 @@ TBaBoolRC BaApiStopCtrlTask() {
 }
 
 //
-TBaBoolRC BaApiStartCtrlThread(TBaApiCtrlTaskOpts* pOpts) {
+TBaBoolRC BaApiStartCtrlThread(const TBaApiCtrlTaskOpts* pOpts) {
    if (!checkCtrlStart(pOpts)) {
       return eBaBoolRC_Error;
    }
 
-
    sStats.imRunning = eBaBool_true;
-   sCtrlThreadArg.pArg = pOpts;
+   sCtrlThreadArg.pArg = (void*)pOpts;
    sCtrlThread = BaCoreCreateThread(pOpts->name, ctrlThreadRout, &sCtrlThreadArg, pOpts->prio);
    if (!sCtrlThread) {
       sStats.imRunning = eBaBool_false;
@@ -267,10 +266,11 @@ TBaBoolRC BaApiStartCtrlThread(TBaApiCtrlTaskOpts* pOpts) {
 
 //
 TBaBoolRC BaApiStopCtrlThread() {
+   sExit = true;
    TBaBoolRC rc = BaCoreDestroyThread(sCtrlThread, 50);
    sCtrlThread = 0;
    resetStats(sStats);
-   // todo: exit function here instead?
+   // todo: exit function here instead? we do not have opts here with the callback
    return rc;
 }
 
@@ -285,7 +285,7 @@ TBaBoolRC BaApiGetCtrlTaskStats(TBaApiCtrlTaskStats *pStats) {
 }
 
 //
-LOCAL TBaBoolRC checkCtrlStart(TBaApiCtrlTaskOpts* pOpts) {
+LOCAL TBaBoolRC checkCtrlStart(const TBaApiCtrlTaskOpts* pOpts) {
    // todo: copy options locally?
 
    // Initialize the general logger. If the user already initialized it
@@ -356,20 +356,20 @@ LOCAL void signalHdlr(int sig) {
 //
 LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    TTimePoint start;
-   TBaApiCtrlTaskOpts* pOpts = (TBaApiCtrlTaskOpts*) pArg->pArg;
+   const TBaApiCtrlTaskOpts* pOpts = (const TBaApiCtrlTaskOpts*) pArg->pArg;
    void (* update  )(void*) = pOpts->update;
    void * updateArg = pOpts->updateArg;
    uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
    TRACE_("Ctrl thread started");
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !pArg->exitTh; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
+   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
       start = std::chrono::high_resolution_clock::now();
-      sStats.actDurUs = BaCoreTimedUs(update, updateArg);
-      if (sStats.actDurUs + MINSLEEP_US > sampTimeUs) {
+      sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
+      if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
          BaCoreUSleep(MINSLEEP_US);
       } else {
-         BaCoreUSleep(sampTimeUs - sStats.actDurUs);
+         BaCoreUSleep(sampTimeUs - sStats.lastDurUs);
       }
    }
    // ////////////////////////////////////////////////////////////////////
