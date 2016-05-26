@@ -36,6 +36,8 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
+class IBaLog;
+
 /// Message priority or severeness
 typedef enum EBaLogPrio {
    eBaLogPrio_Trace = 0, ///< 0
@@ -77,6 +79,12 @@ typedef struct TBaLogInfo {
 
 /// C logger handle
 typedef void* TBaLogHdl;
+
+///
+typedef union TBaLogDesc {
+   TBaLogHdl hdl;
+   IBaLog *pLog;
+} TBaLogDesc;
 
 /*------------------------------------------------------------------------------
  *  C interface

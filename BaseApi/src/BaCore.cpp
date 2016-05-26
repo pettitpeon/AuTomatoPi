@@ -51,6 +51,9 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
+typedef CHRONO_::high_resolution_clock::time_point TTimePoint;
+typedef CHRONO_::duration<SYSCLOCK_::rep, SYSCLOCK_::period> TDuration;
+
 typedef enum EStatus {
    eInitializing = 0,
    eRunning      = 1,

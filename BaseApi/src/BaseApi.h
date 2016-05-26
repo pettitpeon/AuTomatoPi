@@ -43,8 +43,17 @@ typedef struct TBaApiCtrlTaskOpts {
    TBaBoolRC (*exit)(void*); ///< Optional exit function
    void* exitArg; ///< Optional argument exit function
 
-   TBaLogHdl log;
+   TBaLogDesc log; ///< The logger descriptors
+
 } TBaApiCtrlTaskOpts;
+
+///
+typedef struct TBaApiCtrlTaskStats {
+   TBaBool  imRunning;
+   uint64_t updCnt;
+   uint64_t actDurUs;
+   uint64_t lastCycleUs;
+} TBaApiCtrlTaskStats;
 
 /*------------------------------------------------------------------------------
  *  C interface
@@ -73,7 +82,7 @@ TBaBoolRC BaApiExit();
  *  @return Error or success
  */
 TBaBoolRC BaApiInitLoggerDef(
-      const char* name
+      const char* name ///< [in] Name of the default logger
       );
 
 /******************************************************************************/
@@ -81,7 +90,7 @@ TBaBoolRC BaApiInitLoggerDef(
  *  @return Error or success
  */
 TBaBoolRC BaApiInitLogger(
-      TBaLogHdl hdl
+      TBaLogDesc log ///< [in] Logger handle
       );
 
 /******************************************************************************/
@@ -96,7 +105,12 @@ TBaBoolRC BaApiExitLogger();
  *  #BaApiInitLogger() or #BaApiInitLoggerDef()
  *  @return Error or success
  */
-TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...);
+TBaBoolRC BaApiLogF(
+      EBaLogPrio prio, ///< [in] Priority
+      const char* tag, ///< [in] Tag to track or group the message
+      const char* fmt, ///< [in] The message format
+      ... ///< [in] Variable arguments
+      );
 
 /// @name Control task
 //@{
@@ -131,6 +145,15 @@ TBaBoolRC BaApiStartCtrlThread(
  *  @return Error or success
  */
 TBaBoolRC BaApiStopCtrlThread();
+
+/******************************************************************************/
+/** Gets the task statistics. This is mostly meant to be called within the
+ *  @c update() function so it gets the stats from the task
+ *  @return Error or success
+ */
+TBaBoolRC BaApiGetCtrlTaskStats(
+      TBaApiCtrlTaskStats *pStats  ///< [out] Statistics
+      );
 //@}
 
 #ifdef __cplusplus

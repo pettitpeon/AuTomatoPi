@@ -35,16 +35,15 @@
 #define TAG      "BaApi"
 #define CTRLTASK "BaseApiCtrlTask"
 #define DEFDIR "/"
-#define MINSAMPTIME_US 10000
+#define MINSLEEP_US 10000
+#define LASTCYCLE std::chrono::duration_cast<std::chrono::microseconds> \
+   (std::chrono::high_resolution_clock::now() - start).count()
 
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-typedef struct TStats {
-   bool     imRunning;
-   uint64_t updCnt;
-   uint64_t actDurUs;
-} TStats;
+typedef std::chrono::high_resolution_clock::time_point TTimePoint;
+typedef std::chrono::duration<std::chrono::system_clock::rep, std::chrono::system_clock::period> TDuration;
 
 /*------------------------------------------------------------------------------
  *  Local functions
@@ -54,15 +53,16 @@ LOCAL void signalHdlr(int sig);
 LOCAL TBaBoolRC checkCtrlStart(TBaApiCtrlTaskOpts* pOpts);
 LOCAL TBaBoolRC registerSignals();
 LOCAL TBaBoolRC unregisterSignals();
-LOCAL void resetStats(TStats &rStats);
+LOCAL void resetStats(TBaApiCtrlTaskStats &rStats);
 
 /*------------------------------------------------------------------------------
  *  Static variables
  */
 
 static CBaLog *spLog = 0;
+static bool   sExtLogger = false;
 
-static TStats sStats = {0};
+static TBaApiCtrlTaskStats sStats = {0};
 
 static TBaCoreThreadHdl sCtrlThread = 0;
 static TBaCoreThreadArg sCtrlThreadArg = {0};
@@ -103,13 +103,13 @@ TBaBoolRC BaApiInitLoggerDef(const char* name) {
 }
 
 // todo: multi-thread?
-TBaBoolRC BaApiInitLogger(TBaLogHdl hdl) {
+TBaBoolRC BaApiInitLogger(TBaLogDesc log) {
    if (spLog) {
       return eBaBoolRC_Success;
-   } else if (!hdl) {
-      return eBaBoolRC_Error;
    }
-   spLog = dynamic_cast<CBaLog*>((IBaLog*)hdl);
+
+   spLog = dynamic_cast<CBaLog*>(log.pLog);
+   sExtLogger = true;
    return spLog ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
@@ -119,7 +119,10 @@ TBaBoolRC BaApiExitLogger() {
       return eBaBoolRC_Success;
    }
 
-   bool ret = CBaLog::Destroy(spLog);
+   // Only destroy the logger if you created it. NEVER mess with data owned by
+   // the user
+   bool ret = sExtLogger ? true : CBaLog::Destroy(spLog);
+   sExtLogger = false;
    spLog = 0;
    return ret ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
@@ -192,15 +195,18 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
    TRACE_("NOOOO!!");
 
 
+   TTimePoint start;
    uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
    void (*updFun)(void*) = pOpts->update;
    void *pArg = pOpts->updateArg;
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !sExit; sStats.updCnt++) {
+   for ( ; !pArg->exitTh; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
+      start = std::chrono::high_resolution_clock::now();
+
       sStats.actDurUs = BaCoreTimedUs(updFun, pArg);
-      if (sStats.actDurUs + MINSAMPTIME_US > sampTimeUs) {
-         BaCoreUSleep(MINSAMPTIME_US);
+      if (sStats.actDurUs + MINSLEEP_US > sampTimeUs) {
+         BaCoreUSleep(MINSLEEP_US);
       } else {
          BaCoreUSleep(sampTimeUs - sStats.actDurUs);
       }
@@ -223,7 +229,9 @@ TBaBoolRC BaApiStartCtrlTask(TBaApiCtrlTaskOpts* pOpts) {
 
 //
 TBaBoolRC BaApiStopCtrlTask() {
+   BaApiExitLogger();
 #ifdef __WIN32
+   resetStats(sStats);
    return eBaBoolRC_Error;
 #else
 
@@ -248,11 +256,11 @@ TBaBoolRC BaApiStartCtrlThread(TBaApiCtrlTaskOpts* pOpts) {
    }
 
 
-   sStats.imRunning = true;
+   sStats.imRunning = eBaBool_true;
    sCtrlThreadArg.pArg = pOpts;
    sCtrlThread = BaCoreCreateThread(pOpts->name, ctrlThreadRout, &sCtrlThreadArg, pOpts->prio);
    if (!sCtrlThread) {
-      sStats.imRunning = false;
+      sStats.imRunning = eBaBool_false;
    }
    return sCtrlThread ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
@@ -267,12 +275,22 @@ TBaBoolRC BaApiStopCtrlThread() {
 }
 
 //
+TBaBoolRC BaApiGetCtrlTaskStats(TBaApiCtrlTaskStats *pStats) {
+   if (!pStats) {
+      return eBaBoolRC_Error;
+   }
+
+   *pStats = sStats;
+   return eBaBoolRC_Success;
+}
+
+//
 LOCAL TBaBoolRC checkCtrlStart(TBaApiCtrlTaskOpts* pOpts) {
    // todo: copy options locally?
 
    // Initialize the general logger. If the user already initialized it
    // somewhere else, this will have no effect
-   if(pOpts->log) {
+   if(pOpts->log.pLog) {
       BaApiInitLogger(pOpts->log);
    } else {
       BaApiInitLoggerDef(CTRLTASK);
@@ -286,7 +304,7 @@ LOCAL TBaBoolRC checkCtrlStart(TBaApiCtrlTaskOpts* pOpts) {
       return eBaBoolRC_Error;
    }
 
-   sStats.imRunning = true;
+   sStats.imRunning = eBaBool_true;
    return eBaBoolRC_Success;
 }
 
@@ -337,19 +355,24 @@ LOCAL void signalHdlr(int sig) {
 
 //
 LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
-
+   TTimePoint start;
    TBaApiCtrlTaskOpts* pOpts = (TBaApiCtrlTaskOpts*) pArg->pArg;
    void (* update  )(void*) = pOpts->update;
-   TRACE_("Ctrl Started");
+   void * updateArg = pOpts->updateArg;
+   uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
+   TRACE_("Ctrl thread started");
 
-   while (!pArg->exitTh) {
-      uint64_t duration = BaCoreTimedUs(update, 0);
-      if (duration + 9 > pOpts->cyleTimeMs) {
-         BaCoreMSleep(10);
+   // This is the actual control loop ////////////////////////////////////
+   for ( ; !pArg->exitTh; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
+      start = std::chrono::high_resolution_clock::now();
+      sStats.actDurUs = BaCoreTimedUs(update, updateArg);
+      if (sStats.actDurUs + MINSLEEP_US > sampTimeUs) {
+         BaCoreUSleep(MINSLEEP_US);
       } else {
-         BaCoreMSleep(pOpts->cyleTimeMs - duration);
+         BaCoreUSleep(sampTimeUs - sStats.actDurUs);
       }
    }
+   // ////////////////////////////////////////////////////////////////////
 
    if (pOpts->exit) {
       pOpts->exit(pOpts->exitArg);
@@ -357,7 +380,7 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
 }
 
 //
-LOCAL void resetStats(TStats &rStats) {
+LOCAL void resetStats(TBaApiCtrlTaskStats &rStats) {
    memset(&rStats, 0, sizeof(rStats));
 }
 
