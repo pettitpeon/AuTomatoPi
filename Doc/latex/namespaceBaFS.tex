@@ -1,12 +1,12 @@
-\hypertarget{namespaceBaFS}{}\section{Ba\+F\+S Namespace Reference}
-\label{namespaceBaFS}\index{Ba\+F\+S@{Ba\+F\+S}}
+\hypertarget{namespaceBaFS}{}\section{Ba\+FS Namespace Reference}
+\label{namespaceBaFS}\index{Ba\+FS@{Ba\+FS}}
 
 
 Namespace to wrap all file system functions.  
 
 
 \subsection*{Functions}
-\begin{Indent}{\bf Base A\+P\+I File System}\par
+\begin{Indent}{\bf Base A\+PI File System}\par
 \begin{DoxyCompactItemize}
 \item 
 static int \hyperlink{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}{Mk\+Dir} (std\+::string dir, int per=0660)
@@ -26,14 +26,14 @@ static bool \hyperlink{namespaceBaFS_a73d165c90a00491cfe0b9ce3b5fe5c58}{Exists} 
 Namespace to wrap all file system functions. 
 
 \subsection{Function Documentation}
-\hypertarget{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}{}\index{Ba\+F\+S@{Ba\+F\+S}!Mk\+Dir@{Mk\+Dir}}
-\index{Mk\+Dir@{Mk\+Dir}!Ba\+F\+S@{Ba\+F\+S}}
-\subsubsection[{Mk\+Dir(std\+::string dir, int per=0660)}]{\setlength{\rightskip}{0pt plus 5cm}static int Ba\+F\+S\+::\+Mk\+Dir (
+\index{Ba\+FS@{Ba\+FS}!Mk\+Dir@{Mk\+Dir}}
+\index{Mk\+Dir@{Mk\+Dir}!Ba\+FS@{Ba\+FS}}
+\subsubsection[{\texorpdfstring{Mk\+Dir(std\+::string dir, int per=0660)}{MkDir(std::string dir, int per=0660)}}]{\setlength{\rightskip}{0pt plus 5cm}static int Ba\+F\+S\+::\+Mk\+Dir (
 \begin{DoxyParamCaption}
 \item[{std\+::string}]{dir, }
 \item[{int}]{per = {\ttfamily 0660}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}{}\label{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}
 
 
 Portable mkdir(), creates a directory. 
@@ -48,19 +48,23 @@ Normal mkdir() return value
 \mbox{\tt in}  & {\em per} & Permissions with default read/write for owner and group \\
 \hline
 \end{DoxyParams}
-\hypertarget{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}{}\index{Ba\+F\+S@{Ba\+F\+S}!Rename@{Rename}}
-\index{Rename@{Rename}!Ba\+F\+S@{Ba\+F\+S}}
-\subsubsection[{Rename(std\+::string path, std\+::string new\+Path)}]{\setlength{\rightskip}{0pt plus 5cm}static int Ba\+F\+S\+::\+Rename (
+
+
+Referenced by Ba\+Core\+Write\+Pid\+File().
+
+\index{Ba\+FS@{Ba\+FS}!Rename@{Rename}}
+\index{Rename@{Rename}!Ba\+FS@{Ba\+FS}}
+\subsubsection[{\texorpdfstring{Rename(std\+::string path, std\+::string new\+Path)}{Rename(std::string path, std::string newPath)}}]{\setlength{\rightskip}{0pt plus 5cm}static int Ba\+F\+S\+::\+Rename (
 \begin{DoxyParamCaption}
 \item[{std\+::string}]{path, }
 \item[{std\+::string}]{new\+Path}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}{}\label{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}
 
 
 Portable rename(). 
 
-Standardizes the function by A\+L\+W\+A\+Y\+S overwriting if the other file exists. \begin{DoxyReturn}{Returns}
+Standardizes the function by A\+L\+W\+A\+YS overwriting if the other file exists. \begin{DoxyReturn}{Returns}
 Normal rename() return value 
 \end{DoxyReturn}
 
@@ -70,13 +74,13 @@ Normal rename() return value
 \mbox{\tt in}  & {\em new\+Path} & New file or directory path \\
 \hline
 \end{DoxyParams}
-\hypertarget{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}{}\index{Ba\+F\+S@{Ba\+F\+S}!Size@{Size}}
-\index{Size@{Size}!Ba\+F\+S@{Ba\+F\+S}}
-\subsubsection[{Size(std\+::string path)}]{\setlength{\rightskip}{0pt plus 5cm}static uint32\+\_\+t Ba\+F\+S\+::\+Size (
+\index{Ba\+FS@{Ba\+FS}!Size@{Size}}
+\index{Size@{Size}!Ba\+FS@{Ba\+FS}}
+\subsubsection[{\texorpdfstring{Size(std\+::string path)}{Size(std::string path)}}]{\setlength{\rightskip}{0pt plus 5cm}static uint32\+\_\+t Ba\+F\+S\+::\+Size (
 \begin{DoxyParamCaption}
 \item[{std\+::string}]{path}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}{}\label{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}
 
 
 Gets the file size in bytes. 
@@ -89,14 +93,14 @@ file size in bytes
 \mbox{\tt in}  & {\em path} & Path of file \\
 \hline
 \end{DoxyParams}
-\hypertarget{namespaceBaFS_aafa79b524a4f13b6531cf79b1f73774e}{}\index{Ba\+F\+S@{Ba\+F\+S}!Dir\+Size@{Dir\+Size}}
-\index{Dir\+Size@{Dir\+Size}!Ba\+F\+S@{Ba\+F\+S}}
-\subsubsection[{Dir\+Size(std\+::string path, uint32\+\_\+t max\+Depth=(uint32\+\_\+t)-\/1)}]{\setlength{\rightskip}{0pt plus 5cm}static uint64\+\_\+t Ba\+F\+S\+::\+Dir\+Size (
+\index{Ba\+FS@{Ba\+FS}!Dir\+Size@{Dir\+Size}}
+\index{Dir\+Size@{Dir\+Size}!Ba\+FS@{Ba\+FS}}
+\subsubsection[{\texorpdfstring{Dir\+Size(std\+::string path, uint32\+\_\+t max\+Depth=(uint32\+\_\+t)-\/1)}{DirSize(std::string path, uint32_t maxDepth=(uint32_t)-1)}}]{\setlength{\rightskip}{0pt plus 5cm}static uint64\+\_\+t Ba\+F\+S\+::\+Dir\+Size (
 \begin{DoxyParamCaption}
 \item[{std\+::string}]{path, }
 \item[{uint32\+\_\+t}]{max\+Depth = {\ttfamily (uint32\+\_\+t)-\/1}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{namespaceBaFS_aafa79b524a4f13b6531cf79b1f73774e}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaFS_aafa79b524a4f13b6531cf79b1f73774e}{}\label{namespaceBaFS_aafa79b524a4f13b6531cf79b1f73774e}
 
 
 Gets the directory size in bytes recursively with a maximum depth. 
@@ -111,13 +115,13 @@ directory size in bytes
 \mbox{\tt in}  & {\em max\+Depth} & Optional maximum depth \\
 \hline
 \end{DoxyParams}
-\hypertarget{namespaceBaFS_a73d165c90a00491cfe0b9ce3b5fe5c58}{}\index{Ba\+F\+S@{Ba\+F\+S}!Exists@{Exists}}
-\index{Exists@{Exists}!Ba\+F\+S@{Ba\+F\+S}}
-\subsubsection[{Exists(std\+::string path)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Ba\+F\+S\+::\+Exists (
+\index{Ba\+FS@{Ba\+FS}!Exists@{Exists}}
+\index{Exists@{Exists}!Ba\+FS@{Ba\+FS}}
+\subsubsection[{\texorpdfstring{Exists(std\+::string path)}{Exists(std::string path)}}]{\setlength{\rightskip}{0pt plus 5cm}static bool Ba\+F\+S\+::\+Exists (
 \begin{DoxyParamCaption}
 \item[{std\+::string}]{path}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{namespaceBaFS_a73d165c90a00491cfe0b9ce3b5fe5c58}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{namespaceBaFS_a73d165c90a00491cfe0b9ce3b5fe5c58}{}\label{namespaceBaFS_a73d165c90a00491cfe0b9ce3b5fe5c58}
 
 
 Tests if a file or directory exists. 
@@ -130,3 +134,7 @@ true if exists, otherwise, false
 \mbox{\tt in}  & {\em path} & Path of file or directory \\
 \hline
 \end{DoxyParams}
+
+
+Referenced by Ba\+Core\+Write\+Pid\+File().
+

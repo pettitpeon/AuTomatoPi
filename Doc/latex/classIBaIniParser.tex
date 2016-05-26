@@ -2,7 +2,7 @@
 \label{classIBaIniParser}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
 
 
-I\+N\+I parser C++ interface.  
+I\+NI parser C++ interface.  
 
 
 
@@ -30,28 +30,28 @@ virtual bool \hyperlink{classIBaIniParser_a0ca9abb74bbddfc4ec2f1a4b67454189}{Res
 \begin{DoxyCompactList}\small\item\em Reset or erase a key-\/value pair. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classIBaIniParser_a0e21e085e8cf3e900b7e6626fb7f4388}{Exists} (const char $\ast$key)=0
 \begin{DoxyCompactList}\small\item\em Gets if the entry exists. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classIBaIniParser_ac7c44f2ec3373a93f69bd4a465cfa2a7}{Dump\+Ini} (F\+I\+L\+E $\ast$f)=0
-\begin{DoxyCompactList}\small\item\em Dumps the entries in loadable I\+N\+I format. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classIBaIniParser_a0e35971f968cd1d498d2c0e51e96af2e}{Dump\+Ini\+Sec} (const char $\ast$sec, F\+I\+L\+E $\ast$f)=0
-\begin{DoxyCompactList}\small\item\em Dump all entries in a particular section in loadable I\+N\+I format. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classIBaIniParser_a84d51dee2f7482fbbe23758e894e230b}{Dump\+Ini\+Sec\+Less} (F\+I\+L\+E $\ast$f)=0
+virtual void \hyperlink{classIBaIniParser_ac7c44f2ec3373a93f69bd4a465cfa2a7}{Dump\+Ini} (F\+I\+LE $\ast$f)=0
+\begin{DoxyCompactList}\small\item\em Dumps the entries in loadable I\+NI format. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaIniParser_a0e35971f968cd1d498d2c0e51e96af2e}{Dump\+Ini\+Sec} (const char $\ast$sec, F\+I\+LE $\ast$f)=0
+\begin{DoxyCompactList}\small\item\em Dump all entries in a particular section in loadable I\+NI format. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaIniParser_a84d51dee2f7482fbbe23758e894e230b}{Dump\+Ini\+Sec\+Less} (F\+I\+LE $\ast$f)=0
 \begin{DoxyCompactList}\small\item\em Dumps all section-\/less entries. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classIBaIniParser_a9ba24fa3062966de7e68558d4dde1210}{Dump} (F\+I\+L\+E $\ast$f)=0
+virtual void \hyperlink{classIBaIniParser_a9ba24fa3062966de7e68558d4dde1210}{Dump} (F\+I\+LE $\ast$f)=0
 \begin{DoxyCompactList}\small\item\em Dumps all the raw entries in non-\/loadable format. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-I\+N\+I parser C++ interface. 
+I\+NI parser C++ interface. 
 
 \subsection{Member Function Documentation}
-\hypertarget{classIBaIniParser_a94c36d5c60509da2bd75a986860974d8}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+String@{Get\+String}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+String@{Get\+String}}
 \index{Get\+String@{Get\+String}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Get\+String(const char $\ast$key, const char $\ast$def)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::string I\+Ba\+Ini\+Parser\+::\+Get\+String (
+\subsubsection[{\texorpdfstring{Get\+String(const char $\ast$key, const char $\ast$def)=0}{GetString(const char *key, const char *def)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::string I\+Ba\+Ini\+Parser\+::\+Get\+String (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{key, }
 \item[{const char $\ast$}]{def}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a94c36d5c60509da2bd75a986860974d8}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a94c36d5c60509da2bd75a986860974d8}{}\label{classIBaIniParser_a94c36d5c60509da2bd75a986860974d8}
 
 
 Gets string value associated with a key or default if not found. 
@@ -66,14 +66,14 @@ the value or def
 \mbox{\tt in}  & {\em def} & Default value to return if not found \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_a6e9a78448d75a37ec68b049bd45958e9}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+Int@{Get\+Int}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+Int@{Get\+Int}}
 \index{Get\+Int@{Get\+Int}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Get\+Int(const char $\ast$key, int def)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual int I\+Ba\+Ini\+Parser\+::\+Get\+Int (
+\subsubsection[{\texorpdfstring{Get\+Int(const char $\ast$key, int def)=0}{GetInt(const char *key, int def)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual int I\+Ba\+Ini\+Parser\+::\+Get\+Int (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{key, }
 \item[{int}]{def}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a6e9a78448d75a37ec68b049bd45958e9}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a6e9a78448d75a37ec68b049bd45958e9}{}\label{classIBaIniParser_a6e9a78448d75a37ec68b049bd45958e9}
 
 
 Gets integer value associated with a key or default if not found or parse failed. 
@@ -95,14 +95,14 @@ the value or def
 \mbox{\tt in}  & {\em def} & Default value to return if not found \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_aceab5e35ec6832bd9ccf35ad1486ca7b}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+Double@{Get\+Double}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+Double@{Get\+Double}}
 \index{Get\+Double@{Get\+Double}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Get\+Double(const char $\ast$key, double def)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual double I\+Ba\+Ini\+Parser\+::\+Get\+Double (
+\subsubsection[{\texorpdfstring{Get\+Double(const char $\ast$key, double def)=0}{GetDouble(const char *key, double def)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual double I\+Ba\+Ini\+Parser\+::\+Get\+Double (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{key, }
 \item[{double}]{def}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_aceab5e35ec6832bd9ccf35ad1486ca7b}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_aceab5e35ec6832bd9ccf35ad1486ca7b}{}\label{classIBaIniParser_aceab5e35ec6832bd9ccf35ad1486ca7b}
 
 
 Gets double value associated with a key or default if not found or parse failed. 
@@ -123,14 +123,14 @@ the value or def
 \mbox{\tt in}  & {\em def} & Default value to return if not found \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_a3be3b69c9628a1d225187f52bb6d8d4d}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+Bool@{Get\+Bool}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Get\+Bool@{Get\+Bool}}
 \index{Get\+Bool@{Get\+Bool}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Get\+Bool(const char $\ast$key, bool def)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Get\+Bool (
+\subsubsection[{\texorpdfstring{Get\+Bool(const char $\ast$key, bool def)=0}{GetBool(const char *key, bool def)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Get\+Bool (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{key, }
 \item[{bool}]{def}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a3be3b69c9628a1d225187f52bb6d8d4d}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a3be3b69c9628a1d225187f52bb6d8d4d}{}\label{classIBaIniParser_a3be3b69c9628a1d225187f52bb6d8d4d}
 
 
 Gets bool value associated with a key or default if not found or parse failed. 
@@ -157,14 +157,14 @@ the value or def
 \mbox{\tt in}  & {\em def} & Default value to return if not found \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_ad60d8188d917a3fb43326be775e87b08}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Set@{Set}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Set@{Set}}
 \index{Set@{Set}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Set(const char $\ast$key, const char $\ast$val)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Set (
+\subsubsection[{\texorpdfstring{Set(const char $\ast$key, const char $\ast$val)=0}{Set(const char *key, const char *val)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Set (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{key, }
 \item[{const char $\ast$}]{val}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_ad60d8188d917a3fb43326be775e87b08}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_ad60d8188d917a3fb43326be775e87b08}{}\label{classIBaIniParser_ad60d8188d917a3fb43326be775e87b08}
 
 
 Add or overwrite a key-\/value pair. 
@@ -179,13 +179,13 @@ Error or success
 \mbox{\tt in}  & {\em val} & Value \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_a0ca9abb74bbddfc4ec2f1a4b67454189}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Reset@{Reset}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Reset@{Reset}}
 \index{Reset@{Reset}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Reset(const char $\ast$key)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Reset (
+\subsubsection[{\texorpdfstring{Reset(const char $\ast$key)=0}{Reset(const char *key)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Reset (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{key}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a0ca9abb74bbddfc4ec2f1a4b67454189}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a0ca9abb74bbddfc4ec2f1a4b67454189}{}\label{classIBaIniParser_a0ca9abb74bbddfc4ec2f1a4b67454189}
 
 
 Reset or erase a key-\/value pair. 
@@ -198,13 +198,13 @@ true if the element was erased
 \mbox{\tt in}  & {\em key} & Key as \char`\"{}section\+:key\char`\"{} \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_a0e21e085e8cf3e900b7e6626fb7f4388}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Exists@{Exists}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Exists@{Exists}}
 \index{Exists@{Exists}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Exists(const char $\ast$key)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Exists (
+\subsubsection[{\texorpdfstring{Exists(const char $\ast$key)=0}{Exists(const char *key)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Exists (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{key}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a0e21e085e8cf3e900b7e6626fb7f4388}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a0e21e085e8cf3e900b7e6626fb7f4388}{}\label{classIBaIniParser_a0e21e085e8cf3e900b7e6626fb7f4388}
 
 
 Gets if the entry exists. 
@@ -217,33 +217,33 @@ True if entry exists
 \mbox{\tt in}  & {\em key} & Key as \char`\"{}section\+:key\char`\"{} \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_ac7c44f2ec3373a93f69bd4a465cfa2a7}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump\+Ini@{Dump\+Ini}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump\+Ini@{Dump\+Ini}}
 \index{Dump\+Ini@{Dump\+Ini}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Dump\+Ini(\+F\+I\+L\+E $\ast$f)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual void I\+Ba\+Ini\+Parser\+::\+Dump\+Ini (
+\subsubsection[{\texorpdfstring{Dump\+Ini(\+F\+I\+L\+E $\ast$f)=0}{DumpIni(FILE *f)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void I\+Ba\+Ini\+Parser\+::\+Dump\+Ini (
 \begin{DoxyParamCaption}
-\item[{F\+I\+L\+E $\ast$}]{f}
+\item[{F\+I\+LE $\ast$}]{f}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_ac7c44f2ec3373a93f69bd4a465cfa2a7}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_ac7c44f2ec3373a93f69bd4a465cfa2a7}{}\label{classIBaIniParser_ac7c44f2ec3373a93f69bd4a465cfa2a7}
 
 
-Dumps the entries in loadable I\+N\+I format. 
+Dumps the entries in loadable I\+NI format. 
 
 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em f} & Opened output file (can also be stdout) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_a0e35971f968cd1d498d2c0e51e96af2e}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump\+Ini\+Sec@{Dump\+Ini\+Sec}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump\+Ini\+Sec@{Dump\+Ini\+Sec}}
 \index{Dump\+Ini\+Sec@{Dump\+Ini\+Sec}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Dump\+Ini\+Sec(const char $\ast$sec, F\+I\+L\+E $\ast$f)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Dump\+Ini\+Sec (
+\subsubsection[{\texorpdfstring{Dump\+Ini\+Sec(const char $\ast$sec, F\+I\+L\+E $\ast$f)=0}{DumpIniSec(const char *sec, FILE *f)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Dump\+Ini\+Sec (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{sec, }
-\item[{F\+I\+L\+E $\ast$}]{f}
+\item[{F\+I\+LE $\ast$}]{f}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a0e35971f968cd1d498d2c0e51e96af2e}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a0e35971f968cd1d498d2c0e51e96af2e}{}\label{classIBaIniParser_a0e35971f968cd1d498d2c0e51e96af2e}
 
 
-Dump all entries in a particular section in loadable I\+N\+I format. 
+Dump all entries in a particular section in loadable I\+NI format. 
 
 \begin{DoxyReturn}{Returns}
 true if section exists 
@@ -255,13 +255,13 @@ true if section exists
 \mbox{\tt in}  & {\em f} & Opened output file (can also be stdout) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_a84d51dee2f7482fbbe23758e894e230b}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump\+Ini\+Sec\+Less@{Dump\+Ini\+Sec\+Less}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump\+Ini\+Sec\+Less@{Dump\+Ini\+Sec\+Less}}
 \index{Dump\+Ini\+Sec\+Less@{Dump\+Ini\+Sec\+Less}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Dump\+Ini\+Sec\+Less(\+F\+I\+L\+E $\ast$f)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Dump\+Ini\+Sec\+Less (
+\subsubsection[{\texorpdfstring{Dump\+Ini\+Sec\+Less(\+F\+I\+L\+E $\ast$f)=0}{DumpIniSecLess(FILE *f)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Ini\+Parser\+::\+Dump\+Ini\+Sec\+Less (
 \begin{DoxyParamCaption}
-\item[{F\+I\+L\+E $\ast$}]{f}
+\item[{F\+I\+LE $\ast$}]{f}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a84d51dee2f7482fbbe23758e894e230b}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a84d51dee2f7482fbbe23758e894e230b}{}\label{classIBaIniParser_a84d51dee2f7482fbbe23758e894e230b}
 
 
 Dumps all section-\/less entries. 
@@ -274,13 +274,13 @@ true if section exists
 \mbox{\tt in}  & {\em f} & Opened output file (can also be stdout) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classIBaIniParser_a9ba24fa3062966de7e68558d4dde1210}{}\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump@{Dump}}
+\index{I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}!Dump@{Dump}}
 \index{Dump@{Dump}!I\+Ba\+Ini\+Parser@{I\+Ba\+Ini\+Parser}}
-\subsubsection[{Dump(\+F\+I\+L\+E $\ast$f)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual void I\+Ba\+Ini\+Parser\+::\+Dump (
+\subsubsection[{\texorpdfstring{Dump(\+F\+I\+L\+E $\ast$f)=0}{Dump(FILE *f)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void I\+Ba\+Ini\+Parser\+::\+Dump (
 \begin{DoxyParamCaption}
-\item[{F\+I\+L\+E $\ast$}]{f}
+\item[{F\+I\+LE $\ast$}]{f}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaIniParser_a9ba24fa3062966de7e68558d4dde1210}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classIBaIniParser_a9ba24fa3062966de7e68558d4dde1210}{}\label{classIBaIniParser_a9ba24fa3062966de7e68558d4dde1210}
 
 
 Dumps all the raw entries in non-\/loadable format. 

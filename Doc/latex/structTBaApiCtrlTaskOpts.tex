@@ -1,0 +1,52 @@
+\hypertarget{structTBaApiCtrlTaskOpts}{}\section{T\+Ba\+Api\+Ctrl\+Task\+Opts Struct Reference}
+\label{structTBaApiCtrlTaskOpts}\index{T\+Ba\+Api\+Ctrl\+Task\+Opts@{T\+Ba\+Api\+Ctrl\+Task\+Opts}}
+
+
+Options structure for the control task started with \hyperlink{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}{Ba\+Api\+Start\+Ctrl\+Task()}  
+
+
+
+
+{\ttfamily \#include $<$Base\+Api.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{structTBaApiCtrlTaskOpts_acca524319d638b833006dda8de72b33a}{name}\hypertarget{structTBaApiCtrlTaskOpts_acca524319d638b833006dda8de72b33a}{}\label{structTBaApiCtrlTaskOpts_acca524319d638b833006dda8de72b33a}
+
+\begin{DoxyCompactList}\small\item\em Task name. \end{DoxyCompactList}\item 
+\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \hyperlink{structTBaApiCtrlTaskOpts_a6ecce6215aba4fe37a0cae7944d407d5}{prio}\hypertarget{structTBaApiCtrlTaskOpts_a6ecce6215aba4fe37a0cae7944d407d5}{}\label{structTBaApiCtrlTaskOpts_a6ecce6215aba4fe37a0cae7944d407d5}
+
+\begin{DoxyCompactList}\small\item\em Task priority. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{structTBaApiCtrlTaskOpts_a4a2241999559f0924c70899e6c1e71f3}{cyle\+Time\+Ms}\hypertarget{structTBaApiCtrlTaskOpts_a4a2241999559f0924c70899e6c1e71f3}{}\label{structTBaApiCtrlTaskOpts_a4a2241999559f0924c70899e6c1e71f3}
+
+\begin{DoxyCompactList}\small\item\em Desired cycle time in ms. \end{DoxyCompactList}\item 
+T\+Ba\+Log\+Desc \hyperlink{structTBaApiCtrlTaskOpts_abb595fe7dc59ebd1ce4711ff59cc2034}{log}\hypertarget{structTBaApiCtrlTaskOpts_abb595fe7dc59ebd1ce4711ff59cc2034}{}\label{structTBaApiCtrlTaskOpts_abb595fe7dc59ebd1ce4711ff59cc2034}
+
+\begin{DoxyCompactList}\small\item\em The logger descriptor union. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC}($\ast$ \hyperlink{structTBaApiCtrlTaskOpts_aaf141541ca77bd40f2bb5fc2e5859fc9}{init} )(void $\ast$)\hypertarget{structTBaApiCtrlTaskOpts_aaf141541ca77bd40f2bb5fc2e5859fc9}{}\label{structTBaApiCtrlTaskOpts_aaf141541ca77bd40f2bb5fc2e5859fc9}
+
+\begin{DoxyCompactList}\small\item\em Optional initialization function. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{structTBaApiCtrlTaskOpts_ad3650f49b9a488c420c4c22da3ae1dda}{init\+Arg}\hypertarget{structTBaApiCtrlTaskOpts_ad3650f49b9a488c420c4c22da3ae1dda}{}\label{structTBaApiCtrlTaskOpts_ad3650f49b9a488c420c4c22da3ae1dda}
+
+\begin{DoxyCompactList}\small\item\em Optional argument init function. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structTBaApiCtrlTaskOpts_aeb48d712d7cc744807975ec51cdf9f37}{update} )(void $\ast$)\hypertarget{structTBaApiCtrlTaskOpts_aeb48d712d7cc744807975ec51cdf9f37}{}\label{structTBaApiCtrlTaskOpts_aeb48d712d7cc744807975ec51cdf9f37}
+
+\begin{DoxyCompactList}\small\item\em Function that will be called cyclically every \hyperlink{structTBaApiCtrlTaskOpts_a4a2241999559f0924c70899e6c1e71f3}{cyle\+Time\+Ms}. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{structTBaApiCtrlTaskOpts_a596bfe867887a3d23e7888300708837c}{update\+Arg}\hypertarget{structTBaApiCtrlTaskOpts_a596bfe867887a3d23e7888300708837c}{}\label{structTBaApiCtrlTaskOpts_a596bfe867887a3d23e7888300708837c}
+
+\begin{DoxyCompactList}\small\item\em Optional argument update function. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC}($\ast$ \hyperlink{structTBaApiCtrlTaskOpts_a987242de0c1c39f97ff157c918ad7746}{exit} )(void $\ast$)\hypertarget{structTBaApiCtrlTaskOpts_a987242de0c1c39f97ff157c918ad7746}{}\label{structTBaApiCtrlTaskOpts_a987242de0c1c39f97ff157c918ad7746}
+
+\begin{DoxyCompactList}\small\item\em Optional exit function. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{structTBaApiCtrlTaskOpts_a4b4f0d49fe18ab1bebd856f2d07f65e3}{exit\+Arg}\hypertarget{structTBaApiCtrlTaskOpts_a4b4f0d49fe18ab1bebd856f2d07f65e3}{}\label{structTBaApiCtrlTaskOpts_a4b4f0d49fe18ab1bebd856f2d07f65e3}
+
+\begin{DoxyCompactList}\small\item\em Optional argument exit function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Options structure for the control task started with \hyperlink{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}{Ba\+Api\+Start\+Ctrl\+Task()} 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaseApi_8h}{Base\+Api.\+h}\end{DoxyCompactItemize}
