@@ -1,0 +1,28 @@
+/** @page invstDoku Non-Techie Information
+ *  [TOC]
+ *  First sentence.
+ *
+ *
+ *  What Am I       {#intro_sec}
+ *  =========
+ *  par1
+ *
+ *  par2
+ *  same par
+ *
+ *  Subsection       {#sub1}
+ *  ----------
+ *  par1
+ *
+ *  par2
+ *  same par
+ *
+ *  ### SubSubsection ###     {#subsub1}
+ *  par1
+ *
+ *  par2
+ *  same par
+ *
+ *
+ *
+ * */
