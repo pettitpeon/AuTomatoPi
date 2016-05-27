@@ -34,6 +34,20 @@ void CBaComTest::setUp() {
 /*  ...
  */
 void CBaComTest::tearDown() {
+   BaCom1WExit();
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaComTest::Bus1W() {
+   float temp = 0;
+   CPPUNIT_ASSERT(BaCom1WInit());
+   BaCom1WGetTemp(&temp);
+   for (int i = 0; i < 10; ++i) {
+      BaCom1WGetTemp(&temp);
+   }
+   CPPUNIT_ASSERT(BaCom1WExit());
 }
 
 /* ****************************************************************************/

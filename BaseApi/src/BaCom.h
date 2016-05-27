@@ -71,6 +71,25 @@ TBaBoolRC BaComSPIExit(TBaComHdl hdl);
 
 /// @name Init/Exit Functions
 //@{
+
+/******************************************************************************/
+/** Initializes the resources and reserves GPIOs 14 and 15 for
+ *  @return Handle on success, otherwise error
+ */
+TBaBoolRC BaCom1WInit();
+
+/******************************************************************************/
+/** ...
+ *  @return
+ */
+TBaBoolRC BaCom1WExit();
+
+/******************************************************************************/
+/** ...
+ *  @return
+ */
+TBaBoolRC BaCom1WGetTemp(float *pTemp);
+
 /******************************************************************************/
 /** Initializes the resources and reserves GPIOs 14 and 15 for
  *  @return Handle on success, otherwise error

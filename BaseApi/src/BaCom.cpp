@@ -16,14 +16,20 @@
 #include <linux/i2c-dev.h>
 #include <termios.h>
 
+#include <string>
+#include <fstream>
+#include <iostream>
+
 #include "BaCom.h"
 #include "BaCore.h"
 #include "BaGpio.h"
 #include "BaGenMacros.h"
+#include "BaUtils.hpp"
 
+#define BUS1W   04
 #define TXD0    14
 #define RXD0    15
-#define SER_ALT 0
+#define SER_ALT  0
 
 LOCAL inline speed_t baud2Speed(EBaComBaud baud);
 
@@ -43,6 +49,10 @@ typedef struct TSerialDesc {
    }
 } TSerialDesc;
 
+
+static IBaGpio *sp1w = 0;
+static std::ifstream s1wIn;
+
 //
 TBaComHdl BaComI2CInit() {
    return 0;
@@ -61,6 +71,67 @@ TBaComHdl BaComSPIInit() {
 //
 TBaBoolRC BaComSPIExit(TBaComHdl hdl) {
    return 0;
+}
+
+//
+TBaBoolRC BaCom1WInit() {
+   if (sp1w) {
+      return eBaBoolRC_Success;
+   }
+
+   sp1w = IBaGpioCreate(BUS1W);
+   if (!sp1w) {
+      return eBaBoolRC_Error;
+   }
+
+   sp1w->SetAlt(0);
+   std::string path = "/sys/bus/w1/devices/28-0215c2c4bcff/w1_slave";
+   s1wIn.open(path, std::ios::in | std::ios::binary);
+
+   return s1wIn.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
+}
+
+//
+TBaBoolRC BaCom1WExit() {
+   if (!sp1w) {
+      return eBaBoolRC_Success;
+   }
+
+   s1wIn.close();
+   TBaBoolRC rc = s1wIn.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
+   rc |= IBaGpioDelete(sp1w);
+   sp1w = 0;
+
+   return rc;
+}
+
+//
+TBaBoolRC BaCom1WGetTemp(float *pTemp) {
+   if (!sp1w || !pTemp) {
+      return eBaBoolRC_Error;
+   }
+
+   std::string contents;
+   s1wIn.seekg(0, std::ios::end);
+   auto size = s1wIn.tellg();
+   if (size == -1) {
+      return eBaBoolRC_Error;
+   }
+
+   contents.resize(size);
+   s1wIn.seekg(0, std::ios::beg);
+   s1wIn.read(&contents[0], contents.size());
+
+   // Rewind the stream
+   s1wIn.clear();
+   s1wIn.seekg(0, std::ios::beg);
+
+   bool error = false;
+
+   // extract teh values
+   *pTemp = BaToNumber(contents.substr(contents.find("t=") + 2), 0, &error)/1000.0f;
+
+   return error ? eBaBoolRC_Error : eBaBoolRC_Success;
 }
 
 //
