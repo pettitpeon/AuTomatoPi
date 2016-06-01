@@ -19,6 +19,9 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <sstream>
+#include <map>
 
 #include "BaCom.h"
 #include "BaCore.h"
@@ -30,6 +33,7 @@
 #define TXD0    14
 #define RXD0    15
 #define SER_ALT  0
+#define DEVPATH  "/sys/bus/w1/devices/"
 
 LOCAL inline speed_t baud2Speed(EBaComBaud baud);
 
@@ -51,7 +55,8 @@ typedef struct TSerialDesc {
 
 
 static IBaGpio *sp1w = 0;
-static std::ifstream s1wIn;
+//static std::ifstream s1wIn;
+static std::map<uint16_t, std::vector<std::ifstream*>> sDevs;
 
 //
 TBaComHdl BaComI2CInit() {
@@ -85,10 +90,9 @@ TBaBoolRC BaCom1WInit() {
    }
 
    sp1w->SetAlt(0);
-   std::string path = "/sys/bus/w1/devices/28-0215c2c4bcff/w1_slave";
-   s1wIn.open(path, std::ios::in | std::ios::binary);
+   BaCom1WGetDevices();
 
-   return s1wIn.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
+   return eBaBoolRC_Success;
 }
 
 //
@@ -97,12 +101,63 @@ TBaBoolRC BaCom1WExit() {
       return eBaBoolRC_Success;
    }
 
-   s1wIn.close();
-   TBaBoolRC rc = s1wIn.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
-   rc |= IBaGpioDelete(sp1w);
-   sp1w = 0;
+   for (auto kv : sDevs) {
+      for (auto pIs : kv.second) {
+         if (pIs) {
+            delete pIs; // deleting closes the file =)
+         }
+      }
+   }
+   sDevs.clear();
 
+   TBaBoolRC rc = IBaGpioDelete(sp1w);
+   sp1w = 0;
    return rc;
+}
+
+//
+uint16_t BaCom1WGetDevices(){
+   if (!BaFS::Exists(DEVPATH)) {
+      return eBaBoolRC_Error;
+   }
+
+   // directory entry
+   struct dirent *de = 0;
+   DIR *d = 0;
+   uint16_t famId = 0;
+
+   std::ifstream * pIs = 0;
+
+   d = opendir(DEVPATH);
+   if (!d) {
+      return 0;
+   }
+
+   uint16_t i = 0;
+   for (de = readdir(d); de != 0; de = readdir(d)) {
+
+      // Skip "." and ".."
+      if ((strcmp(de->d_name, "..") == 0) || (strcmp(de->d_name, ".") == 0)) {
+         continue;
+      }
+
+      // Get the file info
+      std::stringstream ss;
+      ss << de->d_name;
+      std::cout << ss.str() << " " << de->d_name <<std::endl;
+      if (ss >> famId) {
+         pIs = new std::ifstream();
+         if (pIs) {
+            std::string path = DEVPATH + std::string(de->d_name) + "/w1_slave";
+            pIs->open(path);
+            if(!pIs->fail()) {
+               sDevs[famId].push_back(pIs);
+               i++;
+            }
+         }
+      }
+   }
+   return i;
 }
 
 //
@@ -112,6 +167,9 @@ TBaBoolRC BaCom1WGetTemp(float *pTemp) {
    }
 
    std::string contents;
+   // todo: seg fault if no devices exist
+   std::ifstream *p1wIn = sDevs[28][0];
+   std::ifstream &s1wIn = *p1wIn;
    s1wIn.seekg(0, std::ios::end);
    auto size = s1wIn.tellg();
    if (size == -1) {
