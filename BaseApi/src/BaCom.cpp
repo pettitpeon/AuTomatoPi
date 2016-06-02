@@ -168,6 +168,7 @@ TBaBoolRC BaCom1WGetTemp(float *pTemp) {
 
    std::string contents;
    // todo: seg fault if no devices exist
+   //
    std::ifstream *p1wIn = sDevs[28][0];
    std::ifstream &s1wIn = *p1wIn;
    s1wIn.seekg(0, std::ios::end);
