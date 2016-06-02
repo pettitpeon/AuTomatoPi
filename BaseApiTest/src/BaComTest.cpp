@@ -41,16 +41,11 @@ void CBaComTest::tearDown() {
 /*  ...
  */
 void CBaComTest::Bus1W() {
-   float temp = 0;
+   TBaBool error = eBaBool_false;
    CPPUNIT_ASSERT(BaCom1WInit());
 
-//   uint16_t cnt = BaCom1WGetDevices();
-
-
-   BaCom1WGetTemp(&temp);
    for (int i = 0; i < 10; ++i) {
-      BaCom1WGetTemp(&temp);
-      std::cout << temp << std::endl;
+      std::cout << BaCom1WGetTemp(&error) << ": "<< (error ? "T" : "F") << std::endl;
    }
 
    CPPUNIT_ASSERT(BaCom1WExit());

@@ -31,6 +31,7 @@
  */
 typedef int32_t TBaComHdl;
 typedef void* TBaComSerHdl;
+typedef void* (*TBaCom1wReadFun)(const char* str, size_t n);
 
 /// Baud enumeration
 typedef enum EBaComBaud {
@@ -94,7 +95,18 @@ uint16_t BaCom1WGetDevices();
 /** ...
  *  @return
  */
-TBaBoolRC BaCom1WGetTemp(float *pTemp);
+float BaCom1WGetTemp(TBaBool *pError);
+
+/******************************************************************************/
+/** ...
+ *  @return
+ */
+void *BaCom1WGetValue(
+      uint8_t famID,
+      const char * serNo,
+      TBaCom1wReadFun cb,
+      TBaBool *pError
+      );
 
 /******************************************************************************/
 /** Initializes the resources and reserves GPIOs 14 and 15 for

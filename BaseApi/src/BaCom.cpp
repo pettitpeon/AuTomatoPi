@@ -34,8 +34,11 @@
 #define RXD0    15
 #define SER_ALT  0
 #define DEVPATH  "/sys/bus/w1/devices/"
+#define TEMPFAM 28
 
 LOCAL inline speed_t baud2Speed(EBaComBaud baud);
+LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError);
+LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents);
 
 // Serial descriptor
 typedef struct TSerialDesc {
@@ -54,8 +57,10 @@ typedef struct TSerialDesc {
 } TSerialDesc;
 
 
+// GPIO for the 1w bus. default GPIO 4, pin 7
 static IBaGpio *sp1w = 0;
-//static std::ifstream s1wIn;
+
+// Map of family IDs and devices vector
 static std::map<uint16_t, std::vector<std::ifstream*>> sDevs;
 
 //
@@ -84,11 +89,13 @@ TBaBoolRC BaCom1WInit() {
       return eBaBoolRC_Success;
    }
 
+   // This reserves the GPIO in the c++ interface
    sp1w = IBaGpioCreate(BUS1W);
    if (!sp1w) {
       return eBaBoolRC_Error;
    }
 
+   // This reserves the GPIO in the C interface
    sp1w->SetAlt(0);
    BaCom1WGetDevices();
 
@@ -141,16 +148,16 @@ uint16_t BaCom1WGetDevices(){
          continue;
       }
 
-      // Get the file info
+      // Get open devices with a valid family ID in a input file stream
       std::stringstream ss;
       ss << de->d_name;
-      std::cout << ss.str() << " " << de->d_name <<std::endl;
       if (ss >> famId) {
          pIs = new std::ifstream();
          if (pIs) {
             std::string path = DEVPATH + std::string(de->d_name) + "/w1_slave";
             pIs->open(path);
             if(!pIs->fail()) {
+               // This is a map of family IDs and file streams
                sDevs[famId].push_back(pIs);
                i++;
             }
@@ -161,36 +168,32 @@ uint16_t BaCom1WGetDevices(){
 }
 
 //
-TBaBoolRC BaCom1WGetTemp(float *pTemp) {
-   if (!sp1w || !pTemp) {
-      return eBaBoolRC_Error;
-   }
-
+float BaCom1WGetTemp(TBaBool *pError) {
+   TBaBool terror;
+   pError = pError ? pError : &terror;
    std::string contents;
-   // todo: seg fault if no devices exist
-   //
-   std::ifstream *p1wIn = sDevs[28][0];
-   std::ifstream &s1wIn = *p1wIn;
-   s1wIn.seekg(0, std::ios::end);
-   auto size = s1wIn.tellg();
-   if (size == -1) {
-      return eBaBoolRC_Error;
+
+   if (!read1wDevice(TEMPFAM, 0, contents)) {
+      *pError = eBaBoolRC_Error;
+      return -300;
    }
 
-   contents.resize(size);
-   s1wIn.seekg(0, std::ios::beg);
-   s1wIn.read(&contents[0], contents.size());
+   return readTemp(contents.c_str(), pError);
+}
 
-   // Rewind the stream
-   s1wIn.clear();
-   s1wIn.seekg(0, std::ios::beg);
+//
+void *BaCom1WGetValue(uint8_t famID, const char *serNo, TBaCom1wReadFun cb,
+      TBaBool *pError) {
+   TBaBool terror;
+   pError = pError ? pError : &terror;
+   std::string contents;
 
-   bool error = false;
+   if (!read1wDevice(famID, serNo, contents)) {
+      *pError = eBaBoolRC_Error;
+      return 0;
+   }
 
-   // extract teh values
-   *pTemp = BaToNumber(contents.substr(contents.find("t=") + 2), 0, &error)/1000.0f;
-
-   return error ? eBaBoolRC_Error : eBaBoolRC_Success;
+   return cb(contents.c_str(), contents.size());
 }
 
 //
@@ -312,5 +315,61 @@ LOCAL inline speed_t baud2Speed(EBaComBaud baud) {
    return 0;
 }
 
+//
+LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError) {
+   if (!dvrStr) {
+      return eBaBoolRC_Error;
+   }
+
+   // Extract the values. Temp in milli °C
+   // 96 01 4b 46 7f ff 0c 10 a0 : crc=a0 YES
+   // 96 01 4b 46 7f ff 0c 10 a0 t=25375
+
+   std::string contents(dvrStr);
+   if (contents.find("YES") == std::string::npos) {
+      return eBaBoolRC_Error;
+   }
+
+   return (BaToNumber(contents.substr(contents.find("t=") + 2), -300, (bool*)pError)/1000.0f);
+}
+
+LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents) {
+   if (!sp1w) {
+      return eBaBoolRC_Error;
+   }
+
+   // Find thermometers
+   auto therms = sDevs.find(devFam);
+   if (therms == sDevs.end() || therms->second.size() == 0) {
+      return eBaBoolRC_Error;
+   }
+
+   // Get the first thermometer
+   std::ifstream *p1wIn = 0;
+   if (!serNo) {
+      p1wIn = therms->second[0];
+   } else {
+      // todo: no info about the serno =(
+      p1wIn = therms->second[0];
+   }
+
+   std::ifstream &r1wIn = *p1wIn;
+
+   r1wIn.seekg(0, std::ios::end);
+   auto size = r1wIn.tellg();
+   if (size == -1) {
+      return eBaBoolRC_Error;
+   }
+
+   contents.resize(size);
+   r1wIn.seekg(0, std::ios::beg);
+   r1wIn.read(&contents[0], contents.size());
+
+   // Rewind the stream
+   r1wIn.clear();
+   r1wIn.seekg(0, std::ios::beg);
+
+   return eBaBoolRC_Success;
+}
 
 #endif // __linux
