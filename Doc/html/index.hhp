@@ -34,6 +34,7 @@ BaLogMacros_8h.html
 BaMsg_8h.html
 BaseApi_8h.html
 BaUtils_8hpp.html
+invstDoku.html
 classIBaGpio.html
 classIBaGpio-members.html
 classIBaIniParser.html
@@ -59,6 +60,7 @@ namespaceBaPath.html
 graph_legend.html
 dir_68267d1309a1af8e8297ef4c3efbcdba.html
 index.html
+pages.html
 namespaces.html
 namespacemembers.html
 namespacemembers_func.html
@@ -89,6 +91,12 @@ open.png
 bdwn.png
 sync_on.png
 sync_off.png
+doc.png
+folderopen.png
+folderclosed.png
+arrowdown.png
+arrowright.png
+splitbar.png
 BaBool_8h__incl.svg
 BaBool_8h__dep__incl.svg
 BaCom_8h__incl.svg
@@ -102,6 +110,7 @@ BaMsg_8h__incl.svg
 BaseApi_8h__incl.svg
 BaUtils_8hpp__incl.svg
 graph_legend.svg
+dir_68267d1309a1af8e8297ef4c3efbcdba_dep.svg
 inherit_graph_0.svg
 inherit_graph_1.svg
 inherit_graph_2.svg

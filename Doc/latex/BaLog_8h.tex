@@ -2,20 +2,18 @@
 \label{BaLog_8h}\index{Ba\+Log.\+h@{Ba\+Log.\+h}}
 
 
-Logger A\+PI.  
+Logger A\+P\+I.  
 
 
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
-Include dependency graph for Ba\+Log.\+h\+:
-\nopagebreak
+Include dependency graph for Ba\+Log.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=136pt]{BaLog_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,28 +32,41 @@ class \hyperlink{classIBaLog}{I\+Ba\+Log}
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{B\+A\+S\+Y\+S\+L\+OG}(tag,  fmt, ...)~\hyperlink{BaLog_8h_a943924b60ee5be50728cfc0617577e82}{Ba\+Log\+Sys\+LogF}(tag, \+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+, fmt, \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)\hypertarget{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{}\label{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}
+\hypertarget{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{}\#define \hyperlink{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{B\+A\+S\+Y\+S\+L\+O\+G}(tag,  fmt, ...)~\hyperlink{BaLog_8h_a943924b60ee5be50728cfc0617577e82}{Ba\+Log\+Sys\+Log\+F}(tag, \+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+, fmt, \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)\label{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}
 
 \begin{DoxyCompactList}\small\item\em Syslog macro that includes the line number. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef enum \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} \hyperlink{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}{E\+Ba\+Log\+Prio}\hypertarget{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}{}\label{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}
+\hypertarget{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}{}typedef enum \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} \hyperlink{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}{E\+Ba\+Log\+Prio}\label{BaLog_8h_a09a786ca91602cbc857fc99cf5cab56d}
 
 \begin{DoxyCompactList}\small\item\em Message priority or severeness. \end{DoxyCompactList}\item 
-typedef enum \hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{E\+Ba\+Log\+Out} \hyperlink{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}{E\+Ba\+Log\+Out}\hypertarget{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}{}\label{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}
+\hypertarget{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}{}typedef enum \hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{E\+Ba\+Log\+Out} \hyperlink{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}{E\+Ba\+Log\+Out}\label{BaLog_8h_ababde10f818658c9f0b53104df8b4c14}
 
 \begin{DoxyCompactList}\small\item\em Logger output enumeration. \end{DoxyCompactList}\item 
-typedef struct \hyperlink{structTBaLogOptions}{T\+Ba\+Log\+Options} \hyperlink{BaLog_8h_aa27a02534e598108695a1a2eb967a396}{T\+Ba\+Log\+Options}\hypertarget{BaLog_8h_aa27a02534e598108695a1a2eb967a396}{}\label{BaLog_8h_aa27a02534e598108695a1a2eb967a396}
+\hypertarget{BaLog_8h_aa27a02534e598108695a1a2eb967a396}{}typedef struct \hyperlink{structTBaLogOptions}{T\+Ba\+Log\+Options} \hyperlink{BaLog_8h_aa27a02534e598108695a1a2eb967a396}{T\+Ba\+Log\+Options}\label{BaLog_8h_aa27a02534e598108695a1a2eb967a396}
 
 \begin{DoxyCompactList}\small\item\em Logger options. \end{DoxyCompactList}\item 
-typedef struct \hyperlink{structTBaLogInfo}{T\+Ba\+Log\+Info} \hyperlink{BaLog_8h_ab966a9c1dfd235ba9f32bd1b1d6734ba}{T\+Ba\+Log\+Info}\hypertarget{BaLog_8h_ab966a9c1dfd235ba9f32bd1b1d6734ba}{}\label{BaLog_8h_ab966a9c1dfd235ba9f32bd1b1d6734ba}
+\hypertarget{BaLog_8h_ab966a9c1dfd235ba9f32bd1b1d6734ba}{}typedef struct \hyperlink{structTBaLogInfo}{T\+Ba\+Log\+Info} \hyperlink{BaLog_8h_ab966a9c1dfd235ba9f32bd1b1d6734ba}{T\+Ba\+Log\+Info}\label{BaLog_8h_ab966a9c1dfd235ba9f32bd1b1d6734ba}
 
 \begin{DoxyCompactList}\small\item\em Logger information. \end{DoxyCompactList}\item 
-typedef void $\ast$ \hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl}\hypertarget{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{}\label{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}
+\hypertarget{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{}typedef void $\ast$ \hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl}\label{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}
 
 \begin{DoxyCompactList}\small\item\em C logger handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} \{ \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02}{e\+Ba\+Log\+Prio\+\_\+\+Trace} = 0, 
+\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996}{e\+Ba\+Log\+Prio\+\_\+\+Warning}, 
+\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f}{e\+Ba\+Log\+Prio\+\_\+\+Error}, 
+\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f}{e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash}
+ \}\begin{DoxyCompactList}\small\item\em Message priority or severeness. \end{DoxyCompactList}
+\item 
+enum \hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{E\+Ba\+Log\+Out} \{ \hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140}{e\+Ba\+Log\+Out\+\_\+\+Log} = 1, 
+\hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76}{e\+Ba\+Log\+Out\+\_\+\+Console} = 2, 
+\hyperlink{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7}{e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console} = 3
+ \}\begin{DoxyCompactList}\small\item\em Logger output enumeration. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -70,31 +81,31 @@ void \hyperlink{BaLog_8h_adae1d549034dcc1c586a3ecfc62c2ba0}{Ba\+Log\+Flush} (\hy
 \begin{DoxyCompactList}\small\item\em Create factory for a logger. \end{DoxyCompactList}\item 
 void \hyperlink{BaLog_8h_a966ef64c4dd65b99d3e55181c08de141}{Ba\+Log\+Set\+Def\+Opts} (\hyperlink{structTBaLogOptions}{T\+Ba\+Log\+Options} $\ast$p\+Opts)
 \begin{DoxyCompactList}\small\item\em Sets the a \hyperlink{structTBaLogOptions}{T\+Ba\+Log\+Options} structure to default values. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a09d5f6fde7f2c12d949a050208c1782f}{Ba\+Log\+Destroy} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} save\+Cfg)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a09d5f6fde7f2c12d949a050208c1782f}{Ba\+Log\+Destroy} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} save\+Cfg)
 \begin{DoxyCompactList}\small\item\em Destroy and release resources of logger. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 \begin{Indent}{\bf Logging functions}\par
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a29f561d88507bc151a80b98f9d3a9db7}{Ba\+Log\+Log} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$msg)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a29f561d88507bc151a80b98f9d3a9db7}{Ba\+Log\+Log} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$msg)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_aebe3a86a3ac6e898415f8ba13121354e}{Ba\+Log\+Trace} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$msg)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_aebe3a86a3ac6e898415f8ba13121354e}{Ba\+Log\+Trace} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$msg)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a507ec70afef472d4ed523b677ab5752f}{Ba\+Log\+Warning} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$msg)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a507ec70afef472d4ed523b677ab5752f}{Ba\+Log\+Warning} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$msg)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a7aa4d7877444a12bab73a67ebde720e8}{Ba\+Log\+Error} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$msg)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a7aa4d7877444a12bab73a67ebde720e8}{Ba\+Log\+Error} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$msg)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 \begin{Indent}{\bf Logging functions with format}\par
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a5f7f57a015591273626052ef24692f99}{Ba\+Log\+LogF} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$fmt,...)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a5f7f57a015591273626052ef24692f99}{Ba\+Log\+Log\+F} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, \hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$fmt,...)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a0e9074fa70e0b606383e7cb68dca0197}{Ba\+Log\+TraceF} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$fmt,...)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a0e9074fa70e0b606383e7cb68dca0197}{Ba\+Log\+Trace\+F} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$fmt,...)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a0e14b7303a851831ba7f3026094306ea}{Ba\+Log\+WarningF} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$fmt,...)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a0e14b7303a851831ba7f3026094306ea}{Ba\+Log\+Warning\+F} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$fmt,...)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_ab881cb9e04a68b8efd2133576c7c67ef}{Ba\+Log\+ErrorF} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$fmt,...)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_ab881cb9e04a68b8efd2133576c7c67ef}{Ba\+Log\+Error\+F} (\hyperlink{BaLog_8h_aafc4e99ec41825c3604bc4995a45b315}{T\+Ba\+Log\+Hdl} hdl, const char $\ast$tag, const char $\ast$fmt,...)
 \begin{DoxyCompactList}\small\item\em Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 \begin{Indent}{\bf Getter}\par
@@ -106,7 +117,7 @@ void \hyperlink{BaLog_8h_a2a57f2cc30056b3a22c273ffcc9c4170}{Ba\+Log\+Get\+Log\+I
 \begin{Indent}{\bf Syslog logging}\par
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{BaLog_8h_a943924b60ee5be50728cfc0617577e82}{Ba\+Log\+Sys\+LogF} (const char $\ast$tag, int line, const char $\ast$fmt,...)
+void \hyperlink{BaLog_8h_a943924b60ee5be50728cfc0617577e82}{Ba\+Log\+Sys\+Log\+F} (const char $\ast$tag, int line, const char $\ast$fmt,...)
 \begin{DoxyCompactList}\small\item\em Logs a message into the syslog like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\item 
 void \hyperlink{BaLog_8h_ac5a96c8041f103bb7cd077f50e82067c}{Ba\+Log\+Sys\+Log} (const char $\ast$tag, int line, const char $\ast$msg)
 \begin{DoxyCompactList}\small\item\em Logs a message into the syslog and adds a {\ttfamily tag} and a time stamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -118,15 +129,15 @@ void \hyperlink{BaLog_8h_ac5a96c8041f103bb7cd077f50e82067c}{Ba\+Log\+Sys\+Log} (
 \begin{DoxyCompactList}\small\item\em Create factory for a logger with defaults. \end{DoxyCompactList}\item 
 \hyperlink{classIBaLog}{I\+Ba\+Log} $\ast$ \hyperlink{BaLog_8h_a4013a3ae15510f1dccddeeb93059b7dc}{I\+Ba\+Log\+Create} (const \hyperlink{structTBaLogOptions}{T\+Ba\+Log\+Options} $\ast$p\+Opts)
 \begin{DoxyCompactList}\small\item\em Create factory for a logger. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaLog_8h_a5681107fcf8c49bf0ebb3e762996b55e}{I\+Ba\+Log\+Destroy} (\hyperlink{classIBaLog}{I\+Ba\+Log} $\ast$p\+Hdl, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} save\+Cfg)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaLog_8h_a5681107fcf8c49bf0ebb3e762996b55e}{I\+Ba\+Log\+Destroy} (\hyperlink{classIBaLog}{I\+Ba\+Log} $\ast$p\+Hdl, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} save\+Cfg)
 \begin{DoxyCompactList}\small\item\em Destroy and release resources of logger. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
 \subsection{Detailed Description}
-Logger A\+PI. 
+Logger A\+P\+I. 
 
-Handles logging to files and to syslog. The logger state can be saved to an .ini file to be retrieved later. Among other this A\+PI offers\+:~\newline
+Handles logging to files and to syslog. The logger state can be saved to an .ini file to be retrieved later. Among other this A\+P\+I offers\+:~\newline
 
 \begin{DoxyItemize}
 \item Priority filter
@@ -138,9 +149,9 @@ Handles logging to files and to syslog. The logger state can be saved to an .ini
 \end{DoxyItemize}
 
 \subsection{Enumeration Type Documentation}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!E\+Ba\+Log\+Prio@{E\+Ba\+Log\+Prio}}
+\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!E\+Ba\+Log\+Prio@{E\+Ba\+Log\+Prio}}
 \index{E\+Ba\+Log\+Prio@{E\+Ba\+Log\+Prio}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{E\+Ba\+Log\+Prio}{EBaLogPrio}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+Ba\+Log\+Prio}}\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}
+\subsubsection[{E\+Ba\+Log\+Prio}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+Ba\+Log\+Prio}}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}
 
 
 Message priority or severeness. 
@@ -149,18 +160,18 @@ Message priority or severeness.
 \item[Enumerator]\par
 \begin{description}
 \index{e\+Ba\+Log\+Prio\+\_\+\+Trace@{e\+Ba\+Log\+Prio\+\_\+\+Trace}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Trace@{e\+Ba\+Log\+Prio\+\_\+\+Trace}}\item[{\em 
-e\+Ba\+Log\+Prio\+\_\+\+Trace\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02}
+\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02}{}e\+Ba\+Log\+Prio\+\_\+\+Trace\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02}
 }]0 \index{e\+Ba\+Log\+Prio\+\_\+\+Warning@{e\+Ba\+Log\+Prio\+\_\+\+Warning}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Warning@{e\+Ba\+Log\+Prio\+\_\+\+Warning}}\item[{\em 
-e\+Ba\+Log\+Prio\+\_\+\+Warning\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996}
+\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996}{}e\+Ba\+Log\+Prio\+\_\+\+Warning\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996}
 }]1 \index{e\+Ba\+Log\+Prio\+\_\+\+Error@{e\+Ba\+Log\+Prio\+\_\+\+Error}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Error@{e\+Ba\+Log\+Prio\+\_\+\+Error}}\item[{\em 
-e\+Ba\+Log\+Prio\+\_\+\+Error\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f}
+\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f}{}e\+Ba\+Log\+Prio\+\_\+\+Error\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f}
 }]2 \index{e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash@{e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash@{e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash}}\item[{\em 
-e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f}{}\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f}
+\hypertarget{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f}{}e\+Ba\+Log\+Prio\+\_\+\+Ups\+Crash\label{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916a95e465ec27a91fa461f2ef6753fadc1f}
 }]3 \end{description}
 \end{Desc}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!E\+Ba\+Log\+Out@{E\+Ba\+Log\+Out}}
+\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!E\+Ba\+Log\+Out@{E\+Ba\+Log\+Out}}
 \index{E\+Ba\+Log\+Out@{E\+Ba\+Log\+Out}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{E\+Ba\+Log\+Out}{EBaLogOut}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+Ba\+Log\+Out}}\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}
+\subsubsection[{E\+Ba\+Log\+Out}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+Ba\+Log\+Out}}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4}
 
 
 Logger output enumeration. 
@@ -169,23 +180,23 @@ Logger output enumeration.
 \item[Enumerator]\par
 \begin{description}
 \index{e\+Ba\+Log\+Out\+\_\+\+Log@{e\+Ba\+Log\+Out\+\_\+\+Log}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Out\+\_\+\+Log@{e\+Ba\+Log\+Out\+\_\+\+Log}}\item[{\em 
-e\+Ba\+Log\+Out\+\_\+\+Log\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140}
+\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140}{}e\+Ba\+Log\+Out\+\_\+\+Log\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a27182b8eba4fbdf3cf586102cc3d6140}
 }]1 \index{e\+Ba\+Log\+Out\+\_\+\+Console@{e\+Ba\+Log\+Out\+\_\+\+Console}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Out\+\_\+\+Console@{e\+Ba\+Log\+Out\+\_\+\+Console}}\item[{\em 
-e\+Ba\+Log\+Out\+\_\+\+Console\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76}
+\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76}{}e\+Ba\+Log\+Out\+\_\+\+Console\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a682a40b4026c09259c42f423bfe5de76}
 }]2 \index{e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console@{e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console}!Ba\+Log.\+h@{Ba\+Log.\+h}}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console@{e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console}}\item[{\em 
-e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7}{}\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7}
+\hypertarget{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7}{}e\+Ba\+Log\+Out\+\_\+\+Log\+And\+Console\label{BaLog_8h_a1f5f5789212a206b457c4446abaf81c4a21c991b4a7fa556abd470f0b46b89ee7}
 }]3 \end{description}
 \end{Desc}
 
 
 \subsection{Function Documentation}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Create\+Def@{Ba\+Log\+Create\+Def}}
+\hypertarget{BaLog_8h_af6156879d4b92295f4c5722e45703e56}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Create\+Def@{Ba\+Log\+Create\+Def}}
 \index{Ba\+Log\+Create\+Def@{Ba\+Log\+Create\+Def}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Create\+Def(const char $\ast$name)}{BaLogCreateDef(const char *name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Log\+Hdl} Ba\+Log\+Create\+Def (
+\subsubsection[{Ba\+Log\+Create\+Def(const char $\ast$name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Log\+Hdl} Ba\+Log\+Create\+Def (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{name}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_af6156879d4b92295f4c5722e45703e56}{}\label{BaLog_8h_af6156879d4b92295f4c5722e45703e56}
+)}\label{BaLog_8h_af6156879d4b92295f4c5722e45703e56}
 
 
 Create factory for a logger with defaults. 
@@ -198,13 +209,13 @@ Handle if success, otherwise, null
 \mbox{\tt in}  & {\em name} & Name of the logger \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Create@{Ba\+Log\+Create}}
+\hypertarget{BaLog_8h_a6b1ffed50a45e2e133e49cb3cf257ecb}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Create@{Ba\+Log\+Create}}
 \index{Ba\+Log\+Create@{Ba\+Log\+Create}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Create(const T\+Ba\+Log\+Options $\ast$p\+Opts)}{BaLogCreate(const TBaLogOptions *pOpts)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Log\+Hdl} Ba\+Log\+Create (
+\subsubsection[{Ba\+Log\+Create(const T\+Ba\+Log\+Options $\ast$p\+Opts)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Log\+Hdl} Ba\+Log\+Create (
 \begin{DoxyParamCaption}
 \item[{const {\bf T\+Ba\+Log\+Options} $\ast$}]{p\+Opts}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a6b1ffed50a45e2e133e49cb3cf257ecb}{}\label{BaLog_8h_a6b1ffed50a45e2e133e49cb3cf257ecb}
+)}\label{BaLog_8h_a6b1ffed50a45e2e133e49cb3cf257ecb}
 
 
 Create factory for a logger. 
@@ -217,13 +228,13 @@ Handle if success, otherwise, null
 \mbox{\tt in}  & {\em p\+Opts} & Logger options \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Set\+Def\+Opts@{Ba\+Log\+Set\+Def\+Opts}}
+\hypertarget{BaLog_8h_a966ef64c4dd65b99d3e55181c08de141}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Set\+Def\+Opts@{Ba\+Log\+Set\+Def\+Opts}}
 \index{Ba\+Log\+Set\+Def\+Opts@{Ba\+Log\+Set\+Def\+Opts}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Set\+Def\+Opts(\+T\+Ba\+Log\+Options $\ast$p\+Opts)}{BaLogSetDefOpts(TBaLogOptions *pOpts)}}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Set\+Def\+Opts (
+\subsubsection[{Ba\+Log\+Set\+Def\+Opts(\+T\+Ba\+Log\+Options $\ast$p\+Opts)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Set\+Def\+Opts (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Options} $\ast$}]{p\+Opts}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a966ef64c4dd65b99d3e55181c08de141}{}\label{BaLog_8h_a966ef64c4dd65b99d3e55181c08de141}
+)}\label{BaLog_8h_a966ef64c4dd65b99d3e55181c08de141}
 
 
 Sets the a \hyperlink{structTBaLogOptions}{T\+Ba\+Log\+Options} structure to default values. 
@@ -233,14 +244,14 @@ Sets the a \hyperlink{structTBaLogOptions}{T\+Ba\+Log\+Options} structure to def
 \mbox{\tt out}  & {\em p\+Opts} & Pointer to struct \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Destroy@{Ba\+Log\+Destroy}}
+\hypertarget{BaLog_8h_a09d5f6fde7f2c12d949a050208c1782f}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Destroy@{Ba\+Log\+Destroy}}
 \index{Ba\+Log\+Destroy@{Ba\+Log\+Destroy}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Destroy(\+T\+Ba\+Log\+Hdl hdl, T\+Ba\+Bool save\+Cfg)}{BaLogDestroy(TBaLogHdl hdl, TBaBool saveCfg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+Destroy (
+\subsubsection[{Ba\+Log\+Destroy(\+T\+Ba\+Log\+Hdl hdl, T\+Ba\+Bool save\+Cfg)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Destroy (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{{\bf T\+Ba\+Bool}}]{save\+Cfg}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a09d5f6fde7f2c12d949a050208c1782f}{}\label{BaLog_8h_a09d5f6fde7f2c12d949a050208c1782f}
+)}\label{BaLog_8h_a09d5f6fde7f2c12d949a050208c1782f}
 
 
 Destroy and release resources of logger. 
@@ -255,16 +266,16 @@ True if success, otherwise, false
 \mbox{\tt in}  & {\em save\+Cfg} & Flag to specify if the state should be saved in a cfg file \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Log@{Ba\+Log\+Log}}
+\hypertarget{BaLog_8h_a29f561d88507bc151a80b98f9d3a9db7}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Log@{Ba\+Log\+Log}}
 \index{Ba\+Log\+Log@{Ba\+Log\+Log}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Log(\+T\+Ba\+Log\+Hdl hdl, E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$msg)}{BaLogLog(TBaLogHdl hdl, EBaLogPrio prio, const char *tag, const char *msg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+Log (
+\subsubsection[{Ba\+Log\+Log(\+T\+Ba\+Log\+Hdl hdl, E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$msg)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Log (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{{\bf E\+Ba\+Log\+Prio}}]{prio, }
 \item[{const char $\ast$}]{tag, }
 \item[{const char $\ast$}]{msg}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a29f561d88507bc151a80b98f9d3a9db7}{}\label{BaLog_8h_a29f561d88507bc151a80b98f9d3a9db7}
+)}\label{BaLog_8h_a29f561d88507bc151a80b98f9d3a9db7}
 
 
 Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
@@ -283,15 +294,15 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily msg} is
 \mbox{\tt in}  & {\em msg} & Message to log \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Trace@{Ba\+Log\+Trace}}
+\hypertarget{BaLog_8h_aebe3a86a3ac6e898415f8ba13121354e}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Trace@{Ba\+Log\+Trace}}
 \index{Ba\+Log\+Trace@{Ba\+Log\+Trace}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Trace(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$msg)}{BaLogTrace(TBaLogHdl hdl, const char *tag, const char *msg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+Trace (
+\subsubsection[{Ba\+Log\+Trace(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$msg)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Trace (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{const char $\ast$}]{tag, }
 \item[{const char $\ast$}]{msg}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_aebe3a86a3ac6e898415f8ba13121354e}{}\label{BaLog_8h_aebe3a86a3ac6e898415f8ba13121354e}
+)}\label{BaLog_8h_aebe3a86a3ac6e898415f8ba13121354e}
 
 
 Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
@@ -308,15 +319,15 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily msg} is
 \mbox{\tt in}  & {\em msg} & Message to log \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Warning@{Ba\+Log\+Warning}}
+\hypertarget{BaLog_8h_a507ec70afef472d4ed523b677ab5752f}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Warning@{Ba\+Log\+Warning}}
 \index{Ba\+Log\+Warning@{Ba\+Log\+Warning}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Warning(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$msg)}{BaLogWarning(TBaLogHdl hdl, const char *tag, const char *msg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+Warning (
+\subsubsection[{Ba\+Log\+Warning(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$msg)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Warning (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{const char $\ast$}]{tag, }
 \item[{const char $\ast$}]{msg}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a507ec70afef472d4ed523b677ab5752f}{}\label{BaLog_8h_a507ec70afef472d4ed523b677ab5752f}
+)}\label{BaLog_8h_a507ec70afef472d4ed523b677ab5752f}
 
 
 Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
@@ -333,15 +344,15 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily msg} is
 \mbox{\tt in}  & {\em msg} & Message to log \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Error@{Ba\+Log\+Error}}
+\hypertarget{BaLog_8h_a7aa4d7877444a12bab73a67ebde720e8}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Error@{Ba\+Log\+Error}}
 \index{Ba\+Log\+Error@{Ba\+Log\+Error}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Error(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$msg)}{BaLogError(TBaLogHdl hdl, const char *tag, const char *msg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+Error (
+\subsubsection[{Ba\+Log\+Error(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$msg)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Error (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{const char $\ast$}]{tag, }
 \item[{const char $\ast$}]{msg}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a7aa4d7877444a12bab73a67ebde720e8}{}\label{BaLog_8h_a7aa4d7877444a12bab73a67ebde720e8}
+)}\label{BaLog_8h_a7aa4d7877444a12bab73a67ebde720e8}
 
 
 Logs a message into the logger and adds a {\ttfamily tag} and a time stamp. 
@@ -358,9 +369,9 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily msg} is
 \mbox{\tt in}  & {\em msg} & Message to log \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+LogF@{Ba\+Log\+LogF}}
-\index{Ba\+Log\+LogF@{Ba\+Log\+LogF}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Log\+F(\+T\+Ba\+Log\+Hdl hdl, E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$fmt,...)}{BaLogLogF(TBaLogHdl hdl, EBaLogPrio prio, const char *tag, const char *fmt,...)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+LogF (
+\hypertarget{BaLog_8h_a5f7f57a015591273626052ef24692f99}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Log\+F@{Ba\+Log\+Log\+F}}
+\index{Ba\+Log\+Log\+F@{Ba\+Log\+Log\+F}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{Ba\+Log\+Log\+F(\+T\+Ba\+Log\+Hdl hdl, E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$fmt,...)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Log\+F (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{{\bf E\+Ba\+Log\+Prio}}]{prio, }
@@ -368,7 +379,7 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily msg} is
 \item[{const char $\ast$}]{fmt, }
 \item[{}]{...}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a5f7f57a015591273626052ef24692f99}{}\label{BaLog_8h_a5f7f57a015591273626052ef24692f99}
+)}\label{BaLog_8h_a5f7f57a015591273626052ef24692f99}
 
 
 Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
@@ -387,16 +398,16 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily fmt} is
 \mbox{\tt in}  & {\em fmt} & Message format \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+TraceF@{Ba\+Log\+TraceF}}
-\index{Ba\+Log\+TraceF@{Ba\+Log\+TraceF}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Trace\+F(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$fmt,...)}{BaLogTraceF(TBaLogHdl hdl, const char *tag, const char *fmt,...)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+TraceF (
+\hypertarget{BaLog_8h_a0e9074fa70e0b606383e7cb68dca0197}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Trace\+F@{Ba\+Log\+Trace\+F}}
+\index{Ba\+Log\+Trace\+F@{Ba\+Log\+Trace\+F}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{Ba\+Log\+Trace\+F(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$fmt,...)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Trace\+F (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{const char $\ast$}]{tag, }
 \item[{const char $\ast$}]{fmt, }
 \item[{}]{...}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a0e9074fa70e0b606383e7cb68dca0197}{}\label{BaLog_8h_a0e9074fa70e0b606383e7cb68dca0197}
+)}\label{BaLog_8h_a0e9074fa70e0b606383e7cb68dca0197}
 
 
 Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
@@ -413,16 +424,16 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily fmt} is
 \mbox{\tt in}  & {\em fmt} & Message format \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+WarningF@{Ba\+Log\+WarningF}}
-\index{Ba\+Log\+WarningF@{Ba\+Log\+WarningF}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Warning\+F(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$fmt,...)}{BaLogWarningF(TBaLogHdl hdl, const char *tag, const char *fmt,...)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+WarningF (
+\hypertarget{BaLog_8h_a0e14b7303a851831ba7f3026094306ea}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Warning\+F@{Ba\+Log\+Warning\+F}}
+\index{Ba\+Log\+Warning\+F@{Ba\+Log\+Warning\+F}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{Ba\+Log\+Warning\+F(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$fmt,...)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Warning\+F (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{const char $\ast$}]{tag, }
 \item[{const char $\ast$}]{fmt, }
 \item[{}]{...}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a0e14b7303a851831ba7f3026094306ea}{}\label{BaLog_8h_a0e14b7303a851831ba7f3026094306ea}
+)}\label{BaLog_8h_a0e14b7303a851831ba7f3026094306ea}
 
 
 Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
@@ -439,16 +450,16 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily fmt} is
 \mbox{\tt in}  & {\em fmt} & Message format \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+ErrorF@{Ba\+Log\+ErrorF}}
-\index{Ba\+Log\+ErrorF@{Ba\+Log\+ErrorF}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Error\+F(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$fmt,...)}{BaLogErrorF(TBaLogHdl hdl, const char *tag, const char *fmt,...)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} Ba\+Log\+ErrorF (
+\hypertarget{BaLog_8h_ab881cb9e04a68b8efd2133576c7c67ef}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Error\+F@{Ba\+Log\+Error\+F}}
+\index{Ba\+Log\+Error\+F@{Ba\+Log\+Error\+F}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{Ba\+Log\+Error\+F(\+T\+Ba\+Log\+Hdl hdl, const char $\ast$tag, const char $\ast$fmt,...)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Log\+Error\+F (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{const char $\ast$}]{tag, }
 \item[{const char $\ast$}]{fmt, }
 \item[{}]{...}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_ab881cb9e04a68b8efd2133576c7c67ef}{}\label{BaLog_8h_ab881cb9e04a68b8efd2133576c7c67ef}
+)}\label{BaLog_8h_ab881cb9e04a68b8efd2133576c7c67ef}
 
 
 Logs a message into the logger like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
@@ -465,14 +476,14 @@ true if success, otherwise, false. False if buffer is full or {\ttfamily fmt} is
 \mbox{\tt in}  & {\em fmt} & Message format \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Get\+Log\+Info@{Ba\+Log\+Get\+Log\+Info}}
+\hypertarget{BaLog_8h_a2a57f2cc30056b3a22c273ffcc9c4170}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Get\+Log\+Info@{Ba\+Log\+Get\+Log\+Info}}
 \index{Ba\+Log\+Get\+Log\+Info@{Ba\+Log\+Get\+Log\+Info}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Get\+Log\+Info(\+T\+Ba\+Log\+Hdl hdl, T\+Ba\+Log\+Info $\ast$p\+Info)}{BaLogGetLogInfo(TBaLogHdl hdl, TBaLogInfo *pInfo)}}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Get\+Log\+Info (
+\subsubsection[{Ba\+Log\+Get\+Log\+Info(\+T\+Ba\+Log\+Hdl hdl, T\+Ba\+Log\+Info $\ast$p\+Info)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Get\+Log\+Info (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl, }
 \item[{{\bf T\+Ba\+Log\+Info} $\ast$}]{p\+Info}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a2a57f2cc30056b3a22c273ffcc9c4170}{}\label{BaLog_8h_a2a57f2cc30056b3a22c273ffcc9c4170}
+)}\label{BaLog_8h_a2a57f2cc30056b3a22c273ffcc9c4170}
 
 
 Gets the information and options. 
@@ -484,13 +495,13 @@ The const char pointers of the \hyperlink{structTBaLogInfo}{T\+Ba\+Log\+Info} st
 \mbox{\tt out}  & {\em p\+Info} & Pointer to preallocated structure \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Flush@{Ba\+Log\+Flush}}
+\hypertarget{BaLog_8h_adae1d549034dcc1c586a3ecfc62c2ba0}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Flush@{Ba\+Log\+Flush}}
 \index{Ba\+Log\+Flush@{Ba\+Log\+Flush}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Flush(\+T\+Ba\+Log\+Hdl hdl)}{BaLogFlush(TBaLogHdl hdl)}}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Flush (
+\subsubsection[{Ba\+Log\+Flush(\+T\+Ba\+Log\+Hdl hdl)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Flush (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Log\+Hdl}}]{hdl}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_adae1d549034dcc1c586a3ecfc62c2ba0}{}\label{BaLog_8h_adae1d549034dcc1c586a3ecfc62c2ba0}
+)}\label{BaLog_8h_adae1d549034dcc1c586a3ecfc62c2ba0}
 
 
 Forces flush to disk. 
@@ -500,21 +511,21 @@ Forces flush to disk.
 \mbox{\tt in}  & {\em hdl} & Handle \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Sys\+LogF@{Ba\+Log\+Sys\+LogF}}
-\index{Ba\+Log\+Sys\+LogF@{Ba\+Log\+Sys\+LogF}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Sys\+Log\+F(const char $\ast$tag, int line, const char $\ast$fmt,...)}{BaLogSysLogF(const char *tag, int line, const char *fmt,...)}}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Sys\+LogF (
+\hypertarget{BaLog_8h_a943924b60ee5be50728cfc0617577e82}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Sys\+Log\+F@{Ba\+Log\+Sys\+Log\+F}}
+\index{Ba\+Log\+Sys\+Log\+F@{Ba\+Log\+Sys\+Log\+F}!Ba\+Log.\+h@{Ba\+Log.\+h}}
+\subsubsection[{Ba\+Log\+Sys\+Log\+F(const char $\ast$tag, int line, const char $\ast$fmt,...)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Sys\+Log\+F (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{tag, }
 \item[{int}]{line, }
 \item[{const char $\ast$}]{fmt, }
 \item[{}]{...}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a943924b60ee5be50728cfc0617577e82}{}\label{BaLog_8h_a943924b60ee5be50728cfc0617577e82}
+)}\label{BaLog_8h_a943924b60ee5be50728cfc0617577e82}
 
 
 Logs a message into the syslog like {\ttfamily printf()} and adds a {\ttfamily tag} and a time stamp. 
 
-The syslog should be used to log critical errors, or when a normal logger fails. The {\ttfamily line} parameter is for debugging. It is recommended to use the \hyperlink{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{B\+A\+S\+Y\+S\+L\+OG} macro in order to use the line information correctly 
+The syslog should be used to log critical errors, or when a normal logger fails. The {\ttfamily line} parameter is for debugging. It is recommended to use the \hyperlink{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{B\+A\+S\+Y\+S\+L\+O\+G} macro in order to use the line information correctly 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
 \hline
@@ -523,20 +534,20 @@ The syslog should be used to log critical errors, or when a normal logger fails.
 \mbox{\tt in}  & {\em fmt} & Message format \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Sys\+Log@{Ba\+Log\+Sys\+Log}}
+\hypertarget{BaLog_8h_ac5a96c8041f103bb7cd077f50e82067c}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!Ba\+Log\+Sys\+Log@{Ba\+Log\+Sys\+Log}}
 \index{Ba\+Log\+Sys\+Log@{Ba\+Log\+Sys\+Log}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{Ba\+Log\+Sys\+Log(const char $\ast$tag, int line, const char $\ast$msg)}{BaLogSysLog(const char *tag, int line, const char *msg)}}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Sys\+Log (
+\subsubsection[{Ba\+Log\+Sys\+Log(const char $\ast$tag, int line, const char $\ast$msg)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Log\+Sys\+Log (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{tag, }
 \item[{int}]{line, }
 \item[{const char $\ast$}]{msg}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_ac5a96c8041f103bb7cd077f50e82067c}{}\label{BaLog_8h_ac5a96c8041f103bb7cd077f50e82067c}
+)}\label{BaLog_8h_ac5a96c8041f103bb7cd077f50e82067c}
 
 
 Logs a message into the syslog and adds a {\ttfamily tag} and a time stamp. 
 
-The syslog should be used to log critical errors, or when a normal logger fails. The {\ttfamily line} parameter is for debugging. It is recommended to use the \hyperlink{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{B\+A\+S\+Y\+S\+L\+OG} macro in order to use the line information correctly 
+The syslog should be used to log critical errors, or when a normal logger fails. The {\ttfamily line} parameter is for debugging. It is recommended to use the \hyperlink{BaLog_8h_ac52a0fffb7812cd89d5051bf713ffd62}{B\+A\+S\+Y\+S\+L\+O\+G} macro in order to use the line information correctly 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em tag} & Optional tag of maximum 6 chars + 7th terminating null \\
 \hline
@@ -545,13 +556,13 @@ The syslog should be used to log critical errors, or when a normal logger fails.
 \mbox{\tt in}  & {\em msg} & Message to log \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!I\+Ba\+Log\+Create\+Def@{I\+Ba\+Log\+Create\+Def}}
+\hypertarget{BaLog_8h_a130e5b022a85c189b84bfd799642bb8b}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!I\+Ba\+Log\+Create\+Def@{I\+Ba\+Log\+Create\+Def}}
 \index{I\+Ba\+Log\+Create\+Def@{I\+Ba\+Log\+Create\+Def}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{I\+Ba\+Log\+Create\+Def(const char $\ast$name)}{IBaLogCreateDef(const char *name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Ba\+Log}$\ast$ I\+Ba\+Log\+Create\+Def (
+\subsubsection[{I\+Ba\+Log\+Create\+Def(const char $\ast$name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Ba\+Log}$\ast$ I\+Ba\+Log\+Create\+Def (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{name}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a130e5b022a85c189b84bfd799642bb8b}{}\label{BaLog_8h_a130e5b022a85c189b84bfd799642bb8b}
+)}\label{BaLog_8h_a130e5b022a85c189b84bfd799642bb8b}
 
 
 Create factory for a logger with defaults. 
@@ -564,13 +575,13 @@ Handle if success, otherwise, null
 \mbox{\tt in}  & {\em name} & Name of the logger \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!I\+Ba\+Log\+Create@{I\+Ba\+Log\+Create}}
+\hypertarget{BaLog_8h_a4013a3ae15510f1dccddeeb93059b7dc}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!I\+Ba\+Log\+Create@{I\+Ba\+Log\+Create}}
 \index{I\+Ba\+Log\+Create@{I\+Ba\+Log\+Create}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{I\+Ba\+Log\+Create(const T\+Ba\+Log\+Options $\ast$p\+Opts)}{IBaLogCreate(const TBaLogOptions *pOpts)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Ba\+Log}$\ast$ I\+Ba\+Log\+Create (
+\subsubsection[{I\+Ba\+Log\+Create(const T\+Ba\+Log\+Options $\ast$p\+Opts)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Ba\+Log}$\ast$ I\+Ba\+Log\+Create (
 \begin{DoxyParamCaption}
 \item[{const {\bf T\+Ba\+Log\+Options} $\ast$}]{p\+Opts}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a4013a3ae15510f1dccddeeb93059b7dc}{}\label{BaLog_8h_a4013a3ae15510f1dccddeeb93059b7dc}
+)}\label{BaLog_8h_a4013a3ae15510f1dccddeeb93059b7dc}
 
 
 Create factory for a logger. 
@@ -583,14 +594,14 @@ Handle if success, otherwise, null
 \mbox{\tt in}  & {\em p\+Opts} & Logger options \\
 \hline
 \end{DoxyParams}
-\index{Ba\+Log.\+h@{Ba\+Log.\+h}!I\+Ba\+Log\+Destroy@{I\+Ba\+Log\+Destroy}}
+\hypertarget{BaLog_8h_a5681107fcf8c49bf0ebb3e762996b55e}{}\index{Ba\+Log.\+h@{Ba\+Log.\+h}!I\+Ba\+Log\+Destroy@{I\+Ba\+Log\+Destroy}}
 \index{I\+Ba\+Log\+Destroy@{I\+Ba\+Log\+Destroy}!Ba\+Log.\+h@{Ba\+Log.\+h}}
-\subsubsection[{\texorpdfstring{I\+Ba\+Log\+Destroy(\+I\+Ba\+Log $\ast$p\+Hdl, T\+Ba\+Bool save\+Cfg)}{IBaLogDestroy(IBaLog *pHdl, TBaBool saveCfg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+RC} I\+Ba\+Log\+Destroy (
+\subsubsection[{I\+Ba\+Log\+Destroy(\+I\+Ba\+Log $\ast$p\+Hdl, T\+Ba\+Bool save\+Cfg)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} I\+Ba\+Log\+Destroy (
 \begin{DoxyParamCaption}
 \item[{{\bf I\+Ba\+Log} $\ast$}]{p\+Hdl, }
 \item[{{\bf T\+Ba\+Bool}}]{save\+Cfg}
 \end{DoxyParamCaption}
-)}\hypertarget{BaLog_8h_a5681107fcf8c49bf0ebb3e762996b55e}{}\label{BaLog_8h_a5681107fcf8c49bf0ebb3e762996b55e}
+)}\label{BaLog_8h_a5681107fcf8c49bf0ebb3e762996b55e}
 
 
 Destroy and release resources of logger. 

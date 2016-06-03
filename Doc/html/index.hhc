@@ -8,6 +8,15 @@
   <UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Basic Architecture"><param name="Local" value="index.html#intro_sec"><param name="ImageNumber" value="11"></OBJECT>
   </UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Non-Techie Information"><param name="Local" value="invstDoku.html"><param name="ImageNumber" value="1"></OBJECT>
+  <UL>
+    <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="Subsection       "><param name="Local" value="invstDoku.html#sub1"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="SubSubsection"><param name="Local" value="invstDoku.html#subsub1"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    </UL>
+  </UL>
 <LI><OBJECT type="text/sitemap"><param name="Name" value="Namespaces"><param name="ImageNumber" value="1"></OBJECT>
   <UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Namespace List"><param name="Local" value="namespaces.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -167,10 +176,16 @@
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom.h"><param name="Local" value="BaCom_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BACOM_SERIALDEV"><param name="Local" value="BaCom_8h.html#a560d10625971945890a829c2cfd32769"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCom1wReadFun"><param name="Local" value="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaComBaud"><param name="Local" value="BaCom_8h.html#a0c2d065555852132f1e554bba19040db"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaComBaud"><param name="Local" value="BaCom_8h.html#a51ae55d0c5491b76a6070eb31390691d"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WInit"><param name="Local" value="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WExit"><param name="Local" value="BaCom_8h.html#a1db343e7949ded79fd54ed5c49dfbdfa"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetDevices"><param name="Local" value="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetTemp"><param name="Local" value="BaCom_8h.html#aead9e89e6d443d5cdfdf0f5f0b7489ec"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetValue"><param name="Local" value="BaCom_8h.html#a5289d4a8cefd0fce2826ed5719b32394"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerInit"><param name="Local" value="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerExit"><param name="Local" value="BaCom_8h.html#a607a0ab43460b1e999519a8b6697e7f2"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
