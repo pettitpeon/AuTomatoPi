@@ -36,10 +36,6 @@
 #define DEVPATH  "/sys/bus/w1/devices/"
 #define TEMPFAM 28
 
-LOCAL inline speed_t baud2Speed(EBaComBaud baud);
-LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError);
-LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents);
-
 // Serial descriptor
 typedef struct TSerialDesc {
    int fd;
@@ -56,12 +52,25 @@ typedef struct TSerialDesc {
    }
 } TSerialDesc;
 
+// Serial descriptor
+typedef struct T1wDev {
+   std::ifstream* pIs;
+   std::string serNo;
+
+   T1wDev() : pIs(0), serNo("") { }
+} T1wDev;
+
+
+LOCAL inline speed_t baud2Speed(EBaComBaud baud);
+LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError);
+LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents);
+LOCAL inline std::ifstream* find1wDev(const char *serNo, std::vector<T1wDev> &rTherms);
 
 // GPIO for the 1w bus. default GPIO 4, pin 7
 static IBaGpio *sp1w = 0;
 
 // Map of family IDs and devices vector
-static std::map<uint16_t, std::vector<std::ifstream*>> sDevs;
+static std::map<uint16_t, std::vector<T1wDev>> sDevs;
 
 //
 TBaComHdl BaComI2CInit() {
@@ -109,9 +118,9 @@ TBaBoolRC BaCom1WExit() {
    }
 
    for (auto kv : sDevs) {
-      for (auto pIs : kv.second) {
-         if (pIs) {
-            delete pIs; // deleting closes the file =)
+      for (auto dev : kv.second) {
+         if (dev.pIs) {
+            delete dev.pIs; // deleting closes the file =)
          }
       }
    }
@@ -133,7 +142,7 @@ uint16_t BaCom1WGetDevices(){
    DIR *d = 0;
    uint16_t famId = 0;
 
-   std::ifstream * pIs = 0;
+   T1wDev dev;
 
    d = opendir(DEVPATH);
    if (!d) {
@@ -152,14 +161,18 @@ uint16_t BaCom1WGetDevices(){
       std::stringstream ss;
       ss << de->d_name;
       if (ss >> famId) {
-         pIs = new std::ifstream();
-         if (pIs) {
+         dev.serNo = de->d_name;
+         dev.pIs = new std::ifstream();
+         if (dev.pIs) {
             std::string path = DEVPATH + std::string(de->d_name) + "/w1_slave";
-            pIs->open(path);
-            if(!pIs->fail()) {
+            dev.pIs->open(path);
+            if(!dev.pIs->fail()) {
                // This is a map of family IDs and file streams
-               sDevs[famId].push_back(pIs);
+               sDevs[famId].push_back(dev);
                i++;
+            } else {
+               delete dev.pIs;
+               dev.pIs = 0;
             }
          }
       }
@@ -168,13 +181,13 @@ uint16_t BaCom1WGetDevices(){
 }
 
 //
-float BaCom1WGetTemp(TBaBool *pError) {
+float BaCom1WGetTemp(const char* serNo, TBaBool *pError) {
    TBaBool terror;
    pError = pError ? pError : &terror;
    std::string contents;
 
-   if (!read1wDevice(TEMPFAM, 0, contents)) {
-      *pError = eBaBoolRC_Error;
+   if (!read1wDevice(TEMPFAM, serNo, contents)) {
+      *pError = eBaBool_true;
       return -300;
    }
 
@@ -186,6 +199,11 @@ void *BaCom1WGetValue(uint8_t famID, const char *serNo, TBaCom1wReadFun cb,
       TBaBool *pError) {
    TBaBool terror;
    pError = pError ? pError : &terror;
+
+   if (!cb) {
+      *pError = eBaBoolRC_Error;
+      return 0;
+   }
    std::string contents;
 
    if (!read1wDevice(famID, serNo, contents)) {
@@ -281,7 +299,7 @@ int BaComSerPend(TBaComSerHdl p) {
 
 //
 uint8_t BaComSerGetC(TBaComSerHdl p) {
-   uint8_t x ;
+   uint8_t x;
 
    if (!p || read(((TSerialDesc*)p)->fd, &x, 1) != 1)
      return -1 ;
@@ -318,7 +336,10 @@ LOCAL inline speed_t baud2Speed(EBaComBaud baud) {
 //
 LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError) {
    if (!dvrStr) {
-      return eBaBoolRC_Error;
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return -300;
    }
 
    // Extract the values. Temp in milli °C
@@ -327,7 +348,10 @@ LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError) {
 
    std::string contents(dvrStr);
    if (contents.find("YES") == std::string::npos) {
-      return eBaBoolRC_Error;
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return -300;
    }
 
    return (BaToNumber(contents.substr(contents.find("t=") + 2), -300, (bool*)pError)/1000.0f);
@@ -344,13 +368,10 @@ LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string
       return eBaBoolRC_Error;
    }
 
-   // Get the first thermometer
-   std::ifstream *p1wIn = 0;
-   if (!serNo) {
-      p1wIn = therms->second[0];
-   } else {
-      // todo: no info about the serno =(
-      p1wIn = therms->second[0];
+   // Find the thermometer
+   std::ifstream *p1wIn =  find1wDev(serNo, therms->second);
+   if (!p1wIn) {
+      return eBaBoolRC_Error;
    }
 
    std::ifstream &r1wIn = *p1wIn;
@@ -372,4 +393,19 @@ LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string
    return eBaBoolRC_Success;
 }
 
+//
+LOCAL inline std::ifstream* find1wDev(const char *serNo, std::vector<T1wDev> &rTherms) {
+   if (!serNo) {
+      return rTherms[0].pIs;
+   }
+
+   // todo: no info about the serno =(
+   for (auto dev : rTherms) {
+      if (dev.serNo == serNo) {
+         return dev.pIs;
+      }
+   }
+
+   return 0;
+}
 #endif // __linux

@@ -12,6 +12,7 @@
  *   - I2C
  *   - SPI
  *   - Serial
+ *   - One Wire Bus
  */
 /*------------------------------------------------------------------------------
  */
@@ -31,7 +32,14 @@
  */
 typedef int32_t TBaComHdl;
 typedef void* TBaComSerHdl;
-typedef void* (*TBaCom1wReadFun)(const char* str, size_t n);
+
+/// Callback function to parse the string returned by the driver from
+/// /sys/bus/w1/devices/<SerialNo>/w1_slave
+typedef void* (*TBaCom1wReadFun)(
+      const char* str, /**< [in] Contents of driver file. Note: it gets
+      destroyed after leaving the function, so do not use it outside this cb */
+      size_t n ///< [in] String length
+      );
 
 /// Baud enumeration
 typedef enum EBaComBaud {
@@ -70,43 +78,50 @@ TBaBoolRC BaComSPIExit(TBaComHdl hdl);
 // end stubs!
 
 
-/// @name Init/Exit Functions
+/// @name One Wire bus
 //@{
-
 /******************************************************************************/
-/** Initializes the resources and reserves GPIOs 14 and 15 for
- *  @return Handle on success, otherwise error
+/** Initializes the resources, reserves GPIO 4 and calls #BaCom1WGetDevices()
+ *  @return Error of success
  */
 TBaBoolRC BaCom1WInit();
 
 /******************************************************************************/
-/** ...
- *  @return
+/** Releases the resources
+ *  @return Error of success
  */
 TBaBoolRC BaCom1WExit();
 
 /******************************************************************************/
-/** ...
- *  @return
+/** Scans for devices and saves them internally. This is automatically called
+ *  by #BaCom1WInit()
+ *  @return the number of devices found
  */
 uint16_t BaCom1WGetDevices();
 
 /******************************************************************************/
-/** ...
- *  @return
+/** Get temperature from temperature sensor
+ *  @return Temperature in °C on success, otherwise -300
  */
-float BaCom1WGetTemp(TBaBool *pError);
+float BaCom1WGetTemp(
+      const char* serNo, /**< [in] Optional serial number of the sensor eg:
+       "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used*/
+      TBaBool *pError ///< [out] Optional error flag. Only modified if error
+      );
 
 /******************************************************************************/
-/** ...
- *  @return
+/** Gets the data from a generic one wire device by calling user callback
+ *  @return Null if error, or the data returned by @c cb
  */
-void *BaCom1WGetValue(
-      uint8_t famID,
-      const char * serNo,
-      TBaCom1wReadFun cb,
-      TBaBool *pError
+void* BaCom1WGetValue(
+      uint8_t famID, ///< [in] Family ID of the sensor eg: temperature = 28
+      const char * serNo, /**< [in] Optional serial number of the sensor eg:
+         "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used*/
+      TBaCom1wReadFun cb, /**< [in] Callback function that parses the string
+         returned by the driver */
+      TBaBool *pError ///< [out] Optional error flag. Only modified if error
       );
+//@} One Wire Bus
 
 /******************************************************************************/
 /** Initializes the resources and reserves GPIOs 14 and 15 for
@@ -124,7 +139,6 @@ TBaComSerHdl BaComSerInit(
 TBaBoolRC BaComSerExit(
       TBaComSerHdl hdl  ///< Serial communication handle
       );
-//@} Init/Exit Functions
 
 
 TBaBoolRC BaComSerPutC(
