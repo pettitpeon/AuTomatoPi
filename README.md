@@ -29,5 +29,5 @@
 ## Information for Non-Techie People
 [Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
 
-## Depelopers Documentation
+## Developers Documentation
 [Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
