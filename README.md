@@ -22,12 +22,12 @@
 1. Core functions (sleeps, threads, soft real-time, timers, clocks)
   1. Configuration file parser
 2. GPIOs
-3. Communication (Serial, SPI, I2C)
+3. Communication (One Wire Bus, Serial, SPI, I2C)
 4. Control structures (PID, PT1, debouncer, Schmitt trigger)
 5. Error handling, logs, status reports
 
 ## Information for Non-Techie People
-[Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
+[Read more](https://pettitpeon.github.io/rpiapi/Doc/html/invstDoku.html)
 
-## Depelopers Documentation
+## Developers Documentation
 [Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
