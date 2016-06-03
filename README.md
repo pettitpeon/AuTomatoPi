@@ -27,7 +27,7 @@
 5. Error handling, logs, status reports
 
 ## Information for Non-Techie People
-[Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
+[Read more](https://pettitpeon.github.io/rpiapi/Doc/html/invstDoku.html)
 
 ## Developers Documentation
 [Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
