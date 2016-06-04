@@ -1,6 +1,6 @@
 [name]: What Am I
 =================
-I am a C/C++ API or library to write automation applications with the Raspberry Pi. I
+I am a C/C++ API or library to write automation applications for the Raspberry Pi. I
 ease the programming of applications by providing an abstraction layer with the most
 common ready-to-use functions used in automation applications.
 
