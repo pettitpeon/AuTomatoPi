@@ -43,8 +43,5 @@ back to the world_.
 4. Control structures (PID, PT1, debouncer, Schmitt trigger)
 5. Error handling, logs, status reports
 
-## Information for Non-Techie People
-[Read more](https://pettitpeon.github.io/rpiapi/Doc/html/invstDoku.html)
-
 ## Developers Documentation
 [Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
