@@ -1,4 +1,21 @@
-# README:
+[name]: What Am I       {#title}
+=========
+I am a C/C++ API or library to write automation applications with the Raspberry Pi. I
+ease the programming of applications by providing an abstraction layer with the most
+common ready-to-use functions used in automation applications.
+
+My main goal is to allow non C/C++ and linux experts to write reliable applications
+to automate stuff. Examples could be home automation, automated gardens, hobbyists'
+experimets, etc.
+
+With me you can access GPIOS (inputs and outputs) and communication buses. You can
+create high priority automation deamons and threads with defined cycle times. On top
+of that, I provide logging functions to track errors, messages with state to avoid
+spamming your log and much more.
+
+This software is free like free beer under the LGPL and aims to promote the idea of
+_give something back to the world_.
+
 ## General
 1. This is a C/C++ API for the Raspberry Pi.
 2. It is being developed with the Raspberry Pi 2 Model B, Raspbian Jessie
