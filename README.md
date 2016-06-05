@@ -1,4 +1,4 @@
-[name]: What Am I
+What Am I
 =================
 I am a C/C++ API or library to write automation applications for the Raspberry Pi. I
 ease the programming of applications by providing an abstraction layer with the most
@@ -16,7 +16,7 @@ spamming your log and much more.
 I am free like free beer under the LGPL and aim to promote the idea of  _give something 
 back to the world_.
 
-## General
+## General 
 1. This is a C/C++ API for the Raspberry Pi.
 2. It is being developed with the Raspberry Pi 2 Model B, Raspbian Jessie
   1. Compiler: SysGcc cross-compiler arm-linux-gnueabihf-4.9.2
@@ -35,13 +35,14 @@ back to the world_.
 3. Extensibility
 4. Backwards compatibility
 
-## Goals
+## Functionality Goals
 1. Core functions (sleeps, threads, soft real-time, timers, clocks)
   1. Configuration file parser
 2. GPIOs
 3. Communication (One Wire Bus, Serial, SPI, I2C)
 4. Control structures (PID, PT1, debouncer, Schmitt trigger)
 5. Error handling, logs, status reports
+6. Control tasks with cycle time and priority
 
 ## Developers Documentation
 [Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
