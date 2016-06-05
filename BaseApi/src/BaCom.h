@@ -30,8 +30,8 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-typedef int32_t TBaComHdl;
-typedef void* TBaComSerHdl;
+typedef int32_t TBaComHdl; ///< BaCom Handle
+typedef void* TBaComSerHdl; ///< Serial interface handle
 
 /// Callback function to parse the string returned by the driver from
 /// /sys/bus/w1/devices/<SerialNo>/w1_slave
@@ -101,7 +101,7 @@ uint16_t BaCom1WGetDevices();
 
 /******************************************************************************/
 /** Get temperature from temperature sensor
- *  @return Temperature in °C on success, otherwise -300
+ *  @return Temperature in Â°C on success, otherwise -300
  */
 float BaCom1WGetTemp(
       const char* serNo, /**< [in] Optional serial number of the sensor eg:
@@ -123,6 +123,8 @@ void* BaCom1WGetValue(
       );
 //@} One Wire Bus
 
+/// @name Serial Interface
+//@{
 /******************************************************************************/
 /** Initializes the resources and reserves GPIOs 14 and 15 for
  *  @return Handle on success, otherwise error
@@ -152,14 +154,10 @@ int BaComSerPend(
 uint8_t BaComSerGetC(
       TBaComSerHdl hdl
       );
-
+//@} Serial Interface
 
 #ifdef __cplusplus
 } // extern c
 
-
-/*------------------------------------------------------------------------------
- *  C++ Interface
- */
 #endif // __cplusplus
 #endif /* SRC_BACOM_H_ */
