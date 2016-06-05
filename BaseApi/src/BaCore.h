@@ -123,12 +123,20 @@ int64_t BaCoreTimedUs(
       void* pArg      ///< [in] Function arguments
       );
 
+/******************************************************************************/
+/** Gets the actaul time timestamp
+ */
 void BaCoreGetTStamp(
-      TBaCoreTimeStamp *pStamp ///< [out] Time stamp
+      TBaCoreTimeStamp *pStamp ///< [out] Time stamp or null if error
       );
 
-const char* BaCoreGetTStampStr(
-      const TBaCoreTimeStamp *pStamp
+/******************************************************************************/
+/** Converts time stamp structure to mallocated string. The user must free the
+ *  returned pointer to avoid memory leaks
+ *  @return Time stamp string if success, otherwise, null
+ */
+const char* BaCoreTStampToStr(
+      const TBaCoreTimeStamp *pStamp ///< [in] Time stamp to convert to string
       );
 //@} Timing functions
 
