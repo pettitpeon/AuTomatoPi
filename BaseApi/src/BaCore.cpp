@@ -114,7 +114,7 @@ void BaCoreGetTStamp(TBaCoreTimeStamp *pStamp) {
 }
 
 //
-const char* BaCoreGetTStampStr(const TBaCoreTimeStamp *pStamp) {
+const char* BaCoreTStampToStr(const TBaCoreTimeStamp *pStamp) {
    if (!pStamp) {
       return 0;
    }
