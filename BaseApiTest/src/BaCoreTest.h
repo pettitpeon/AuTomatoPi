@@ -28,6 +28,7 @@ public:
    CPPUNIT_TEST(SleepAndTiming);
    CPPUNIT_TEST(ThreadsNiceWeather);
    CPPUNIT_TEST(ThreadsSpecialCases);
+   CPPUNIT_TEST(PidFiles);
 
    CPPUNIT_TEST_SUITE_END();
 
@@ -35,8 +36,10 @@ public:
    void SleepAndTiming();
    void ThreadsNiceWeather();
    void ThreadsSpecialCases();
+   void PidFiles();
 };
 
 
 
 #endif /* BACORETEST_H_ */
+

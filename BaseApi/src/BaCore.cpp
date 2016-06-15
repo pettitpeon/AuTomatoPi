@@ -18,7 +18,7 @@
  #include <winbase.h>
 #endif
 
-//#include <iostream> // uncomment for debugging
+#include <iostream> // uncomment for debugging
 #include <fstream>      // std::ifstream
 #include <chrono>
 #include <thread>
@@ -295,7 +295,6 @@ pid_t BaCoreReadPidFile(const char *progName, TBaBool internal) {
 
    std::string pidPath = PIDPATH;
    std::ifstream file(internal ? pidPath + progName : progName);
-
    pid_t pid = 0;
 
    // Check error
@@ -311,11 +310,11 @@ TBaBoolRC BaCoreTestPidFile(const char *progName) {
    if (!progName) {
       return -1;
    }
-   std::string pidfile = PIDPATH;
-   pidfile.append(progName);
+   std::string nameOfPID;
 
-   pid_t pid = BaCoreReadPidFile(pidfile.c_str(), eBaBool_true);
+   pid_t pid = BaCoreReadPidFile(progName, eBaBool_true);
 
+   // Check if I am myself
    if ((pid < 0) || (pid == getpid())) {
       return eBaBoolRC_Success;
    }
@@ -332,7 +331,23 @@ TBaBoolRC BaCoreTestPidFile(const char *progName) {
 
    // Process in PID is running
    // TODO: check if it is another instance of yourself
+   // /proc/[PID]/comm
+   std::string path = "/proc/" + std::to_string(pid) + "/comm";
+   std::ifstream commFile(path, std::ios_base::binary);
+   if(commFile.fail()) {
+      return eBaBoolRC_Success;
+   }
 
+//   while(commFile.good())
+//       std::cout << (char)commFile.get();
+
+   std::getline(commFile, nameOfPID);
+
+   if (nameOfPID != progName) {
+      return eBaBoolRC_Success;
+   }
+
+   // There is another process called progName running
    return eBaBoolRC_Error;
 }
 

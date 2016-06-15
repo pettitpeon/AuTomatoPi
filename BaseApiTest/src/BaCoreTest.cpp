@@ -9,15 +9,18 @@
  */
 
 #include <iostream>
+#include "BaseApi.h"
 #include "BaCoreTest.h"
 #include "BaCore.h"
 #include "BaGenMacros.h"
+#include "CppU.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaCoreTest );
 
 LOCAL void testTimingFun(void *arg);
 LOCAL void testThreadNiceWeatherFun(TBaCoreThreadArg *pArg);
 LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg);
+LOCAL void writePidRout(void*);
 
 /* ****************************************************************************/
 /*  ...
@@ -219,6 +222,23 @@ void CBaCoreTest::ThreadsSpecialCases() {
    CPPUNIT_ASSERT(!BaCoreDestroyThread(0, 0));
 }
 
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaCoreTest::PidFiles() {
+
+   TBaApiCtrlTaskOpts opts = {0};
+   opts.cyleTimeMs = 1000;
+   opts.prio = eBaCorePrio_Normal;
+   opts.update = writePidRout;
+   ASS(BaApiStartCtrlTask(&opts));
+   BaCoreSleep(1);
+
+   ASS(!BaCoreTestPidFile("BaseApiTest"));
+   ASS(BaApiStopCtrlTask());
+}
+
 // Auxiliary timing function
 LOCAL void testTimingFun(void * arg) {
    int64_t dur = (int64_t) arg;
@@ -252,4 +272,15 @@ LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg) {
       BaCoreMSleep(100);
    }
    std::cout << "testInfThreadFun exit\n";
+}
+
+LOCAL void writePidRout(void*) {
+   static int sInit = 0;
+   if (!sInit) {
+      BaCoreWritePidFile("BaseApiTest");
+   }
+   if (sInit >= 100) {
+      exit(0);
+   }
+   sInit++;
 }
