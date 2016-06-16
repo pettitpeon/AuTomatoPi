@@ -14,6 +14,9 @@
 #include "BaCore.h"
 #include "BaGenMacros.h"
 #include "CppU.h"
+#include "BaLogMacros.h"
+
+#define TAG "Test"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaCoreTest );
 
@@ -232,10 +235,22 @@ void CBaCoreTest::PidFiles() {
    opts.cyleTimeMs = 1000;
    opts.prio = eBaCorePrio_Normal;
    opts.update = writePidRout;
-   ASS(BaApiStartCtrlTask(&opts));
-   BaCoreSleep(1);
+   TBaCoreTimeStamp ts;
+   BaCoreGetTStamp(&ts);
+   std::cout << BaCoreTStampToStr(&ts) << std::endl;
+   TRACE_("Now!");
 
+   // Create a second process with the same name
+   ASS(BaApiStartCtrlTask(&opts));
+
+   // Give it chance to be born
+   BaCoreMSleep(500);
+
+   // Check if the PID in the file is running, is not ourself, and is called
+   // the same.
    ASS(!BaCoreTestPidFile("BaseApiTest"));
+   BaCoreGetTStamp(&ts);
+   std::cout << BaCoreTStampToStr(&ts) << std::endl;
    ASS(BaApiStopCtrlTask());
 }
 
@@ -278,6 +293,9 @@ LOCAL void writePidRout(void*) {
    static int sInit = 0;
    if (!sInit) {
       BaCoreWritePidFile("BaseApiTest");
+      TBaCoreTimeStamp ts;
+      BaCoreGetTStamp(&ts);
+      std::cout << BaCoreTStampToStr(&ts) << std::endl;
    }
    if (sInit >= 100) {
       exit(0);

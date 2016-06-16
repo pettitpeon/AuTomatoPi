@@ -15,6 +15,7 @@
  */
 #ifndef BALOGMACROS_H_
 #define BALOGMACROS_H_
+#include "BaseApi.h"
 
 #define TRACE_(fmt, ...) BaApiLogF(eBaLogPrio_Trace, TAG, fmt, ##__VA_ARGS__)
 #define WARN_(fmt, ...) BaApiLogF(eBaLogPrio_Warning, TAG, fmt, ##__VA_ARGS__)

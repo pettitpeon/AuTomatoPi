@@ -18,7 +18,7 @@
  #include <winbase.h>
 #endif
 
-#include <iostream> // uncomment for debugging
+//#include <iostream> // uncomment for debugging
 #include <fstream>      // std::ifstream
 #include <chrono>
 #include <thread>
@@ -119,14 +119,17 @@ const char* BaCoreTStampToStr(const TBaCoreTimeStamp *pStamp) {
       return 0;
    }
 
+   char millis[4];
+   snprintf(millis, 4, "%03d", pStamp->millis);
+
    struct tm timeStruct = tmp_4_9_2::localtime(pStamp->tt);
    std::string entry = tmp_4_9_2::put_time(&timeStruct, "%y/%m/%d %H:%M:%S") +
-         "." + std::to_string(pStamp->millis);
+         "." + millis;
 
    char * p = (char *) malloc(22);
    strncpy(p, entry.c_str(), 22-1);
    p[22 - 1] = 0;
-   return 0;
+   return p;
 }
 
 //
@@ -308,14 +311,16 @@ pid_t BaCoreReadPidFile(const char *progName, TBaBool internal) {
 //
 TBaBoolRC BaCoreTestPidFile(const char *progName) {
    if (!progName) {
-      return -1;
+      return eBaBoolRC_Success;
    }
    std::string nameOfPID;
 
+   // Get the PID from the PID file
    pid_t pid = BaCoreReadPidFile(progName, eBaBool_true);
 
    // Check if I am myself
    if ((pid < 0) || (pid == getpid())) {
+      // OK, I can overwrite my own file
       return eBaBoolRC_Success;
    }
 
@@ -323,26 +328,23 @@ TBaBoolRC BaCoreTestPidFile(const char *progName) {
 #ifdef __WIN32
 
 #else
+
+   // Check if the process from the PID is running
    if (kill(pid, 0) && errno == ESRCH) {
-      // process not running!
+      // process not running, can overwrite file
       return eBaBoolRC_Success;
    }
 #endif
 
    // Process in PID is running
-   // TODO: check if it is another instance of yourself
-   // /proc/[PID]/comm
-   std::string path = "/proc/" + std::to_string(pid) + "/comm";
-   std::ifstream commFile(path, std::ios_base::binary);
+   // Open proc file from PID: /proc/[PID]/comm
+   std::ifstream commFile("/proc/" + std::to_string(pid) + "/comm");
    if(commFile.fail()) {
       return eBaBoolRC_Success;
    }
 
-//   while(commFile.good())
-//       std::cout << (char)commFile.get();
-
+   // Read the executable name and compare it with the given name
    std::getline(commFile, nameOfPID);
-
    if (nameOfPID != progName) {
       return eBaBoolRC_Success;
    }
