@@ -45,4 +45,4 @@ back to the world_.
 6. Control tasks with cycle time and priority
 
 ## Developers Documentation
-[Read more](https://pettitpeon.github.io/rpiapi/Doc/html/index.html)
+[Read more](https://pettitpeon.github.io/AuTomatoPi/Doc/html/index.html)
