@@ -30,9 +30,14 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2"><param name="Name" value="BaCom1WInit"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a560d10625971945890a829c2cfd32769"><param name="Name" value="BACOM_SERIALDEV"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a607a0ab43460b1e999519a8b6697e7f2"><param name="Name" value="BaComSerExit"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#aced95b335f1d9c05e7b3c84427cd9949"><param name="Name" value="BaComSerGetC"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2"><param name="Name" value="BaComSerInit"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a5763d9526e6dc78f324391e4a17b4d36"><param name="Name" value="BaComSerPend"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a6e2bd92d46d4f9326dbccc3f25408fcd"><param name="Name" value="BaComSerPutC"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a0c2d065555852132f1e554bba19040db"><param name="Name" value="EBaComBaud"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2"><param name="Name" value="TBaCom1wReadFun"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a9ac1d442bdbe734ad6aac5974f37e4ad"><param name="Name" value="TBaComHdl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281"><param name="Name" value="TBaComSerHdl"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a1db343e7949ded79fd54ed5c49dfbdfa"><param name="Name" value="BaCom1WExit"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706"><param name="Name" value="BaCom1WGetDevices"></OBJECT>
@@ -41,7 +46,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2"><param name="Name" value="BaCom1WInit"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a560d10625971945890a829c2cfd32769"><param name="Name" value="BACOM_SERIALDEV"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a607a0ab43460b1e999519a8b6697e7f2"><param name="Name" value="BaComSerExit"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#aced95b335f1d9c05e7b3c84427cd9949"><param name="Name" value="BaComSerGetC"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2"><param name="Name" value="BaComSerInit"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a5763d9526e6dc78f324391e4a17b4d36"><param name="Name" value="BaComSerPend"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a6e2bd92d46d4f9326dbccc3f25408fcd"><param name="Name" value="BaComSerPutC"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html"><param name="Name" value="BaCore.h"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a91ad70ff751bb8afd38fe7fd3bc7e1e1"><param name="Name" value="BaCoreCreateThread"></OBJECT>
@@ -50,7 +58,6 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a6a302164ab5c3007db39e2a93bb8834b"><param name="Name" value="BaCoreGetOwnProcPrio"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a3063c6580150f08a015d37bcd9cd3bb6"><param name="Name" value="BaCoreGetThreadInfo"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a5890e7e91b8c1895f6a474781c489eb8"><param name="Name" value="BaCoreGetTStamp"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#aebf452ee091a54803ba4d4174809993d"><param name="Name" value="BaCoreGetTStampStr"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a0b02663d5b06d203f8886a8b9702a055"><param name="Name" value="BaCoreMSleep"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a3bdde8e7955f8575a7a7bf94609a8f0a"><param name="Name" value="BaCoreNSleep"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#af357edfd2287b05789cffbbf0c906ed5"><param name="Name" value="BaCoreReadPidFile"></OBJECT>
@@ -61,6 +68,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a2ab9ab9bd8d9002a4bd017d4421e9260"><param name="Name" value="BaCoreTimedMs"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a5753216c928d411b57f70254302157c9"><param name="Name" value="BaCoreTimedS"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#ac7c70166fe4345034332c00a46d4946f"><param name="Name" value="BaCoreTimedUs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a9bc3dda291950c463500374c53029691"><param name="Name" value="BaCoreTStampToStr"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a1d944ec09e121ad1d73c342ef0040a7a"><param name="Name" value="BaCoreUSleep"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#ad4f62afe32321fb493c4a60b3f1a7611"><param name="Name" value="BaCoreWritePidFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a157dc8d9ee9a32912cbc26f9b1dd7476"><param name="Name" value="EBaCorePrio"></OBJECT>
@@ -85,7 +93,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a6a302164ab5c3007db39e2a93bb8834b"><param name="Name" value="BaCoreGetOwnProcPrio"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a3063c6580150f08a015d37bcd9cd3bb6"><param name="Name" value="BaCoreGetThreadInfo"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a5890e7e91b8c1895f6a474781c489eb8"><param name="Name" value="BaCoreGetTStamp"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#aebf452ee091a54803ba4d4174809993d"><param name="Name" value="BaCoreGetTStampStr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a0b02663d5b06d203f8886a8b9702a055"><param name="Name" value="BaCoreMSleep"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a3bdde8e7955f8575a7a7bf94609a8f0a"><param name="Name" value="BaCoreNSleep"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#af357edfd2287b05789cffbbf0c906ed5"><param name="Name" value="BaCoreReadPidFile"></OBJECT>
@@ -96,6 +103,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a2ab9ab9bd8d9002a4bd017d4421e9260"><param name="Name" value="BaCoreTimedMs"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a5753216c928d411b57f70254302157c9"><param name="Name" value="BaCoreTimedS"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#ac7c70166fe4345034332c00a46d4946f"><param name="Name" value="BaCoreTimedUs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a9bc3dda291950c463500374c53029691"><param name="Name" value="BaCoreTStampToStr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a1d944ec09e121ad1d73c342ef0040a7a"><param name="Name" value="BaCoreUSleep"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#ad4f62afe32321fb493c4a60b3f1a7611"><param name="Name" value="BaCoreWritePidFile"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespaceBaFS.html"><param name="Name" value="BaFS"></OBJECT>
@@ -585,6 +593,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6"><param name="Name" value="TBaBool"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d"><param name="Name" value="TBaBoolRC"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2"><param name="Name" value="TBaCom1wReadFun"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#a9ac1d442bdbe734ad6aac5974f37e4ad"><param name="Name" value="TBaComHdl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281"><param name="Name" value="TBaComSerHdl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="BaCore_8h.html#a41dc05559f1b0abe2f8261fc5cece7a9"><param name="Name" value="TBaCoreFun"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structTBaCoreThreadArg.html"><param name="Name" value="TBaCoreThreadArg"></OBJECT>
   <UL>

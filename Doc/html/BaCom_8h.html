@@ -50,8 +50,7 @@
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">BaCom.h File Reference</div>  </div>
 </div><!--header-->
@@ -77,6 +76,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a9ac1d442bdbe734ad6aac5974f37e4ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ac1d442bdbe734ad6aac5974f37e4ad"></a>
+typedef int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a9ac1d442bdbe734ad6aac5974f37e4ad">TBaComHdl</a></td></tr>
+<tr class="memdesc:a9ac1d442bdbe734ad6aac5974f37e4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">BaCom Handle. <br /></td></tr>
+<tr class="separator:a9ac1d442bdbe734ad6aac5974f37e4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd28efcbb112d949c065c93b9496f281"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd28efcbb112d949c065c93b9496f281"></a>
+typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a></td></tr>
+<tr class="memdesc:abd28efcbb112d949c065c93b9496f281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial interface handle. <br /></td></tr>
+<tr class="separator:abd28efcbb112d949c065c93b9496f281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add8b012b9350e6336e8bc815a3b732d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add8b012b9350e6336e8bc815a3b732d2"></a>
 typedef void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2">TBaCom1wReadFun</a>) (const char *str, size_t n)</td></tr>
 <tr class="memdesc:add8b012b9350e6336e8bc815a3b732d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function to parse the string returned by the driver from /sys/bus/w1/devices/&lt;SerialNo&gt;/w1_slave. <br /></td></tr>
@@ -94,12 +101,6 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afd029cee32185ec1613ba18b144439a2"><td class="memItemLeft" align="right" valign="top">TBaComSerHdl&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2">BaComSerInit</a> (const char *device, <a class="el" href="BaCom_8h.html#a51ae55d0c5491b76a6070eb31390691d">EBaComBaud</a> baud)</td></tr>
-<tr class="memdesc:afd029cee32185ec1613ba18b144439a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources and reserves GPIOs 14 and 15 for.  <a href="#afd029cee32185ec1613ba18b144439a2">More...</a><br /></td></tr>
-<tr class="separator:afd029cee32185ec1613ba18b144439a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a607a0ab43460b1e999519a8b6697e7f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a607a0ab43460b1e999519a8b6697e7f2">BaComSerExit</a> (TBaComSerHdl hdl)</td></tr>
-<tr class="memdesc:a607a0ab43460b1e999519a8b6697e7f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees resources.  <a href="#a607a0ab43460b1e999519a8b6697e7f2">More...</a><br /></td></tr>
-<tr class="separator:a607a0ab43460b1e999519a8b6697e7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">One Wire bus</div></td></tr>
 <tr class="memitem:a36457e41594d45b408d50a9dd23866e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2">BaCom1WInit</a> ()</td></tr>
 <tr class="memdesc:a36457e41594d45b408d50a9dd23866e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources, reserves GPIO 4 and calls <a class="el" href="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706" title="Scans for devices and saves them internally. ">BaCom1WGetDevices()</a>  <a href="#a36457e41594d45b408d50a9dd23866e2">More...</a><br /></td></tr>
@@ -116,6 +117,22 @@ Functions</h2></td></tr>
 <tr class="memitem:a5289d4a8cefd0fce2826ed5719b32394"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a5289d4a8cefd0fce2826ed5719b32394">BaCom1WGetValue</a> (uint8_t famID, const char *serNo, <a class="el" href="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2">TBaCom1wReadFun</a> cb, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *pError)</td></tr>
 <tr class="memdesc:a5289d4a8cefd0fce2826ed5719b32394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the data from a generic one wire device by calling user callback.  <a href="#a5289d4a8cefd0fce2826ed5719b32394">More...</a><br /></td></tr>
 <tr class="separator:a5289d4a8cefd0fce2826ed5719b32394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Serial Interface</div></td></tr>
+<tr class="memitem:afd029cee32185ec1613ba18b144439a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2">BaComSerInit</a> (const char *device, <a class="el" href="BaCom_8h.html#a51ae55d0c5491b76a6070eb31390691d">EBaComBaud</a> baud)</td></tr>
+<tr class="memdesc:afd029cee32185ec1613ba18b144439a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources and reserves GPIOs 14 and 15 for.  <a href="#afd029cee32185ec1613ba18b144439a2">More...</a><br /></td></tr>
+<tr class="separator:afd029cee32185ec1613ba18b144439a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a607a0ab43460b1e999519a8b6697e7f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a607a0ab43460b1e999519a8b6697e7f2">BaComSerExit</a> (<a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a> hdl)</td></tr>
+<tr class="memdesc:a607a0ab43460b1e999519a8b6697e7f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees resources.  <a href="#a607a0ab43460b1e999519a8b6697e7f2">More...</a><br /></td></tr>
+<tr class="separator:a607a0ab43460b1e999519a8b6697e7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e2bd92d46d4f9326dbccc3f25408fcd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a6e2bd92d46d4f9326dbccc3f25408fcd">BaComSerPutC</a> (<a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a> hdl, uint8_t c)</td></tr>
+<tr class="memdesc:a6e2bd92d46d4f9326dbccc3f25408fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources and reserves GPIOs 14 and 15 for.  <a href="#a6e2bd92d46d4f9326dbccc3f25408fcd">More...</a><br /></td></tr>
+<tr class="separator:a6e2bd92d46d4f9326dbccc3f25408fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5763d9526e6dc78f324391e4a17b4d36"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a5763d9526e6dc78f324391e4a17b4d36">BaComSerPend</a> (<a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a> hdl)</td></tr>
+<tr class="memdesc:a5763d9526e6dc78f324391e4a17b4d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources and reserves GPIOs 14 and 15 for.  <a href="#a5763d9526e6dc78f324391e4a17b4d36">More...</a><br /></td></tr>
+<tr class="separator:a5763d9526e6dc78f324391e4a17b4d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aced95b335f1d9c05e7b3c84427cd9949"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#aced95b335f1d9c05e7b3c84427cd9949">BaComSerGetC</a> (<a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a> hdl)</td></tr>
+<tr class="memdesc:aced95b335f1d9c05e7b3c84427cd9949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources and reserves GPIOs 14 and 15 for.  <a href="#aced95b335f1d9c05e7b3c84427cd9949">More...</a><br /></td></tr>
+<tr class="separator:aced95b335f1d9c05e7b3c84427cd9949"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Communications API. </p>
@@ -205,7 +222,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get temperature from temperature sensor. </p>
-<dl class="section return"><dt>Returns</dt><dd>Temperature in °C on success, otherwise -300 </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Temperature in Â°C on success, otherwise -300 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">serNo</td><td>Optional serial number of the sensor eg: "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used </td></tr>
@@ -271,7 +288,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TBaComSerHdl BaComSerInit </td>
+          <td class="memname"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a> BaComSerInit </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>device</em>, </td>
@@ -309,7 +326,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComSerExit </td>
           <td>(</td>
-          <td class="paramtype">TBaComSerHdl&#160;</td>
+          <td class="paramtype"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a>&#160;</td>
           <td class="paramname"><em>hdl</em></td><td>)</td>
           <td></td>
         </tr>
@@ -327,10 +344,77 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a6e2bd92d46d4f9326dbccc3f25408fcd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComSerPutC </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes the resources and reserves GPIOs 14 and 15 for. </p>
+<dl class="section return"><dt>Returns</dt><dd>Handle on success, otherwise error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5763d9526e6dc78f324391e4a17b4d36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int BaComSerPend </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes the resources and reserves GPIOs 14 and 15 for. </p>
+<dl class="section return"><dt>Returns</dt><dd>Handle on success, otherwise error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aced95b335f1d9c05e7b3c84427cd9949"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t BaComSerGetC </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a>&#160;</td>
+          <td class="paramname"><em>hdl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes the resources and reserves GPIOs 14 and 15 for. </p>
+<dl class="section return"><dt>Returns</dt><dd>Handle on success, otherwise error </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 3 2016 16:12:35 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 22 2016 19:17:29 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

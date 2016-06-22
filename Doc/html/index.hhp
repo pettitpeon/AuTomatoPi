@@ -106,8 +106,10 @@ BaGpio_8h__incl.svg
 BaIniParse_8h__incl.svg
 BaLog_8h__incl.svg
 BaLog_8h__dep__incl.svg
+BaLogMacros_8h__incl.svg
 BaMsg_8h__incl.svg
 BaseApi_8h__incl.svg
+BaseApi_8h__dep__incl.svg
 BaUtils_8hpp__incl.svg
 graph_legend.svg
 dir_68267d1309a1af8e8297ef4c3efbcdba_dep.svg

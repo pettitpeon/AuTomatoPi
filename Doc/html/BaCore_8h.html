@@ -68,7 +68,7 @@ Include dependency graph for BaCore.h:</div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__dep__incl.svg" width="94" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__dep__incl.svg" width="124" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="BaCore_8h_source.html">Go to the source code of this file.</a></p>
@@ -159,11 +159,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:ac7c70166fe4345034332c00a46d4946f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timing function.  <a href="#ac7c70166fe4345034332c00a46d4946f">More...</a><br /></td></tr>
 <tr class="separator:ac7c70166fe4345034332c00a46d4946f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5890e7e91b8c1895f6a474781c489eb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a5890e7e91b8c1895f6a474781c489eb8">BaCoreGetTStamp</a> (<a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp)</td></tr>
-<tr class="memdesc:a5890e7e91b8c1895f6a474781c489eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timing function.  <a href="#a5890e7e91b8c1895f6a474781c489eb8">More...</a><br /></td></tr>
+<tr class="memdesc:a5890e7e91b8c1895f6a474781c489eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the actual time timestamp.  <a href="#a5890e7e91b8c1895f6a474781c489eb8">More...</a><br /></td></tr>
 <tr class="separator:a5890e7e91b8c1895f6a474781c489eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebf452ee091a54803ba4d4174809993d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#aebf452ee091a54803ba4d4174809993d">BaCoreGetTStampStr</a> (const <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp)</td></tr>
-<tr class="memdesc:aebf452ee091a54803ba4d4174809993d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timing function.  <a href="#aebf452ee091a54803ba4d4174809993d">More...</a><br /></td></tr>
-<tr class="separator:aebf452ee091a54803ba4d4174809993d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bc3dda291950c463500374c53029691"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a9bc3dda291950c463500374c53029691">BaCoreTStampToStr</a> (const <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp)</td></tr>
+<tr class="memdesc:a9bc3dda291950c463500374c53029691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts time stamp structure to mallocated string.  <a href="#a9bc3dda291950c463500374c53029691">More...</a><br /></td></tr>
+<tr class="separator:a9bc3dda291950c463500374c53029691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Multi-threading</div></td></tr>
 <tr class="memitem:a91ad70ff751bb8afd38fe7fd3bc7e1e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaCore_8h.html#a2898da7dd1b0e998b8c64dca81dff404">TBaCoreThreadHdl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a91ad70ff751bb8afd38fe7fd3bc7e1e1">BaCoreCreateThread</a> (const char *name, <a class="el" href="BaCore_8h.html#ae50095c02ffddc39ec0df7f19e52c559">TBaCoreThreadFun</a> routine, <a class="el" href="structTBaCoreThreadArg.html">TBaCoreThreadArg</a> *pArg, <a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a> prio)</td></tr>
 <tr class="memdesc:a91ad70ff751bb8afd38fe7fd3bc7e1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread factory.  <a href="#a91ad70ff751bb8afd38fe7fd3bc7e1e1">More...</a><br /></td></tr>
@@ -473,23 +473,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Timing function. </p>
-<dl class="section return"><dt>Returns</dt><dd>Time in the defined unit </dd></dl>
+<p>Gets the actual time timestamp. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">pStamp</td><td>Time stamp </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pStamp</td><td>Time stamp or null if error </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="aebf452ee091a54803ba4d4174809993d"></a>
+<a class="anchor" id="a9bc3dda291950c463500374c53029691"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* BaCoreGetTStampStr </td>
+          <td class="memname">const char* BaCoreTStampToStr </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *&#160;</td>
           <td class="paramname"><em>pStamp</em></td><td>)</td>
@@ -498,8 +497,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Timing function. </p>
-<dl class="section return"><dt>Returns</dt><dd>Time in the defined unit </dd></dl>
+<p>Converts time stamp structure to mallocated string. </p>
+<p>The user must free the returned pointer to avoid memory leaks </p><dl class="section return"><dt>Returns</dt><dd>Time stamp string if success, otherwise, null </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pStamp</td><td>Time stamp to convert to string </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -808,7 +813,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 3 2016 16:12:35 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 22 2016 19:17:30 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

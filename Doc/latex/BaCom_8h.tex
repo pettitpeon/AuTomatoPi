@@ -22,6 +22,12 @@ Include dependency graph for Ba\+Com.\+h\+:\nopagebreak
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
+\hypertarget{BaCom_8h_a9ac1d442bdbe734ad6aac5974f37e4ad}{}typedef int32\+\_\+t \hyperlink{BaCom_8h_a9ac1d442bdbe734ad6aac5974f37e4ad}{T\+Ba\+Com\+Hdl}\label{BaCom_8h_a9ac1d442bdbe734ad6aac5974f37e4ad}
+
+\begin{DoxyCompactList}\small\item\em Ba\+Com Handle. \end{DoxyCompactList}\item 
+\hypertarget{BaCom_8h_abd28efcbb112d949c065c93b9496f281}{}typedef void $\ast$ \hyperlink{BaCom_8h_abd28efcbb112d949c065c93b9496f281}{T\+Ba\+Com\+Ser\+Hdl}\label{BaCom_8h_abd28efcbb112d949c065c93b9496f281}
+
+\begin{DoxyCompactList}\small\item\em Serial interface handle. \end{DoxyCompactList}\item 
 \hypertarget{BaCom_8h_add8b012b9350e6336e8bc815a3b732d2}{}typedef void $\ast$($\ast$ \hyperlink{BaCom_8h_add8b012b9350e6336e8bc815a3b732d2}{T\+Ba\+Com1w\+Read\+Fun}) (const char $\ast$str, size\+\_\+t n)\label{BaCom_8h_add8b012b9350e6336e8bc815a3b732d2}
 
 \begin{DoxyCompactList}\small\item\em Callback function to parse the string returned by the driver from /sys/bus/w1/devices/$<$\+Serial\+No$>$/w1\+\_\+slave. \end{DoxyCompactList}\item 
@@ -35,12 +41,6 @@ Include dependency graph for Ba\+Com.\+h\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Baud enumeration. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
-\begin{DoxyCompactItemize}
-\item 
-T\+Ba\+Com\+Ser\+Hdl \hyperlink{BaCom_8h_afd029cee32185ec1613ba18b144439a2}{Ba\+Com\+Ser\+Init} (const char $\ast$device, \hyperlink{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}{E\+Ba\+Com\+Baud} baud)
-\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}{Ba\+Com\+Ser\+Exit} (T\+Ba\+Com\+Ser\+Hdl hdl)
-\begin{DoxyCompactList}\small\item\em Frees resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \begin{Indent}{\bf One Wire bus}\par
 \begin{DoxyCompactItemize}
 \item 
@@ -54,6 +54,20 @@ float \hyperlink{BaCom_8h_aead9e89e6d443d5cdfdf0f5f0b7489ec}{Ba\+Com1\+W\+Get\+T
 \begin{DoxyCompactList}\small\item\em Get temperature from temperature sensor. \end{DoxyCompactList}\item 
 void $\ast$ \hyperlink{BaCom_8h_a5289d4a8cefd0fce2826ed5719b32394}{Ba\+Com1\+W\+Get\+Value} (uint8\+\_\+t fam\+I\+D, const char $\ast$ser\+No, \hyperlink{BaCom_8h_add8b012b9350e6336e8bc815a3b732d2}{T\+Ba\+Com1w\+Read\+Fun} cb, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
 \begin{DoxyCompactList}\small\item\em Gets the data from a generic one wire device by calling user callback. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Serial Interface}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaCom_8h_abd28efcbb112d949c065c93b9496f281}{T\+Ba\+Com\+Ser\+Hdl} \hyperlink{BaCom_8h_afd029cee32185ec1613ba18b144439a2}{Ba\+Com\+Ser\+Init} (const char $\ast$device, \hyperlink{BaCom_8h_a51ae55d0c5491b76a6070eb31390691d}{E\+Ba\+Com\+Baud} baud)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}{Ba\+Com\+Ser\+Exit} (\hyperlink{BaCom_8h_abd28efcbb112d949c065c93b9496f281}{T\+Ba\+Com\+Ser\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Frees resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a6e2bd92d46d4f9326dbccc3f25408fcd}{Ba\+Com\+Ser\+Put\+C} (\hyperlink{BaCom_8h_abd28efcbb112d949c065c93b9496f281}{T\+Ba\+Com\+Ser\+Hdl} hdl, uint8\+\_\+t c)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
+int \hyperlink{BaCom_8h_a5763d9526e6dc78f324391e4a17b4d36}{Ba\+Com\+Ser\+Pend} (\hyperlink{BaCom_8h_abd28efcbb112d949c065c93b9496f281}{T\+Ba\+Com\+Ser\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{BaCom_8h_aced95b335f1d9c05e7b3c84427cd9949}{Ba\+Com\+Ser\+Get\+C} (\hyperlink{BaCom_8h_abd28efcbb112d949c065c93b9496f281}{T\+Ba\+Com\+Ser\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
@@ -124,7 +138,7 @@ the number of devices found
 Get temperature from temperature sensor. 
 
 \begin{DoxyReturn}{Returns}
-Temperature in °\+C on success, otherwise -\/300 
+Temperature in Â°\+C on success, otherwise -\/300 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
@@ -163,7 +177,7 @@ Null if error, or the data returned by {\ttfamily cb}
 \end{DoxyParams}
 \hypertarget{BaCom_8h_afd029cee32185ec1613ba18b144439a2}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Init@{Ba\+Com\+Ser\+Init}}
 \index{Ba\+Com\+Ser\+Init@{Ba\+Com\+Ser\+Init}!Ba\+Com.\+h@{Ba\+Com.\+h}}
-\subsubsection[{Ba\+Com\+Ser\+Init(const char $\ast$device, E\+Ba\+Com\+Baud baud)}]{\setlength{\rightskip}{0pt plus 5cm}T\+Ba\+Com\+Ser\+Hdl Ba\+Com\+Ser\+Init (
+\subsubsection[{Ba\+Com\+Ser\+Init(const char $\ast$device, E\+Ba\+Com\+Baud baud)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Com\+Ser\+Hdl} Ba\+Com\+Ser\+Init (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{device, }
 \item[{{\bf E\+Ba\+Com\+Baud}}]{baud}
@@ -187,7 +201,7 @@ Handle on success, otherwise error
 \index{Ba\+Com\+Ser\+Exit@{Ba\+Com\+Ser\+Exit}!Ba\+Com.\+h@{Ba\+Com.\+h}}
 \subsubsection[{Ba\+Com\+Ser\+Exit(\+T\+Ba\+Com\+Ser\+Hdl hdl)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+Ser\+Exit (
 \begin{DoxyParamCaption}
-\item[{T\+Ba\+Com\+Ser\+Hdl}]{hdl}
+\item[{{\bf T\+Ba\+Com\+Ser\+Hdl}}]{hdl}
 \end{DoxyParamCaption}
 )}\label{BaCom_8h_a607a0ab43460b1e999519a8b6697e7f2}
 
@@ -202,3 +216,46 @@ Error or success
 {\em hdl} & Serial communication handle \\
 \hline
 \end{DoxyParams}
+\hypertarget{BaCom_8h_a6e2bd92d46d4f9326dbccc3f25408fcd}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Put\+C@{Ba\+Com\+Ser\+Put\+C}}
+\index{Ba\+Com\+Ser\+Put\+C@{Ba\+Com\+Ser\+Put\+C}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+Ser\+Put\+C(\+T\+Ba\+Com\+Ser\+Hdl hdl, uint8\+\_\+t c)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+Ser\+Put\+C (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+Ba\+Com\+Ser\+Hdl}}]{hdl, }
+\item[{uint8\+\_\+t}]{c}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a6e2bd92d46d4f9326dbccc3f25408fcd}
+
+
+Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
+
+\begin{DoxyReturn}{Returns}
+Handle on success, otherwise error 
+\end{DoxyReturn}
+\hypertarget{BaCom_8h_a5763d9526e6dc78f324391e4a17b4d36}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Pend@{Ba\+Com\+Ser\+Pend}}
+\index{Ba\+Com\+Ser\+Pend@{Ba\+Com\+Ser\+Pend}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+Ser\+Pend(\+T\+Ba\+Com\+Ser\+Hdl hdl)}]{\setlength{\rightskip}{0pt plus 5cm}int Ba\+Com\+Ser\+Pend (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+Ba\+Com\+Ser\+Hdl}}]{hdl}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a5763d9526e6dc78f324391e4a17b4d36}
+
+
+Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
+
+\begin{DoxyReturn}{Returns}
+Handle on success, otherwise error 
+\end{DoxyReturn}
+\hypertarget{BaCom_8h_aced95b335f1d9c05e7b3c84427cd9949}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+Ser\+Get\+C@{Ba\+Com\+Ser\+Get\+C}}
+\index{Ba\+Com\+Ser\+Get\+C@{Ba\+Com\+Ser\+Get\+C}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+Ser\+Get\+C(\+T\+Ba\+Com\+Ser\+Hdl hdl)}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Ba\+Com\+Ser\+Get\+C (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+Ba\+Com\+Ser\+Hdl}}]{hdl}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_aced95b335f1d9c05e7b3c84427cd9949}
+
+
+Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
+
+\begin{DoxyReturn}{Returns}
+Handle on success, otherwise error 
+\end{DoxyReturn}

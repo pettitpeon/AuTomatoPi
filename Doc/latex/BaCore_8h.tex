@@ -18,7 +18,7 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=142pt]{BaCore_8h__dep__incl}
+\includegraphics[width=165pt]{BaCore_8h__dep__incl}
 \end{center}
 \end{figure}
 \subsection*{Classes}
@@ -92,9 +92,9 @@ int64\+\_\+t \hyperlink{BaCore_8h_a2ab9ab9bd8d9002a4bd017d4421e9260}{Ba\+Core\+T
 int64\+\_\+t \hyperlink{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}{Ba\+Core\+Timed\+Us} (\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun} fun, void $\ast$p\+Arg)
 \begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\item 
 void \hyperlink{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}{Ba\+Core\+Get\+T\+Stamp} (\hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp)
-\begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\item 
-const char $\ast$ \hyperlink{BaCore_8h_aebf452ee091a54803ba4d4174809993d}{Ba\+Core\+Get\+T\+Stamp\+Str} (const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp)
-\begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Gets the actual time timestamp. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{BaCore_8h_a9bc3dda291950c463500374c53029691}{Ba\+Core\+T\+Stamp\+To\+Str} (const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp)
+\begin{DoxyCompactList}\small\item\em Converts time stamp structure to mallocated string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 \begin{Indent}{\bf Multi-\/threading}\par
 \begin{DoxyCompactItemize}
@@ -319,30 +319,32 @@ Referenced by Ba\+Api\+Start\+Ctrl\+Task().
 )}\label{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}
 
 
-Timing function. 
+Gets the actual time timestamp. 
 
-\begin{DoxyReturn}{Returns}
-Time in the defined unit 
-\end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em p\+Stamp} & Time stamp \\
+\mbox{\tt out}  & {\em p\+Stamp} & Time stamp or null if error \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_aebf452ee091a54803ba4d4174809993d}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+T\+Stamp\+Str@{Ba\+Core\+Get\+T\+Stamp\+Str}}
-\index{Ba\+Core\+Get\+T\+Stamp\+Str@{Ba\+Core\+Get\+T\+Stamp\+Str}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Get\+T\+Stamp\+Str(const T\+Ba\+Core\+Time\+Stamp $\ast$p\+Stamp)}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Core\+Get\+T\+Stamp\+Str (
+\hypertarget{BaCore_8h_a9bc3dda291950c463500374c53029691}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}}
+\index{Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}!Ba\+Core.\+h@{Ba\+Core.\+h}}
+\subsubsection[{Ba\+Core\+T\+Stamp\+To\+Str(const T\+Ba\+Core\+Time\+Stamp $\ast$p\+Stamp)}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Core\+T\+Stamp\+To\+Str (
 \begin{DoxyParamCaption}
 \item[{const {\bf T\+Ba\+Core\+Time\+Stamp} $\ast$}]{p\+Stamp}
 \end{DoxyParamCaption}
-)}\label{BaCore_8h_aebf452ee091a54803ba4d4174809993d}
+)}\label{BaCore_8h_a9bc3dda291950c463500374c53029691}
 
 
-Timing function. 
+Converts time stamp structure to mallocated string. 
 
-\begin{DoxyReturn}{Returns}
-Time in the defined unit 
+The user must free the returned pointer to avoid memory leaks \begin{DoxyReturn}{Returns}
+Time stamp string if success, otherwise, null 
 \end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Stamp} & Time stamp to convert to string \\
+\hline
+\end{DoxyParams}
 \hypertarget{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Create\+Thread@{Ba\+Core\+Create\+Thread}}
 \index{Ba\+Core\+Create\+Thread@{Ba\+Core\+Create\+Thread}!Ba\+Core.\+h@{Ba\+Core.\+h}}
 \subsubsection[{Ba\+Core\+Create\+Thread(const char $\ast$name, T\+Ba\+Core\+Thread\+Fun routine, T\+Ba\+Core\+Thread\+Arg $\ast$p\+Arg, E\+Ba\+Core\+Prio prio)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Core\+Thread\+Hdl} Ba\+Core\+Create\+Thread (
