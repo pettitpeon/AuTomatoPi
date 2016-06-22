@@ -124,7 +124,7 @@ int64_t BaCoreTimedUs(
       );
 
 /******************************************************************************/
-/** Gets the actaul time timestamp
+/** Gets the actual time timestamp
  */
 void BaCoreGetTStamp(
       TBaCoreTimeStamp *pStamp ///< [out] Time stamp or null if error

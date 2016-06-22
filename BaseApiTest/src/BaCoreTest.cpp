@@ -9,15 +9,21 @@
  */
 
 #include <iostream>
+#include "BaseApi.h"
 #include "BaCoreTest.h"
 #include "BaCore.h"
 #include "BaGenMacros.h"
+#include "CppU.h"
+#include "BaLogMacros.h"
+
+#define TAG "Test"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaCoreTest );
 
 LOCAL void testTimingFun(void *arg);
 LOCAL void testThreadNiceWeatherFun(TBaCoreThreadArg *pArg);
 LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg);
+LOCAL void writePidRout(void*);
 
 /* ****************************************************************************/
 /*  ...
@@ -219,6 +225,35 @@ void CBaCoreTest::ThreadsSpecialCases() {
    CPPUNIT_ASSERT(!BaCoreDestroyThread(0, 0));
 }
 
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaCoreTest::PidFiles() {
+
+   TBaApiCtrlTaskOpts opts = {0};
+   opts.cyleTimeMs = 1000;
+   opts.prio = eBaCorePrio_Normal;
+   opts.update = writePidRout;
+   TBaCoreTimeStamp ts;
+   BaCoreGetTStamp(&ts);
+   std::cout << BaCoreTStampToStr(&ts) << std::endl;
+   TRACE_("Now!");
+
+   // Create a second process with the same name
+   ASS(BaApiStartCtrlTask(&opts));
+
+   // Give it chance to be born
+   BaCoreMSleep(500);
+
+   // Check if the PID in the file is running, is not ourself, and is called
+   // the same.
+   ASS(!BaCoreTestPidFile("BaseApiTest"));
+   BaCoreGetTStamp(&ts);
+   std::cout << BaCoreTStampToStr(&ts) << std::endl;
+   ASS(BaApiStopCtrlTask());
+}
+
 // Auxiliary timing function
 LOCAL void testTimingFun(void * arg) {
    int64_t dur = (int64_t) arg;
@@ -252,4 +287,18 @@ LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg) {
       BaCoreMSleep(100);
    }
    std::cout << "testInfThreadFun exit\n";
+}
+
+LOCAL void writePidRout(void*) {
+   static int sInit = 0;
+   if (!sInit) {
+      BaCoreWritePidFile("BaseApiTest");
+      TBaCoreTimeStamp ts;
+      BaCoreGetTStamp(&ts);
+      std::cout << BaCoreTStampToStr(&ts) << std::endl;
+   }
+   if (sInit >= 100) {
+      exit(0);
+   }
+   sInit++;
 }
