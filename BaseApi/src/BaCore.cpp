@@ -119,6 +119,7 @@ const char* BaCoreTStampToStr(const TBaCoreTimeStamp *pStamp) {
       return 0;
    }
 
+   // todo: what if millis is > than three digits?
    char millis[4];
    snprintf(millis, 4, "%03d", pStamp->millis);
 

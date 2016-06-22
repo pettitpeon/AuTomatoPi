@@ -15,6 +15,8 @@
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
 #include <termios.h>
+#include <linux/spi/spidev.h>
+#include <fcntl.h>
 
 #include <string>
 #include <fstream>
@@ -72,6 +74,16 @@ static IBaGpio *sp1w = 0;
 // Map of family IDs and devices vector
 static std::map<uint16_t, std::vector<T1wDev>> sDevs;
 
+// The SPI bus parameters
+// Variables as they need to be passed as pointers later on
+
+const static char       *spiDev0  = "/dev/spidev0.0" ;
+const static char       *spiDev1  = "/dev/spidev0.1" ;
+const static uint8_t     spiBPW   = 8 ;
+const static uint16_t    spiDelay = 0 ;
+static uint32_t    spiSpeeds [2] ;
+static int         spiFds [2] ;
+
 //
 TBaComHdl BaComI2CInit() {
    return 0;
@@ -84,6 +96,32 @@ TBaBoolRC BaComI2CExit(TBaComHdl hdl) {
 
 //
 TBaComHdl BaComSPIInit() {
+   int fd ;
+   int channel;
+   int speed;
+   int mode;
+
+   mode    &= 3 ;  // Mode is 0, 1, 2 or 3
+   channel &= 1 ;  // Channel is 0 or 1
+
+   if ((fd = open (channel == 0 ? spiDev0 : spiDev1, O_RDWR)) < 0)
+//     return wiringPiFailure (WPI_ALMOST, "Unable to open SPI device: %s\n", strerror (errno)) ;
+
+   spiSpeeds [channel] = speed ;
+   spiFds    [channel] = fd ;
+
+ // Set SPI parameters.
+
+   if (ioctl (fd, SPI_IOC_WR_MODE, &mode)            < 0)
+//     return wiringPiFailure (WPI_ALMOST, "SPI Mode Change failure: %s\n", strerror (errno)) ;
+
+   if (ioctl (fd, SPI_IOC_WR_BITS_PER_WORD, &spiBPW) < 0)
+//     return wiringPiFailure (WPI_ALMOST, "SPI BPW Change failure: %s\n", strerror (errno)) ;
+
+   if (ioctl (fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed)   < 0)
+//     return wiringPiFailure (WPI_ALMOST, "SPI Speed Change failure: %s\n", strerror (errno)) ;
+
+   return fd ;
    return 0;
 }
 
