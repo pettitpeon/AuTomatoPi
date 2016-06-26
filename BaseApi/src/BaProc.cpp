@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <string>
-#include <fstream>  // std::ifstream
+#include <fstream> // std::ifstream
 
 #include "BaProc.h"
 #include "BaUtils.hpp"
