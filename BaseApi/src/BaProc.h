@@ -38,13 +38,13 @@ extern "C" {
 #endif
 
 /******************************************************************************/
-/** ...
+/** Get the short name of own process
  *  @return on success, the process name, otherwise, 0
  */
 const char* BaProcGetOwnShortName();
 
 /******************************************************************************/
-/** ...
+/** Get the full name of own process
  *  @return on success, the process name, otherwise, 0
  */
 const char* BaProcGetOwnFullName();
