@@ -31,7 +31,7 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaComTest);
 
-   CPPUNIT_TEST(Bus1W);
+//   CPPUNIT_TEST(Bus1W);
 //   CPPUNIT_TEST(Config);
 //   CPPUNIT_TEST(Serial);
 

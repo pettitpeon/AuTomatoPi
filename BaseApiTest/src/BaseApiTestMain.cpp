@@ -29,7 +29,7 @@
 #include "BaIniParseTest.h"
 #include "BaMsgTest.h"
 #include "BaseApiTest.h"
-
+#include "BaCore.h"
 
 //
 enum TTestSelection {
@@ -67,6 +67,7 @@ int main(int argc, char* argv[]) {
    // Print arguments
    for(int i = 0; i < argc; i++) {
       std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
+      std::cout << "Full Name: " << BaCoreGetOwnName() << std::endl;
    }
 
    // Get the working directory
@@ -113,7 +114,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaComTest::suite());
 //   pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaGpioTest::suite());
-   pSuite->addTest(CBaCoreTest::suite());
+//   pSuite->addTest(CBaCoreTest::suite());
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());

@@ -25,15 +25,19 @@
 #include "BaBool.h"
 #include <unistd.h>
 
+/*------------------------------------------------------------------------------
+ *  Defines
+ */
+#define BACORE_TSTAMPLEN 22
 
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
 /// Time stamp structure
 typedef struct TBaCoreTimeStamp {
-   time_t tt;
-   uint32_t micros;
-   uint32_t millis;
+   time_t tt; ///< Epoch seconds in local time
+   uint32_t micros; ///< Fraction of second in microseconds, max = 1000 000
+   uint16_t millis; ///< Fraction of second in milliseconds, max = 1000
 } TBaCoreTimeStamp;
 
 
@@ -127,16 +131,19 @@ int64_t BaCoreTimedUs(
 /** Gets the actual time timestamp
  */
 void BaCoreGetTStamp(
-      TBaCoreTimeStamp *pStamp ///< [out] Time stamp or null if error
+      TBaCoreTimeStamp *pStamp ///< [out] Time stamp
       );
 
 /******************************************************************************/
-/** Converts time stamp structure to mallocated string. The user must free the
- *  returned pointer to avoid memory leaks
+/** Converts time stamp structure to string. If the user gives a buffer (@c pBuf),
+ *  it is used and returned. If the buffer is null, the string is mallocated and
+ *  user must free the returned pointer to avoid memory leaks
  *  @return Time stamp string if success, otherwise, null
  */
 const char* BaCoreTStampToStr(
-      const TBaCoreTimeStamp *pStamp ///< [in] Time stamp to convert to string
+      const TBaCoreTimeStamp *pStamp, ///< [in] Time stamp to convert to string
+      char pBuf[BACORE_TSTAMPLEN]     /**< [in,out] Optional buffer of
+      length >= BACORE_TSTAMPLEN. If null, the string is mallocated **/
       );
 //@} Timing functions
 

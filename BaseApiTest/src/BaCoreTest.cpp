@@ -8,6 +8,7 @@
  *   Module description:
  */
 
+#include <stdlib.h>
 #include <iostream>
 #include "BaseApi.h"
 #include "BaCoreTest.h"
@@ -24,6 +25,8 @@ LOCAL void testTimingFun(void *arg);
 LOCAL void testThreadNiceWeatherFun(TBaCoreThreadArg *pArg);
 LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg);
 LOCAL void writePidRout(void*);
+
+char sBuf[BACORE_TSTAMPLEN];
 
 /* ****************************************************************************/
 /*  ...
@@ -62,6 +65,37 @@ void CBaCoreTest::SleepAndTiming() {
    CPPUNIT_ASSERT_MESSAGE("1000us == " + std::to_string(dur) + "us",
          dur > 1000 && dur < 1100);
 #endif
+}
+
+/* ****************************************************************************/
+/*  Test the time stamp functions
+ */
+void CBaCoreTest::TimeStamps() {
+   TBaCoreTimeStamp tStamp;
+
+   // Test the time stamp structure
+   BaCoreGetTStamp(&tStamp);
+   ASS(tStamp.micros < 1000000);
+   ASS(tStamp.millis < 1000);
+
+   // 11/04/2016
+   ASS_MSG(std::to_string(tStamp.tt) + " > 1460366790", tStamp.tt > 1460366790);
+
+   // Assert it returns a pointer
+   ASS(BaCoreTStampToStr(&tStamp, sBuf));
+
+   // Test the mallocated function
+   const char * tss = BaCoreTStampToStr(&tStamp, 0);
+   ASS(tss);
+   std::cout << tss << std::endl;
+   free((void*)tss);
+
+   std::cout << BaCoreTStampToStr(&tStamp, sBuf) << std::endl;
+
+   // Bad timestamp
+   tStamp.millis = 1234;
+   ASS(!BaCoreTStampToStr(&tStamp, sBuf));
+
 }
 
 /* ****************************************************************************/
@@ -237,7 +271,7 @@ void CBaCoreTest::PidFiles() {
    opts.update = writePidRout;
    TBaCoreTimeStamp ts;
    BaCoreGetTStamp(&ts);
-   std::cout << BaCoreTStampToStr(&ts) << std::endl;
+   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
    TRACE_("Now!");
 
    // Create a second process with the same name
@@ -250,7 +284,7 @@ void CBaCoreTest::PidFiles() {
    // the same.
    ASS(!BaCoreTestPidFile("BaseApiTest"));
    BaCoreGetTStamp(&ts);
-   std::cout << BaCoreTStampToStr(&ts) << std::endl;
+   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
    ASS(BaApiStopCtrlTask());
 }
 
@@ -295,7 +329,7 @@ LOCAL void writePidRout(void*) {
       BaCoreWritePidFile("BaseApiTest");
       TBaCoreTimeStamp ts;
       BaCoreGetTStamp(&ts);
-      std::cout << BaCoreTStampToStr(&ts) << std::endl;
+      std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
    }
    if (sInit >= 100) {
       exit(0);

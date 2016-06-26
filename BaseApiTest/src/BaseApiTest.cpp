@@ -85,13 +85,21 @@ void CBaseApiTest::ControlTask() {
    CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 #else
-   CPPUNIT_ASSERT(!BaApiStartCtrlTask(&sOpts));
+
+   CPPUNIT_ASSERT(BaApiStartCtrlTask(&sOpts));
    BaCoreMSleep(slpMs);
    CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
+
+   // This is the parent. therefore in the
    CPPUNIT_ASSERT(stats.imRunning);
-   CPPUNIT_ASSERT(!BaApiStopCtrlTask());
+
+   // should not start
+   CPPUNIT_ASSERT(!BaApiStartCtrlTask(&sOpts));
+
+   CPPUNIT_ASSERT(BaApiStopCtrlTask());
    CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
+
 #endif
 
    // Logger should not be set after stop

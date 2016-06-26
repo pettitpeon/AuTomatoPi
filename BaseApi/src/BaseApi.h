@@ -131,7 +131,7 @@ TBaBoolRC BaApiStartCtrlTask(
 /** Stops the one and only control task
  *  @return Error or success
  */
-TBaBoolRC BaApiStopCtrlTask();
+TBaBoolRC BaApiStopCtrlTask(const char * progName);
 
 /******************************************************************************/
 /** Starts the one and only control thread as a new thread. This is mainly for

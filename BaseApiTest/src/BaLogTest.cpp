@@ -477,6 +477,10 @@ void CBaLogTest::Stress() {
       ASS(loggers[i]);
    }
 
+//   thArg4.exitTh = false;
+//   thArg4.pArg = &loggers;
+//   stresser4Rout(&thArg4);
+
    // 1. stresser
    arg1.pLog = pObj;
    arg1.tag = "stres1";

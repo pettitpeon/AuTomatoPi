@@ -32,7 +32,7 @@
 #include "BaCore.h"
 #include "BaGenMacros.h"
 #include "BaUtils.hpp"
-#include <BaTmpTime.hpp>
+#include "BaTmpTime.hpp"
 
 /*------------------------------------------------------------------------------
  *  Defines and macros
@@ -41,6 +41,7 @@
 #define CHRONO_ std::chrono
 #define SYSCLOCK_ CHRONO_::system_clock
 #define CHRONOHRC CHRONO_::high_resolution_clock
+#define CTRLTASK "BaseApiCtrlTask"
 
 #if __linux
 # define PIDPATH "/var/run/BaseApi/"
@@ -107,30 +108,50 @@ int64_t BaCoreTimedUs(TBaCoreFun fun, void* pArg) {
 
 //
 void BaCoreGetTStamp(TBaCoreTimeStamp *pStamp) {
+   if (!pStamp) {
+      return;
+   }
+
    auto nowT = CHRONOHRC::now();
    pStamp->tt = CHRONOHRC::to_time_t(nowT);
    pStamp->micros = CHRONO_::duration_cast<CHRONO_::microseconds>(nowT.time_since_epoch()).count() % 1000000;
-   pStamp->millis = pStamp->micros % 1000;
+
+   // Get the millis part of the second with rounding to the nearest milli
+   pStamp->millis = pStamp->micros / 1000;
+   if (pStamp->micros % 1000 >= 500) {
+      if (pStamp->millis == 999) {
+         pStamp->millis = 0;
+         pStamp->tt++;
+      } else {
+         pStamp->millis++;
+      }
+   }
+
 }
 
-//
-const char* BaCoreTStampToStr(const TBaCoreTimeStamp *pStamp) {
-   if (!pStamp) {
+// Stamp length is 22
+const char* BaCoreTStampToStr(const TBaCoreTimeStamp *pStamp, char *pBuf) {
+   if (!pStamp || pStamp->micros >= 1000000 || pStamp->millis >= 1000) {
       return 0;
    }
 
-   // todo: what if millis is > than three digits?
-   char millis[4];
-   snprintf(millis, 4, "%03d", pStamp->millis);
+   if (!pBuf) {
+      pBuf = (char *) malloc(BACORE_TSTAMPLEN);
+   }
 
    struct tm timeStruct = tmp_4_9_2::localtime(pStamp->tt);
-   std::string entry = tmp_4_9_2::put_time(&timeStruct, "%y/%m/%d %H:%M:%S") +
-         "." + millis;
+   std::string epochStr = tmp_4_9_2::put_time(&timeStruct, "%y/%m/%d %H:%M:%S");
 
-   char * p = (char *) malloc(22);
-   strncpy(p, entry.c_str(), 22-1);
-   p[22 - 1] = 0;
-   return p;
+   // Write the time stamp up to seconds and include the terminating null
+   strncpy(pBuf, epochStr.c_str(), BACORE_TSTAMPLEN-4);
+
+   // Append the millis part overwriting the former terminating null
+   // WIN: 4 chars + ending null = 5
+   // LIN: 4 chars + ending null = 5
+   uint8_t off = BACORE_TSTAMPLEN - 5;
+   snprintf(pBuf+off, 5, ".%03d", pStamp->millis);
+   pBuf[BACORE_TSTAMPLEN-1] = 0; // safety? necessary?
+   return pBuf;
 }
 
 //
@@ -365,7 +386,7 @@ TBaBoolRC BaCoreWritePidFile(const char *progName) {
    }
 
    std::string pidfile = PIDPATH;
-   pidfile.append(progName);
+   pidfile.append(CTRLTASK);
    std::ofstream myfile (pidfile);
 
    if (!myfile.is_open()) {
@@ -375,6 +396,7 @@ TBaBoolRC BaCoreWritePidFile(const char *progName) {
 
    pid_t pid = getpid();
    myfile << pid << std::endl;
+   myfile << progName << std::endl;
    myfile.close();
    return myfile.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
 }

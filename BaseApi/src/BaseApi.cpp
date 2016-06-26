@@ -149,9 +149,9 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    return eBaBoolRC_Error;
 #else
 
-   if (!BaCoreTestPidFile(CTRLTASK)) {
+   if (!BaCoreTestPidFile(BaCoreGetOwnName())) {
       ERROR_("Process already running");
-      // todo: return
+      return eBaBoolRC_Error;
    }
 
    // Reset exit flag
@@ -179,14 +179,15 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    if (pid > 0) {
       unregisterSignals();
       TRACE_("Fork successful: Luke, I am you father");
-      resetStats(sStats);
+      sStats.imRunning = eBaBool_true;
+//      resetStats(sStats);
       return eBaBoolRC_Success;
    }
 
    // Now Luke is in command ////////////////////////////////////////
 
    // Write PID file
-   BaCoreWritePidFile(CTRLTASK);
+   BaCoreWritePidFile(BaCoreGetOwnName());
 
    // Change directory to default
    chdir(DEFDIR);
@@ -228,14 +229,14 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
 
 
 //
-TBaBoolRC BaApiStopCtrlTask() {
+TBaBoolRC BaApiStopCtrlTask(const char *progName) {
    BaApiExitLogger();
 #ifdef __WIN32
    resetStats(sStats);
    return eBaBoolRC_Error;
 #else
 
-   int pid = BaCoreReadPidFile(CTRLTASK, eBaBool_true);
+   int pid = BaCoreReadPidFile(progName ? progName : CTRLTASK, eBaBool_true);
    if (pid != -1) {
       if (kill(pid, SIGRTMIN) == 0) {
          return eBaBool_true;

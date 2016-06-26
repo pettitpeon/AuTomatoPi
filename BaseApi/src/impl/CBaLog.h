@@ -24,6 +24,7 @@
 #include <fstream> // std::ofstream
 
 #include "BaLog.h"
+#include "BaCore.h"
 #include "CBaMsg.h"
 
 struct TBaCoreThreadArg;
@@ -138,7 +139,7 @@ private:
    const std::string mName; // Name of the log
    const std::string mPath; // Path to the log
    const EBaLogPrio mPrioFilt; // Priority filter, allows messages equal of higher
-   const EBaLogOut mOut; // Output form specifier
+   const EBaLogOut mOut; // Output from specifier
    const uint32_t mMaxFileSizeB; // File size limit in bytes
    const uint16_t mMaxNoFiles; // Maximum no. of extra history files
    const uint16_t mMaxBufLength; // Max. no. of messages in the buffer
@@ -157,6 +158,8 @@ private:
    std::mutex mMtx; // Mutex to avoid simultaneous read and write of the buffer
    char mMillis[4]; // Temp variable to save the milli part of a time-stamp
    char mTag[7]; // Temp variable to manipulate the tag and pad spaces
+   char mStrTStamp[BACORE_TSTAMPLEN];
+   TBaCoreTimeStamp mTs;
 
    CBaMsg mLogCloseFailed;
    CBaMsg mRenameFailed;

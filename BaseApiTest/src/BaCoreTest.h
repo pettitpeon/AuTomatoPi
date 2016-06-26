@@ -26,6 +26,7 @@ public:
    CPPUNIT_TEST_SUITE(CBaCoreTest);
 
    CPPUNIT_TEST(SleepAndTiming);
+   CPPUNIT_TEST(TimeStamps);
    CPPUNIT_TEST(ThreadsNiceWeather);
    CPPUNIT_TEST(ThreadsSpecialCases);
    CPPUNIT_TEST(PidFiles);
@@ -34,6 +35,7 @@ public:
 
 public:
    void SleepAndTiming();
+   void TimeStamps();
    void ThreadsNiceWeather();
    void ThreadsSpecialCases();
    void PidFiles();
