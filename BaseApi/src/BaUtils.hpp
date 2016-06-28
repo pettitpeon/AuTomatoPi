@@ -222,7 +222,7 @@ static inline std::string GetFileExtension(
 /** Changes the extension of a path. The period is considered part of the
  *  extension.
  *  - "/foo/bar/baz.txt", ".dat" --> "/foo/bar/baz.dat"
- *  - "/foo/bar/baz.txt", "" --> "/foo/bar/baz"A
+ *  - "/foo/bar/baz.txt", "" --> "/foo/bar/baz"
  *  - "/foo/bar/baz", ".txt" --> "/foo/bar/baz.txt"
  *
  *  @return The path with the new extension

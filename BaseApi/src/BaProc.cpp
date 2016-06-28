@@ -13,6 +13,12 @@
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
+
+#ifdef __WIN32
+# include <windef.h>
+# include <winbase.h>
+#endif
+
 #include <string>
 #include <fstream> // std::ifstream
 
@@ -23,11 +29,15 @@
     Defines
  -----------------------------------------------------------------------------*/
 #if __WIN32
-# define PIDPATH "\\var\\run\\BaseApi\\"
+# define PIDPATH "C:\\var\\run\\BaseApi\\"
 #else
 # define PIDPATH "/var/run/BaseApi/"
 #endif
+#define PIDEXT ".pid"
 #define CTRLTASK "BaseApiCtrlTask"
+#define CTRLPIDFILE PIDPATH CTRLTASK
+#define SHLEN BAPROC_SHORTNAMELEN
+#define FULLLEN BAPROC_FULLNAMELEN
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -51,7 +61,8 @@ const char* BaProcGetOwnFullName() {
    static std::string name = "";
    if (name == "") {
       TCHAR szFileName[MAX_PATH];
-      GetModuleFileName(NULL, szFileName, MAX_PATH );
+      GetModuleFileName(NULL, szFileName, MAX_PATH);
+      GetModuleFileNameA(NULL, szFileName, MAX_PATH);
       name = BaPath::GetFilename(szFileName);
    }
    return name.c_str();
@@ -60,39 +71,160 @@ const char* BaProcGetOwnFullName() {
    return __progname;
 #endif
 }
+
 //
 const char* BaProcGetOwnShortName() {
-   static char sShortOwnName[BAPROC_SHORTNAMELEN] = {0};
+   static char sShortOwnName[SHLEN] = {0};
+
+   // Only write the first time
    if (!sShortOwnName[0]) {
-      strncpy(sShortOwnName, BaProcGetOwnFullName(), BAPROC_SHORTNAMELEN);
+
+      // strncpy() does not write the terminating null if size of from >= size
+      // The string is initialized with 0s so we just do not write the last char
+      strncpy(sShortOwnName, BaProcGetOwnFullName(), SHLEN-1);
    }
 
    return sShortOwnName;
 }
 
-
 //
-pid_t BaProcReadPidFile(const char *progName, TBaBool internal) {
-   if (!progName) {
-      return -1;
+TBaBoolRC BaProcWriteCtrlTaskPidFile() {
+   if (!BaFS::Exists(PIDPATH)) {
+      BaFS::MkDir(PIDPATH);
    }
 
-   std::string pidPath = PIDPATH;
-   std::ifstream file(internal ? pidPath + progName : progName);
+   std::ofstream ofile(CTRLPIDFILE);
+   if (!ofile.is_open()) {
+      // todo: log?
+      return eBaBoolRC_Error;
+   }
+
+   ofile << getpid() << std::endl;
+   ofile << BaProcGetOwnShortName() << std::endl;
+   ofile.close();
+   return ofile.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
+}
+
+//
+pid_t BaProcReadCtrlTaskPidFile(char buf[SHLEN]) {
+   std::string taskName(SHLEN, 0);
+   std::ifstream ifile(CTRLPIDFILE);
    pid_t pid = 0;
 
    // Check error
-   if(!(file >> pid)) {
-      return -1;
+   if(!(ifile >> pid)) {
+      return 0;
+   }
+
+   if (buf) {
+      if(!(ifile >> taskName)) {
+         return 0;
+      }
+
+      // strncpy() does not write the terminating null if size of from >= size
+      strncpy(buf, taskName.c_str(), SHLEN-1);
+      buf[SHLEN-1] = 0;
    }
 
    return pid;
 }
 
 //
-TBaBoolRC BaProcTestPidFile(const char *progName) {
+TBaBoolRC BaProcDelCtrlTaskPidFile() {
+   return remove(CTRLPIDFILE) == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+const char* BaProcGetPIDShortName(pid_t pid, char buf[SHLEN]) {
+   buf[SHLEN-1] = 0;
+#ifdef __WIN32
+   strncpy(buf, "ImAWinStub", SHLEN-1);
+#else
+
+#endif
+   return buf;
+}
+
+//
+const char* BaProcGetPIDFullName(pid_t pid, char buf[FULLLEN]) {
+   if (!buf) {
+      return 0;
+   }
+   buf[FULLLEN-1] = 0;
+#ifdef __WIN32
+   strncpy(buf, "ImALooooongWinStub", FULLLEN-1);
+#else
+
+#endif
+   return buf;
+}
+
+//
+TBaBoolRC BaProcWriteOwnPidFile() {
+   if (!BaFS::Exists(PIDPATH)) {
+      BaFS::MkDir(PIDPATH);
+   }
+
+   std::string pidfile = PIDPATH +
+         BaPath::ChangeFileExtension(BaProcGetOwnShortName(), PIDEXT);
+   std::ofstream ofile(pidfile);
+
+   if (!ofile.is_open()) {
+      // todo: log?
+      return eBaBoolRC_Error;
+   }
+
+   ofile << getpid() << std::endl;
+   ofile.close();
+   return ofile.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
+}
+
+//
+pid_t BaProcReadPidFile(const char *progName, TBaBool internal) {
    if (!progName) {
-      return eBaBoolRC_Success;
+      return 0;
+   }
+
+   std::string pidPath;
+   if (internal) {
+      pidPath = PIDPATH +
+            BaPath::ChangeFileExtension(progName, PIDEXT);
+   } else {
+      pidPath = progName;
+   }
+
+   std::ifstream file(pidPath);
+   pid_t pid = 0;
+
+   // Check error
+   if(!(file >> pid)) {
+      return 0;
+   }
+
+   return pid;
+}
+
+//
+TBaBoolRC BaProcDelPidFile(const char *progName, TBaBool internal) {
+   if (!progName) {
+      return eBaBoolRC_Error;
+   }
+
+   std::string pidPath = "";
+   if (internal) {
+      pidPath = PIDPATH +
+            BaPath::ChangeFileExtension(progName, PIDEXT);
+   } else {
+      pidPath.append(progName);
+   }
+
+   return remove(pidPath.c_str()) == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
+   if (!progName) {
+      return eBaBool_true;
    }
    std::string nameOfPID;
 
@@ -102,12 +234,12 @@ TBaBoolRC BaProcTestPidFile(const char *progName) {
    // Check if I am myself
    if ((pid < 0) || (pid == getpid())) {
       // OK, I can overwrite my own file
-      return eBaBoolRC_Success;
+      return eBaBool_true;
    }
 
    // Fake kill
 #ifdef __WIN32
-
+   return eBaBool_false;
 #else
 
    // Check if the process from the PID is running
@@ -121,44 +253,19 @@ TBaBoolRC BaProcTestPidFile(const char *progName) {
    // Open proc file from PID: /proc/[PID]/comm
    std::ifstream commFile("/proc/" + std::to_string(pid) + "/comm");
    if(commFile.fail()) {
-      return eBaBoolRC_Success;
+      return eBaBool_true;
    }
 
    // Read the executable name and compare it with the given name
    std::getline(commFile, nameOfPID);
    if (nameOfPID != progName) {
-      return eBaBoolRC_Success;
+      return eBaBool_true;
    }
 
    // There is another process called progName running
-   return eBaBoolRC_Error;
+   return eBaBool_false;
 }
 
-//
-TBaBoolRC BaProcWritePidFile(const char *progName) {
-   if (!progName) {
-      return eBaBoolRC_Error;
-   }
-
-   if (!BaFS::Exists(PIDPATH)) {
-      BaFS::MkDir(PIDPATH);
-   }
-
-   std::string pidfile = PIDPATH;
-   pidfile.append(CTRLTASK);
-   std::ofstream myfile (pidfile);
-
-   if (!myfile.is_open()) {
-      // todo: log?
-      return eBaBoolRC_Error;
-   }
-
-   pid_t pid = getpid();
-   myfile << pid << std::endl;
-   myfile << progName << std::endl;
-   myfile.close();
-   return myfile.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
-}
 
 //
 TBaBoolRC BaProcRemovePidFile(const char *progName) {

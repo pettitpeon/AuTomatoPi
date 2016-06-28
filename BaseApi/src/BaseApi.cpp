@@ -229,7 +229,7 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
 
 
 //
-TBaBoolRC BaApiStopCtrlTask(const char *progName) {
+TBaBoolRC BaApiStopCtrlTask() {
    BaApiExitLogger();
 #ifdef __WIN32
    resetStats(sStats);

@@ -50,13 +50,26 @@ const char* BaProcGetOwnShortName();
 const char* BaProcGetOwnFullName();
 
 /******************************************************************************/
-/** ...
- *  @return on success, the process name, otherwise, 0
+/** Write/overwrite the Control Task PID file which is a special PID file. This
+ *  function is meant to be called from within the forked control task.
+ *  @return Success or error
  */
-const char* BaProcGetPIDShortName(
-      pid_t pid, ///< Process ID
-      char buf[BAPROC_SHORTNAMELEN] ///< [in,out] Optional buffer
+TBaBoolRC BaProcWriteCtrlTaskPidFile();
+
+/******************************************************************************/
+/** ...
+ *  @return Success or error
+ */
+pid_t BaProcReadCtrlTaskPidFile(
+      char buf[BAPROC_SHORTNAMELEN] ///< [out]
       );
+
+/******************************************************************************/
+/** ...
+ *  @return Success or error
+ */
+TBaBoolRC BaProcDelCtrlTaskPidFile();
+
 
 /******************************************************************************/
 /** ...
@@ -67,33 +80,53 @@ const char* BaProcGetPIDFullName(
       char buf[BAPROC_FULLNAMELEN] ///< [in,out] Optional buffer
       );
 
+/******************************************************************************/
+/** ...
+ *  @return on success, the process name, otherwise, 0
+ */
+const char* BaProcGetPIDShortName(
+      pid_t pid, ///< Process ID
+      char buf[BAPROC_SHORTNAMELEN] ///< [in,out] Optional buffer
+      );
+
 /// @name PID Files
 //@{
+
+/******************************************************************************/
+/** Writes the PID file of an internal program.
+ *  @return Success or error
+ */
+TBaBoolRC BaProcWriteOwnPidFile();
+
 /******************************************************************************/
 /** Tries to read the PID from an internal program, or from a path
- *  @return on success, the PID, otherwise, -1
+ *  @return on success, the PID, otherwise, 0
  */
 pid_t BaProcReadPidFile(
-      const char *progName, ///< [in] Internal program name or path to PID file
+      const char *progName, ///< [in] Internal program name or full path to PID file
       TBaBool internal /**< [in] Flag to signal that the program was created
       with this API */
       );
 
 /******************************************************************************/
-/** TODO: Checks if the internal program is running
- *  @return Success or error
+/** ...
+ *  @return on success, the PID, otherwise, 0
  */
-TBaBoolRC BaProcTestPidFile(
-      const char *progName
+TBaBoolRC BaProcDelPidFile(
+      const char *progName, ///< [in] Internal program name or full path to PID file
+      TBaBool internal /**< [in] Flag to signal that the program was created
+      with this API */
       );
 
 /******************************************************************************/
-/** Writes the PID file of an internal program. The own name can be read with
- *  #BaProcGetOwnName().
- *  @return Success or error
+/** Test if a program with the PID inside the PID file is running and has the
+ *  same name as @c progName
+ *  @return true or false
  */
-TBaBoolRC BaProcWritePidFile(
-      const char *progName ///< [in] Internal program name
+TBaBool BaProcPidFileIsRunning(
+      const char *progName,
+      TBaBool internal /**< [in] Flag to signal that the program was created
+      with this API */
       );
 
 /******************************************************************************/

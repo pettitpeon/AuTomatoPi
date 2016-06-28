@@ -29,7 +29,10 @@
 #include "BaIniParseTest.h"
 #include "BaMsgTest.h"
 #include "BaseApiTest.h"
+#include "BaProcTest.h"
+
 #include "BaCore.h"
+
 
 //
 enum TTestSelection {
@@ -118,6 +121,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());
+   pSuite->addTest(CBaProcTest::suite());
    return pSuite;
 }
 

@@ -46,7 +46,7 @@
 #if __linux
 # define PIDPATH "/var/run/BaseApi/"
 #elif __WIN32
-# define PIDPATH "\\var\\run\\BaseApi\\"
+# define PIDPATH "C:\\var\\run\\BaseApi\\"
 #endif
 
 /*------------------------------------------------------------------------------
@@ -253,6 +253,7 @@ TBaBoolRC BaCoreGetThreadInfo(TBaCoreThreadHdl hdl, TBaCoreThreadInfo *pInfo) {
 
    // Get name
    size_t n = sizeof(pInfo->name);
+   // strncpy() does not write the terminating null if size of from >= size
    memset(pInfo->name, 0, n);
    strncpy(pInfo->name, pDesc->name.c_str(), n-1);
 
