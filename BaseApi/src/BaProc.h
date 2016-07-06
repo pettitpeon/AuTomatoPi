@@ -8,7 +8,9 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  Process functions
+ *   - Names
+ *   - PIDs
  */
 /*------------------------------------------------------------------------------
  */
@@ -23,8 +25,8 @@
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-#define BAPROC_SHORTNAMELEN 16
-#define BAPROC_FULLNAMELEN  256
+#define BAPROC_SHORTNAMELEN 16 ///< Standard length of program names 'proc/comm'
+#define BAPROC_FULLNAMELEN  256 ///< Maximum length of a file's name
 
 /*------------------------------------------------------------------------------
     Type definitions

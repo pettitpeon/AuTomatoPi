@@ -155,7 +155,6 @@ const char* BaProcGetPIDName(pid_t pid, char buf[SHLEN]) {
    return buf;
 }
 
-
 //
 TBaBoolRC BaProcWriteOwnPidFile() {
    if (!BaFS::Exists(PIDPATH)) {
