@@ -10,6 +10,10 @@
 #include <sched.h>
 
 // Portability headers
+#ifdef __arm__
+//error
+#endif
+
 #if __linux
  #include <sys/syscall.h>
 #elif __WIN32

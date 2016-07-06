@@ -12,6 +12,9 @@
  */
 /*------------------------------------------------------------------------------
  */
+
+#include <stdlib.h>
+#include <unistd.h>
 #include <iostream>
 #include "BaProcTest.h"
 #include "BaGenMacros.h"
@@ -21,8 +24,10 @@
 
 #if __WIN32
 # define PIDPATH "C:\\var\\run\\BaseApi\\"
+# define BINNAME "BaseApiTest.exe"
 #else
 # define PIDPATH "/var/run/BaseApi/"
+# define BINNAME "BaseApiTest"
 #endif
 #define PIDEXT ".pid"
 
@@ -59,21 +64,41 @@ void CBaProcTest::Init() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaProcTest::Test() {
+void CBaProcTest::OwnNames() {
 
-   char buf[BAPROC_SHORTNAMELEN];
    ASS(BaProcGetOwnShortName());
    ASS(BaProcGetOwnFullName());
-   std::cout << BaProcGetOwnShortName() << std::endl;
-   std::cout << BaProcGetOwnFullName() << std::endl;
+   std::string nameS = BaProcGetOwnShortName();
+   std::string nameF = BaProcGetOwnFullName();
+   ASS_MSG(nameS, nameS == BINNAME);
+   ASS_MSG(nameF, nameF == BINNAME);
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaProcTest::CtrlTaskPID() {
+
+   char buf[BAPROC_SHORTNAMELEN];
+
+   // No CtrlTask PID at the beginning
+   ASS(!BaProcReadCtrlTaskPidFile(buf));
+   ASS(!BaProcReadCtrlTaskPidFile(0));
+
+   // Write task PID
    ASS(BaProcWriteCtrlTaskPidFile());
+
+   // Ctrl Task PID available
    ASS(BaProcReadCtrlTaskPidFile(buf));
+   ASS(BaProcReadCtrlTaskPidFile(0));
+
    std::cout << buf << std::endl;
-   std::string nameFromPID(buf);
-   ASS(nameFromPID == BaProcGetOwnShortName());
+   ASS(std::string(buf) == BaProcGetOwnShortName());
+
+   ASS(BaFS::Exists(PIDPATH "BaseApiCtrlTask"));
    ASS(BaProcDelCtrlTaskPidFile());
    ASS(!BaFS::Exists(PIDPATH "BaseApiCtrlTask"));
-
+   ASS(!BaProcDelCtrlTaskPidFile());
 }
 
 /* ****************************************************************************/
@@ -97,4 +122,26 @@ void CBaProcTest::PIDFiles() {
    ASS(!BaProcDelPidFile(path.c_str(), eBaBool_false));
 }
 
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaProcTest::NameFromPID() {
+   std::string binName = BINNAME;
+   char buf[BAPROC_FULLNAMELEN];
+   const char *name = BaProcGetPIDName(getpid(), buf);
+   ASS(buf == name);
+   name = BaProcGetPIDName(getpid(), buf);
+   ASS(buf == name);
 
+#ifdef __linux
+   name = BaProcGetPIDName(getpid(), buf);
+   ASS_MSG(name, name == binName);
+   name = BaProcGetPIDName(getpid(), 0);
+   ASS_MSG(name, name == binName);
+
+   // Test that freeing the mallocated string does not crash
+   free((void*) name);
+   ASS(!BaProcGetPIDName(0, 0));
+   ASS(!BaProcGetPIDName(0, buf));
+#endif
+}

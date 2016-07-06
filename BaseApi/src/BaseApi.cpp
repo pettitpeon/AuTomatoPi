@@ -236,7 +236,7 @@ TBaBoolRC BaApiStopCtrlTask() {
    return eBaBoolRC_Error;
 #else
 
-   int pid = BaCoreReadPidFile(progName ? progName : CTRLTASK, eBaBool_true);
+   int pid = BaCoreReadPidFile(CTRLTASK, eBaBool_true);
    if (pid != -1) {
       if (kill(pid, SIGRTMIN) == 0) {
          return eBaBool_true;

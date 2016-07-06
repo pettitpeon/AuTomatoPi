@@ -32,16 +32,22 @@ public:
    CPPUNIT_TEST_SUITE(CBaProcTest);
 
    CPPUNIT_TEST(Init);
-   CPPUNIT_TEST(Test);
+   CPPUNIT_TEST(OwnNames);
+   CPPUNIT_TEST(CtrlTaskPID);
    CPPUNIT_TEST(PIDFiles);
+   CPPUNIT_TEST(NameFromPID);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
    void Init();
-   void Test();
+   void OwnNames();
+   void CtrlTaskPID();
    void PIDFiles();
+   void NameFromPID();
 };
 
 #endif // BAPROCTEST_H_
+
+
 

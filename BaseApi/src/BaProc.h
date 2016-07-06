@@ -37,6 +37,8 @@
 extern "C" {
 #endif
 
+/// @name Name of Processes
+//@{
 /******************************************************************************/
 /** Get the short name of own process
  *  @return on success, the process name, otherwise, 0
@@ -50,6 +52,19 @@ const char* BaProcGetOwnShortName();
 const char* BaProcGetOwnFullName();
 
 /******************************************************************************/
+/** Gets the process name from the PID. If no @c buf is provided, the pointer is
+ *  mallocated and has to be freed by the user to avoid memory leaks
+ *  @return on success, the process name, otherwise, 0
+ */
+const char* BaProcGetPIDName(
+      pid_t pid, ///< [in] Process ID
+      char buf[BAPROC_SHORTNAMELEN] ///< [out] Optional buffer
+      );
+//@} Name of Processes
+
+/// @name Control TasK PID File
+//@{
+/******************************************************************************/
 /** Write/overwrite the Control Task PID file which is a special PID file. This
  *  function is meant to be called from within the forked control task.
  *  @return Success or error
@@ -57,41 +72,25 @@ const char* BaProcGetOwnFullName();
 TBaBoolRC BaProcWriteCtrlTaskPidFile();
 
 /******************************************************************************/
-/** ...
- *  @return Success or error
+/** Read the Control Task PID file. The special control task PID file contains
+ *  name of the binary. This name is written to @c buf if the pointer is
+ *  provided
+ *  @return The PID on success or 0 on error
  */
 pid_t BaProcReadCtrlTaskPidFile(
-      char buf[BAPROC_SHORTNAMELEN] ///< [out]
+      char buf[BAPROC_SHORTNAMELEN] /**< [out] Optional buffer to read the name
+      of the binary*/
       );
 
 /******************************************************************************/
-/** ...
+/** Deletes the Control Task PID file.
  *  @return Success or error
  */
 TBaBoolRC BaProcDelCtrlTaskPidFile();
-
-
-/******************************************************************************/
-/** ...
- *  @return on success, the process name, otherwise, 0
- */
-const char* BaProcGetPIDFullName(
-      pid_t pid, ///< Process ID
-      char buf[BAPROC_FULLNAMELEN] ///< [in,out] Optional buffer
-      );
-
-/******************************************************************************/
-/** ...
- *  @return on success, the process name, otherwise, 0
- */
-const char* BaProcGetPIDShortName(
-      pid_t pid, ///< Process ID
-      char buf[BAPROC_SHORTNAMELEN] ///< [in,out] Optional buffer
-      );
+//@}  Control TasK PID File
 
 /// @name PID Files
 //@{
-
 /******************************************************************************/
 /** Writes the PID file of an internal program.
  *  @return Success or error
@@ -109,7 +108,7 @@ pid_t BaProcReadPidFile(
       );
 
 /******************************************************************************/
-/** ...
+/** Delete the PID file
  *  @return on success, the PID, otherwise, 0
  */
 TBaBoolRC BaProcDelPidFile(
@@ -124,18 +123,9 @@ TBaBoolRC BaProcDelPidFile(
  *  @return true or false
  */
 TBaBool BaProcPidFileIsRunning(
-      const char *progName,
+      const char *progName, ///< [in] Internal program name or full path to PID file
       TBaBool internal /**< [in] Flag to signal that the program was created
       with this API */
-      );
-
-/******************************************************************************/
-/** Remover the PID file of an internal program. The own name can be read with
- *  #BaProcGetOwnName().
- *  @return Success or error
- */
-TBaBoolRC BaProcRemovePidFile(
-      const char *progName ///< [in] Internal program name
       );
 //@} PID Files
 

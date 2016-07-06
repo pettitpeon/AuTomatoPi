@@ -24,6 +24,8 @@
 
 #include "BaProc.h"
 #include "BaUtils.hpp"
+#include "BaGenMacros.h"
+
 
 /*------------------------------------------------------------------------------
     Defines
@@ -46,6 +48,7 @@
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
+LOCAL std::string getPIDName(pid_t pid);
 
 /*------------------------------------------------------------------------------
     Local variables
@@ -135,29 +138,23 @@ TBaBoolRC BaProcDelCtrlTaskPidFile() {
 }
 
 //
-const char* BaProcGetPIDShortName(pid_t pid, char buf[SHLEN]) {
-   buf[SHLEN-1] = 0;
-#ifdef __WIN32
-   strncpy(buf, "ImAWinStub", SHLEN-1);
-#else
-
-#endif
-   return buf;
-}
-
-//
-const char* BaProcGetPIDFullName(pid_t pid, char buf[FULLLEN]) {
+const char* BaProcGetPIDName(pid_t pid, char buf[SHLEN]) {
    if (!buf) {
+      buf = (char*) malloc(SHLEN);
+      if(!buf) {
+         return 0;
+      }
+   }
+
+   std::string namePID = getPIDName(pid);
+   if (namePID.empty()) {
       return 0;
    }
-   buf[FULLLEN-1] = 0;
-#ifdef __WIN32
-   strncpy(buf, "ImALooooongWinStub", FULLLEN-1);
-#else
 
-#endif
+   strncpy(buf, namePID.c_str(), SHLEN-1);
    return buf;
 }
+
 
 //
 TBaBoolRC BaProcWriteOwnPidFile() {
@@ -226,8 +223,6 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
    if (!progName) {
       return eBaBool_true;
    }
-   std::string nameOfPID;
-
    // Get the PID from the PID file
    pid_t pid = BaProcReadPidFile(progName, eBaBool_true);
 
@@ -244,21 +239,16 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
 
    // Check if the process from the PID is running
    if (kill(pid, 0) && errno == ESRCH) {
-      // process not running, can overwrite file
-      return eBaBoolRC_Success;
+      // Orocess not running, can overwrite file
+      return eBaBool_true;
    }
 #endif
 
    // Process in PID is running
    // Open proc file from PID: /proc/[PID]/comm
-   std::ifstream commFile("/proc/" + std::to_string(pid) + "/comm");
-   if(commFile.fail()) {
-      return eBaBool_true;
-   }
 
    // Read the executable name and compare it with the given name
-   std::getline(commFile, nameOfPID);
-   if (nameOfPID != progName) {
+   if (getPIDName(pid) != progName) {
       return eBaBool_true;
    }
 
@@ -266,21 +256,25 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
    return eBaBool_false;
 }
 
-
-//
-TBaBoolRC BaProcRemovePidFile(const char *progName) {
-   if (!progName) {
-      return eBaBoolRC_Error;
-   }
-   std::string pidfile = PIDPATH;
-   pidfile.append(progName);
-   return unlink(pidfile.c_str()) == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
-}
-
-/*------------------------------------------------------------------------------
-    C++ Interface
- -----------------------------------------------------------------------------*/
-
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
+LOCAL std::string getPIDName(pid_t pid) {
+   std::string nameOfPID;
+#ifdef __WIN32
+   nameOfPID = "ImAWinStub";
+#else
+   // Process in PID is running
+   // Open proc file from PID: /proc/[PID]/comm
+   std::ifstream commFile("/proc/" + std::to_string(pid) + "/comm");
+   if(commFile.fail()) {
+      return "";
+   }
+
+   // Read the executable name
+   std::getline(commFile, nameOfPID);
+
+#endif
+   return nameOfPID;
+}
+
