@@ -7,14 +7,16 @@ O\+S level A\+P\+I.
 
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
 {\ttfamily \#include $<$unistd.\+h$>$}\\*
-Include dependency graph for Ba\+Core.\+h\+:\nopagebreak
+Include dependency graph for Ba\+Core.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=206pt]{BaCore_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -93,8 +95,8 @@ int64\+\_\+t \hyperlink{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}{Ba\+Core\+T
 \begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\item 
 void \hyperlink{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}{Ba\+Core\+Get\+T\+Stamp} (\hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp)
 \begin{DoxyCompactList}\small\item\em Gets the actual time timestamp. \end{DoxyCompactList}\item 
-const char $\ast$ \hyperlink{BaCore_8h_a9bc3dda291950c463500374c53029691}{Ba\+Core\+T\+Stamp\+To\+Str} (const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp)
-\begin{DoxyCompactList}\small\item\em Converts time stamp structure to mallocated string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+const char $\ast$ \hyperlink{BaCore_8h_a505f6901474517229290f1f9278f5a99}{Ba\+Core\+T\+Stamp\+To\+Str} (const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp, char p\+Buf\mbox{[}B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N\mbox{]})
+\begin{DoxyCompactList}\small\item\em Converts time stamp structure to string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 \begin{Indent}{\bf Multi-\/threading}\par
 \begin{DoxyCompactItemize}
@@ -323,26 +325,29 @@ Gets the actual time timestamp.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em p\+Stamp} & Time stamp or null if error \\
+\mbox{\tt out}  & {\em p\+Stamp} & Time stamp \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a9bc3dda291950c463500374c53029691}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}}
+\hypertarget{BaCore_8h_a505f6901474517229290f1f9278f5a99}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}}
 \index{Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+T\+Stamp\+To\+Str(const T\+Ba\+Core\+Time\+Stamp $\ast$p\+Stamp)}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Core\+T\+Stamp\+To\+Str (
+\subsubsection[{Ba\+Core\+T\+Stamp\+To\+Str(const T\+Ba\+Core\+Time\+Stamp $\ast$p\+Stamp, char p\+Buf[B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N])}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Core\+T\+Stamp\+To\+Str (
 \begin{DoxyParamCaption}
-\item[{const {\bf T\+Ba\+Core\+Time\+Stamp} $\ast$}]{p\+Stamp}
+\item[{const {\bf T\+Ba\+Core\+Time\+Stamp} $\ast$}]{p\+Stamp, }
+\item[{char}]{p\+Buf\mbox{[}\+B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N\mbox{]}}
 \end{DoxyParamCaption}
-)}\label{BaCore_8h_a9bc3dda291950c463500374c53029691}
+)}\label{BaCore_8h_a505f6901474517229290f1f9278f5a99}
 
 
-Converts time stamp structure to mallocated string. 
+Converts time stamp structure to string. 
 
-The user must free the returned pointer to avoid memory leaks \begin{DoxyReturn}{Returns}
+If the user gives a buffer ({\ttfamily p\+Buf}), it is used and returned. If the buffer is null, the string is mallocated and user must free the returned pointer to avoid memory leaks \begin{DoxyReturn}{Returns}
 Time stamp string if success, otherwise, null 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em p\+Stamp} & Time stamp to convert to string \\
+\hline
+\mbox{\tt in,out}  & {\em p\+Buf} & Optional buffer of length $>$= B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N. If null, the string is mallocated $\ast$ \\
 \hline
 \end{DoxyParams}
 \hypertarget{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Create\+Thread@{Ba\+Core\+Create\+Thread}}
@@ -476,6 +481,10 @@ Gets the name of the calling process.
 Mangling with the returned pointer leads to undefined behavior, please do not mess with it \begin{DoxyReturn}{Returns}
 The name of the calling process 
 \end{DoxyReturn}
+
+
+Referenced by Ba\+Api\+Start\+Ctrl\+Task().
+
 \hypertarget{BaCore_8h_af357edfd2287b05789cffbbf0c906ed5}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Read\+Pid\+File@{Ba\+Core\+Read\+Pid\+File}}
 \index{Ba\+Core\+Read\+Pid\+File@{Ba\+Core\+Read\+Pid\+File}!Ba\+Core.\+h@{Ba\+Core.\+h}}
 \subsubsection[{Ba\+Core\+Read\+Pid\+File(const char $\ast$prog\+Name, T\+Ba\+Bool internal)}]{\setlength{\rightskip}{0pt plus 5cm}pid\+\_\+t Ba\+Core\+Read\+Pid\+File (

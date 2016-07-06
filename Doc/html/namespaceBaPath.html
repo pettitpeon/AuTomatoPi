@@ -162,7 +162,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaCore_8h.html#a5bb6f24ac3258da1560dbc5ddda1442c">BaCoreGetOwnName()</a>, <a class="el" href="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195">ChangeFileExtension()</a>, and <a class="el" href="namespaceBaPath.html#a42b3acac9c048e45a531c9dc4be319f1">GetFileExtension()</a>.</p>
+<p>Referenced by <a class="el" href="BaCore_8h.html#a5bb6f24ac3258da1560dbc5ddda1442c">BaCoreGetOwnName()</a>, <a class="el" href="BaProc_8h.html#a73fc3532099b1f6d8ec26a69d065bca7">BaProcGetOwnFullName()</a>, <a class="el" href="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195">ChangeFileExtension()</a>, and <a class="el" href="namespaceBaPath.html#a42b3acac9c048e45a531c9dc4be319f1">GetFileExtension()</a>.</p>
 
 </div>
 </div>
@@ -254,7 +254,7 @@ Functions</h2></td></tr>
 <p>Changes the extension of a path. </p>
 <p>The period is considered part of the extension.</p><ul>
 <li>"/foo/bar/baz.txt", ".dat" &ndash;&gt; "/foo/bar/baz.dat"</li>
-<li>"/foo/bar/baz.txt", "" &ndash;&gt; "/foo/bar/baz"A</li>
+<li>"/foo/bar/baz.txt", "" &ndash;&gt; "/foo/bar/baz"</li>
 <li>"/foo/bar/baz", ".txt" &ndash;&gt; "/foo/bar/baz.txt"</li>
 </ul>
 <dl class="section return"><dt>Returns</dt><dd>The path with the new extension </dd></dl>
@@ -266,12 +266,14 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Referenced by <a class="el" href="BaProc_8h.html#a013102082e8b0f1c7148c1642194af6d">BaProcDelPidFile()</a>, <a class="el" href="BaProc_8h.html#a96b3ee236e4731559f69eca02a5e3d88">BaProcReadPidFile()</a>, and <a class="el" href="BaProc_8h.html#a482d93d161a58d213b2e0afb47adde14">BaProcWriteOwnPidFile()</a>.</p>
+
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 22 2016 19:17:30 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 21:10:51 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

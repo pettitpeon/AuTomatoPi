@@ -63,12 +63,14 @@
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaCore.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__incl.svg" width="179" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__incl.svg" width="179" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__dep__incl.svg" width="124" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__dep__incl.svg" width="124" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </div>
 <p><a href="BaCore_8h_source.html">Go to the source code of this file.</a></p>
@@ -161,9 +163,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a5890e7e91b8c1895f6a474781c489eb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a5890e7e91b8c1895f6a474781c489eb8">BaCoreGetTStamp</a> (<a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp)</td></tr>
 <tr class="memdesc:a5890e7e91b8c1895f6a474781c489eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the actual time timestamp.  <a href="#a5890e7e91b8c1895f6a474781c489eb8">More...</a><br /></td></tr>
 <tr class="separator:a5890e7e91b8c1895f6a474781c489eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bc3dda291950c463500374c53029691"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a9bc3dda291950c463500374c53029691">BaCoreTStampToStr</a> (const <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp)</td></tr>
-<tr class="memdesc:a9bc3dda291950c463500374c53029691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts time stamp structure to mallocated string.  <a href="#a9bc3dda291950c463500374c53029691">More...</a><br /></td></tr>
-<tr class="separator:a9bc3dda291950c463500374c53029691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a505f6901474517229290f1f9278f5a99"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a505f6901474517229290f1f9278f5a99">BaCoreTStampToStr</a> (const <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp, char pBuf[BACORE_TSTAMPLEN])</td></tr>
+<tr class="memdesc:a505f6901474517229290f1f9278f5a99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts time stamp structure to string.  <a href="#a505f6901474517229290f1f9278f5a99">More...</a><br /></td></tr>
+<tr class="separator:a505f6901474517229290f1f9278f5a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Multi-threading</div></td></tr>
 <tr class="memitem:a91ad70ff751bb8afd38fe7fd3bc7e1e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaCore_8h.html#a2898da7dd1b0e998b8c64dca81dff404">TBaCoreThreadHdl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a91ad70ff751bb8afd38fe7fd3bc7e1e1">BaCoreCreateThread</a> (const char *name, <a class="el" href="BaCore_8h.html#ae50095c02ffddc39ec0df7f19e52c559">TBaCoreThreadFun</a> routine, <a class="el" href="structTBaCoreThreadArg.html">TBaCoreThreadArg</a> *pArg, <a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a> prio)</td></tr>
 <tr class="memdesc:a91ad70ff751bb8afd38fe7fd3bc7e1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread factory.  <a href="#a91ad70ff751bb8afd38fe7fd3bc7e1e1">More...</a><br /></td></tr>
@@ -476,14 +478,14 @@ Functions</h2></td></tr>
 <p>Gets the actual time timestamp. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">pStamp</td><td>Time stamp or null if error </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pStamp</td><td>Time stamp </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a9bc3dda291950c463500374c53029691"></a>
+<a class="anchor" id="a505f6901474517229290f1f9278f5a99"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -491,17 +493,28 @@ Functions</h2></td></tr>
           <td class="memname">const char* BaCoreTStampToStr </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *&#160;</td>
-          <td class="paramname"><em>pStamp</em></td><td>)</td>
+          <td class="paramname"><em>pStamp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>pBuf</em>[BACORE_TSTAMPLEN]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts time stamp structure to mallocated string. </p>
-<p>The user must free the returned pointer to avoid memory leaks </p><dl class="section return"><dt>Returns</dt><dd>Time stamp string if success, otherwise, null </dd></dl>
+<p>Converts time stamp structure to string. </p>
+<p>If the user gives a buffer (<code>pBuf</code>), it is used and returned. If the buffer is null, the string is mallocated and user must free the returned pointer to avoid memory leaks </p><dl class="section return"><dt>Returns</dt><dd>Time stamp string if success, otherwise, null </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pStamp</td><td>Time stamp to convert to string </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pBuf</td><td>Optional buffer of length &gt;= BACORE_TSTAMPLEN. If null, the string is mallocated * </td></tr>
   </table>
   </dd>
 </dl>
@@ -695,6 +708,8 @@ Functions</h2></td></tr>
 <p>Gets the name of the calling process. </p>
 <p>Mangling with the returned pointer leads to undefined behavior, please do not mess with it </p><dl class="section return"><dt>Returns</dt><dd>The name of the calling process </dd></dl>
 
+<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="af357edfd2287b05789cffbbf0c906ed5"></a>
@@ -813,7 +828,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 22 2016 19:17:30 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 6 2016 21:10:51 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

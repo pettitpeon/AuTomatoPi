@@ -80,7 +80,7 @@ The filename including the extension
 \end{DoxyParams}
 
 
-Referenced by Ba\+Core\+Get\+Own\+Name(), Change\+File\+Extension(), and Get\+File\+Extension().
+Referenced by Ba\+Core\+Get\+Own\+Name(), Ba\+Proc\+Get\+Own\+Full\+Name(), Change\+File\+Extension(), and Get\+File\+Extension().
 
 \hypertarget{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}{}\index{Ba\+Path@{Ba\+Path}!Get\+File\+Extension@{Get\+File\+Extension}}
 \index{Get\+File\+Extension@{Get\+File\+Extension}!Ba\+Path@{Ba\+Path}}
@@ -124,7 +124,7 @@ Changes the extension of a path.
 The period is considered part of the extension.
 \begin{DoxyItemize}
 \item \char`\"{}/foo/bar/baz.\+txt\char`\"{}, \char`\"{}.\+dat\char`\"{} --$>$ \char`\"{}/foo/bar/baz.\+dat\char`\"{}
-\item \char`\"{}/foo/bar/baz.\+txt\char`\"{}, \char`\"{}\char`\"{} --$>$ \char`\"{}/foo/bar/baz\char`\"{}A
+\item \char`\"{}/foo/bar/baz.\+txt\char`\"{}, \char`\"{}\char`\"{} --$>$ \char`\"{}/foo/bar/baz\char`\"{}
 \item \char`\"{}/foo/bar/baz\char`\"{}, \char`\"{}.\+txt\char`\"{} --$>$ \char`\"{}/foo/bar/baz.\+txt\char`\"{}
 \end{DoxyItemize}
 
@@ -138,3 +138,7 @@ The path with the new extension
 \mbox{\tt in}  & {\em ext} & Extension to replace \\
 \hline
 \end{DoxyParams}
+
+
+Referenced by Ba\+Proc\+Del\+Pid\+File(), Ba\+Proc\+Read\+Pid\+File(), and Ba\+Proc\+Write\+Own\+Pid\+File().
+

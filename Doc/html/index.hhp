@@ -21,6 +21,7 @@ BaIniParse_8h_source.html
 BaLog_8h_source.html
 BaLogMacros_8h_source.html
 BaMsg_8h_source.html
+BaProc_8h_source.html
 BaseApi_8h_source.html
 BaUtils_8hpp_source.html
 BaBool_8h.html
@@ -32,6 +33,7 @@ BaIniParse_8h.html
 BaLog_8h.html
 BaLogMacros_8h.html
 BaMsg_8h.html
+BaProc_8h.html
 BaseApi_8h.html
 BaUtils_8hpp.html
 invstDoku.html
@@ -108,6 +110,7 @@ BaLog_8h__incl.svg
 BaLog_8h__dep__incl.svg
 BaLogMacros_8h__incl.svg
 BaMsg_8h__incl.svg
+BaProc_8h__incl.svg
 BaseApi_8h__incl.svg
 BaseApi_8h__dep__incl.svg
 BaUtils_8hpp__incl.svg
