@@ -95,9 +95,9 @@ void CBaProcTest::CtrlTaskPID() {
    std::cout << buf << std::endl;
    ASS(std::string(buf) == BaProcGetOwnShortName());
 
-   ASS(BaFS::Exists(PIDPATH "BaseApiCtrlTask"));
+   ASS(BaFS::Exists(PIDPATH "BaseApiCtrlTask.pid"));
    ASS(BaProcDelCtrlTaskPidFile());
-   ASS(!BaFS::Exists(PIDPATH "BaseApiCtrlTask"));
+   ASS(!BaFS::Exists(PIDPATH "BaseApiCtrlTask.pid"));
    ASS(!BaProcDelCtrlTaskPidFile());
 }
 
@@ -120,6 +120,8 @@ void CBaProcTest::PIDFiles() {
    ASS(BaProcDelPidFile(path.c_str(), eBaBool_false));
    ASS(!BaProcDelPidFile(BaProcGetOwnShortName(), eBaBool_true));
    ASS(!BaProcDelPidFile(path.c_str(), eBaBool_false));
+
+   // todo: Test external PID files!
 }
 
 /* ****************************************************************************/

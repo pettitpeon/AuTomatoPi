@@ -206,44 +206,44 @@ EBaCorePrio BaCoreGetOwnProcPrio();
 const char* BaCoreGetOwnName();
 //@} Other getter setters
 
-/// @name PID Files
-//@{
-/******************************************************************************/
-/** Tries to read the PID from an internal program, or from a path
- *  @return on success, the PID, otherwise, -1
- */
-pid_t BaCoreReadPidFile(
-      const char *progName, ///< [in] Internal program name or path to PID file
-      TBaBool internal /**< [in] Flag to signal that the program was created
-      with this API */
-      );
-
-/******************************************************************************/
-/** TODO: Checks if the internal program is running
- *  @return Success or error
- */
-TBaBoolRC BaCoreTestPidFile(
-      const char *progName
-      );
-
-/******************************************************************************/
-/** Writes the PID file of an internal program. The own name can be read with
- *  #BaCoreGetOwnName().
- *  @return Success or error
- */
-TBaBoolRC BaCoreWritePidFile(
-      const char *progName ///< [in] Internal program name
-      );
-
-/******************************************************************************/
-/** Remover the PID file of an internal program. The own name can be read with
- *  #BaCoreGetOwnName().
- *  @return Success or error
- */
-TBaBoolRC BaCoreRemovePidFile(
-      const char *progName ///< [in] Internal program name
-      );
-//@} PID Files
+///// @name PID Files
+////@{
+///******************************************************************************/
+///** Tries to read the PID from an internal program, or from a path
+// *  @return on success, the PID, otherwise, -1
+// */
+//pid_t BaCoreReadPidFile(
+//      const char *progName, ///< [in] Internal program name or path to PID file
+//      TBaBool internal /**< [in] Flag to signal that the program was created
+//      with this API */
+//      );
+//
+///******************************************************************************/
+///** TODO: Checks if the internal program is running
+// *  @return Success or error
+// */
+//TBaBoolRC BaCoreTestPidFile(
+//      const char *progName
+//      );
+//
+///******************************************************************************/
+///** Writes the PID file of an internal program. The own name can be read with
+// *  #BaCoreGetOwnName().
+// *  @return Success or error
+// */
+//TBaBoolRC BaCoreWritePidFile(
+//      const char *progName ///< [in] Internal program name
+//      );
+//
+///******************************************************************************/
+///** Remover the PID file of an internal program. The own name can be read with
+// *  #BaCoreGetOwnName().
+// *  @return Success or error
+// */
+//TBaBoolRC BaCoreRemovePidFile(
+//      const char *progName ///< [in] Internal program name
+//      );
+////@} PID Files
 
 #ifdef __cplusplus
 }

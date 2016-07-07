@@ -24,7 +24,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CBaCoreTest );
 LOCAL void testTimingFun(void *arg);
 LOCAL void testThreadNiceWeatherFun(TBaCoreThreadArg *pArg);
 LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg);
-LOCAL void writePidRout(void*);
+//LOCAL void writePidRout(void*);
 
 char sBuf[BACORE_TSTAMPLEN];
 
@@ -265,27 +265,27 @@ void CBaCoreTest::ThreadsSpecialCases() {
  */
 void CBaCoreTest::PidFiles() {
 
-   TBaApiCtrlTaskOpts opts = {0};
-   opts.cyleTimeMs = 1000;
-   opts.prio = eBaCorePrio_Normal;
-   opts.update = writePidRout;
-   TBaCoreTimeStamp ts;
-   BaCoreGetTStamp(&ts);
-   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
-   TRACE_("Now!");
-
-   // Create a second process with the same name
-   ASS(BaApiStartCtrlTask(&opts));
-
-   // Give it chance to be born
-   BaCoreMSleep(500);
-
-   // Check if the PID in the file is running, is not ourself, and is called
-   // the same.
-   ASS(!BaCoreTestPidFile("BaseApiTest"));
-   BaCoreGetTStamp(&ts);
-   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
-   ASS(BaApiStopCtrlTask());
+//   TBaApiCtrlTaskOpts opts = {0};
+//   opts.cyleTimeMs = 1000;
+//   opts.prio = eBaCorePrio_Normal;
+//   opts.update = writePidRout;
+//   TBaCoreTimeStamp ts;
+//   BaCoreGetTStamp(&ts);
+//   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
+//   TRACE_("Now!");
+//
+//   // Create a second process with the same name
+//   ASS(BaApiStartCtrlTask(&opts));
+//
+//   // Give it chance to be born
+//   BaCoreMSleep(500);
+//
+//   // Check if the PID in the file is running, is not ourself, and is called
+//   // the same.
+//   ASS(!BaCoreTestPidFile("BaseApiTest"));
+//   BaCoreGetTStamp(&ts);
+//   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
+//   ASS(BaApiStopCtrlTask());
 }
 
 // Auxiliary timing function
@@ -323,16 +323,17 @@ LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg) {
    std::cout << "testInfThreadFun exit\n";
 }
 
-LOCAL void writePidRout(void*) {
-   static int sInit = 0;
-   if (!sInit) {
-      BaCoreWritePidFile("BaseApiTest");
-      TBaCoreTimeStamp ts;
-      BaCoreGetTStamp(&ts);
-      std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
-   }
-   if (sInit >= 100) {
-      exit(0);
-   }
-   sInit++;
-}
+//LOCAL void writePidRout(void*) {
+//   static int sInit = 0;
+//   if (!sInit) {
+////      BaCoreWritePidFile("BaseApiTest");
+//      BaProcWriteOwnPidFile();
+//      TBaCoreTimeStamp ts;
+//      BaCoreGetTStamp(&ts);
+//      std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
+//   }
+//   if (sInit >= 100) {
+//      exit(0);
+//   }
+//   sInit++;
+//}

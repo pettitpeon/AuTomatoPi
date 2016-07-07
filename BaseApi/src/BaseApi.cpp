@@ -28,6 +28,7 @@
 #include "CBaLog.h"
 #include "BaGenMacros.h"
 #include "BaLogMacros.h"
+#include "BaProc.h"
 
 /*------------------------------------------------------------------------------
  *  Defines
@@ -149,7 +150,7 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    return eBaBoolRC_Error;
 #else
 
-   if (!BaCoreTestPidFile(BaCoreGetOwnName())) {
+   if (BaProcPidFileIsRunning(CTRLTASK, eBaBool_true)) {
       ERROR_("Process already running");
       return eBaBoolRC_Error;
    }
@@ -187,7 +188,7 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    // Now Luke is in command ////////////////////////////////////////
 
    // Write PID file
-   BaCoreWritePidFile(BaCoreGetOwnName());
+   BaProcWriteCtrlTaskPidFile();
 
    // Change directory to default
    chdir(DEFDIR);
@@ -218,7 +219,7 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
       pOpts->exit(pOpts->exitArg);
    }
    TRACE_("Luke: I finished your quest father");
-   BaCoreRemovePidFile(CTRLTASK);
+   BaProcDelCtrlTaskPidFile();
    resetStats(sStats);
 
    // This is the child process, should not continue
@@ -236,15 +237,18 @@ TBaBoolRC BaApiStopCtrlTask() {
    return eBaBoolRC_Error;
 #else
 
-   int pid = BaCoreReadPidFile(CTRLTASK, eBaBool_true);
-   if (pid != -1) {
-      if (kill(pid, SIGRTMIN) == 0) {
+   pid_t pid = BaProcReadCtrlTaskPidFile(0);
+   if (pid) {
+      int killRc = kill(pid, SIGRTMIN);
+      if (killRc == 0) {
+         resetStats(sStats);
          return eBaBool_true;
       }
-      ERROR_("Kill failed");
+      ERROR_("Kill failed (%i)", killRc);
    } else {
-      WARN_("Failed to read the PID of %s", CTRLTASK);
+      WARN_("Failed to read the PID of CtrlTask");
    }
+
    resetStats(sStats);
    return eBaBoolRC_Error;
 #endif

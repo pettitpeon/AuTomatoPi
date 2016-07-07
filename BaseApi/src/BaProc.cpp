@@ -37,7 +37,7 @@
 #endif
 #define PIDEXT ".pid"
 #define CTRLTASK "BaseApiCtrlTask"
-#define CTRLPIDFILE PIDPATH CTRLTASK
+#define CTRLPIDFILE PIDPATH CTRLTASK PIDEXT
 #define SHLEN BAPROC_SHORTNAMELEN
 #define FULLLEN BAPROC_FULLNAMELEN
 
@@ -220,15 +220,30 @@ TBaBoolRC BaProcDelPidFile(const char *progName, TBaBool internal) {
 //
 TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
    if (!progName) {
-      return eBaBool_true;
+      return eBaBool_false;
    }
-   // Get the PID from the PID file
-   pid_t pid = BaProcReadPidFile(progName, eBaBool_true);
+
+   std::string binName = progName;
+   char buf[BAPROC_SHORTNAMELEN];
+   pid_t pid = 0;
+
+   if (!internal) {
+      binName = BaPath::GetFilename(binName);
+   }
+
+   if (binName == CTRLTASK) {
+      pid = BaProcReadCtrlTaskPidFile(buf);
+      if (pid) {
+         binName = buf;
+      }
+   } else {
+      pid = BaProcReadPidFile(progName, internal);
+   }
 
    // Check if I am myself
-   if ((pid < 0) || (pid == getpid())) {
+   if (!pid || (pid == getpid())) {
       // OK, I can overwrite my own file
-      return eBaBool_true;
+      return eBaBool_false;
    }
 
    // Fake kill
@@ -239,7 +254,7 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
    // Check if the process from the PID is running
    if (kill(pid, 0) && errno == ESRCH) {
       // Orocess not running, can overwrite file
-      return eBaBool_true;
+      return eBaBool_false;
    }
 #endif
 
@@ -247,12 +262,12 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
    // Open proc file from PID: /proc/[PID]/comm
 
    // Read the executable name and compare it with the given name
-   if (getPIDName(pid) != progName) {
-      return eBaBool_true;
+   if (getPIDName(pid) != binName) {
+      return eBaBool_false;
    }
 
    // There is another process called progName running
-   return eBaBool_false;
+   return eBaBool_true;
 }
 
 /*------------------------------------------------------------------------------
