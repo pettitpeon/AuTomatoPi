@@ -9,14 +9,9 @@
 #include <signal.h>
 #include <sched.h>
 
-// Portability headers
-#ifdef __arm__
-//error
-#endif
-
-#if __linux
+#ifndef __WIN32
  #include <sys/syscall.h>
-#elif __WIN32
+#else
  #include <processthreadsapi.h>
  #include <windef.h>
  #include <winbase.h>
@@ -28,7 +23,6 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-
 
 /*------------------------------------------------------------------------------
  *  Includes
@@ -89,7 +83,6 @@ typedef struct TThreadDesc {
 LOCAL TDuration timed(TBaCoreFun func, void* pArg);
 LOCAL void threadRoutine(TThreadDesc *pDesc);
 LOCAL int prio2Prio(EBaCorePrio prio);
-LOCAL EBaCorePrio prioFromPrio(int prio);
 
 /*------------------------------------------------------------------------------
  *  Interface implementation
@@ -269,153 +262,6 @@ TBaBoolRC BaCoreGetThreadInfo(TBaCoreThreadHdl hdl, TBaCoreThreadInfo *pInfo) {
    return eBaBoolRC_Success;
 }
 
-//
-TBaBoolRC BaCoreSetOwnProcPrio(EBaCorePrio prio) {
-
-   // Define the priority and scheduler
-   int8_t sched = SCHED_OTHER;
-   struct sched_param schedPrio;
-#ifdef __linux
-   schedPrio.__sched_priority = prio2Prio(prio);
-   // Set the soft real-time scheduler if required
-   sched = prio > eBaCorePrio_Highest ? SCHED_FIFO : SCHED_OTHER;
-#elif __WIN32
-   schedPrio.sched_priority = prio2Prio(prio);
-#endif
-
-   int ret = sched_setscheduler(0, sched, &schedPrio);
-   return ret == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
-}
-
-//
-EBaCorePrio BaCoreGetOwnProcPrio() {
-   // In windows it is only a stub
-#ifdef __WIN32
-   return eBaCorePrio_Normal;
-#else
-   struct sched_param schedPrio;
-   sched_getparam(0, &schedPrio);
-   return prioFromPrio(schedPrio.__sched_priority);
-#endif
-
-}
-
-//
-const char* BaCoreGetOwnName() {
-#ifdef __linux
-   extern char *__progname;
-   return __progname;
-#else
-   static std::string name = "";
-   if (name == "") {
-      TCHAR szFileName[MAX_PATH];
-      GetModuleFileName(NULL, szFileName, MAX_PATH );
-      name = BaPath::GetFilename(szFileName);
-   }
-   return name.c_str();
-#endif
-}
-
-
-//
-pid_t BaCoreReadPidFile(const char *progName, TBaBool internal) {
-   if (!progName) {
-      return -1;
-   }
-
-   std::string pidPath = PIDPATH;
-   std::ifstream file(internal ? pidPath + progName : progName);
-   pid_t pid = 0;
-
-   // Check error
-   if(!(file >> pid)) {
-      return -1;
-   }
-
-   return pid;
-}
-
-//
-TBaBoolRC BaCoreTestPidFile(const char *progName) {
-   if (!progName) {
-      return eBaBoolRC_Success;
-   }
-   std::string nameOfPID;
-
-   // Get the PID from the PID file
-   pid_t pid = BaCoreReadPidFile(progName, eBaBool_true);
-
-   // Check if I am myself
-   if ((pid < 0) || (pid == getpid())) {
-      // OK, I can overwrite my own file
-      return eBaBoolRC_Success;
-   }
-
-   // Fake kill
-#ifdef __WIN32
-
-#else
-
-   // Check if the process from the PID is running
-   if (kill(pid, 0) && errno == ESRCH) {
-      // process not running, can overwrite file
-      return eBaBoolRC_Success;
-   }
-#endif
-
-   // Process in PID is running
-   // Open proc file from PID: /proc/[PID]/comm
-   std::ifstream commFile("/proc/" + std::to_string(pid) + "/comm");
-   if(commFile.fail()) {
-      return eBaBoolRC_Success;
-   }
-
-   // Read the executable name and compare it with the given name
-   std::getline(commFile, nameOfPID);
-   if (nameOfPID != progName) {
-      return eBaBoolRC_Success;
-   }
-
-   // There is another process called progName running
-   return eBaBoolRC_Error;
-}
-
-//
-TBaBoolRC BaCoreWritePidFile(const char *progName) {
-   if (!progName) {
-      return eBaBoolRC_Error;
-   }
-
-   if (!BaFS::Exists(PIDPATH)) {
-      BaFS::MkDir(PIDPATH);
-   }
-
-   std::string pidfile = PIDPATH;
-   pidfile.append(CTRLTASK);
-   std::ofstream myfile (pidfile);
-
-   if (!myfile.is_open()) {
-      // todo: log?
-      return eBaBoolRC_Error;
-   }
-
-   pid_t pid = getpid();
-   myfile << pid << std::endl;
-   myfile << progName << std::endl;
-   myfile.close();
-   return myfile.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
-}
-
-//
-TBaBoolRC BaCoreRemovePidFile(const char *progName) {
-   if (!progName) {
-      return eBaBoolRC_Error;
-   }
-   std::string pidfile = PIDPATH;
-   pidfile.append(progName);
-   return unlink(pidfile.c_str()) == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
-}
-
 
 /*------------------------------------------------------------------------------
  *  Local functions
@@ -506,53 +352,6 @@ LOCAL int prio2Prio(EBaCorePrio prio) {
 #endif
       default : return 1;
    }
-
-}
-
-//
-LOCAL EBaCorePrio prioFromPrio(int prio) {
-   //  Linux
-   // Scheduler  def min max
-   // SCHED_FIFO      1  99
-   // SCHED_OTHER 0  -20 19
-   //  Windows, Only SCHED_OTHER available
-   // Min -15
-   // Max  15
-
-
-#ifdef __linux
-//      case eBaCorePrio_Minimum:    return -20;
-//      case eBaCorePrio_Low:        return -10;
-//      case eBaCorePrio_Normal:     return   0;
-//      case eBaCorePrio_High:       return  10;
-//      case eBaCorePrio_Highest:    return  19;
-//      case eBaCorePrio_RT_Normal:  return  20;
-//      case eBaCorePrio_RT_High:    return  45;
-//      case eBaCorePrio_RT_Highest: return  70;
-   if (prio ==  0) return eBaCorePrio_Normal;
-   if (prio == 20) return eBaCorePrio_RT_Normal;
-
-   if (prio < -10) return eBaCorePrio_Minimum;
-   if (prio <   0) return eBaCorePrio_Low;
-   if (prio <  10) return eBaCorePrio_High;
-   if (prio <  20) return eBaCorePrio_Highest;
-
-   if (prio <  50) return eBaCorePrio_RT_High;
-   return eBaCorePrio_RT_Highest;
-
-#elif __WIN32
-   switch (prio) {
-      case THREAD_PRIORITY_IDLE:              return eBaCorePrio_Minimum;
-      case THREAD_PRIORITY_LOWEST:            return eBaCorePrio_Low;
-      case THREAD_PRIORITY_NORMAL:            return eBaCorePrio_Normal;
-      case THREAD_PRIORITY_ABOVE_NORMAL:      return eBaCorePrio_High;
-      case THREAD_PRIORITY_HIGHEST:           return eBaCorePrio_Highest;
-      case THREAD_PRIORITY_TIME_CRITICAL - 6: return eBaCorePrio_RT_Normal;
-      case THREAD_PRIORITY_TIME_CRITICAL - 3: return eBaCorePrio_RT_High;
-      case THREAD_PRIORITY_TIME_CRITICAL:     return eBaCorePrio_RT_Highest;
-      default : return eBaCorePrio_Normal;
-   }
-#endif
 
 }
 

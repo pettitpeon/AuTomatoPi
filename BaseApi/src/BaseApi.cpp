@@ -79,15 +79,12 @@ static volatile sig_atomic_t sExit = 0;
 
 //
 TBaBoolRC BaApiInit() {
-
-
    return eBaBoolRC_Success;
 }
 
 
 //
 TBaBoolRC BaApiExit() {
-
    return eBaBoolRC_Success;
 }
 
@@ -193,7 +190,7 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    // Change directory to default
    chdir(DEFDIR);
 
-   TRACE_("prio: %i", BaCoreSetOwnProcPrio(pOpts->prio));
+   TRACE_("prio: %i", BaProcSetOwnPrio(pOpts->prio));
    TRACE_("NOOOO!!");
 
 

@@ -11,6 +11,7 @@
  *  Process functions
  *   - Names
  *   - PIDs
+ *   - Priorities
  */
 /*------------------------------------------------------------------------------
  */
@@ -21,6 +22,7 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include "BaBool.h"
+#include "BaCore.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -131,6 +133,22 @@ TBaBool BaProcPidFileIsRunning(
       );
 //@} PID Files
 
+/// @name Process Priority
+//@{
+/******************************************************************************/
+/** Set the priority of the calling process. TODO: unit test
+ *  @return Error or success
+ */
+TBaBoolRC BaProcSetOwnPrio(
+      EBaCorePrio prio    ///< [in] New priority
+      );
+
+/******************************************************************************/
+/** Get the priority of the calling process. TODO: unit test
+ *  @return the priority
+ */
+EBaCorePrio BaProcGetOwnPrio();
+//@} Process Priority
 
 #ifdef __cplusplus
 } // extern c

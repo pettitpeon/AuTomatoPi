@@ -120,8 +120,15 @@ void CBaProcTest::PIDFiles() {
    ASS(BaProcDelPidFile(path.c_str(), eBaBool_false));
    ASS(!BaProcDelPidFile(BaProcGetOwnShortName(), eBaBool_true));
    ASS(!BaProcDelPidFile(path.c_str(), eBaBool_false));
+   ASS(!BaProcReadPidFile(0, eBaBool_true));
 
-   // todo: Test external PID files!
+   // Test external PID files!
+   ASS(!BaProcReadPidFile(PIDPATH "BaseApiTest.pid", eBaBool_false));
+   ASS(BaProcWriteOwnPidFile());
+   ASS(BaProcReadPidFile(PIDPATH "BaseApiTest.pid", eBaBool_false));
+   ASS(BaProcDelPidFile(PIDPATH "BaseApiTest.pid", eBaBool_false));
+   ASS(!BaProcDelPidFile(PIDPATH "BaseApiTest.pid", eBaBool_false));
+   ASS(!BaProcReadPidFile(0, eBaBool_false));
 }
 
 /* ****************************************************************************/
@@ -135,7 +142,7 @@ void CBaProcTest::NameFromPID() {
    name = BaProcGetPIDName(getpid(), buf);
    ASS(buf == name);
 
-#ifdef __linux
+#ifndef __WIN32
    name = BaProcGetPIDName(getpid(), buf);
    ASS_MSG(name, name == binName);
    name = BaProcGetPIDName(getpid(), 0);
@@ -146,4 +153,22 @@ void CBaProcTest::NameFromPID() {
    ASS(!BaProcGetPIDName(0, 0));
    ASS(!BaProcGetPIDName(0, buf));
 #endif
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaProcTest::Prio() {
+   ASS(BaProcSetOwnPrio(eBaCorePrio_RT_Highest));
+   // if out of range
+   ASS(!BaProcSetOwnPrio((EBaCorePrio) (eBaCorePrio_Minimum - 1)));
+   ASS(!BaProcSetOwnPrio((EBaCorePrio) (eBaCorePrio_RT_Highest + 1)));
+
+#ifndef __WIN32
+   ASS(BaProcSetOwnPrio(eBaCorePrio_RT_Highest));
+   ASS_EQ(eBaCorePrio_RT_Highest, BaProcGetOwnPrio());
+   ASS(BaProcSetOwnPrio(eBaCorePrio_Normal));
+   ASS_EQ(eBaCorePrio_Normal, BaProcGetOwnPrio());
+#endif
+
 }

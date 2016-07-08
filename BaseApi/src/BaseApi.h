@@ -150,7 +150,7 @@ TBaBoolRC BaApiStopCtrlThread();
 
 /******************************************************************************/
 /** Gets the task statistics. This is mostly meant to be called within the
- *  @c update() function so it gets the stats from the task
+ *  @c update() function so it gets the statistics from the control task
  *  @return Error or success
  */
 TBaBoolRC BaApiGetCtrlTaskStats(

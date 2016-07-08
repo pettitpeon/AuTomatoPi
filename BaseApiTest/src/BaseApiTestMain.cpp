@@ -30,8 +30,7 @@
 #include "BaMsgTest.h"
 #include "BaseApiTest.h"
 #include "BaProcTest.h"
-
-#include "BaCore.h"
+#include "BaProc.h"
 
 
 //
@@ -46,8 +45,8 @@ char gCWD[1024];
 
 static TTestSelection sSelection =
 //      eSingleTests;
-//      eSingleSuites;
-      eFullRegistry;
+      eSingleSuites;
+//      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -70,7 +69,7 @@ int main(int argc, char* argv[]) {
    // Print arguments
    for(int i = 0; i < argc; i++) {
       std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
-      std::cout << "Full Name: " << BaCoreGetOwnName() << std::endl;
+      std::cout << "Full Name: " << BaProcGetOwnFullName() << std::endl;
    }
 
    // Get the working directory

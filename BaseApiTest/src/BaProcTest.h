@@ -36,6 +36,7 @@ public:
    CPPUNIT_TEST(CtrlTaskPID);
    CPPUNIT_TEST(PIDFiles);
    CPPUNIT_TEST(NameFromPID);
+   CPPUNIT_TEST(Prio);
 
    CPPUNIT_TEST_SUITE_END();
 
@@ -45,6 +46,7 @@ public:
    void CtrlTaskPID();
    void PIDFiles();
    void NameFromPID();
+   void Prio();
 };
 
 #endif // BAPROCTEST_H_

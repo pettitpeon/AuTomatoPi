@@ -49,6 +49,8 @@
     Local functions
  -----------------------------------------------------------------------------*/
 LOCAL std::string getPIDName(pid_t pid);
+LOCAL int prio2Prio(EBaCorePrio prio);
+LOCAL EBaCorePrio prioFromPrio(int prio);
 
 /*------------------------------------------------------------------------------
     Local variables
@@ -270,6 +272,40 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
    return eBaBool_true;
 }
 
+//
+TBaBoolRC BaProcSetOwnPrio(EBaCorePrio prio) {
+   if (prio < eBaCorePrio_Minimum || prio > eBaCorePrio_RT_Highest) {
+      return eBaBoolRC_Error;
+   }
+
+   // Define the priority and scheduler
+   int8_t sched = SCHED_OTHER;
+   struct sched_param schedPrio;
+#ifdef __linux
+   schedPrio.__sched_priority = prio2Prio(prio);
+   // Set the soft real-time scheduler if required
+   sched = prio > eBaCorePrio_Highest ? SCHED_FIFO : SCHED_OTHER;
+#elif __WIN32
+   schedPrio.sched_priority = prio2Prio(prio);
+#endif
+
+   int ret = sched_setscheduler(0, sched, &schedPrio);
+   return ret == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+EBaCorePrio BaProcGetOwnPrio() {
+   // In windows it is only a stub
+#ifdef __WIN32
+   return eBaCorePrio_Normal;
+#else
+   struct sched_param schedPrio;
+   sched_getparam(0, &schedPrio);
+   return prioFromPrio(schedPrio.__sched_priority);
+#endif
+
+}
+
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
@@ -292,3 +328,84 @@ LOCAL std::string getPIDName(pid_t pid) {
    return nameOfPID;
 }
 
+// todo: this function is double think about a solution
+LOCAL int prio2Prio(EBaCorePrio prio) {
+   //  Linux
+   // Scheduler  def min max
+   // SCHED_FIFO      1  99
+   // SCHED_OTHER 0  -20 19
+   //  Windows, Only SCHED_OTHER available
+   // Min -15
+   // Max  15
+   switch (prio) {
+#ifdef __linux
+      case eBaCorePrio_Minimum:    return -20;
+      case eBaCorePrio_Low:        return -10;
+      case eBaCorePrio_Normal:     return   0;
+      case eBaCorePrio_High:       return  10;
+      case eBaCorePrio_Highest:    return  19;
+      case eBaCorePrio_RT_Normal:  return  20;
+      case eBaCorePrio_RT_High:    return  45;
+      case eBaCorePrio_RT_Highest: return  70;
+      default : return 0;
+#elif __WIN32
+      case eBaCorePrio_Minimum:    return THREAD_PRIORITY_IDLE;
+      case eBaCorePrio_Low:        return THREAD_PRIORITY_LOWEST;
+      case eBaCorePrio_Normal:     return THREAD_PRIORITY_NORMAL;
+      case eBaCorePrio_High:       return THREAD_PRIORITY_ABOVE_NORMAL;
+      case eBaCorePrio_Highest:    return THREAD_PRIORITY_HIGHEST;
+      case eBaCorePrio_RT_Normal:  return THREAD_PRIORITY_TIME_CRITICAL - 6;
+      case eBaCorePrio_RT_High:    return THREAD_PRIORITY_TIME_CRITICAL - 3;
+      case eBaCorePrio_RT_Highest: return THREAD_PRIORITY_TIME_CRITICAL;
+      default : return THREAD_PRIORITY_NORMAL;
+#endif
+   }
+
+}
+
+//
+LOCAL EBaCorePrio prioFromPrio(int prio) {
+   //  Linux
+   // Scheduler  def min max
+   // SCHED_FIFO      1  99
+   // SCHED_OTHER 0  -20 19
+   //  Windows, Only SCHED_OTHER available
+   // Min -15
+   // Max  15
+
+
+#ifdef __linux
+//      case eBaCorePrio_Minimum:    return -20;
+//      case eBaCorePrio_Low:        return -10;
+//      case eBaCorePrio_Normal:     return   0;
+//      case eBaCorePrio_High:       return  10;
+//      case eBaCorePrio_Highest:    return  19;
+//      case eBaCorePrio_RT_Normal:  return  20;
+//      case eBaCorePrio_RT_High:    return  45;
+//      case eBaCorePrio_RT_Highest: return  70;
+   if (prio ==  0) return eBaCorePrio_Normal;
+   if (prio == 20) return eBaCorePrio_RT_Normal;
+
+   if (prio < -10) return eBaCorePrio_Minimum;
+   if (prio <   0) return eBaCorePrio_Low;
+   if (prio <  10) return eBaCorePrio_High;
+   if (prio <  20) return eBaCorePrio_Highest;
+
+   if (prio <  50) return eBaCorePrio_RT_High;
+   return eBaCorePrio_RT_Highest;
+
+#elif __WIN32
+   switch (prio) {
+      case THREAD_PRIORITY_IDLE:              return eBaCorePrio_Minimum;
+      case THREAD_PRIORITY_LOWEST:            return eBaCorePrio_Low;
+      case THREAD_PRIORITY_NORMAL:            return eBaCorePrio_Normal;
+      case THREAD_PRIORITY_ABOVE_NORMAL:      return eBaCorePrio_High;
+      case THREAD_PRIORITY_HIGHEST:           return eBaCorePrio_Highest;
+      case THREAD_PRIORITY_TIME_CRITICAL - 6: return eBaCorePrio_RT_Normal;
+      case THREAD_PRIORITY_TIME_CRITICAL - 3: return eBaCorePrio_RT_High;
+      case THREAD_PRIORITY_TIME_CRITICAL:     return eBaCorePrio_RT_Highest;
+      default : return eBaCorePrio_Normal;
+   }
+#endif
+
+}
