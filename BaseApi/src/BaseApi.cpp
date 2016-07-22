@@ -225,7 +225,6 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
 #endif
 }
 
-
 //
 TBaBoolRC BaApiStopCtrlTask() {
    BaApiExitLogger();

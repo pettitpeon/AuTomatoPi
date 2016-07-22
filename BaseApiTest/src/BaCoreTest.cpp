@@ -8,7 +8,6 @@
  *   Module description:
  */
 
-#include <stdlib.h>
 #include <iostream>
 #include "BaseApi.h"
 #include "BaCoreTest.h"

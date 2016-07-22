@@ -100,8 +100,26 @@ TBaBoolRC BaCom1WExit();
 uint16_t BaCom1WGetDevices();
 
 /******************************************************************************/
-/** Get temperature from temperature sensor
- *  @return Temperature in Â°C on success, otherwise -300
+/** ...
+ *  @return Error of success
+ */
+int32_t  BaCom1WRdAsync(
+      uint8_t famID,
+      const char *serNo,
+      TBaBool *pError
+      );
+
+/******************************************************************************/
+/** ...
+ *  @return Error of success
+ */
+TBaBoolRC BaCom1WStopAsyncThread();
+
+/******************************************************************************/
+/** Gets the temperature from the sensor. This is a slow synchronous read. It
+ *  takes about 1s. For soft real-time applications, the asynchronous call is
+ *  suggested
+ *  @return Temperature in °C on success, otherwise -300
  */
 float BaCom1WGetTemp(
       const char* serNo, /**< [in] Optional serial number of the sensor eg:

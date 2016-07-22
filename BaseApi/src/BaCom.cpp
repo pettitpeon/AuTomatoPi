@@ -54,25 +54,33 @@ typedef struct TSerialDesc {
    }
 } TSerialDesc;
 
-// Serial descriptor
+// 1W descriptor
 typedef struct T1wDev {
    std::ifstream* pIs;
    std::string serNo;
+   std::string actVal;
+   bool init;
+   TBaCoreThreadHdl updThread;
+   TBaCoreThreadArg threadArg;
+   bool syncRead;
 
-   T1wDev() : pIs(0), serNo("") { }
+   T1wDev() : pIs(0), serNo(""), actVal(""), init(false), updThread(0),
+         syncRead(false) { threadArg = {0}; }
 } T1wDev;
 
-
+typedef std::map<uint16_t, std::vector<T1wDev>> T1WDevs;
 LOCAL inline speed_t baud2Speed(EBaComBaud baud);
 LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError);
 LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents);
-LOCAL inline std::ifstream* find1wDev(const char *serNo, std::vector<T1wDev> &rTherms);
+LOCAL inline std::ifstream* find1wDevIs(const char *serNo, std::vector<T1wDev> &rTherms);
+LOCAL inline T1wDev* find1wDev(const char *serNo, uint8_t devFam);
+LOCAL void rdAsync1WRout(TBaCoreThreadArg *pArg);
 
 // GPIO for the 1w bus. default GPIO 4, pin 7
 static IBaGpio *sp1w = 0;
 
 // Map of family IDs and devices vector
-static std::map<uint16_t, std::vector<T1wDev>> sDevs;
+static T1WDevs s1WDevs;
 
 // The SPI bus parameters
 // Variables as they need to be passed as pointers later on
@@ -155,14 +163,14 @@ TBaBoolRC BaCom1WExit() {
       return eBaBoolRC_Success;
    }
 
-   for (auto kv : sDevs) {
+   for (auto kv : s1WDevs) {
       for (auto dev : kv.second) {
          if (dev.pIs) {
             delete dev.pIs; // deleting closes the file =)
          }
       }
    }
-   sDevs.clear();
+   s1WDevs.clear();
 
    TBaBoolRC rc = IBaGpioDelete(sp1w);
    sp1w = 0;
@@ -206,7 +214,7 @@ uint16_t BaCom1WGetDevices(){
             dev.pIs->open(path);
             if(!dev.pIs->fail()) {
                // This is a map of family IDs and file streams
-               sDevs[famId].push_back(dev);
+               s1WDevs[famId].push_back(dev);
                i++;
             } else {
                delete dev.pIs;
@@ -216,6 +224,34 @@ uint16_t BaCom1WGetDevices(){
       }
    }
    return i;
+}
+
+//
+int32_t BaCom1WRdAsync(uint8_t famID, const char *serNo, TBaBool *pError) {
+   TBaBool terror;
+   pError = pError ? pError : &terror;
+   T1wDev *pDev = 0;
+   if(!sp1w || s1WDevs.size() == 0) {
+      *pError = eBaBool_true;
+      return 0;
+   }
+
+   auto family = s1WDevs.find(famID);
+   if (family == s1WDevs.end() || family->second.size() == 0) {
+      return eBaBoolRC_Error;
+   }
+
+   for (auto dev : family->second) {
+      if (dev.serNo == serNo) {
+         pDev = &dev;
+      }
+   }
+
+   if (!pDev->updThread) {
+      pDev->threadArg.pArg = pDev;
+      pDev->updThread = BaCoreCreateThread(serNo, rdAsync1WRout, &pDev->threadArg, eBaCorePrio_Normal);
+   }
+   return 0;
 }
 
 //
@@ -395,19 +431,20 @@ LOCAL inline float readTemp(const char *dvrStr, TBaBool *pError) {
    return (BaToNumber(contents.substr(contents.find("t=") + 2), -300, (bool*)pError)/1000.0f);
 }
 
+//
 LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents) {
    if (!sp1w) {
       return eBaBoolRC_Error;
    }
 
    // Find thermometers
-   auto therms = sDevs.find(devFam);
-   if (therms == sDevs.end() || therms->second.size() == 0) {
+   auto therms = s1WDevs.find(devFam);
+   if (therms == s1WDevs.end() || therms->second.size() == 0) {
       return eBaBoolRC_Error;
    }
 
    // Find the thermometer
-   std::ifstream *p1wIn =  find1wDev(serNo, therms->second);
+   std::ifstream *p1wIn =  find1wDevIs(serNo, therms->second);
    if (!p1wIn) {
       return eBaBoolRC_Error;
    }
@@ -432,7 +469,7 @@ LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string
 }
 
 //
-LOCAL inline std::ifstream* find1wDev(const char *serNo, std::vector<T1wDev> &rTherms) {
+LOCAL inline std::ifstream* find1wDevIs(const char *serNo, std::vector<T1wDev> &rTherms) {
    if (!serNo) {
       return rTherms[0].pIs;
    }
@@ -446,4 +483,49 @@ LOCAL inline std::ifstream* find1wDev(const char *serNo, std::vector<T1wDev> &rT
 
    return 0;
 }
+
+//
+LOCAL inline T1wDev* find1wDev(const char *serNo, uint8_t devFam) {
+//   if (!s1WDevs) {
+//      return 0;
+//   }
+//
+//   for (auto dev : s1WDevs) {
+//      if (dev.second == serNo) {
+//         return dev;
+//      }
+//   }
+//
+   return 0;
+}
+
+//
+LOCAL void rdAsync1WRout(TBaCoreThreadArg *pArg) {
+   if (!pArg || !pArg->pArg) {
+      return;
+   }
+
+   T1wDev *pDev = (T1wDev*)pArg->pArg;
+   std::ifstream &r1wIn =  *pDev->pIs;
+   while (!pArg->exitTh) {
+      if(!pDev->syncRead) {
+
+         r1wIn.seekg(0, std::ios::end);
+         auto size = r1wIn.tellg();
+
+         if (size != -1) {
+            pDev->actVal.resize(size);
+            r1wIn.seekg(0, std::ios::beg);
+            r1wIn.read(&pDev->actVal[0], pDev->actVal.size());
+
+            // Rewind the stream
+            r1wIn.clear();
+            r1wIn.seekg(0, std::ios::beg);
+         }
+
+      }
+      BaCoreMSleep(10);
+   }
+}
+
 #endif // __linux

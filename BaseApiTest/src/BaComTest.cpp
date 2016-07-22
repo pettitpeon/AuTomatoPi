@@ -16,6 +16,7 @@
 #ifdef __linux
 
 #include <string.h>
+#include <stdlib.h>
 #include <iostream>
 #include "BaComTest.h"
 #include "BaCom.h"
