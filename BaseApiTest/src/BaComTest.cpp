@@ -23,6 +23,7 @@
 #include "BaGpio.h"
 #include "BaCore.h"
 #include "BaGenMacros.h"
+#include "dbg/BaDbgMacros.h"
 
 #define TEST1W true
 
@@ -47,19 +48,23 @@ void CBaComTest::tearDown() {
 /*  ...
  */
 void CBaComTest::Bus1W() {
-   TBaBool noError = eBaBool_false;
+   TBaBool yesError = eBaBool_false;
    TBaBool error = eBaBool_false;
    float temp = 0;
    CPPUNIT_ASSERT(BaCom1WInit());
 
+   BaCom1WRdAsync(28, "28-0215c2c4bcff", 0);
+   BaCoreMSleep(900);
+   BaCom1WRdAsync(28, "28-0215c2c4bcff", 0);
+
    // No error
-   temp = BaCom1WGetTemp("28-0215c2c4bcff", &noError);
-   std::cout << temp << ": "<< (noError ? "T" : "F") << std::endl;
-   temp = BaCom1WGetTemp(0, &noError);
-   std::cout << temp << ": "<< (noError ? "T" : "F") << std::endl;
+   temp = BaCom1WGetTemp("28-0215c2c4bcff", &yesError);
+   std::cout << temp << ": "<< (yesError ? "T" : "F") << std::endl;
+   temp = BaCom1WGetTemp(0, &yesError);
+   std::cout << temp << ": "<< (yesError ? "T" : "F") << std::endl;
    const char* out = 0;
-   out = (const char*) BaCom1WGetValue(28, 0, rdDvr,  &noError);
-   std::cout << out << ": "<< (noError ? "T" : "F") << std::endl;
+   out = (const char*) BaCom1WGetValue(28, 0, rdDvr,  &yesError);
+   std::cout << out << ": "<< (yesError ? "T" : "F") << std::endl;
    free((void*)out);
 
    // Error
@@ -70,7 +75,7 @@ void CBaComTest::Bus1W() {
 
    // Test at the end so all functions are always called
    if (TEST1W) {
-      CPPUNIT_ASSERT(!noError);
+      CPPUNIT_ASSERT(!yesError);
       CPPUNIT_ASSERT(error);
    }
 }
