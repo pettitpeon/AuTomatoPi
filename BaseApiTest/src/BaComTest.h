@@ -30,17 +30,20 @@ public:
    void tearDown();
 
    CPPUNIT_TEST_SUITE(CBaComTest);
-
+   CPPUNIT_TEST(init);
    CPPUNIT_TEST(Bus1W);
 //   CPPUNIT_TEST(Config);
 //   CPPUNIT_TEST(Serial);
+   CPPUNIT_TEST(exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
+   void init();
    void Bus1W();
    void Config();
    void Serial();
+   void exit();
 };
 
 #endif // BACOMTEST_H_

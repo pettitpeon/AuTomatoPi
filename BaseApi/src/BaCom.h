@@ -100,20 +100,22 @@ TBaBoolRC BaCom1WExit();
 uint16_t BaCom1WGetDevices();
 
 /******************************************************************************/
-/** ...
- *  @return Error of success
+/** Read the value of the sensor asynchronously
+ *  @return On success, the contents of the sensor file, otherwise 0
  */
-int32_t  BaCom1WRdAsync(
-      uint8_t famID,
-      const char *serNo,
-      TBaBool *pError
+const char* BaCom1WRdAsync(
+      uint8_t famID, ///< [in] Family ID // todo: redundant info
+      const char *serNo ///< [in] Serial number of the sensor
       );
 
 /******************************************************************************/
 /** ...
  *  @return Error of success
  */
-TBaBoolRC BaCom1WStopAsyncThread();
+TBaBoolRC BaCom1WStopAsyncThread(
+      uint8_t famID, ///< [in] Family ID // todo: redundant info
+      const char *serNo ///< [in] Serial number of the sensor
+      );
 
 /******************************************************************************/
 /** Gets the temperature from the sensor. This is a slow synchronous read. It

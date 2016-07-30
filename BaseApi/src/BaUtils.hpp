@@ -29,6 +29,11 @@
 #include <string>
 #include <istream>
 
+
+#ifdef __WIN32
+# include <windows.h> // CopyFileA
+#endif
+
 /******************************************************************************/
 /** Namespace to wrap all file system functions
  */
@@ -48,6 +53,23 @@ static inline int MkDir(
    return mkdir(dir.c_str());
 #else
    return mkdir(dir.c_str(), per);
+#endif
+}
+
+/******************************************************************************/
+/** Portable file copy. Always rewrites
+ *  @return true if success
+ */
+static inline TBaBoolRC CpFile(
+      std::string src, ///< [in] Path of source file
+      std::string dst  ///< [in] Path of destination
+      ) {
+#ifdef _WIN32
+   return CopyFileA(src.c_str(), dst.c_str(), eBaBool_false);
+#else
+   // todo
+
+   return cp(dir.c_str(), per);
 #endif
 }
 
