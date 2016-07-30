@@ -28,6 +28,9 @@
 #include <stdarg.h>
 #include <string>
 #include <istream>
+#include <fstream>
+#include <algorithm>
+#include <iterator>
 
 
 #ifdef __WIN32
@@ -64,13 +67,18 @@ static inline TBaBoolRC CpFile(
       std::string src, ///< [in] Path of source file
       std::string dst  ///< [in] Path of destination
       ) {
-#ifdef _WIN32
-   return CopyFileA(src.c_str(), dst.c_str(), eBaBool_false);
-#else
-   // todo
+   std::filebuf fSrc;
+   std::ofstream fDst(dst);
+   if (fDst.fail() || !fSrc.open(src, std::ios::in | std::ios::binary)) {
+      return eBaBoolRC_Error;
+   }
 
-   return cp(dir.c_str(), per);
-#endif
+   std::istreambuf_iterator<char> begSrc(&fSrc);
+   std::istreambuf_iterator<char> endSrc;
+   std::ostreambuf_iterator<char> begDst(fDst);
+   std::copy(begSrc, endSrc, begDst);
+
+   return fDst.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
 }
 
 /******************************************************************************/

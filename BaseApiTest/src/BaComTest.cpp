@@ -65,19 +65,20 @@ void CBaComTest::tearDown() {
  */
 void CBaComTest::init() {
 #ifndef __arm__
+   BaFS::MkDir("C:\\tmp\\");
    BaFS::MkDir(DEVDIR);
    BaFS::MkDir(DEVDIR DEV1W1);
    BaFS::MkDir(DEVDIR DEV1W2);
    BaFS::MkDir(DEVDIR DEV1W3);
-   std::ofstream os(SENSOR1W(DEV1W1));
-
-   // Real sensor example data
-   os << "96 01 4b 46 7f ff 0c 10 a0 : crc=a0 YES" << std::endl;
-   os << "96 01 4b 46 7f ff 0c 10 a0 t=25375" << std::endl;
-
+   {
+      std::ofstream os(SENSOR1W(DEV1W1));
+      // Real sensor example data
+      os << "96 01 4b 46 7f ff 0c 10 a0 : crc=a0 YES" << std::endl;
+      os << "96 01 4b 46 7f ff 0c 10 a0 t=25375" << std::endl;
+   }
    // Copy to other 2 sensors
-   BaFS::CpFile(SENSOR1W(DEV1W1), SENSOR1W(DEV1W2));
-   BaFS::CpFile(SENSOR1W(DEV1W1), SENSOR1W(DEV1W3));
+   std::cout << (BaFS::CpFile(SENSOR1W(DEV1W1), SENSOR1W(DEV1W2)) ? "OK" : "ER") << std::endl;
+   std::cout << (BaFS::CpFile(SENSOR1W(DEV1W1), SENSOR1W(DEV1W3)) ? "OK" : "ER") << std::endl;
 #endif
 }
 
@@ -175,12 +176,12 @@ void CBaComTest::Config() {
  */
 void CBaComTest::exit() {
 #ifndef __arm__
-   remove(SENSOR1W(DEV1W1));
-   remove(SENSOR1W(DEV1W2));
    remove(SENSOR1W(DEV1W3));
-   rmdir(DEVDIR DEV1W1);
+   remove(SENSOR1W(DEV1W2));
+   remove(SENSOR1W(DEV1W1));
    rmdir(DEVDIR DEV1W3);
    rmdir(DEVDIR DEV1W2);
+   rmdir(DEVDIR DEV1W1);
    rmdir(DEVDIR);
 #endif
 }
