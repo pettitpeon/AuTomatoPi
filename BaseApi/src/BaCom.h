@@ -100,27 +100,25 @@ TBaBoolRC BaCom1WExit();
 uint16_t BaCom1WGetDevices();
 
 /******************************************************************************/
-/** Read the value of the sensor asynchronously
+/** Read the value of the 1W sensor asynchronously
  *  @return On success, the contents of the sensor file, otherwise 0
  */
 const char* BaCom1WRdAsync(
-      uint8_t famID, ///< [in] Family ID // todo: redundant info
-      const char *serNo ///< [in] Serial number of the sensor
+      const char* serNo ///< [in] Serial number of the sensor
       );
 
 /******************************************************************************/
-/** ...
+/** Stop the asynchronous thread of 1W devices
  *  @return Error of success
  */
 TBaBoolRC BaCom1WStopAsyncThread(
-      uint8_t famID, ///< [in] Family ID // todo: redundant info
-      const char *serNo ///< [in] Serial number of the sensor
+      const char* serNo ///< [in] Serial number of the sensor
       );
 
 /******************************************************************************/
 /** Gets the temperature from the sensor. This is a slow synchronous read. It
  *  takes about 1s. For soft real-time applications, the asynchronous call is
- *  suggested
+ *  suggested.
  *  @return Temperature in °C on success, otherwise -300
  */
 float BaCom1WGetTemp(
@@ -130,13 +128,13 @@ float BaCom1WGetTemp(
       );
 
 /******************************************************************************/
-/** Gets the data from a generic one wire device by calling user callback
+/** Gets the data from a generic one wire device by calling user callback.
+ *  todo: return the first sensor if serNO == 1
  *  @return Null if error, or the data returned by @c cb
  */
 void* BaCom1WGetValue(
-      uint8_t famID, ///< [in] Family ID of the sensor eg: temperature = 28
-      const char * serNo, /**< [in] Optional serial number of the sensor eg:
-         "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used*/
+      const char* serNo, /**< [in] Optional serial number of the sensor eg:
+         "28-0215c2c4bcff".*/
       TBaCom1wReadFun cb, /**< [in] Callback function that parses the string
          returned by the driver */
       TBaBool *pError ///< [out] Optional error flag. Only modified if error

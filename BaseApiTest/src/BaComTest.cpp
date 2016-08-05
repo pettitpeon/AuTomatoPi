@@ -96,18 +96,18 @@ void CBaComTest::Bus1W() {
    CPPUNIT_ASSERT(BaCom1WExit());
    CPPUNIT_ASSERT(BaCom1WInit());
 
-   CPPUNIT_ASSERT(!BaCom1WRdAsync(28, "28-0215c2c4bcff"));
-   CPPUNIT_ASSERT(!BaCom1WRdAsync(28, "28-0315c2c4bcff"));
-   CPPUNIT_ASSERT(!BaCom1WRdAsync(28, "28-0415c2c4bcff"));
+   CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0215c2c4bcff"));
+   CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0315c2c4bcff"));
+   CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0415c2c4bcff"));
    BaCoreMSleep(900);
 
    // todo: moretest missing
-   CPPUNIT_ASSERT(BaCom1WStopAsyncThread(28, "28-0215c2c4bcff"));
+   CPPUNIT_ASSERT(BaCom1WStopAsyncThread("28-0215c2c4bcff"));
 
    // Only overwrite if no error
-   pAsyncVal = BaCom1WRdAsync(28, "28-0215c2c4bcff");
-   pAsyncVal = pAsyncVal ? BaCom1WRdAsync(28, "28-0315c2c4bcff") : 0;
-   pAsyncVal = pAsyncVal ? BaCom1WRdAsync(28, "28-0415c2c4bcff") : 0;
+   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff");
+   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0315c2c4bcff") : 0;
+   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0415c2c4bcff") : 0;
 
    // No error
    temp = BaCom1WGetTemp("28-0215c2c4bcff", &yesError);
@@ -115,7 +115,7 @@ void CBaComTest::Bus1W() {
    temp = BaCom1WGetTemp(0, &yesError);
    std::cout << temp << ": "<< (yesError ? "T" : "F") << std::endl;
    const char* out = 0;
-   out = (const char*) BaCom1WGetValue(28, 0, rdDvr,  &yesError);
+   out = (const char*) BaCom1WGetValue(0, rdDvr,  &yesError);
    std::cout << out << ": "<< (yesError ? "T" : "F") << std::endl;
    free((void*)out);
 

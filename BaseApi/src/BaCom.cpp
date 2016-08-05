@@ -79,12 +79,14 @@ typedef struct T1wDev {
    }
 } T1wDev;
 
+// fixme: We need a map of vector pointers!!!
 typedef std::map<uint16_t, std::vector<T1wDev*>> T1WDevs;
 LOCAL inline speed_t baud2Speed(EBaComBaud baud);
 LOCAL inline float read1WTemp(const char *dvrStr, TBaBool *pError);
-LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents);
-LOCAL inline T1wDev* find1wDev(const char *serNo, std::vector<T1wDev*> &rTherms);
+LOCAL inline TBaBool read1wDevice(uint8_t famID, const char *serNo, std::string &contents);
+LOCAL inline T1wDev* find1wDev(const char *serNo, std::vector<T1wDev*> &rSensors);
 LOCAL void rdAsync1WRout(TBaCoreThreadArg *pArg);
+LOCAL uint8_t get1WFamId(std::string serNo);
 
 // GPIO for the 1w bus. default GPIO 4, pin 7
 static IBaGpio *sp1w = 0;
@@ -230,6 +232,8 @@ uint16_t BaCom1WGetDevices(){
       // The information is under /sys/bus/w1/devices/28-0215c2c4bcff/w1_slave
       std::stringstream ss;
       ss << de->d_name;
+
+      // If the famId is successfully extracted...
       if (ss >> famId) {
          T1wDev *pDev = new T1wDev;
          pDev->serNo = de->d_name;
@@ -255,13 +259,18 @@ uint16_t BaCom1WGetDevices(){
 }
 
 //
-const char* BaCom1WRdAsync(uint8_t famID, const char *serNo) {
+const char* BaCom1WRdAsync(const char *serNo) {
+   if (!serNo) {
+      return 0;
+   }
+
    T1wDev *pDev = 0;
    if(!sp1w || s1WDevs.size() == 0) {
       return 0;
    }
 
    // find the family vector
+   uint8_t famID = get1WFamId(serNo);
    auto family = s1WDevs.find(famID);
    if (family == s1WDevs.end() || family->second.size() == 0) {
       return 0;
@@ -283,12 +292,13 @@ const char* BaCom1WRdAsync(uint8_t famID, const char *serNo) {
 }
 
 //
-TBaBoolRC BaCom1WStopAsyncThread(uint8_t famID, const char *serNo) {
-   if(!sp1w || s1WDevs.size() == 0) {
+TBaBoolRC BaCom1WStopAsyncThread(const char *serNo) {
+   if(!sp1w || !serNo || s1WDevs.size() == 0) {
       return eBaBoolRC_Error;
    }
 
    // find the family vector
+   uint8_t famID = get1WFamId(serNo);
    auto family = s1WDevs.find(famID);
    if (family == s1WDevs.end() || family->second.size() == 0) {
       return eBaBoolRC_Error;
@@ -320,17 +330,25 @@ float BaCom1WGetTemp(const char* serNo, TBaBool *pError) {
 }
 
 //
-void *BaCom1WGetValue(uint8_t famID, const char *serNo, TBaCom1wReadFun cb,
-      TBaBool *pError) {
-   TBaBool terror;
-   pError = pError ? pError : &terror;
-
-   if (!cb) {
+void *BaCom1WGetValue(const char* serNo, TBaCom1wReadFun cb, TBaBool *pError) {
+   if (!cb || s1WDevs.empty()) {
       *pError = eBaBoolRC_Error;
       return 0;
    }
+
+   TBaBool terror;
+   pError = pError ? pError : &terror;
    std::string contents;
 
+   uint8_t famID = get1WFamId(serNo);
+
+   if (!serNo) {
+   }
+
+   // fixme: modularize it correctly.
+   // Get family, get device, read device.
+   // rename correctly the functions with prefixes eg: w1, sr, sp, i2
+   // refactor the whole 1w to make it usable and testable.
    if (!read1wDevice(famID, serNo, contents)) {
       *pError = eBaBoolRC_Error;
       return 0;
@@ -484,20 +502,21 @@ LOCAL inline float read1WTemp(const char *dvrStr, TBaBool *pError) {
    return (BaToNumber(contents.substr(contents.find("t=") + 2), -300, (bool*)pError)/1000.0f);
 }
 
-//
-LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string &contents) {
+// todo: FamID is required, serNo is optional. If there is no serNo
+LOCAL inline TBaBool read1wDevice(uint8_t famID, const char *serNo, std::string &contents) {
    if (!sp1w) {
       return eBaBoolRC_Error;
    }
    bool runTemp = false;
-   // Find thermometers
-   auto therms = s1WDevs.find(devFam);
-   if (therms == s1WDevs.end() || therms->second.size() == 0) {
+
+   // Find family sensors
+   auto famSensors = s1WDevs.find(famID);
+   if (famSensors == s1WDevs.end() || famSensors->second.size() == 0) {
       return eBaBoolRC_Error;
    }
 
-   // Find the thermometer
-   T1wDev *pDev = find1wDev(serNo, therms->second);
+   // Find the sensor
+   T1wDev *pDev = find1wDev(serNo, famSensors->second);
    if (!pDev) {
       return eBaBoolRC_Error;
    }
@@ -525,12 +544,13 @@ LOCAL inline TBaBool read1wDevice(uint8_t devFam, const char *serNo, std::string
 }
 
 //
-LOCAL inline T1wDev* find1wDev(const char *serNo, std::vector<T1wDev*> &rTherms) {
+LOCAL inline T1wDev* find1wDev(const char *serNo, std::vector<T1wDev*> &rSensors) {
    if (!serNo) {
-      return rTherms[0];
+      // FixMe: this is extremely dangerous. Can create a dummy dev
+      return rSensors[0];
    }
 
-   for (auto dev : rTherms) {
+   for (auto dev : rSensors) {
       if (dev && dev->serNo == serNo) {
          return dev;
       }
@@ -596,3 +616,19 @@ LOCAL void rdAsync1WRout(TBaCoreThreadArg *pArg) {
    pDev->updThread = 0;
    delete pDev;
 }
+
+//
+LOCAL uint8_t get1WFamId(std::string serNo) {
+   // eg. 28-0215c2c4bcff [devFam]-[devID]
+   std::stringstream ss;
+
+   // This is not char because it extracts one character
+   // FixME: check the segFault when famId is char
+   uint16_t famId;
+   ss << serNo;
+   if (ss >> famId) {
+      return famId;
+   }
+   return 0;
+}
+
