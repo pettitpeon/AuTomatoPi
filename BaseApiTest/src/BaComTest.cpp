@@ -40,6 +40,7 @@
 # define DEV1W3 "28-0415c2c4bcff"
 # define SENSOR1W(dev) DEVDIR dev "/w1_slave"
 #endif
+
 #define TEST1W true
 
 LOCAL void* rdDvr(const char* str, size_t n);
@@ -105,7 +106,9 @@ void CBaComTest::Bus1W() {
    BaCoreMSleep(900);
 
 #ifdef __arm__
-
+   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff");
+   temp      = BaCom1WGetTemp("28-0215c2c4bcff", &error1);
+   temp      = BaCom1WGetTemp("28-xxx", &error2);
 
 #else
    // Test async reading

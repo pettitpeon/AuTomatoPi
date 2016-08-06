@@ -83,13 +83,12 @@ typedef struct T1wDev {
 typedef std::map<uint16_t, std::vector<T1wDev*>* > T1WDevs;
 
 
-LOCAL inline speed_t baud2Speed(EBaComBaud baud);
+LOCAL inline speed_t srBaud2Speed(EBaComBaud baud);
 
 // One wire bus local functions
 LOCAL inline float   w1ReadTemp(const char *dvrStr, TBaBool *pError);
 LOCAL inline TBaBool w1ReadDevice(T1wDev* pDev, std::string &contents);
-LOCAL inline T1wDev* w1FindDev(const char *serNo, std::vector<T1wDev*> &rSensors);
-LOCAL inline void w1RdAsyncRout(TBaCoreThreadArg *pArg);
+LOCAL inline void    w1RdAsyncRout(TBaCoreThreadArg *pArg);
 LOCAL inline uint8_t w1GetFamId(std::string serNo);
 LOCAL inline T1wDev* w1GetFirstFamDev(uint8_t famID);
 LOCAL inline T1wDev* w1GetDev(const char* serNo);
@@ -371,7 +370,7 @@ TBaComSerHdl BaComSerInit(const char *dev, EBaComBaud baud) {
    int     status;
 
    // Validate and try opening the file descriptor
-   if(!(myBaud = baud2Speed(baud)) || !p || !p->pRXD0 || !p->pTXD0 ||
+   if(!(myBaud = srBaud2Speed(baud)) || !p || !p->pRXD0 || !p->pTXD0 ||
          (p->fd = open(dev, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1) {
       delete p;
       return 0;
@@ -456,7 +455,7 @@ uint8_t BaComSerGetC(TBaComSerHdl p) {
 }
 
 //
-LOCAL inline speed_t baud2Speed(EBaComBaud baud) {
+LOCAL inline speed_t srBaud2Speed(EBaComBaud baud) {
    switch (baud) {
    case eBaComBaud_50    : return     B50;
    case eBaComBaud_75    : return     B75;
@@ -542,22 +541,6 @@ LOCAL inline TBaBoolRC w1ReadDevice(T1wDev* pDev, std::string &contents) {
 }
 
 //
-LOCAL inline T1wDev* w1FindDev(const char *serNo, std::vector<T1wDev*> &rSensors) {
-   if (!serNo) {
-      // FixMe: this is extremely dangerous. Can create a dummy dev
-      return rSensors[0];
-   }
-
-   for (auto dev : rSensors) {
-      if (dev && dev->serNo == serNo) {
-         return dev;
-      }
-   }
-
-   return 0;
-}
-
-//
 LOCAL void w1RdAsyncRout(TBaCoreThreadArg *pArg) {
    if (!pArg || !pArg->pArg) {
       return;
@@ -582,11 +565,6 @@ LOCAL void w1RdAsyncRout(TBaCoreThreadArg *pArg) {
 
             // Read contents to string
             r1wIn.read(&pDev->actVal[0], pDev->actVal.size());
-
-            // toDelete
-            if (!pDev->valid) {
-               printf("validated %s\n", pDev->serNo.c_str());
-            }
 
             pDev->valid = true;
             // Rewind the stream
