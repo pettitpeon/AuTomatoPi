@@ -87,8 +87,8 @@ void CBaComTest::init() {
  */
 void CBaComTest::Bus1W() {
 
-   TBaBool yesError = eBaBool_false;
-   TBaBool error = eBaBool_false;
+   TBaBool error1 = eBaBool_false;
+   TBaBool error2 = eBaBool_false;
    const char *pAsyncVal = 0;
 
    float temp = 0;
@@ -96,40 +96,47 @@ void CBaComTest::Bus1W() {
    CPPUNIT_ASSERT(BaCom1WExit());
    CPPUNIT_ASSERT(BaCom1WInit());
 
+   // Threads not ready
    CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0215c2c4bcff"));
    CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0315c2c4bcff"));
    CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0415c2c4bcff"));
+
+   // After sleeping threads are ready
    BaCoreMSleep(900);
 
-   // todo: moretest missing
-   CPPUNIT_ASSERT(BaCom1WStopAsyncThread("28-0215c2c4bcff"));
+#ifdef __arm__
 
+
+#else
+   // Test async reading
    // Only overwrite if no error
    pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff");
    pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0315c2c4bcff") : 0;
    pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0415c2c4bcff") : 0;
 
+   // Test sync reading
    // No error
-   temp = BaCom1WGetTemp("28-0215c2c4bcff", &yesError);
-   std::cout << temp << ": "<< (yesError ? "T" : "F") << std::endl;
-   temp = BaCom1WGetTemp(0, &yesError);
-   std::cout << temp << ": "<< (yesError ? "T" : "F") << std::endl;
+   temp = BaCom1WGetTemp("28-0215c2c4bcff", &error1);
+   std::cout << temp << ": "<< (error1 ? "T" : "F") << std::endl;
+   temp = BaCom1WGetTemp(0, &error1);
+   std::cout << temp << ": "<< (error1 ? "T" : "F") << std::endl;
    const char* out = 0;
-   out = (const char*) BaCom1WGetValue(0, rdDvr,  &yesError);
-   std::cout << out << ": "<< (yesError ? "T" : "F") << std::endl;
+   out = (const char*) BaCom1WGetValue(0, rdDvr,  &error1);
+   std::cout << out << ": "<< (error1 ? "T" : "F") << std::endl;
    free((void*)out);
 
    // Error
-   temp = BaCom1WGetTemp("28-xxx", &error);
-   std::cout << temp << ": "<< (error ? "T" : "F") << std::endl;
+   temp = BaCom1WGetTemp("28-xxx", &error2);
+   std::cout << temp << ": "<< (error2 ? "T" : "F") << std::endl;
+#endif
 
    CPPUNIT_ASSERT(BaCom1WExit());
 
    // Test at the end so all functions are always called
    if (TEST1W) {
       CPPUNIT_ASSERT(pAsyncVal);
-      CPPUNIT_ASSERT(!yesError);
-      CPPUNIT_ASSERT(error);
+      CPPUNIT_ASSERT(!error1);
+      CPPUNIT_ASSERT(error2);
    }
 }
 #ifdef __linux

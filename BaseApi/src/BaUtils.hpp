@@ -32,10 +32,8 @@
 #include <algorithm>
 #include <iterator>
 
+#include "BaBool.h"
 
-#ifdef __WIN32
-# include <windows.h> // CopyFileA
-#endif
 
 /******************************************************************************/
 /** Namespace to wrap all file system functions

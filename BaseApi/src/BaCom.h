@@ -107,13 +107,13 @@ const char* BaCom1WRdAsync(
       const char* serNo ///< [in] Serial number of the sensor
       );
 
-/******************************************************************************/
-/** Stop the asynchronous thread of 1W devices
- *  @return Error of success
- */
-TBaBoolRC BaCom1WStopAsyncThread(
-      const char* serNo ///< [in] Serial number of the sensor
-      );
+///******************************************************************************/
+///** Stop the asynchronous thread of 1W devices
+// *  @return Error of success
+// */
+//TBaBoolRC BaCom1WPauseAsyncThread(
+//      const char* serNo ///< [in] Serial number of the sensor
+//      );
 
 /******************************************************************************/
 /** Gets the temperature from the sensor. This is a slow synchronous read. It
