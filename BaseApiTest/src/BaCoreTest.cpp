@@ -95,6 +95,13 @@ void CBaCoreTest::TimeStamps() {
    tStamp.millis = 1234;
    ASS(!BaCoreTStampToStr(&tStamp, sBuf));
 
+
+   // Monotonic timestamp
+   TBaCoreMonTStampUs ts = BaCoreGetMonTStamp();
+   ASS(ts > 0);
+   BaCoreUSleep(1);
+   ASS(BaCoreGetMonTStamp() > ts);
+
 }
 
 /* ****************************************************************************/
@@ -112,6 +119,7 @@ void CBaCoreTest::ThreadsNiceWeather() {
    // Test creation and get info
    testPrio = eBaCorePrio_Normal;
    name = "eBaCorePrio_Normal";
+   name.resize(15);
    arg.exitTh = eBaBool_false;
    hdl = BaCoreCreateThread(name.c_str(), testThreadNiceWeatherFun, &arg, testPrio);
    CPPUNIT_ASSERT(hdl);
@@ -150,6 +158,7 @@ void CBaCoreTest::ThreadsNiceWeather() {
    // eBaCorePrio_Highest /////////////////////////////
    testPrio = eBaCorePrio_Highest;
    name = "eBaCorePrio_Highest";
+   name.resize(15);
    arg.exitTh = eBaBool_false;
    hdl = BaCoreCreateThread(name.c_str(), testThreadNiceWeatherFun, &arg, testPrio);
    CPPUNIT_ASSERT(hdl);
@@ -187,6 +196,7 @@ void CBaCoreTest::ThreadsNiceWeather() {
    // eBaCorePrio_RT_High /////////////////////////////
    testPrio = eBaCorePrio_RT_High;
    name = "eBaCorePrio_RT_High";
+   name.resize(15);
    arg.exitTh = eBaBool_false;
    hdl = BaCoreCreateThread(name.c_str(), testThreadNiceWeatherFun, &arg, testPrio);
    CPPUNIT_ASSERT(hdl);

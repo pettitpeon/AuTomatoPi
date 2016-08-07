@@ -22,8 +22,9 @@
 #endif
 
 // Shorter names
-#define ASS             CPPUNIT_ASSERT
-#define ASS_MSG         CPPUNIT_ASSERT_MESSAGE
-#define ASS_EQ          CPPUNIT_ASSERT_EQUAL
+#define ASS         CPPUNIT_ASSERT
+#define ASS_MSG     CPPUNIT_ASSERT_MESSAGE
+#define ASS_EQ      CPPUNIT_ASSERT_EQUAL
+#define ASS_D_EQ    CPPUNIT_ASSERT_DOUBLES_EQUAL
 
 #endif /* CPPU_H_ */

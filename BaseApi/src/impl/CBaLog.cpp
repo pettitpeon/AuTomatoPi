@@ -51,7 +51,7 @@
 
 #define LOGEXT    ".log"
 #define CFGEXT    ".cfg"
-#define CHRONOHRC std::chrono::high_resolution_clock
+#define CHRONOHRC_ std::chrono::high_resolution_clock
 #define CHRONO    std::chrono
 #define TAG       "BaLog"
 #define TAGSZ     7

@@ -23,6 +23,7 @@
  *  Includes
  */
 #include "BaBool.h"
+#include "BaCore.h"
 
 /// Serial device path
 #define BACOM_SERIALDEV "/dev/ttyAMA0"
@@ -88,37 +89,34 @@ TBaBoolRC BaCom1WInit();
 
 /******************************************************************************/
 /** Releases the resources
- *  @return Error of success
+ *  @return Error or success
  */
 TBaBoolRC BaCom1WExit();
 
 /******************************************************************************/
 /** Scans for devices and saves them internally. This is automatically called
  *  by #BaCom1WInit()
- *  @return the number of devices found
+ *  @return The number of devices found
  */
 uint16_t BaCom1WGetDevices();
 
 /******************************************************************************/
-/** Read the value of the 1W sensor asynchronously
+/** Read the value of the 1W sensor asynchronously. This works with an internal
+ *  worker thread. The @c serNo must have the form:@n
+ *  XX-XXXXXXXXXXXX [devFam]-[devID]
  *  @return On success, the contents of the sensor file, otherwise 0
  */
 const char* BaCom1WRdAsync(
-      const char* serNo ///< [in] Serial number of the sensor
+      const char* serNo, /**< [in] Optional serial number of the sensor eg:
+       "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used*/
+      TBaCoreMonTStampUs *pTs ///< [out] optional timestamp of the reading
       );
 
-///******************************************************************************/
-///** Stop the asynchronous thread of 1W devices
-// *  @return Error of success
-// */
-//TBaBoolRC BaCom1WPauseAsyncThread(
-//      const char* serNo ///< [in] Serial number of the sensor
-//      );
-
 /******************************************************************************/
-/** Gets the temperature from the sensor. This is a slow synchronous read. It
- *  takes about 1s. For soft real-time applications, the asynchronous call is
- *  suggested.
+/** Gets the temperature from the sensor with family "28". This is a slow
+ *  synchronous read. It takes about 1s. For soft real-time applications,
+ *  the asynchronous call is suggested. The @c serNo must have the form:@n
+ *  XX-XXXXXXXXXXXX [devFam]-[devID]
  *  @return Temperature in °C on success, otherwise -300
  */
 float BaCom1WGetTemp(
@@ -129,14 +127,15 @@ float BaCom1WGetTemp(
 
 /******************************************************************************/
 /** Gets the data from a generic one wire device by calling user callback.
- *  todo: return the first sensor if serNO == 1
+ *  todo: return the first sensor if serNO == 1. The @c serNo must have the form:@n
+ *  XX-XXXXXXXXXXXX [devFam]-[devID]
  *  @return Null if error, or the data returned by @c cb
  */
 void* BaCom1WGetValue(
       const char* serNo, /**< [in] Optional serial number of the sensor eg:
          "28-0215c2c4bcff".*/
       TBaCom1wReadFun cb, /**< [in] Callback function that parses the string
-         returned by the driver */
+         returned by the driver*/
       TBaBool *pError ///< [out] Optional error flag. Only modified if error
       );
 //@} One Wire Bus

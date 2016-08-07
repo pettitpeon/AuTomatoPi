@@ -26,6 +26,7 @@
 #include "BaGenMacros.h"
 #include "dbg/BaDbgMacros.h"
 #include "BaUtils.hpp"
+#include "CppU.h"
 
 #ifdef __WIN32
 # define DEVDIR "C:\\tmp\\devices\\"
@@ -87,35 +88,48 @@ void CBaComTest::init() {
 /*  ...
  */
 void CBaComTest::Bus1W() {
-
    TBaBool error1 = eBaBool_false;
    TBaBool error2 = eBaBool_false;
+   TBaCoreMonTStampUs ts = 0;
    const char *pAsyncVal = 0;
-
+   const char* out = 0;
    float temp = 0;
-   CPPUNIT_ASSERT(BaCom1WInit());
-   CPPUNIT_ASSERT(BaCom1WExit());
-   CPPUNIT_ASSERT(BaCom1WInit());
+   ASS(BaCom1WInit());
+   ASS(BaCom1WExit());
+
+   // Uninitialized
+   ASS(!BaCom1WRdAsync("28-0215c2c4bcff", &ts));
+   ASS(!BaCom1WGetValue("28-0215c2c4bcff", rdDvr, 0));
+   ASS_D_EQ(-300.0, BaCom1WGetTemp("28-0215c2c4bcff", 0), 0.001);
+
+
+   ASS(BaCom1WInit());
 
    // Threads not ready
-   CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0215c2c4bcff"));
-   CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0315c2c4bcff"));
-   CPPUNIT_ASSERT(!BaCom1WRdAsync("28-0415c2c4bcff"));
+   ASS(!BaCom1WRdAsync("28-0215c2c4bcff", &ts));
+   ASS(!BaCom1WRdAsync("28-0315c2c4bcff", 0));
+   ASS(!BaCom1WRdAsync("28-0415c2c4bcff", &ts));
 
    // After sleeping threads are ready
    BaCoreMSleep(900);
 
+// Meant for RPI
 #ifdef __arm__
-   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff");
+   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff", &ts);
    temp      = BaCom1WGetTemp("28-0215c2c4bcff", &error1);
+   temp      = BaCom1WGetTemp(0, &error1);
    temp      = BaCom1WGetTemp("28-xxx", &error2);
+   ASS(!BaCom1WGetValue("28-xxx", rdDvr, 0));
+   ASS(!BaCom1WGetValue("28-xxx", 0, 0));
+   out = (const char*) BaCom1WGetValue("28-0215c2c4bcff", rdDvr, &error1);
 
+// Meant for PC (Lin, Win)
 #else
    // Test async reading
    // Only overwrite if no error
-   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff");
-   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0315c2c4bcff") : 0;
-   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0415c2c4bcff") : 0;
+   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff", &ts);
+   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0315c2c4bcff", &ts) : 0;
+   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0415c2c4bcff", &ts) : 0;
 
    // Test sync reading
    // No error
@@ -123,7 +137,6 @@ void CBaComTest::Bus1W() {
    std::cout << temp << ": "<< (error1 ? "T" : "F") << std::endl;
    temp = BaCom1WGetTemp(0, &error1);
    std::cout << temp << ": "<< (error1 ? "T" : "F") << std::endl;
-   const char* out = 0;
    out = (const char*) BaCom1WGetValue(0, rdDvr,  &error1);
    std::cout << out << ": "<< (error1 ? "T" : "F") << std::endl;
    free((void*)out);
@@ -133,13 +146,13 @@ void CBaComTest::Bus1W() {
    std::cout << temp << ": "<< (error2 ? "T" : "F") << std::endl;
 #endif
 
-   CPPUNIT_ASSERT(BaCom1WExit());
+   ASS(BaCom1WExit());
 
    // Test at the end so all functions are always called
    if (TEST1W) {
-      CPPUNIT_ASSERT(pAsyncVal);
-      CPPUNIT_ASSERT(!error1);
-      CPPUNIT_ASSERT(error2);
+      ASS(pAsyncVal);
+      ASS(!error1);
+      ASS(error2);
    }
 }
 #ifdef __linux

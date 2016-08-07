@@ -36,6 +36,7 @@
 #define TXD0    14
 #define RXD0    15
 #define SER_ALT  0
+#define ERRTEMP -300
 
 #ifdef __WIN32
 # define DEVPATH  "C:\\tmp\\devices\\"
@@ -67,14 +68,14 @@ typedef struct T1wDev {
    std::string serNo;
    std::string actVal;
    bool valid; // Flag to check that the value is valid
-   bool run; // to run the async thread. This is more like a pause todo:
+   bool run; // to run the async thread. This is more like a pause flag
    TBaCoreThreadHdl updThread;
    TBaCoreThreadArg threadArg;
    uint32_t heartBeat;
+   TBaCoreMonTStampUs ts;
 
    T1wDev() : pIs(0), serNo(""), actVal(""), valid(false), run(false), updThread(0),
-         heartBeat(0) {
-      threadArg = {0};
+         threadArg{0}, heartBeat(0), ts(0) {
       threadArg.pArg = this;
    }
 } T1wDev;
@@ -280,7 +281,7 @@ uint16_t BaCom1WGetDevices(){
 }
 
 //
-const char* BaCom1WRdAsync(const char *serNo) {
+const char* BaCom1WRdAsync(const char *serNo, TBaCoreMonTStampUs *pTs) {
    if(!sp1w || s1WDevs.empty()) {
       return 0;
    }
@@ -289,7 +290,14 @@ const char* BaCom1WRdAsync(const char *serNo) {
    T1wDev *pDev = w1GetDev(serNo);
    if (pDev) {
       pDev->run = true;
-      return pDev->valid ? pDev->actVal.c_str() : 0;
+      if (pDev->valid) {
+
+         // Copy the timestamp
+         if (pTs) {
+            *pTs = pDev->ts;
+         }
+         return pDev->actVal.c_str();
+      }
    }
 
    return 0;
@@ -319,14 +327,14 @@ float BaCom1WGetTemp(const char* serNo, TBaBool *pError) {
 
    if (!sp1w || s1WDevs.empty()) {
       *pError = eBaBoolRC_Error;
-      return 0;
+      return ERRTEMP;
    }
 
    T1wDev *pDev = serNo ? w1GetDev(serNo) : w1GetFirstFamDev(W1TEMPFAM);
 
    if (!w1ReadDevice(pDev, contents)) {
       *pError = eBaBool_true;
-      return -300;
+      return ERRTEMP;
    }
 
    return w1ReadTemp(contents.c_str(), pError);
@@ -487,7 +495,7 @@ LOCAL inline float w1ReadTemp(const char *dvrStr, TBaBool *pError) {
       if (pError) {
          *pError = eBaBool_true;
       }
-      return -300;
+      return ERRTEMP;
    }
 
    // Extract the values. Temp in milli °C
@@ -499,10 +507,11 @@ LOCAL inline float w1ReadTemp(const char *dvrStr, TBaBool *pError) {
       if (pError) {
          *pError = eBaBool_true;
       }
-      return -300;
+      return ERRTEMP;
    }
 
-   return (BaToNumber(contents.substr(contents.find("t=") + 2), -300, (bool*)pError)/1000.0f);
+   return (BaToNumber(
+         contents.substr(contents.find("t=") + 2), ERRTEMP, (bool*)pError)/1000.0f);
 }
 
 //
@@ -563,10 +572,11 @@ LOCAL void w1RdAsyncRout(TBaCoreThreadArg *pArg) {
             // Rewind stream
             r1wIn.seekg(0, std::ios::beg);
 
-            // Read contents to string
+            // Read contents to string and save the timestamp
             r1wIn.read(&pDev->actVal[0], pDev->actVal.size());
-
+            pDev->ts = BaCoreGetMonTStamp();
             pDev->valid = true;
+
             // Rewind the stream
             r1wIn.clear();
             r1wIn.seekg(0, std::ios::beg);

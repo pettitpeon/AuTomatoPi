@@ -36,10 +36,11 @@
  *  Defines and macros
  */
 #define TAG "BaCore"
-#define CHRONO_ std::chrono
-#define SYSCLOCK_ CHRONO_::system_clock
-#define CHRONOHRC CHRONO_::high_resolution_clock
-#define CTRLTASK "BaseApiCtrlTask"
+#define CHRONO_    std::chrono
+#define STEADCLOCK_  CHRONO_::steady_clock
+#define CHRONOHRC_  CHRONO_::high_resolution_clock
+#define CTRLTASK   "BaseApiCtrlTask"
+#define TASKNAMESZ 16
 
 #if __linux
 # define PIDPATH "/var/run/BaseApi/"
@@ -50,8 +51,8 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-typedef CHRONO_::high_resolution_clock::time_point TTimePoint;
-typedef CHRONO_::duration<SYSCLOCK_::rep, SYSCLOCK_::period> TDuration;
+typedef STEADCLOCK_::time_point TTimePoint;
+typedef CHRONO_::duration<STEADCLOCK_::rep, STEADCLOCK_::period> TDuration;
 
 typedef enum EStatus {
    eInitializing = 0,
@@ -60,8 +61,6 @@ typedef enum EStatus {
    eFinished     = 3
 } EStatus;
 
-typedef CHRONO_::high_resolution_clock::time_point TTimePoint;
-typedef CHRONO_::duration<SYSCLOCK_::rep, SYSCLOCK_::period> TDuration;
 typedef struct TThreadDesc {
    std::string             name;
    TBaCoreThreadFun        routine;
@@ -83,6 +82,7 @@ typedef struct TThreadDesc {
 LOCAL TDuration timed(TBaCoreFun func, void* pArg);
 LOCAL void threadRoutine(TThreadDesc *pDesc);
 LOCAL int prio2Prio(EBaCorePrio prio);
+LOCAL inline int64_t round1000(int64_t n);
 
 /*------------------------------------------------------------------------------
  *  Interface implementation
@@ -90,17 +90,17 @@ LOCAL int prio2Prio(EBaCorePrio prio);
 
 //
 int64_t BaCoreTimedS(TBaCoreFun fun, void* pArg) {
-   return CHRONO_::duration_cast<CHRONO_::seconds>(timed(fun, pArg)).count();
+   return round1000(CHRONO_::duration_cast<CHRONO_::milliseconds>(timed(fun, pArg)).count());
 }
 
 //
 int64_t BaCoreTimedMs(TBaCoreFun fun, void* pArg) {
-   return CHRONO_::duration_cast<CHRONO_::milliseconds>(timed(fun, pArg)).count();
+   return round1000(CHRONO_::duration_cast<CHRONO_::microseconds>(timed(fun, pArg)).count());
 }
 
 //
 int64_t BaCoreTimedUs(TBaCoreFun fun, void* pArg) {
-   return CHRONO_::duration_cast<CHRONO_::microseconds>(timed(fun, pArg)).count();
+   return round1000(timed(fun, pArg).count());
 }
 
 //
@@ -109,8 +109,8 @@ void BaCoreGetTStamp(TBaCoreTimeStamp *pStamp) {
       return;
    }
 
-   auto nowT = CHRONOHRC::now();
-   pStamp->tt = CHRONOHRC::to_time_t(nowT);
+   auto nowT = CHRONOHRC_::now();
+   pStamp->tt = CHRONOHRC_::to_time_t(nowT);
    pStamp->micros = CHRONO_::duration_cast<CHRONO_::microseconds>(nowT.time_since_epoch()).count() % 1000000;
 
    // Get the millis part of the second with rounding to the nearest milli
@@ -124,6 +124,13 @@ void BaCoreGetTStamp(TBaCoreTimeStamp *pStamp) {
       }
    }
 
+}
+
+//
+TBaCoreMonTStampUs BaCoreGetMonTStamp() {
+
+   // The steady clock runs in nanoseconds. Round to micros
+   return round1000(STEADCLOCK_::now().time_since_epoch().count());
 }
 
 // Stamp length is 22
@@ -191,7 +198,12 @@ TBaCoreThreadHdl BaCoreCreateThread(const char *name, TBaCoreThreadFun routine,
    }
 
    TThreadDesc *pDesc = new TThreadDesc();
+
    pDesc->name = name ? name : "";
+   if (pDesc->name.size() >= TASKNAMESZ) {
+      pDesc->name.resize(TASKNAMESZ -1 );
+   }
+
    pDesc->pArg = pArg;
    pDesc->prio = (EBaCorePrio)prio;
    pDesc->routine = routine;
@@ -357,9 +369,22 @@ LOCAL int prio2Prio(EBaCorePrio prio) {
 
 //
 LOCAL TDuration timed(TBaCoreFun func, void* pArg) {
-   const TTimePoint start = std::chrono::high_resolution_clock::now();
+   const TTimePoint start = std::chrono::steady_clock::now();
    func(pArg);
-   const TTimePoint end = std::chrono::high_resolution_clock::now();
+   const TTimePoint end = std::chrono::steady_clock::now();
    return end - start;
 }
+
+//
+LOCAL inline int64_t round1000(int64_t n) {
+
+   // Round to the nearest thousand
+   if (n % 1000 < 500) {
+      return n /= 1000;
+   }
+
+   n /= 1000;
+   return ++n;
+}
+
 

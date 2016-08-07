@@ -40,6 +40,9 @@ typedef struct TBaCoreTimeStamp {
    uint16_t millis; ///< Fraction of second in milliseconds, max = 1000
 } TBaCoreTimeStamp;
 
+/// Monotonic timestamp in microseconds
+typedef int64_t TBaCoreMonTStampUs;
+
 
 /// Thread priority and scheduler. RT is FIFO
 // Windows does not have RT
@@ -128,11 +131,16 @@ int64_t BaCoreTimedUs(
       );
 
 /******************************************************************************/
-/** Gets the actual time timestamp
+/** Gets the actual timestamp in local timeS
  */
 void BaCoreGetTStamp(
       TBaCoreTimeStamp *pStamp ///< [out] Time stamp
       );
+
+/******************************************************************************/
+/** Gets the actual monotonic timestamp in microseconds
+ */
+TBaCoreMonTStampUs BaCoreGetMonTStamp();
 
 /******************************************************************************/
 /** Converts time stamp structure to string. If the user gives a buffer (@c pBuf),
@@ -151,11 +159,11 @@ const char* BaCoreTStampToStr(
 /// @name Multi-threading
 //@{
 /******************************************************************************/
-/** Thread factory
+/** Thread factory. The maximum @c name size including null is 16
  *  @return Thread handle
  */
 TBaCoreThreadHdl BaCoreCreateThread(
-      const char *name,         ///< [in] Thread name
+      const char *name,         ///< [in] Thread name. Max size is 15 chars + null
       TBaCoreThreadFun routine, ///< [in] Thread entry function
       TBaCoreThreadArg *pArg,   ///< [in] Arguments of thread function
       EBaCorePrio prio          ///< [in] Thread priority
