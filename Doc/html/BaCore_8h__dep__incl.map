@@ -1,4 +1,6 @@
 <map id="BaCore.h" name="BaCore.h">
-<area shape="rect" id="node2" href="$BaseApi_8h.html" title="Includes the following: " alt="" coords="21,80,103,107"/>
-<area shape="rect" id="node3" href="$BaLogMacros_8h.html" title="This header defines macros for logging more easily. " alt="" coords="5,155,119,181"/>
+<area shape="rect" id="node2" href="$BaCom_8h.html" title="Communications API. " alt="" coords="5,80,81,107"/>
+<area shape="rect" id="node3" href="$BaseApi_8h.html" title="Includes the following: " alt="" coords="106,80,189,107"/>
+<area shape="rect" id="node5" href="$BaProc_8h.html" title="Process functions. " alt="" coords="213,80,289,107"/>
+<area shape="rect" id="node4" href="$BaLogMacros_8h.html" title="This header defines macros for logging more easily. " alt="" coords="91,155,204,181"/>
 </map>

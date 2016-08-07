@@ -2,18 +2,27 @@
 \label{BaProc_8h}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 
 
-...  
+Process functions.  
 
 
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
-Include dependency graph for Ba\+Proc.\+h\+:
-\nopagebreak
+{\ttfamily \#include \char`\"{}Ba\+Core.\+h\char`\"{}}\\*
+Include dependency graph for Ba\+Proc.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=137pt]{BaProc_8h__incl}
+\includegraphics[width=206pt]{BaProc_8h__incl}
 \end{center}
 \end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{BaProc_8h_a3c9a9ad2caaae2472761064235cbd62f}{}\#define \hyperlink{BaProc_8h_a3c9a9ad2caaae2472761064235cbd62f}{B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N}~16\label{BaProc_8h_a3c9a9ad2caaae2472761064235cbd62f}
+
+\begin{DoxyCompactList}\small\item\em Standard length of program names \textquotesingle{}proc/comm\textquotesingle{}. \end{DoxyCompactList}\item 
+\hypertarget{BaProc_8h_a71a01cc9c903abdd1e44eba81d7d8b12}{}\#define \hyperlink{BaProc_8h_a71a01cc9c903abdd1e44eba81d7d8b12}{B\+A\+P\+R\+O\+C\+\_\+\+F\+U\+L\+L\+N\+A\+M\+E\+L\+E\+N}~256\label{BaProc_8h_a71a01cc9c903abdd1e44eba81d7d8b12}
+
+\begin{DoxyCompactList}\small\item\em Maximum length of a file\textquotesingle{}s name. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{Indent}{\bf Name of Processes}\par
 \begin{DoxyCompactItemize}
@@ -22,7 +31,7 @@ const char $\ast$ \hyperlink{BaProc_8h_ad46d33c7f014cf825241bc7095b9737b}{Ba\+Pr
 \begin{DoxyCompactList}\small\item\em Get the short name of own process. \end{DoxyCompactList}\item 
 const char $\ast$ \hyperlink{BaProc_8h_a73fc3532099b1f6d8ec26a69d065bca7}{Ba\+Proc\+Get\+Own\+Full\+Name} ()
 \begin{DoxyCompactList}\small\item\em Get the full name of own process. \end{DoxyCompactList}\item 
-const char $\ast$ \hyperlink{BaProc_8h_a73d2aefbd3859030073bc2bbab6de07f}{Ba\+Proc\+Get\+P\+I\+D\+Name} (pid\+\_\+t pid, char buf\mbox{[}B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N\mbox{]})
+const char $\ast$ \hyperlink{BaProc_8h_a73d2aefbd3859030073bc2bbab6de07f}{Ba\+Proc\+Get\+P\+I\+D\+Name} (pid\+\_\+t pid, char buf\mbox{[}\hyperlink{BaProc_8h_a3c9a9ad2caaae2472761064235cbd62f}{B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N}\mbox{]})
 \begin{DoxyCompactList}\small\item\em Gets the process name from the P\+I\+D. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 \begin{Indent}{\bf Control Tas\+K P\+I\+D File}\par
@@ -30,7 +39,7 @@ const char $\ast$ \hyperlink{BaProc_8h_a73d2aefbd3859030073bc2bbab6de07f}{Ba\+Pr
 \item 
 \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaProc_8h_a667375fe0a60e74e7381f89d355e7401}{Ba\+Proc\+Write\+Ctrl\+Task\+Pid\+File} ()
 \begin{DoxyCompactList}\small\item\em Write/overwrite the Control Task P\+I\+D file which is a special P\+I\+D file. \end{DoxyCompactList}\item 
-pid\+\_\+t \hyperlink{BaProc_8h_a524fd9c92965cdab16be46d9b8551f1c}{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File} (char buf\mbox{[}B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N\mbox{]})
+pid\+\_\+t \hyperlink{BaProc_8h_a524fd9c92965cdab16be46d9b8551f1c}{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File} (char buf\mbox{[}\hyperlink{BaProc_8h_a3c9a9ad2caaae2472761064235cbd62f}{B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N}\mbox{]})
 \begin{DoxyCompactList}\small\item\em Read the Control Task P\+I\+D file. \end{DoxyCompactList}\item 
 \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaProc_8h_a236a46d6e33d23942605b54b9b4c1a21}{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File} ()
 \begin{DoxyCompactList}\small\item\em Deletes the Control Task P\+I\+D file. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -47,12 +56,25 @@ pid\+\_\+t \hyperlink{BaProc_8h_a96b3ee236e4731559f69eca02a5e3d88}{Ba\+Proc\+Rea
 \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} \hyperlink{BaProc_8h_afedb73be073c8b608dfff1bacbdbdc25}{Ba\+Proc\+Pid\+File\+Is\+Running} (const char $\ast$prog\+Name, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} internal)
 \begin{DoxyCompactList}\small\item\em Test if a program with the P\+I\+D inside the P\+I\+D file is running and has the same name as {\ttfamily prog\+Name}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
+\begin{Indent}{\bf Process Priority}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaProc_8h_abcb0de82a78484519583fff8d18b7b50}{Ba\+Proc\+Set\+Own\+Prio} (\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} prio)
+\begin{DoxyCompactList}\small\item\em Set the priority of the calling process. \end{DoxyCompactList}\item 
+\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \hyperlink{BaProc_8h_a98f2e5bacc720d9d3ce9a666a890de6b}{Ba\+Proc\+Get\+Own\+Prio} ()
+\begin{DoxyCompactList}\small\item\em Get the priority of the calling process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
 
 
 \subsection{Detailed Description}
-... 
+Process functions. 
 
 
+\begin{DoxyItemize}
+\item Names
+\item P\+I\+Ds
+\item Priorities 
+\end{DoxyItemize}
 
 \subsection{Function Documentation}
 \hypertarget{BaProc_8h_ad46d33c7f014cf825241bc7095b9737b}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Get\+Own\+Short\+Name@{Ba\+Proc\+Get\+Own\+Short\+Name}}
@@ -127,6 +149,10 @@ Write/overwrite the Control Task P\+I\+D file which is a special P\+I\+D file.
 This function is meant to be called from within the forked control task. \begin{DoxyReturn}{Returns}
 Success or error 
 \end{DoxyReturn}
+
+
+Referenced by Ba\+Api\+Start\+Ctrl\+Task().
+
 \hypertarget{BaProc_8h_a524fd9c92965cdab16be46d9b8551f1c}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File}}
 \index{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File(char buf[B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N])}]{\setlength{\rightskip}{0pt plus 5cm}pid\+\_\+t Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File (
@@ -146,6 +172,10 @@ The P\+I\+D on success or 0 on error
 \mbox{\tt out}  & {\em buf} & Optional buffer to read the name of the binary \\
 \hline
 \end{DoxyParams}
+
+
+Referenced by Ba\+Api\+Stop\+Ctrl\+Task(), and Ba\+Proc\+Pid\+File\+Is\+Running().
+
 \hypertarget{BaProc_8h_a236a46d6e33d23942605b54b9b4c1a21}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File}}
 \index{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File (
@@ -160,6 +190,10 @@ Deletes the Control Task P\+I\+D file.
 \begin{DoxyReturn}{Returns}
 Success or error 
 \end{DoxyReturn}
+
+
+Referenced by Ba\+Api\+Start\+Ctrl\+Task().
+
 \hypertarget{BaProc_8h_a482d93d161a58d213b2e0afb47adde14}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Write\+Own\+Pid\+File@{Ba\+Proc\+Write\+Own\+Pid\+File}}
 \index{Ba\+Proc\+Write\+Own\+Pid\+File@{Ba\+Proc\+Write\+Own\+Pid\+File}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Write\+Own\+Pid\+File()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Proc\+Write\+Own\+Pid\+File (
@@ -244,3 +278,44 @@ true or false
 \mbox{\tt in}  & {\em internal} & Flag to signal that the program was created with this A\+P\+I \\
 \hline
 \end{DoxyParams}
+
+
+Referenced by Ba\+Api\+Start\+Ctrl\+Task().
+
+\hypertarget{BaProc_8h_abcb0de82a78484519583fff8d18b7b50}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Set\+Own\+Prio@{Ba\+Proc\+Set\+Own\+Prio}}
+\index{Ba\+Proc\+Set\+Own\+Prio@{Ba\+Proc\+Set\+Own\+Prio}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
+\subsubsection[{Ba\+Proc\+Set\+Own\+Prio(\+E\+Ba\+Core\+Prio prio)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Proc\+Set\+Own\+Prio (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+Ba\+Core\+Prio}}]{prio}
+\end{DoxyParamCaption}
+)}\label{BaProc_8h_abcb0de82a78484519583fff8d18b7b50}
+
+
+Set the priority of the calling process. 
+
+T\+O\+D\+O\+: unit test \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prio} & New priority \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Ba\+Api\+Start\+Ctrl\+Task().
+
+\hypertarget{BaProc_8h_a98f2e5bacc720d9d3ce9a666a890de6b}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Get\+Own\+Prio@{Ba\+Proc\+Get\+Own\+Prio}}
+\index{Ba\+Proc\+Get\+Own\+Prio@{Ba\+Proc\+Get\+Own\+Prio}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
+\subsubsection[{Ba\+Proc\+Get\+Own\+Prio()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf E\+Ba\+Core\+Prio} Ba\+Proc\+Get\+Own\+Prio (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{BaProc_8h_a98f2e5bacc720d9d3ce9a666a890de6b}
+
+
+Get the priority of the calling process. 
+
+T\+O\+D\+O\+: unit test \begin{DoxyReturn}{Returns}
+the priority 
+\end{DoxyReturn}

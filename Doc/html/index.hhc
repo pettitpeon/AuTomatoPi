@@ -190,8 +190,9 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WInit"><param name="Local" value="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WExit"><param name="Local" value="BaCom_8h.html#a1db343e7949ded79fd54ed5c49dfbdfa"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetDevices"><param name="Local" value="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WRdAsync"><param name="Local" value="BaCom_8h.html#a624dc3c42afb27ed7ad9514ab4cc8485"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetTemp"><param name="Local" value="BaCom_8h.html#aead9e89e6d443d5cdfdf0f5f0b7489ec"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetValue"><param name="Local" value="BaCom_8h.html#a5289d4a8cefd0fce2826ed5719b32394"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetValue"><param name="Local" value="BaCom_8h.html#abe2197503642d4517de5445e652e4ead"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerInit"><param name="Local" value="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerExit"><param name="Local" value="BaCom_8h.html#a607a0ab43460b1e999519a8b6697e7f2"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerPutC"><param name="Local" value="BaCom_8h.html#a6e2bd92d46d4f9326dbccc3f25408fcd"><param name="ImageNumber" value="11"></OBJECT>
@@ -219,6 +220,7 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="isRunning"><param name="Local" value="structTBaCoreThreadInfo.html#ab3b8ba12748c55ac4763b010fd3cfc42"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreTimeStamp"><param name="Local" value="BaCore_8h.html#ab12ee629b9995a0696756e25fe0a85ef"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreMonTStampUs"><param name="Local" value="BaCore_8h.html#a26e10ffbac03a898c7f8921f65ee4544"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaCorePrio"><param name="Local" value="BaCore_8h.html#a157dc8d9ee9a32912cbc26f9b1dd7476"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreThreadArg"><param name="Local" value="BaCore_8h.html#a9a294779f7323469261016b0f040c297"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreThreadInfo"><param name="Local" value="BaCore_8h.html#a55c2b904410b0e5f7b9b3f1b747a0475"><param name="ImageNumber" value="11"></OBJECT>
@@ -244,17 +246,11 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreTimedMs"><param name="Local" value="BaCore_8h.html#a2ab9ab9bd8d9002a4bd017d4421e9260"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreTimedUs"><param name="Local" value="BaCore_8h.html#ac7c70166fe4345034332c00a46d4946f"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreGetTStamp"><param name="Local" value="BaCore_8h.html#a5890e7e91b8c1895f6a474781c489eb8"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreGetMonTStamp"><param name="Local" value="BaCore_8h.html#addc3e044eb80deaba6bcbf17e7549b7b"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreTStampToStr"><param name="Local" value="BaCore_8h.html#a505f6901474517229290f1f9278f5a99"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreCreateThread"><param name="Local" value="BaCore_8h.html#a91ad70ff751bb8afd38fe7fd3bc7e1e1"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreDestroyThread"><param name="Local" value="BaCore_8h.html#a3e568df0bc78e0f639718932d9c1f229"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreGetThreadInfo"><param name="Local" value="BaCore_8h.html#a3063c6580150f08a015d37bcd9cd3bb6"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreSetOwnProcPrio"><param name="Local" value="BaCore_8h.html#a48cd5004864e106e6c94ff87b0838c17"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreGetOwnProcPrio"><param name="Local" value="BaCore_8h.html#a6a302164ab5c3007db39e2a93bb8834b"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreGetOwnName"><param name="Local" value="BaCore_8h.html#a5bb6f24ac3258da1560dbc5ddda1442c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreReadPidFile"><param name="Local" value="BaCore_8h.html#af357edfd2287b05789cffbbf0c906ed5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreTestPidFile"><param name="Local" value="BaCore_8h.html#ae0cc2fd4d4a01f4965dfba4a81a019f4"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreWritePidFile"><param name="Local" value="BaCore_8h.html#ad4f62afe32321fb493c4a60b3f1a7611"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCoreRemovePidFile"><param name="Local" value="BaCore_8h.html#a207323687df5930d5d7335a07303a687"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGenMacros.h"><param name="Local" value="BaGenMacros_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
@@ -460,6 +456,8 @@
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProc.h"><param name="Local" value="BaProc_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BAPROC_SHORTNAMELEN"><param name="Local" value="BaProc_8h.html#a3c9a9ad2caaae2472761064235cbd62f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BAPROC_FULLNAMELEN"><param name="Local" value="BaProc_8h.html#a71a01cc9c903abdd1e44eba81d7d8b12"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetOwnShortName"><param name="Local" value="BaProc_8h.html#ad46d33c7f014cf825241bc7095b9737b"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetOwnFullName"><param name="Local" value="BaProc_8h.html#a73fc3532099b1f6d8ec26a69d065bca7"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetPIDName"><param name="Local" value="BaProc_8h.html#a73d2aefbd3859030073bc2bbab6de07f"><param name="ImageNumber" value="11"></OBJECT>
@@ -470,6 +468,8 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcReadPidFile"><param name="Local" value="BaProc_8h.html#a96b3ee236e4731559f69eca02a5e3d88"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcDelPidFile"><param name="Local" value="BaProc_8h.html#a013102082e8b0f1c7148c1642194af6d"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcPidFileIsRunning"><param name="Local" value="BaProc_8h.html#afedb73be073c8b608dfff1bacbdbdc25"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcSetOwnPrio"><param name="Local" value="BaProc_8h.html#abcb0de82a78484519583fff8d18b7b50"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetOwnPrio"><param name="Local" value="BaProc_8h.html#a98f2e5bacc720d9d3ce9a666a890de6b"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaseApi.h"><param name="Local" value="BaseApi_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
@@ -510,6 +510,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaUtils.hpp"><param name="Local" value="BaUtils_8hpp.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="MkDir"><param name="Local" value="BaUtils_8hpp.html#a9e6346a9784d4de1dbda3c79ef8bb72b"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="CpFile"><param name="Local" value="BaUtils_8hpp.html#a500756f66ff45aaf311421e7f68a0070"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="Rename"><param name="Local" value="BaUtils_8hpp.html#ad729f83dfe589df3058696c6db6452c9"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="Size"><param name="Local" value="BaUtils_8hpp.html#a526ea62172fcaa4003dd437863c6604c"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="DirSize"><param name="Local" value="BaUtils_8hpp.html#aafa79b524a4f13b6531cf79b1f73774e"><param name="ImageNumber" value="11"></OBJECT>

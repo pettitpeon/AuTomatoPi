@@ -47,23 +47,36 @@
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">BaProc.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>...  
+<p>Process functions.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="BaCore_8h_source.html">BaCore.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaProc.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaProc_8h__incl.svg" width="87" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaProc_8h__incl.svg" width="179" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="BaProc_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a3c9a9ad2caaae2472761064235cbd62f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c9a9ad2caaae2472761064235cbd62f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a3c9a9ad2caaae2472761064235cbd62f">BAPROC_SHORTNAMELEN</a>&#160;&#160;&#160;16</td></tr>
+<tr class="memdesc:a3c9a9ad2caaae2472761064235cbd62f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard length of program names 'proc/comm'. <br /></td></tr>
+<tr class="separator:a3c9a9ad2caaae2472761064235cbd62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71a01cc9c903abdd1e44eba81d7d8b12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71a01cc9c903abdd1e44eba81d7d8b12"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a71a01cc9c903abdd1e44eba81d7d8b12">BAPROC_FULLNAMELEN</a>&#160;&#160;&#160;256</td></tr>
+<tr class="memdesc:a71a01cc9c903abdd1e44eba81d7d8b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum length of a file's name. <br /></td></tr>
+<tr class="separator:a71a01cc9c903abdd1e44eba81d7d8b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Name of Processes</div></td></tr>
@@ -73,14 +86,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a73fc3532099b1f6d8ec26a69d065bca7"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a73fc3532099b1f6d8ec26a69d065bca7">BaProcGetOwnFullName</a> ()</td></tr>
 <tr class="memdesc:a73fc3532099b1f6d8ec26a69d065bca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the full name of own process.  <a href="#a73fc3532099b1f6d8ec26a69d065bca7">More...</a><br /></td></tr>
 <tr class="separator:a73fc3532099b1f6d8ec26a69d065bca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73d2aefbd3859030073bc2bbab6de07f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a73d2aefbd3859030073bc2bbab6de07f">BaProcGetPIDName</a> (pid_t pid, char buf[BAPROC_SHORTNAMELEN])</td></tr>
+<tr class="memitem:a73d2aefbd3859030073bc2bbab6de07f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a73d2aefbd3859030073bc2bbab6de07f">BaProcGetPIDName</a> (pid_t pid, char buf[<a class="el" href="BaProc_8h.html#a3c9a9ad2caaae2472761064235cbd62f">BAPROC_SHORTNAMELEN</a>])</td></tr>
 <tr class="memdesc:a73d2aefbd3859030073bc2bbab6de07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the process name from the PID.  <a href="#a73d2aefbd3859030073bc2bbab6de07f">More...</a><br /></td></tr>
 <tr class="separator:a73d2aefbd3859030073bc2bbab6de07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Control TasK PID File</div></td></tr>
 <tr class="memitem:a667375fe0a60e74e7381f89d355e7401"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a667375fe0a60e74e7381f89d355e7401">BaProcWriteCtrlTaskPidFile</a> ()</td></tr>
 <tr class="memdesc:a667375fe0a60e74e7381f89d355e7401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write/overwrite the Control Task PID file which is a special PID file.  <a href="#a667375fe0a60e74e7381f89d355e7401">More...</a><br /></td></tr>
 <tr class="separator:a667375fe0a60e74e7381f89d355e7401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a524fd9c92965cdab16be46d9b8551f1c"><td class="memItemLeft" align="right" valign="top">pid_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a524fd9c92965cdab16be46d9b8551f1c">BaProcReadCtrlTaskPidFile</a> (char buf[BAPROC_SHORTNAMELEN])</td></tr>
+<tr class="memitem:a524fd9c92965cdab16be46d9b8551f1c"><td class="memItemLeft" align="right" valign="top">pid_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a524fd9c92965cdab16be46d9b8551f1c">BaProcReadCtrlTaskPidFile</a> (char buf[<a class="el" href="BaProc_8h.html#a3c9a9ad2caaae2472761064235cbd62f">BAPROC_SHORTNAMELEN</a>])</td></tr>
 <tr class="memdesc:a524fd9c92965cdab16be46d9b8551f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the Control Task PID file.  <a href="#a524fd9c92965cdab16be46d9b8551f1c">More...</a><br /></td></tr>
 <tr class="separator:a524fd9c92965cdab16be46d9b8551f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a236a46d6e33d23942605b54b9b4c1a21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a236a46d6e33d23942605b54b9b4c1a21">BaProcDelCtrlTaskPidFile</a> ()</td></tr>
@@ -99,9 +112,21 @@ Functions</h2></td></tr>
 <tr class="memitem:afedb73be073c8b608dfff1bacbdbdc25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#afedb73be073c8b608dfff1bacbdbdc25">BaProcPidFileIsRunning</a> (const char *progName, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> internal)</td></tr>
 <tr class="memdesc:afedb73be073c8b608dfff1bacbdbdc25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if a program with the PID inside the PID file is running and has the same name as <code>progName</code>.  <a href="#afedb73be073c8b608dfff1bacbdbdc25">More...</a><br /></td></tr>
 <tr class="separator:afedb73be073c8b608dfff1bacbdbdc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Process Priority</div></td></tr>
+<tr class="memitem:abcb0de82a78484519583fff8d18b7b50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#abcb0de82a78484519583fff8d18b7b50">BaProcSetOwnPrio</a> (<a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a> prio)</td></tr>
+<tr class="memdesc:abcb0de82a78484519583fff8d18b7b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the priority of the calling process.  <a href="#abcb0de82a78484519583fff8d18b7b50">More...</a><br /></td></tr>
+<tr class="separator:abcb0de82a78484519583fff8d18b7b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98f2e5bacc720d9d3ce9a666a890de6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaProc_8h.html#a98f2e5bacc720d9d3ce9a666a890de6b">BaProcGetOwnPrio</a> ()</td></tr>
+<tr class="memdesc:a98f2e5bacc720d9d3ce9a666a890de6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the priority of the calling process.  <a href="#a98f2e5bacc720d9d3ce9a666a890de6b">More...</a><br /></td></tr>
+<tr class="separator:a98f2e5bacc720d9d3ce9a666a890de6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>... </p>
+<div class="textblock"><p>Process functions. </p>
+<ul>
+<li>Names</li>
+<li>PIDs</li>
+<li>Priorities </li>
+</ul>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ad46d33c7f014cf825241bc7095b9737b"></a>
 <div class="memitem">
@@ -195,6 +220,8 @@ Functions</h2></td></tr>
 <p>Write/overwrite the Control Task PID file which is a special PID file. </p>
 <p>This function is meant to be called from within the forked control task. </p><dl class="section return"><dt>Returns</dt><dd>Success or error </dd></dl>
 
+<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a524fd9c92965cdab16be46d9b8551f1c"></a>
@@ -220,6 +247,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Referenced by <a class="el" href="BaseApi_8h.html#a55d72c35323e5ffaa7219d7fb54f4bf1">BaApiStopCtrlTask()</a>, and <a class="el" href="BaProc_8h.html#afedb73be073c8b608dfff1bacbdbdc25">BaProcPidFileIsRunning()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a236a46d6e33d23942605b54b9b4c1a21"></a>
@@ -237,6 +266,8 @@ Functions</h2></td></tr>
 
 <p>Deletes the Control Task PID file. </p>
 <dl class="section return"><dt>Returns</dt><dd>Success or error </dd></dl>
+
+<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
 
 </div>
 </div>
@@ -366,12 +397,59 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abcb0de82a78484519583fff8d18b7b50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaProcSetOwnPrio </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a>&#160;</td>
+          <td class="paramname"><em>prio</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the priority of the calling process. </p>
+<p>TODO: unit test </p><dl class="section return"><dt>Returns</dt><dd>Error or success </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">prio</td><td>New priority </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a98f2e5bacc720d9d3ce9a666a890de6b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a> BaProcGetOwnPrio </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the priority of the calling process. </p>
+<p>TODO: unit test </p><dl class="section return"><dt>Returns</dt><dd>the priority </dd></dl>
+
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 21:10:51 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

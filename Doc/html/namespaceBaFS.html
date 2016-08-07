@@ -57,6 +57,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a9e6346a9784d4de1dbda3c79ef8bb72b"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaFS.html#a9e6346a9784d4de1dbda3c79ef8bb72b">MkDir</a> (std::string dir, int per=0660)</td></tr>
 <tr class="memdesc:a9e6346a9784d4de1dbda3c79ef8bb72b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Portable mkdir(), creates a directory.  <a href="#a9e6346a9784d4de1dbda3c79ef8bb72b">More...</a><br /></td></tr>
 <tr class="separator:a9e6346a9784d4de1dbda3c79ef8bb72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a500756f66ff45aaf311421e7f68a0070"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaFS.html#a500756f66ff45aaf311421e7f68a0070">CpFile</a> (std::string src, std::string dst)</td></tr>
+<tr class="memdesc:a500756f66ff45aaf311421e7f68a0070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Portable file copy.  <a href="#a500756f66ff45aaf311421e7f68a0070">More...</a><br /></td></tr>
+<tr class="separator:a500756f66ff45aaf311421e7f68a0070"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad729f83dfe589df3058696c6db6452c9"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaFS.html#ad729f83dfe589df3058696c6db6452c9">Rename</a> (std::string path, std::string newPath)</td></tr>
 <tr class="memdesc:ad729f83dfe589df3058696c6db6452c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Portable rename().  <a href="#ad729f83dfe589df3058696c6db6452c9">More...</a><br /></td></tr>
 <tr class="separator:ad729f83dfe589df3058696c6db6452c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -115,7 +118,51 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaCore_8h.html#ad4f62afe32321fb493c4a60b3f1a7611">BaCoreWritePidFile()</a>, <a class="el" href="BaProc_8h.html#a667375fe0a60e74e7381f89d355e7401">BaProcWriteCtrlTaskPidFile()</a>, and <a class="el" href="BaProc_8h.html#a482d93d161a58d213b2e0afb47adde14">BaProcWriteOwnPidFile()</a>.</p>
+<p>Referenced by <a class="el" href="BaProc_8h.html#a667375fe0a60e74e7381f89d355e7401">BaProcWriteCtrlTaskPidFile()</a>, and <a class="el" href="BaProc_8h.html#a482d93d161a58d213b2e0afb47adde14">BaProcWriteOwnPidFile()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a500756f66ff45aaf311421e7f68a0070"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaFS::CpFile </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Portable file copy. </p>
+<p>Always rewrites </p><dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Path of source file </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dst</td><td>Path of destination </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -271,14 +318,14 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaCore_8h.html#ad4f62afe32321fb493c4a60b3f1a7611">BaCoreWritePidFile()</a>, <a class="el" href="BaProc_8h.html#a667375fe0a60e74e7381f89d355e7401">BaProcWriteCtrlTaskPidFile()</a>, and <a class="el" href="BaProc_8h.html#a482d93d161a58d213b2e0afb47adde14">BaProcWriteOwnPidFile()</a>.</p>
+<p>Referenced by <a class="el" href="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706">BaCom1WGetDevices()</a>, <a class="el" href="BaProc_8h.html#a667375fe0a60e74e7381f89d355e7401">BaProcWriteCtrlTaskPidFile()</a>, and <a class="el" href="BaProc_8h.html#a482d93d161a58d213b2e0afb47adde14">BaProcWriteOwnPidFile()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 21:10:51 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 7 2016 20:40:07 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

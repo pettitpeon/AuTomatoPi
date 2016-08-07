@@ -66,11 +66,14 @@
 <code>#include &lt;stdarg.h&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;istream&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;iterator&gt;</code><br />
+<code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaUtils.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaUtils_8hpp__incl.svg" width="707" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaUtils_8hpp__incl.svg" width="1082" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="BaUtils_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -100,6 +103,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a9e6346a9784d4de1dbda3c79ef8bb72b"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaFS.html#a9e6346a9784d4de1dbda3c79ef8bb72b">BaFS::MkDir</a> (std::string dir, int per=0660)</td></tr>
 <tr class="memdesc:a9e6346a9784d4de1dbda3c79ef8bb72b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Portable mkdir(), creates a directory.  <a href="namespaceBaFS.html#a9e6346a9784d4de1dbda3c79ef8bb72b">More...</a><br /></td></tr>
 <tr class="separator:a9e6346a9784d4de1dbda3c79ef8bb72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a500756f66ff45aaf311421e7f68a0070"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaFS.html#a500756f66ff45aaf311421e7f68a0070">BaFS::CpFile</a> (std::string src, std::string dst)</td></tr>
+<tr class="memdesc:a500756f66ff45aaf311421e7f68a0070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Portable file copy.  <a href="namespaceBaFS.html#a500756f66ff45aaf311421e7f68a0070">More...</a><br /></td></tr>
+<tr class="separator:a500756f66ff45aaf311421e7f68a0070"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad729f83dfe589df3058696c6db6452c9"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaFS.html#ad729f83dfe589df3058696c6db6452c9">BaFS::Rename</a> (std::string path, std::string newPath)</td></tr>
 <tr class="memdesc:ad729f83dfe589df3058696c6db6452c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Portable rename().  <a href="namespaceBaFS.html#ad729f83dfe589df3058696c6db6452c9">More...</a><br /></td></tr>
 <tr class="separator:ad729f83dfe589df3058696c6db6452c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -279,7 +285,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 21:10:51 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

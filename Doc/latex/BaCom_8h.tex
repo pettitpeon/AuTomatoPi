@@ -6,12 +6,12 @@ Communications A\+P\+I.
 
 
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
-Include dependency graph for Ba\+Com.\+h\+:
-\nopagebreak
+{\ttfamily \#include \char`\"{}Ba\+Core.\+h\char`\"{}}\\*
+Include dependency graph for Ba\+Com.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=137pt]{BaCom_8h__incl}
+\includegraphics[width=206pt]{BaCom_8h__incl}
 \end{center}
 \end{figure}
 \subsection*{Macros}
@@ -51,9 +51,11 @@ Include dependency graph for Ba\+Com.\+h\+:
 \begin{DoxyCompactList}\small\item\em Releases the resources. \end{DoxyCompactList}\item 
 uint16\+\_\+t \hyperlink{BaCom_8h_a17f4dcfdde9d9a2a0b2c88151b744706}{Ba\+Com1\+W\+Get\+Devices} ()
 \begin{DoxyCompactList}\small\item\em Scans for devices and saves them internally. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{BaCom_8h_a624dc3c42afb27ed7ad9514ab4cc8485}{Ba\+Com1\+W\+Rd\+Async} (const char $\ast$ser\+No, \hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us} $\ast$p\+Ts)
+\begin{DoxyCompactList}\small\item\em Read the value of the 1\+W sensor asynchronously. \end{DoxyCompactList}\item 
 float \hyperlink{BaCom_8h_aead9e89e6d443d5cdfdf0f5f0b7489ec}{Ba\+Com1\+W\+Get\+Temp} (const char $\ast$ser\+No, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
-\begin{DoxyCompactList}\small\item\em Get temperature from temperature sensor. \end{DoxyCompactList}\item 
-void $\ast$ \hyperlink{BaCom_8h_a5289d4a8cefd0fce2826ed5719b32394}{Ba\+Com1\+W\+Get\+Value} (uint8\+\_\+t fam\+I\+D, const char $\ast$ser\+No, \hyperlink{BaCom_8h_add8b012b9350e6336e8bc815a3b732d2}{T\+Ba\+Com1w\+Read\+Fun} cb, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Gets the temperature from the sensor with family \char`\"{}28\char`\"{}. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{BaCom_8h_abe2197503642d4517de5445e652e4ead}{Ba\+Com1\+W\+Get\+Value} (const char $\ast$ser\+No, \hyperlink{BaCom_8h_add8b012b9350e6336e8bc815a3b732d2}{T\+Ba\+Com1w\+Read\+Fun} cb, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
 \begin{DoxyCompactList}\small\item\em Gets the data from a generic one wire device by calling user callback. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 \begin{Indent}{\bf Serial Interface}\par
@@ -110,7 +112,7 @@ Error of success
 Releases the resources. 
 
 \begin{DoxyReturn}{Returns}
-Error of success 
+Error or success 
 \end{DoxyReturn}
 \hypertarget{BaCom_8h_a17f4dcfdde9d9a2a0b2c88151b744706}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com1\+W\+Get\+Devices@{Ba\+Com1\+W\+Get\+Devices}}
 \index{Ba\+Com1\+W\+Get\+Devices@{Ba\+Com1\+W\+Get\+Devices}!Ba\+Com.\+h@{Ba\+Com.\+h}}
@@ -124,8 +126,35 @@ Error of success
 Scans for devices and saves them internally. 
 
 This is automatically called by \hyperlink{BaCom_8h_a36457e41594d45b408d50a9dd23866e2}{Ba\+Com1\+W\+Init()} \begin{DoxyReturn}{Returns}
-the number of devices found 
+The number of devices found 
 \end{DoxyReturn}
+
+
+Referenced by Ba\+Com1\+W\+Init().
+
+\hypertarget{BaCom_8h_a624dc3c42afb27ed7ad9514ab4cc8485}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com1\+W\+Rd\+Async@{Ba\+Com1\+W\+Rd\+Async}}
+\index{Ba\+Com1\+W\+Rd\+Async@{Ba\+Com1\+W\+Rd\+Async}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com1\+W\+Rd\+Async(const char $\ast$ser\+No, T\+Ba\+Core\+Mon\+T\+Stamp\+Us $\ast$p\+Ts)}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Com1\+W\+Rd\+Async (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ser\+No, }
+\item[{{\bf T\+Ba\+Core\+Mon\+T\+Stamp\+Us} $\ast$}]{p\+Ts}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a624dc3c42afb27ed7ad9514ab4cc8485}
+
+
+Read the value of the 1\+W sensor asynchronously. 
+
+This works with an internal worker thread. The {\ttfamily ser\+No} must have the form\+:~\newline
+X\+X-\/\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X \mbox{[}dev\+Fam\mbox{]}-\/\mbox{[}dev\+I\+D\mbox{]} \begin{DoxyReturn}{Returns}
+On success, the contents of the sensor file, otherwise 0 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ser\+No} & Optional serial number of the sensor eg\+: \char`\"{}28-\/0215c2c4bcff\char`\"{}. If null, the first sensor with family I\+D 28 is used \\
+\hline
+\mbox{\tt out}  & {\em p\+Ts} & optional timestamp of the reading \\
+\hline
+\end{DoxyParams}
 \hypertarget{BaCom_8h_aead9e89e6d443d5cdfdf0f5f0b7489ec}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com1\+W\+Get\+Temp@{Ba\+Com1\+W\+Get\+Temp}}
 \index{Ba\+Com1\+W\+Get\+Temp@{Ba\+Com1\+W\+Get\+Temp}!Ba\+Com.\+h@{Ba\+Com.\+h}}
 \subsubsection[{Ba\+Com1\+W\+Get\+Temp(const char $\ast$ser\+No, T\+Ba\+Bool $\ast$p\+Error)}]{\setlength{\rightskip}{0pt plus 5cm}float Ba\+Com1\+W\+Get\+Temp (
@@ -136,10 +165,11 @@ the number of devices found
 )}\label{BaCom_8h_aead9e89e6d443d5cdfdf0f5f0b7489ec}
 
 
-Get temperature from temperature sensor. 
+Gets the temperature from the sensor with family \char`\"{}28\char`\"{}. 
 
-\begin{DoxyReturn}{Returns}
-Temperature in Â°\+C on success, otherwise -\/300 
+This is a slow synchronous read. It takes about 1s. For soft real-\/time applications, the asynchronous call is suggested. The {\ttfamily ser\+No} must have the form\+:~\newline
+X\+X-\/\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X \mbox{[}dev\+Fam\mbox{]}-\/\mbox{[}dev\+I\+D\mbox{]} \begin{DoxyReturn}{Returns}
+Temperature in °\+C on success, otherwise -\/300 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
@@ -148,28 +178,26 @@ Temperature in Â°\+C on success, otherwise -\/300
 \mbox{\tt out}  & {\em p\+Error} & Optional error flag. Only modified if error \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCom_8h_a5289d4a8cefd0fce2826ed5719b32394}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com1\+W\+Get\+Value@{Ba\+Com1\+W\+Get\+Value}}
+\hypertarget{BaCom_8h_abe2197503642d4517de5445e652e4ead}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com1\+W\+Get\+Value@{Ba\+Com1\+W\+Get\+Value}}
 \index{Ba\+Com1\+W\+Get\+Value@{Ba\+Com1\+W\+Get\+Value}!Ba\+Com.\+h@{Ba\+Com.\+h}}
-\subsubsection[{Ba\+Com1\+W\+Get\+Value(uint8\+\_\+t fam\+I\+D, const char $\ast$ser\+No, T\+Ba\+Com1w\+Read\+Fun cb, T\+Ba\+Bool $\ast$p\+Error)}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Ba\+Com1\+W\+Get\+Value (
+\subsubsection[{Ba\+Com1\+W\+Get\+Value(const char $\ast$ser\+No, T\+Ba\+Com1w\+Read\+Fun cb, T\+Ba\+Bool $\ast$p\+Error)}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Ba\+Com1\+W\+Get\+Value (
 \begin{DoxyParamCaption}
-\item[{uint8\+\_\+t}]{fam\+I\+D, }
 \item[{const char $\ast$}]{ser\+No, }
 \item[{{\bf T\+Ba\+Com1w\+Read\+Fun}}]{cb, }
 \item[{{\bf T\+Ba\+Bool} $\ast$}]{p\+Error}
 \end{DoxyParamCaption}
-)}\label{BaCom_8h_a5289d4a8cefd0fce2826ed5719b32394}
+)}\label{BaCom_8h_abe2197503642d4517de5445e652e4ead}
 
 
 Gets the data from a generic one wire device by calling user callback. 
 
-\begin{DoxyReturn}{Returns}
+todo\+: return the first sensor if ser\+N\+O == 1. The {\ttfamily ser\+No} must have the form\+:~\newline
+X\+X-\/\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X \mbox{[}dev\+Fam\mbox{]}-\/\mbox{[}dev\+I\+D\mbox{]} \begin{DoxyReturn}{Returns}
 Null if error, or the data returned by {\ttfamily cb} 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em fam\+I\+D} & Family I\+D of the sensor eg\+: temperature = 28 \\
-\hline
-\mbox{\tt in}  & {\em ser\+No} & Optional serial number of the sensor eg\+: \char`\"{}28-\/0215c2c4bcff\char`\"{}. If null, the first sensor with family I\+D 28 is used \\
+\mbox{\tt in}  & {\em ser\+No} & Optional serial number of the sensor eg\+: \char`\"{}28-\/0215c2c4bcff\char`\"{}. \\
 \hline
 \mbox{\tt in}  & {\em cb} & Callback function that parses the string returned by the driver \\
 \hline

@@ -63,14 +63,12 @@
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaCore.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__incl.svg" width="179" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__incl.svg" width="179" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__dep__incl.svg" width="124" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__dep__incl.svg" width="295" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="BaCore_8h_source.html">Go to the source code of this file.</a></p>
@@ -93,6 +91,10 @@ Typedefs</h2></td></tr>
 typedef struct <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#ab12ee629b9995a0696756e25fe0a85ef">TBaCoreTimeStamp</a></td></tr>
 <tr class="memdesc:ab12ee629b9995a0696756e25fe0a85ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time stamp structure. <br /></td></tr>
 <tr class="separator:ab12ee629b9995a0696756e25fe0a85ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26e10ffbac03a898c7f8921f65ee4544"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26e10ffbac03a898c7f8921f65ee4544"></a>
+typedef int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a26e10ffbac03a898c7f8921f65ee4544">TBaCoreMonTStampUs</a></td></tr>
+<tr class="memdesc:a26e10ffbac03a898c7f8921f65ee4544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Monotonic timestamp in microseconds. <br /></td></tr>
+<tr class="separator:a26e10ffbac03a898c7f8921f65ee4544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a157dc8d9ee9a32912cbc26f9b1dd7476"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a157dc8d9ee9a32912cbc26f9b1dd7476"></a>
 typedef enum <a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a157dc8d9ee9a32912cbc26f9b1dd7476">EBaCorePrio</a></td></tr>
 <tr class="memdesc:a157dc8d9ee9a32912cbc26f9b1dd7476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread priority and scheduler. RT is FIFO. <br /></td></tr>
@@ -161,8 +163,12 @@ Functions</h2></td></tr>
 <tr class="memdesc:ac7c70166fe4345034332c00a46d4946f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timing function.  <a href="#ac7c70166fe4345034332c00a46d4946f">More...</a><br /></td></tr>
 <tr class="separator:ac7c70166fe4345034332c00a46d4946f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5890e7e91b8c1895f6a474781c489eb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a5890e7e91b8c1895f6a474781c489eb8">BaCoreGetTStamp</a> (<a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp)</td></tr>
-<tr class="memdesc:a5890e7e91b8c1895f6a474781c489eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the actual time timestamp.  <a href="#a5890e7e91b8c1895f6a474781c489eb8">More...</a><br /></td></tr>
+<tr class="memdesc:a5890e7e91b8c1895f6a474781c489eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the actual timestamp in local timeS.  <a href="#a5890e7e91b8c1895f6a474781c489eb8">More...</a><br /></td></tr>
 <tr class="separator:a5890e7e91b8c1895f6a474781c489eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc3e044eb80deaba6bcbf17e7549b7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addc3e044eb80deaba6bcbf17e7549b7b"></a>
+<a class="el" href="BaCore_8h.html#a26e10ffbac03a898c7f8921f65ee4544">TBaCoreMonTStampUs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#addc3e044eb80deaba6bcbf17e7549b7b">BaCoreGetMonTStamp</a> ()</td></tr>
+<tr class="memdesc:addc3e044eb80deaba6bcbf17e7549b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the actual monotonic timestamp in microseconds. <br /></td></tr>
+<tr class="separator:addc3e044eb80deaba6bcbf17e7549b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a505f6901474517229290f1f9278f5a99"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a505f6901474517229290f1f9278f5a99">BaCoreTStampToStr</a> (const <a class="el" href="structTBaCoreTimeStamp.html">TBaCoreTimeStamp</a> *pStamp, char pBuf[BACORE_TSTAMPLEN])</td></tr>
 <tr class="memdesc:a505f6901474517229290f1f9278f5a99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts time stamp structure to string.  <a href="#a505f6901474517229290f1f9278f5a99">More...</a><br /></td></tr>
 <tr class="separator:a505f6901474517229290f1f9278f5a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,29 +182,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a3063c6580150f08a015d37bcd9cd3bb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a3063c6580150f08a015d37bcd9cd3bb6">BaCoreGetThreadInfo</a> (const <a class="el" href="BaCore_8h.html#a2898da7dd1b0e998b8c64dca81dff404">TBaCoreThreadHdl</a> hdl, <a class="el" href="structTBaCoreThreadInfo.html">TBaCoreThreadInfo</a> *pInfo)</td></tr>
 <tr class="memdesc:a3063c6580150f08a015d37bcd9cd3bb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the thread info.  <a href="#a3063c6580150f08a015d37bcd9cd3bb6">More...</a><br /></td></tr>
 <tr class="separator:a3063c6580150f08a015d37bcd9cd3bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Other getter setters</div></td></tr>
-<tr class="memitem:a48cd5004864e106e6c94ff87b0838c17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a48cd5004864e106e6c94ff87b0838c17">BaCoreSetOwnProcPrio</a> (<a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a> prio)</td></tr>
-<tr class="memdesc:a48cd5004864e106e6c94ff87b0838c17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the priority of the calling process.  <a href="#a48cd5004864e106e6c94ff87b0838c17">More...</a><br /></td></tr>
-<tr class="separator:a48cd5004864e106e6c94ff87b0838c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a302164ab5c3007db39e2a93bb8834b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a6a302164ab5c3007db39e2a93bb8834b">BaCoreGetOwnProcPrio</a> ()</td></tr>
-<tr class="memdesc:a6a302164ab5c3007db39e2a93bb8834b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the priority of the calling process.  <a href="#a6a302164ab5c3007db39e2a93bb8834b">More...</a><br /></td></tr>
-<tr class="separator:a6a302164ab5c3007db39e2a93bb8834b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bb6f24ac3258da1560dbc5ddda1442c"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a5bb6f24ac3258da1560dbc5ddda1442c">BaCoreGetOwnName</a> ()</td></tr>
-<tr class="memdesc:a5bb6f24ac3258da1560dbc5ddda1442c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the calling process.  <a href="#a5bb6f24ac3258da1560dbc5ddda1442c">More...</a><br /></td></tr>
-<tr class="separator:a5bb6f24ac3258da1560dbc5ddda1442c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">PID Files</div></td></tr>
-<tr class="memitem:af357edfd2287b05789cffbbf0c906ed5"><td class="memItemLeft" align="right" valign="top">pid_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#af357edfd2287b05789cffbbf0c906ed5">BaCoreReadPidFile</a> (const char *progName, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> internal)</td></tr>
-<tr class="memdesc:af357edfd2287b05789cffbbf0c906ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to read the PID from an internal program, or from a path.  <a href="#af357edfd2287b05789cffbbf0c906ed5">More...</a><br /></td></tr>
-<tr class="separator:af357edfd2287b05789cffbbf0c906ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0cc2fd4d4a01f4965dfba4a81a019f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#ae0cc2fd4d4a01f4965dfba4a81a019f4">BaCoreTestPidFile</a> (const char *progName)</td></tr>
-<tr class="memdesc:ae0cc2fd4d4a01f4965dfba4a81a019f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO: Checks if the internal program is running.  <a href="#ae0cc2fd4d4a01f4965dfba4a81a019f4">More...</a><br /></td></tr>
-<tr class="separator:ae0cc2fd4d4a01f4965dfba4a81a019f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4f62afe32321fb493c4a60b3f1a7611"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#ad4f62afe32321fb493c4a60b3f1a7611">BaCoreWritePidFile</a> (const char *progName)</td></tr>
-<tr class="memdesc:ad4f62afe32321fb493c4a60b3f1a7611"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the PID file of an internal program.  <a href="#ad4f62afe32321fb493c4a60b3f1a7611">More...</a><br /></td></tr>
-<tr class="separator:ad4f62afe32321fb493c4a60b3f1a7611"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a207323687df5930d5d7335a07303a687"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a207323687df5930d5d7335a07303a687">BaCoreRemovePidFile</a> (const char *progName)</td></tr>
-<tr class="memdesc:a207323687df5930d5d7335a07303a687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remover the PID file of an internal program.  <a href="#a207323687df5930d5d7335a07303a687">More...</a><br /></td></tr>
-<tr class="separator:a207323687df5930d5d7335a07303a687"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>OS level API. </p>
@@ -475,7 +458,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the actual time timestamp. </p>
+<p>Gets the actual timestamp in local timeS. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">pStamp</td><td>Time stamp </td></tr>
@@ -558,10 +541,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Thread factory. </p>
-<dl class="section return"><dt>Returns</dt><dd>Thread handle </dd></dl>
+<p>The maximum <code>name</code> size including null is 16 </p><dl class="section return"><dt>Returns</dt><dd>Thread handle </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Thread name </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Thread name. Max size is 15 chars + null </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">routine</td><td>Thread entry function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pArg</td><td>Arguments of thread function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">prio</td><td>Thread priority </td></tr>
@@ -569,7 +552,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a81ad517fcd3fbf12c5fc57273eb0ce94">BaApiStartCtrlThread()</a>, and <a class="el" href="BaGpio_8h.html#aad89a86e462d6c700eb0f26a93d5c690">BaGpioStartSWPWM()</a>.</p>
+<p>Referenced by <a class="el" href="BaseApi_8h.html#a81ad517fcd3fbf12c5fc57273eb0ce94">BaApiStartCtrlThread()</a>, <a class="el" href="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706">BaCom1WGetDevices()</a>, and <a class="el" href="BaGpio_8h.html#aad89a86e462d6c700eb0f26a93d5c690">BaGpioStartSWPWM()</a>.</p>
 
 </div>
 </div>
@@ -607,7 +590,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaseApi_8h.html#abf560df382cc0fa41c71a555a567befd">BaApiStopCtrlThread()</a>, and <a class="el" href="BaGpio_8h.html#a79b33d8a85223b99b6f6ad6d2fa6edc9">BaGpioStopSWPWM()</a>.</p>
+<p>Referenced by <a class="el" href="BaseApi_8h.html#abf560df382cc0fa41c71a555a567befd">BaApiStopCtrlThread()</a>, <a class="el" href="BaCom_8h.html#a1db343e7949ded79fd54ed5c49dfbdfa">BaCom1WExit()</a>, and <a class="el" href="BaGpio_8h.html#a79b33d8a85223b99b6f6ad6d2fa6edc9">BaGpioStopSWPWM()</a>.</p>
 
 </div>
 </div>
@@ -647,188 +630,10 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a48cd5004864e106e6c94ff87b0838c17"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaCoreSetOwnProcPrio </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a>&#160;</td>
-          <td class="paramname"><em>prio</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set the priority of the calling process. </p>
-<p>TODO: unit test </p><dl class="section return"><dt>Returns</dt><dd>Error or success </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">prio</td><td>New priority </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6a302164ab5c3007db39e2a93bb8834b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a> BaCoreGetOwnProcPrio </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the priority of the calling process. </p>
-<p>TODO: unit test </p><dl class="section return"><dt>Returns</dt><dd>the priority </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a5bb6f24ac3258da1560dbc5ddda1442c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char* BaCoreGetOwnName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the name of the calling process. </p>
-<p>Mangling with the returned pointer leads to undefined behavior, please do not mess with it </p><dl class="section return"><dt>Returns</dt><dd>The name of the calling process </dd></dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af357edfd2287b05789cffbbf0c906ed5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">pid_t BaCoreReadPidFile </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>progName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a>&#160;</td>
-          <td class="paramname"><em>internal</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Tries to read the PID from an internal program, or from a path. </p>
-<dl class="section return"><dt>Returns</dt><dd>on success, the PID, otherwise, -1 </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">progName</td><td>Internal program name or path to PID file </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">internal</td><td>Flag to signal that the program was created with this API </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a55d72c35323e5ffaa7219d7fb54f4bf1">BaApiStopCtrlTask()</a>, and <a class="el" href="BaCore_8h.html#ae0cc2fd4d4a01f4965dfba4a81a019f4">BaCoreTestPidFile()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae0cc2fd4d4a01f4965dfba4a81a019f4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaCoreTestPidFile </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>progName</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>TODO: Checks if the internal program is running. </p>
-<dl class="section return"><dt>Returns</dt><dd>Success or error </dd></dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad4f62afe32321fb493c4a60b3f1a7611"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaCoreWritePidFile </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>progName</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Writes the PID file of an internal program. </p>
-<p>The own name can be read with <a class="el" href="BaCore_8h.html#a5bb6f24ac3258da1560dbc5ddda1442c" title="Gets the name of the calling process. ">BaCoreGetOwnName()</a>. </p><dl class="section return"><dt>Returns</dt><dd>Success or error </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">progName</td><td>Internal program name </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a207323687df5930d5d7335a07303a687"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaCoreRemovePidFile </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>progName</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Remover the PID file of an internal program. </p>
-<p>The own name can be read with <a class="el" href="BaCore_8h.html#a5bb6f24ac3258da1560dbc5ddda1442c" title="Gets the name of the calling process. ">BaCoreGetOwnName()</a>. </p><dl class="section return"><dt>Returns</dt><dd>Success or error </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">progName</td><td>Internal program name </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 21:10:51 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

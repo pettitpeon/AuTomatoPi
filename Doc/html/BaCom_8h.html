@@ -59,11 +59,11 @@
 <p>Communications API.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="BaCore_8h_source.html">BaCore.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaCom.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCom_8h__incl.svg" width="87" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCom_8h__incl.svg" width="179" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="BaCom_8h_source.html">Go to the source code of this file.</a></p>
@@ -112,12 +112,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a17f4dcfdde9d9a2a0b2c88151b744706"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706">BaCom1WGetDevices</a> ()</td></tr>
 <tr class="memdesc:a17f4dcfdde9d9a2a0b2c88151b744706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scans for devices and saves them internally.  <a href="#a17f4dcfdde9d9a2a0b2c88151b744706">More...</a><br /></td></tr>
 <tr class="separator:a17f4dcfdde9d9a2a0b2c88151b744706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a624dc3c42afb27ed7ad9514ab4cc8485"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a624dc3c42afb27ed7ad9514ab4cc8485">BaCom1WRdAsync</a> (const char *serNo, <a class="el" href="BaCore_8h.html#a26e10ffbac03a898c7f8921f65ee4544">TBaCoreMonTStampUs</a> *pTs)</td></tr>
+<tr class="memdesc:a624dc3c42afb27ed7ad9514ab4cc8485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the value of the 1W sensor asynchronously.  <a href="#a624dc3c42afb27ed7ad9514ab4cc8485">More...</a><br /></td></tr>
+<tr class="separator:a624dc3c42afb27ed7ad9514ab4cc8485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aead9e89e6d443d5cdfdf0f5f0b7489ec"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#aead9e89e6d443d5cdfdf0f5f0b7489ec">BaCom1WGetTemp</a> (const char *serNo, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *pError)</td></tr>
-<tr class="memdesc:aead9e89e6d443d5cdfdf0f5f0b7489ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get temperature from temperature sensor.  <a href="#aead9e89e6d443d5cdfdf0f5f0b7489ec">More...</a><br /></td></tr>
+<tr class="memdesc:aead9e89e6d443d5cdfdf0f5f0b7489ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the temperature from the sensor with family "28".  <a href="#aead9e89e6d443d5cdfdf0f5f0b7489ec">More...</a><br /></td></tr>
 <tr class="separator:aead9e89e6d443d5cdfdf0f5f0b7489ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5289d4a8cefd0fce2826ed5719b32394"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a5289d4a8cefd0fce2826ed5719b32394">BaCom1WGetValue</a> (uint8_t famID, const char *serNo, <a class="el" href="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2">TBaCom1wReadFun</a> cb, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *pError)</td></tr>
-<tr class="memdesc:a5289d4a8cefd0fce2826ed5719b32394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the data from a generic one wire device by calling user callback.  <a href="#a5289d4a8cefd0fce2826ed5719b32394">More...</a><br /></td></tr>
-<tr class="separator:a5289d4a8cefd0fce2826ed5719b32394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe2197503642d4517de5445e652e4ead"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#abe2197503642d4517de5445e652e4ead">BaCom1WGetValue</a> (const char *serNo, <a class="el" href="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2">TBaCom1wReadFun</a> cb, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *pError)</td></tr>
+<tr class="memdesc:abe2197503642d4517de5445e652e4ead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the data from a generic one wire device by calling user callback.  <a href="#abe2197503642d4517de5445e652e4ead">More...</a><br /></td></tr>
+<tr class="separator:abe2197503642d4517de5445e652e4ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Serial Interface</div></td></tr>
 <tr class="memitem:afd029cee32185ec1613ba18b144439a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281">TBaComSerHdl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2">BaComSerInit</a> (const char *device, <a class="el" href="BaCom_8h.html#a51ae55d0c5491b76a6070eb31390691d">EBaComBaud</a> baud)</td></tr>
 <tr class="memdesc:afd029cee32185ec1613ba18b144439a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources and reserves GPIOs 14 and 15 for.  <a href="#afd029cee32185ec1613ba18b144439a2">More...</a><br /></td></tr>
@@ -176,7 +179,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Releases the resources. </p>
-<dl class="section return"><dt>Returns</dt><dd>Error of success </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Error or success </dd></dl>
 
 </div>
 </div>
@@ -194,7 +197,46 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Scans for devices and saves them internally. </p>
-<p>This is automatically called by <a class="el" href="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2" title="Initializes the resources, reserves GPIO 4 and calls BaCom1WGetDevices() ">BaCom1WInit()</a> </p><dl class="section return"><dt>Returns</dt><dd>the number of devices found </dd></dl>
+<p>This is automatically called by <a class="el" href="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2" title="Initializes the resources, reserves GPIO 4 and calls BaCom1WGetDevices() ">BaCom1WInit()</a> </p><dl class="section return"><dt>Returns</dt><dd>The number of devices found </dd></dl>
+
+<p>Referenced by <a class="el" href="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2">BaCom1WInit()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a624dc3c42afb27ed7ad9514ab4cc8485"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* BaCom1WRdAsync </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>serNo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaCore_8h.html#a26e10ffbac03a898c7f8921f65ee4544">TBaCoreMonTStampUs</a> *&#160;</td>
+          <td class="paramname"><em>pTs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read the value of the 1W sensor asynchronously. </p>
+<p>This works with an internal worker thread. The <code>serNo</code> must have the form:<br />
+XX-XXXXXXXXXXXX [devFam]-[devID] </p><dl class="section return"><dt>Returns</dt><dd>On success, the contents of the sensor file, otherwise 0 </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">serNo</td><td>Optional serial number of the sensor eg: "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pTs</td><td>optional timestamp of the reading </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -222,8 +264,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get temperature from temperature sensor. </p>
-<dl class="section return"><dt>Returns</dt><dd>Temperature in Â°C on success, otherwise -300 </dd></dl>
+<p>Gets the temperature from the sensor with family "28". </p>
+<p>This is a slow synchronous read. It takes about 1s. For soft real-time applications, the asynchronous call is suggested. The <code>serNo</code> must have the form:<br />
+XX-XXXXXXXXXXXX [devFam]-[devID] </p><dl class="section return"><dt>Returns</dt><dd>Temperature in °C on success, otherwise -300 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">serNo</td><td>Optional serial number of the sensor eg: "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used </td></tr>
@@ -234,19 +277,13 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5289d4a8cefd0fce2826ed5719b32394"></a>
+<a class="anchor" id="abe2197503642d4517de5445e652e4ead"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void* BaCom1WGetValue </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>famID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>serNo</em>, </td>
         </tr>
@@ -271,11 +308,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the data from a generic one wire device by calling user callback. </p>
-<dl class="section return"><dt>Returns</dt><dd>Null if error, or the data returned by <code>cb</code> </dd></dl>
+<p>todo: return the first sensor if serNO == 1. The <code>serNo</code> must have the form:<br />
+XX-XXXXXXXXXXXX [devFam]-[devID] </p><dl class="section return"><dt>Returns</dt><dd>Null if error, or the data returned by <code>cb</code> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">famID</td><td>Family ID of the sensor eg: temperature = 28 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">serNo</td><td>Optional serial number of the sensor eg: "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">serNo</td><td>Optional serial number of the sensor eg: "28-0215c2c4bcff". </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cb</td><td>Callback function that parses the string returned by the driver </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">pError</td><td>Optional error flag. Only modified if error </td></tr>
   </table>
@@ -415,7 +452,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 21:10:50 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

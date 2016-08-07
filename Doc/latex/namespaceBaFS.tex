@@ -11,6 +11,8 @@ Namespace to wrap all file system functions.
 \item 
 static int \hyperlink{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}{Mk\+Dir} (std\+::string dir, int per=0660)
 \begin{DoxyCompactList}\small\item\em Portable mkdir(), creates a directory. \end{DoxyCompactList}\item 
+static \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{namespaceBaFS_a500756f66ff45aaf311421e7f68a0070}{Cp\+File} (std\+::string src, std\+::string dst)
+\begin{DoxyCompactList}\small\item\em Portable file copy. \end{DoxyCompactList}\item 
 static int \hyperlink{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}{Rename} (std\+::string path, std\+::string new\+Path)
 \begin{DoxyCompactList}\small\item\em Portable rename(). \end{DoxyCompactList}\item 
 static uint32\+\_\+t \hyperlink{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}{Size} (std\+::string path)
@@ -50,8 +52,30 @@ Normal mkdir() return value
 \end{DoxyParams}
 
 
-Referenced by Ba\+Core\+Write\+Pid\+File(), Ba\+Proc\+Write\+Ctrl\+Task\+Pid\+File(), and Ba\+Proc\+Write\+Own\+Pid\+File().
+Referenced by Ba\+Proc\+Write\+Ctrl\+Task\+Pid\+File(), and Ba\+Proc\+Write\+Own\+Pid\+File().
 
+\hypertarget{namespaceBaFS_a500756f66ff45aaf311421e7f68a0070}{}\index{Ba\+F\+S@{Ba\+F\+S}!Cp\+File@{Cp\+File}}
+\index{Cp\+File@{Cp\+File}!Ba\+F\+S@{Ba\+F\+S}}
+\subsubsection[{Cp\+File(std\+::string src, std\+::string dst)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf T\+Ba\+Bool\+R\+C} Ba\+F\+S\+::\+Cp\+File (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{src, }
+\item[{std\+::string}]{dst}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{namespaceBaFS_a500756f66ff45aaf311421e7f68a0070}
+
+
+Portable file copy. 
+
+Always rewrites \begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em src} & Path of source file \\
+\hline
+\mbox{\tt in}  & {\em dst} & Path of destination \\
+\hline
+\end{DoxyParams}
 \hypertarget{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}{}\index{Ba\+F\+S@{Ba\+F\+S}!Rename@{Rename}}
 \index{Rename@{Rename}!Ba\+F\+S@{Ba\+F\+S}}
 \subsubsection[{Rename(std\+::string path, std\+::string new\+Path)}]{\setlength{\rightskip}{0pt plus 5cm}static int Ba\+F\+S\+::\+Rename (
@@ -136,5 +160,5 @@ true if exists, otherwise, false
 \end{DoxyParams}
 
 
-Referenced by Ba\+Core\+Write\+Pid\+File(), Ba\+Proc\+Write\+Ctrl\+Task\+Pid\+File(), and Ba\+Proc\+Write\+Own\+Pid\+File().
+Referenced by Ba\+Com1\+W\+Get\+Devices(), Ba\+Proc\+Write\+Ctrl\+Task\+Pid\+File(), and Ba\+Proc\+Write\+Own\+Pid\+File().
 

@@ -14,8 +14,11 @@ General useful functions~\newline
 {\ttfamily \#include $<$stdarg.\+h$>$}\\*
 {\ttfamily \#include $<$string$>$}\\*
 {\ttfamily \#include $<$istream$>$}\\*
-Include dependency graph for Ba\+Utils.\+hpp\+:
-\nopagebreak
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$iterator$>$}\\*
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
+Include dependency graph for Ba\+Utils.\+hpp\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -43,6 +46,8 @@ static std\+::string \hyperlink{BaUtils_8hpp_a42ed36ddc7c211af550ec7c7eb28738b}{
 \item 
 static int \hyperlink{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}{Ba\+F\+S\+::\+Mk\+Dir} (std\+::string dir, int per=0660)
 \begin{DoxyCompactList}\small\item\em Portable mkdir(), creates a directory. \end{DoxyCompactList}\item 
+static \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{namespaceBaFS_a500756f66ff45aaf311421e7f68a0070}{Ba\+F\+S\+::\+Cp\+File} (std\+::string src, std\+::string dst)
+\begin{DoxyCompactList}\small\item\em Portable file copy. \end{DoxyCompactList}\item 
 static int \hyperlink{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}{Ba\+F\+S\+::\+Rename} (std\+::string path, std\+::string new\+Path)
 \begin{DoxyCompactList}\small\item\em Portable rename(). \end{DoxyCompactList}\item 
 static uint32\+\_\+t \hyperlink{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}{Ba\+F\+S\+::\+Size} (std\+::string path)

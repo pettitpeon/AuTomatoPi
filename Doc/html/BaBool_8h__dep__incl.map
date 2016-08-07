@@ -1,11 +1,12 @@
 <map id="BaBool.h" name="BaBool.h">
-<area shape="rect" id="node2" href="$BaCom_8h.html" title="Communications API. " alt="" coords="5,80,81,107"/>
-<area shape="rect" id="node3" href="$BaCore_8h.html" title="OS level API. " alt="" coords="105,80,181,107"/>
-<area shape="rect" id="node4" href="$BaseApi_8h.html" title="Includes the following: " alt="" coords="178,155,261,181"/>
-<area shape="rect" id="node6" href="$BaGpio_8h.html" title="GPIOs APIs. " alt="" coords="257,80,333,107"/>
-<area shape="rect" id="node7" href="$BaIniParse_8h.html" title="Ini/config files parser based on iniparser from N. " alt="" coords="358,80,454,107"/>
-<area shape="rect" id="node8" href="$BaLog_8h.html" title="Logger API. " alt="" coords="479,80,549,107"/>
-<area shape="rect" id="node10" href="$BaProc_8h.html" title="... " alt="" coords="573,80,649,107"/>
-<area shape="rect" id="node5" href="$BaLogMacros_8h.html" title="This header defines macros for logging more easily. " alt="" coords="163,229,276,256"/>
-<area shape="rect" id="node9" href="$BaMsg_8h.html" title="API for messages with state. " alt="" coords="477,155,551,181"/>
+<area shape="rect" id="node2" href="$BaCom_8h.html" title="Communications API. " alt="" coords="5,155,81,181"/>
+<area shape="rect" id="node3" href="$BaCore_8h.html" title="OS level API. " alt="" coords="81,80,157,107"/>
+<area shape="rect" id="node4" href="$BaseApi_8h.html" title="Includes the following: " alt="" coords="206,155,289,181"/>
+<area shape="rect" id="node6" href="$BaProc_8h.html" title="Process functions. " alt="" coords="105,155,181,181"/>
+<area shape="rect" id="node7" href="$BaGpio_8h.html" title="GPIOs APIs. " alt="" coords="284,80,360,107"/>
+<area shape="rect" id="node8" href="$BaUtils_8hpp.html" title="General useful functions . " alt="" coords="384,80,473,107"/>
+<area shape="rect" id="node9" href="$BaIniParse_8h.html" title="Ini/config files parser based on iniparser from N. " alt="" coords="498,80,594,107"/>
+<area shape="rect" id="node10" href="$BaLog_8h.html" title="Logger API. " alt="" coords="619,80,689,107"/>
+<area shape="rect" id="node5" href="$BaLogMacros_8h.html" title="This header defines macros for logging more easily. " alt="" coords="191,229,304,256"/>
+<area shape="rect" id="node11" href="$BaMsg_8h.html" title="API for messages with state. " alt="" coords="617,155,691,181"/>
 </map>

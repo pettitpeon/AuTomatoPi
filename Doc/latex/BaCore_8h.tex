@@ -7,20 +7,18 @@ O\+S level A\+P\+I.
 
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
 {\ttfamily \#include $<$unistd.\+h$>$}\\*
-Include dependency graph for Ba\+Core.\+h\+:
-\nopagebreak
+Include dependency graph for Ba\+Core.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=206pt]{BaCore_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=165pt]{BaCore_8h__dep__incl}
+\includegraphics[width=293pt]{BaCore_8h__dep__incl}
 \end{center}
 \end{figure}
 \subsection*{Classes}
@@ -38,6 +36,9 @@ struct \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info}
 \hypertarget{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}{}typedef struct \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} \hyperlink{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}{T\+Ba\+Core\+Time\+Stamp}\label{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}
 
 \begin{DoxyCompactList}\small\item\em Time stamp structure. \end{DoxyCompactList}\item 
+\hypertarget{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{}typedef int64\+\_\+t \hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us}\label{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}
+
+\begin{DoxyCompactList}\small\item\em Monotonic timestamp in microseconds. \end{DoxyCompactList}\item 
 \hypertarget{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}{}typedef enum \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \hyperlink{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}{E\+Ba\+Core\+Prio}\label{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}
 
 \begin{DoxyCompactList}\small\item\em Thread priority and scheduler. R\+T is F\+I\+F\+O. \end{DoxyCompactList}\item 
@@ -94,7 +95,10 @@ int64\+\_\+t \hyperlink{BaCore_8h_a2ab9ab9bd8d9002a4bd017d4421e9260}{Ba\+Core\+T
 int64\+\_\+t \hyperlink{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}{Ba\+Core\+Timed\+Us} (\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun} fun, void $\ast$p\+Arg)
 \begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\item 
 void \hyperlink{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}{Ba\+Core\+Get\+T\+Stamp} (\hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp)
-\begin{DoxyCompactList}\small\item\em Gets the actual time timestamp. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gets the actual timestamp in local time\+S. \end{DoxyCompactList}\item 
+\hypertarget{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}{}\hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us} \hyperlink{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}{Ba\+Core\+Get\+Mon\+T\+Stamp} ()\label{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}
+
+\begin{DoxyCompactList}\small\item\em Gets the actual monotonic timestamp in microseconds. \end{DoxyCompactList}\item 
 const char $\ast$ \hyperlink{BaCore_8h_a505f6901474517229290f1f9278f5a99}{Ba\+Core\+T\+Stamp\+To\+Str} (const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp, char p\+Buf\mbox{[}B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N\mbox{]})
 \begin{DoxyCompactList}\small\item\em Converts time stamp structure to string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
@@ -107,28 +111,6 @@ const char $\ast$ \hyperlink{BaCore_8h_a505f6901474517229290f1f9278f5a99}{Ba\+Co
 \begin{DoxyCompactList}\small\item\em Thread destructor. \end{DoxyCompactList}\item 
 \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}{Ba\+Core\+Get\+Thread\+Info} (const \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info} $\ast$p\+Info)
 \begin{DoxyCompactList}\small\item\em Get the thread info. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\end{Indent}
-\begin{Indent}{\bf Other getter setters}\par
-\begin{DoxyCompactItemize}
-\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a48cd5004864e106e6c94ff87b0838c17}{Ba\+Core\+Set\+Own\+Proc\+Prio} (\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} prio)
-\begin{DoxyCompactList}\small\item\em Set the priority of the calling process. \end{DoxyCompactList}\item 
-\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \hyperlink{BaCore_8h_a6a302164ab5c3007db39e2a93bb8834b}{Ba\+Core\+Get\+Own\+Proc\+Prio} ()
-\begin{DoxyCompactList}\small\item\em Get the priority of the calling process. \end{DoxyCompactList}\item 
-const char $\ast$ \hyperlink{BaCore_8h_a5bb6f24ac3258da1560dbc5ddda1442c}{Ba\+Core\+Get\+Own\+Name} ()
-\begin{DoxyCompactList}\small\item\em Gets the name of the calling process. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\end{Indent}
-\begin{Indent}{\bf P\+I\+D Files}\par
-\begin{DoxyCompactItemize}
-\item 
-pid\+\_\+t \hyperlink{BaCore_8h_af357edfd2287b05789cffbbf0c906ed5}{Ba\+Core\+Read\+Pid\+File} (const char $\ast$prog\+Name, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} internal)
-\begin{DoxyCompactList}\small\item\em Tries to read the P\+I\+D from an internal program, or from a path. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_ae0cc2fd4d4a01f4965dfba4a81a019f4}{Ba\+Core\+Test\+Pid\+File} (const char $\ast$prog\+Name)
-\begin{DoxyCompactList}\small\item\em T\+O\+D\+O\+: Checks if the internal program is running. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_ad4f62afe32321fb493c4a60b3f1a7611}{Ba\+Core\+Write\+Pid\+File} (const char $\ast$prog\+Name)
-\begin{DoxyCompactList}\small\item\em Writes the P\+I\+D file of an internal program. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a207323687df5930d5d7335a07303a687}{Ba\+Core\+Remove\+Pid\+File} (const char $\ast$prog\+Name)
-\begin{DoxyCompactList}\small\item\em Remover the P\+I\+D file of an internal program. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
@@ -321,7 +303,7 @@ Referenced by Ba\+Api\+Start\+Ctrl\+Task().
 )}\label{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}
 
 
-Gets the actual time timestamp. 
+Gets the actual timestamp in local time\+S. 
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -364,12 +346,12 @@ Time stamp string if success, otherwise, null
 
 Thread factory. 
 
-\begin{DoxyReturn}{Returns}
+The maximum {\ttfamily name} size including null is 16 \begin{DoxyReturn}{Returns}
 Thread handle 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em name} & Thread name \\
+\mbox{\tt in}  & {\em name} & Thread name. Max size is 15 chars + null \\
 \hline
 \mbox{\tt in}  & {\em routine} & Thread entry function \\
 \hline
@@ -380,7 +362,7 @@ Thread handle
 \end{DoxyParams}
 
 
-Referenced by Ba\+Api\+Start\+Ctrl\+Thread(), and Ba\+Gpio\+Start\+S\+W\+P\+W\+M().
+Referenced by Ba\+Api\+Start\+Ctrl\+Thread(), Ba\+Com1\+W\+Get\+Devices(), and Ba\+Gpio\+Start\+S\+W\+P\+W\+M().
 
 \hypertarget{BaCore_8h_a3e568df0bc78e0f639718932d9c1f229}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}}
 \index{Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}!Ba\+Core.\+h@{Ba\+Core.\+h}}
@@ -406,7 +388,7 @@ Error if bad handle, or success
 \end{DoxyParams}
 
 
-Referenced by Ba\+Api\+Stop\+Ctrl\+Thread(), and Ba\+Gpio\+Stop\+S\+W\+P\+W\+M().
+Referenced by Ba\+Api\+Stop\+Ctrl\+Thread(), Ba\+Com1\+W\+Exit(), and Ba\+Gpio\+Stop\+S\+W\+P\+W\+M().
 
 \hypertarget{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+Thread\+Info@{Ba\+Core\+Get\+Thread\+Info}}
 \index{Ba\+Core\+Get\+Thread\+Info@{Ba\+Core\+Get\+Thread\+Info}!Ba\+Core.\+h@{Ba\+Core.\+h}}
@@ -430,148 +412,3 @@ Error or success
 \mbox{\tt out}  & {\em p\+Info} & Thread info \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a48cd5004864e106e6c94ff87b0838c17}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Set\+Own\+Proc\+Prio@{Ba\+Core\+Set\+Own\+Proc\+Prio}}
-\index{Ba\+Core\+Set\+Own\+Proc\+Prio@{Ba\+Core\+Set\+Own\+Proc\+Prio}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Set\+Own\+Proc\+Prio(\+E\+Ba\+Core\+Prio prio)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Set\+Own\+Proc\+Prio (
-\begin{DoxyParamCaption}
-\item[{{\bf E\+Ba\+Core\+Prio}}]{prio}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a48cd5004864e106e6c94ff87b0838c17}
-
-
-Set the priority of the calling process. 
-
-T\+O\+D\+O\+: unit test \begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em prio} & New priority \\
-\hline
-\end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
-\hypertarget{BaCore_8h_a6a302164ab5c3007db39e2a93bb8834b}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+Own\+Proc\+Prio@{Ba\+Core\+Get\+Own\+Proc\+Prio}}
-\index{Ba\+Core\+Get\+Own\+Proc\+Prio@{Ba\+Core\+Get\+Own\+Proc\+Prio}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Get\+Own\+Proc\+Prio()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf E\+Ba\+Core\+Prio} Ba\+Core\+Get\+Own\+Proc\+Prio (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a6a302164ab5c3007db39e2a93bb8834b}
-
-
-Get the priority of the calling process. 
-
-T\+O\+D\+O\+: unit test \begin{DoxyReturn}{Returns}
-the priority 
-\end{DoxyReturn}
-\hypertarget{BaCore_8h_a5bb6f24ac3258da1560dbc5ddda1442c}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+Own\+Name@{Ba\+Core\+Get\+Own\+Name}}
-\index{Ba\+Core\+Get\+Own\+Name@{Ba\+Core\+Get\+Own\+Name}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Get\+Own\+Name()}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Core\+Get\+Own\+Name (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a5bb6f24ac3258da1560dbc5ddda1442c}
-
-
-Gets the name of the calling process. 
-
-Mangling with the returned pointer leads to undefined behavior, please do not mess with it \begin{DoxyReturn}{Returns}
-The name of the calling process 
-\end{DoxyReturn}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
-\hypertarget{BaCore_8h_af357edfd2287b05789cffbbf0c906ed5}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Read\+Pid\+File@{Ba\+Core\+Read\+Pid\+File}}
-\index{Ba\+Core\+Read\+Pid\+File@{Ba\+Core\+Read\+Pid\+File}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Read\+Pid\+File(const char $\ast$prog\+Name, T\+Ba\+Bool internal)}]{\setlength{\rightskip}{0pt plus 5cm}pid\+\_\+t Ba\+Core\+Read\+Pid\+File (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{prog\+Name, }
-\item[{{\bf T\+Ba\+Bool}}]{internal}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_af357edfd2287b05789cffbbf0c906ed5}
-
-
-Tries to read the P\+I\+D from an internal program, or from a path. 
-
-\begin{DoxyReturn}{Returns}
-on success, the P\+I\+D, otherwise, -\/1 
-\end{DoxyReturn}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em prog\+Name} & Internal program name or path to P\+I\+D file \\
-\hline
-\mbox{\tt in}  & {\em internal} & Flag to signal that the program was created with this A\+P\+I \\
-\hline
-\end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Stop\+Ctrl\+Task(), and Ba\+Core\+Test\+Pid\+File().
-
-\hypertarget{BaCore_8h_ae0cc2fd4d4a01f4965dfba4a81a019f4}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Test\+Pid\+File@{Ba\+Core\+Test\+Pid\+File}}
-\index{Ba\+Core\+Test\+Pid\+File@{Ba\+Core\+Test\+Pid\+File}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Test\+Pid\+File(const char $\ast$prog\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Test\+Pid\+File (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{prog\+Name}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_ae0cc2fd4d4a01f4965dfba4a81a019f4}
-
-
-T\+O\+D\+O\+: Checks if the internal program is running. 
-
-\begin{DoxyReturn}{Returns}
-Success or error 
-\end{DoxyReturn}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
-\hypertarget{BaCore_8h_ad4f62afe32321fb493c4a60b3f1a7611}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Write\+Pid\+File@{Ba\+Core\+Write\+Pid\+File}}
-\index{Ba\+Core\+Write\+Pid\+File@{Ba\+Core\+Write\+Pid\+File}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Write\+Pid\+File(const char $\ast$prog\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Write\+Pid\+File (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{prog\+Name}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_ad4f62afe32321fb493c4a60b3f1a7611}
-
-
-Writes the P\+I\+D file of an internal program. 
-
-The own name can be read with \hyperlink{BaCore_8h_a5bb6f24ac3258da1560dbc5ddda1442c}{Ba\+Core\+Get\+Own\+Name()}. \begin{DoxyReturn}{Returns}
-Success or error 
-\end{DoxyReturn}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em prog\+Name} & Internal program name \\
-\hline
-\end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
-\hypertarget{BaCore_8h_a207323687df5930d5d7335a07303a687}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Remove\+Pid\+File@{Ba\+Core\+Remove\+Pid\+File}}
-\index{Ba\+Core\+Remove\+Pid\+File@{Ba\+Core\+Remove\+Pid\+File}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Remove\+Pid\+File(const char $\ast$prog\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Remove\+Pid\+File (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{prog\+Name}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a207323687df5930d5d7335a07303a687}
-
-
-Remover the P\+I\+D file of an internal program. 
-
-The own name can be read with \hyperlink{BaCore_8h_a5bb6f24ac3258da1560dbc5ddda1442c}{Ba\+Core\+Get\+Own\+Name()}. \begin{DoxyReturn}{Returns}
-Success or error 
-\end{DoxyReturn}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em prog\+Name} & Internal program name \\
-\hline
-\end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
