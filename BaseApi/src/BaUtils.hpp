@@ -269,6 +269,34 @@ static inline std::string ChangeFileExtension(
          + filename.substr(0, filename.find_last_of('.'))
          + ext;
 }
+
+/******************************************************************************/
+/** Concatenates @c path1 with @c path2 and adds or removes a delimiter when
+ *  required. E.g.:
+ *  - "/foo/bar",   "baz.txt" --> "/foo/bar/baz.dat"
+ *  - "/foo/bar/", "/baz.txt" --> "/foo/bar/baz.dat"
+ *
+ *  @return The path with the new extension
+ */
+static inline std::string Concatenate(
+      std::string path1, ///< [in] Path part 1
+      std::string path2, ///< [in] Path part 2
+#ifdef _WIN32
+      char delimiter = '\\'
+#else
+      char delimiter = '/'
+#endif
+            ) {
+
+   if (path1.back() == delimiter) {
+      if (path2[0] == delimiter) {
+         path1.resize(path1.length() - 1);
+         return path1 + path2;
+      }
+      return path1 + path2;
+   }
+   return path1 + delimiter + path2;
+}
 //@}
 }  // namespace BaPath
 

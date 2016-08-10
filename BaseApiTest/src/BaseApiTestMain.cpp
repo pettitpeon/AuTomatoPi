@@ -44,8 +44,8 @@ char gCWD[1024];
 
 static TTestSelection sSelection =
 //      eSingleTests;
-//      eSingleSuites;
-      eFullRegistry;
+      eSingleSuites;
+//      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -112,10 +112,10 @@ int main(int argc, char* argv[]) {
 **/
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CTestTemplate::suite());
-   pSuite->addTest(CBaComTest::suite());
-//   pSuite->addTest(CBaLogTest::suite());
+//   pSuite->addTest(CBaComTest::suite());
+   pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaGpioTest::suite());
-   pSuite->addTest(CBaCoreTest::suite());
+//   pSuite->addTest(CBaCoreTest::suite());
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());

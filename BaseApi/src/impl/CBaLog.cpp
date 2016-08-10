@@ -165,6 +165,14 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
    prioFilt = MINMAX(prioFilt, eBaLogPrio_Trace, eBaLogPrio_UpsCrash);
 
    // //////////////// Create //////////////
+   // If windows, remove the trailing '\' because it generates problems with the
+   // when the path is saved with the IniParser
+#ifdef __WIN32
+   if (path.back() == '\\') {
+      path.resize(path.length() - 1);
+   }
+#endif
+
    CBaLog *p = new CBaLog(name, path, prioFilt, out, maxFileSizeB, maxNoFiles, maxBufLength, fileCnt,
          fileSizeB);
    if (!p) {
@@ -173,8 +181,7 @@ CBaLog* CBaLog::commonCreate(std::string name, std::string path, EBaLogPrio prio
    }
    // //////////////// Create //////////////
 
-
-   p->mFullPath = FULLPATH(p->mPath, p->mName);
+   p->mFullPath = BaPath::Concatenate(p->mPath, p->mName) + ".log";
    std::ios_base::openmode om = std::ios_base::binary | std::ios_base::out;
    if (fromCfg) {
       om |= std::ios_base::app;

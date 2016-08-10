@@ -144,9 +144,15 @@ void CBaIniParse::TwistedIni() {
          (bool) iniparser_find_entry(pOrgHdl, "open["),
          pNewHdl->Exists("open["));
 
-   tmp = pNewHdl->GetString("multi line key", "");
-   CPPUNIT_ASSERT_MESSAGE(pNewHdl->GetString("multi line key", ""),
-         tmp == iniparser_getstring(pOrgHdl,"multi line key", ""));
+   // Multi-lines
+   tmp = pNewHdl->GetString("multi:multi line key", "");
+   CPPUNIT_ASSERT_MESSAGE(tmp, tmp == "multi line value");
+   tmp = pNewHdl->GetString("multi:visible", "");
+   CPPUNIT_ASSERT_MESSAGE(tmp, tmp == "1");
+   tmp = pNewHdl->GetString("multi:a", "");
+   CPPUNIT_ASSERT_MESSAGE(tmp, tmp == "beginend");
+   tmp = pNewHdl->GetString("multi:c", "");
+   CPPUNIT_ASSERT_MESSAGE(tmp, tmp == "begin  end");
 
    CPPUNIT_ASSERT(IBaIniParserDestroy(pNewHdl));
    iniparser_freedict(pOrgHdl);
@@ -168,6 +174,7 @@ void CBaIniParse::TwistedIni() {
 
    tmp = pNewHdl->GetString("section:key", 0);
    CPPUNIT_ASSERT_MESSAGE(tmp, tmp == iniparser_getstring(pOrgHdl, "section:key", 0));
+
    /* reset the key's value*/
    CPPUNIT_ASSERT_EQUAL(pNewHdl->Set("section:key", 0),
          !iniparser_set(pOrgHdl, "section:key", 0));
@@ -190,7 +197,6 @@ void CBaIniParse::TwistedIni() {
    CPPUNIT_ASSERT_EQUAL(pNewHdl->Set("section:key", 0), !iniparser_set(pOrgHdl, "section:key", 0));
    CPPUNIT_ASSERT_EQUAL(pNewHdl->Set("section:key1", 0), !iniparser_set(pOrgHdl, "section:key1", 0));
    CPPUNIT_ASSERT_EQUAL(pNewHdl->Set("section:key2", 0), !iniparser_set(pOrgHdl, "section:key2", 0));
-
 
 }
 

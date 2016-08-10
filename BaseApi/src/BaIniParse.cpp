@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------
-    Includes
+ Includes
  -----------------------------------------------------------------------------*/
 #include <map>
 #include <string>
@@ -12,27 +12,27 @@
 #include "BaUtils.hpp"
 
 /*------------------------------------------------------------------------------
-    Defines
+ Defines
  -----------------------------------------------------------------------------*/
 #define ASCIILINESZ  (1024)                // Line size for C functions
 #define STRNOTFOUND  std::string::npos     // Return value for string not found
 #define C_HDL_       ((CBaIniParser*) hdl) // Shortcut for C handle
 
 /*------------------------------------------------------------------------------
-    Type definitions
+ Type definitions
  -----------------------------------------------------------------------------*/
 // This enum stores the status for each parsed line (internal use only).
 typedef enum line_status {
-    eLINE_UNPROCESSED,
-    eLINE_ERROR,
-    eLINE_EMPTY,
-    eLINE_COMMENT,
-    eLINE_SECTION,
-    eLINE_VALUE
+   eLINE_UNPROCESSED,
+   eLINE_ERROR,
+   eLINE_EMPTY,
+   eLINE_COMMENT,
+   eLINE_SECTION,
+   eLINE_VALUE
 } line_status;
 
 /*------------------------------------------------------------------------------
-    Declarations
+ Declarations
  -----------------------------------------------------------------------------*/
 LOCAL const char* strlwc(const char *in, char *out, unsigned len);
 LOCAL char* xstrdup(const char * s);
@@ -40,11 +40,10 @@ LOCAL unsigned strstrip(char *s);
 LOCAL line_status iniparser_line(const char *input_line, char *section,
       char *key, char *value);
 
-
 /*------------------------------------------------------------------------------
-    C++ Interface
+ C++ Interface
  -----------------------------------------------------------------------------*/
-class CBaIniParser : public IBaIniParser {
+class CBaIniParser: public IBaIniParser {
 public:
 
    //
@@ -53,19 +52,18 @@ public:
       if (!file) {
          return pIp;
       }
-      FILE * in ;
+      FILE * in;
 
-      char line    [ASCIILINESZ+1];
-      char section [ASCIILINESZ+1];
-      char key     [ASCIILINESZ+1];
-      char tmp     [(ASCIILINESZ * 2) + 1];
-      char val     [ASCIILINESZ+1];
+      char line[ASCIILINESZ + 1];
+      char section[ASCIILINESZ + 1];
+      char key[ASCIILINESZ + 1];
+      char tmp[(ASCIILINESZ * 2) + 1];
+      char val[ASCIILINESZ + 1];
 
-      int last = 0 ;
+      int last = 0;
       int len;
-      int lineno = 0 ;
+      int lineno = 0;
       int errs = 0;
-
 
       if (!pIp || !(in = fopen(file, "r"))) {
 //         fprintf(stderr, "iniparser: cannot open %s\n", file);
@@ -73,15 +71,15 @@ public:
          return 0;
       }
 
-      memset(line,    0, ASCIILINESZ);
+      memset(line, 0, ASCIILINESZ);
       memset(section, 0, ASCIILINESZ);
-      memset(key,     0, ASCIILINESZ);
-      memset(val,     0, ASCIILINESZ);
+      memset(key, 0, ASCIILINESZ);
+      memset(val, 0, ASCIILINESZ);
       last = 0;
 
-      while (fgets(line+last, ASCIILINESZ-last, in) != NULL) {
-         lineno++ ;
-         len = (int)strlen(line)-1;
+      while (fgets(line + last, ASCIILINESZ - last, in) != 0) {
+         ++lineno;
+         len = (int) strlen(line) - 1;
          if (len == 0) {
             continue;
          }
@@ -89,35 +87,28 @@ public:
          // Safety check against buffer overflows
          if (line[len] != '\n' && !feof(in)) {
             // fixme: log error
-//            fprintf(stderr, "iniparser: input line too long in %s (%d)\n",
-//                  file, lineno);
+//            fprintf(stderr, "iniparser: input line too long in %s (%d)\n", file, lineno);
             Destroy(pIp);
             fclose(in);
-            return NULL ;
+            return 0;
          }
 
-         /* Get rid of \n and spaces at end of line */
-         while ((len>=0) && ((line[len]=='\n') || (isspace(line[len])))) {
-            line[len]=0 ;
-            len-- ;
+         // Get rid of \n and spaces at end of line
+         while ((len >= 0) && ((line[len] == '\n') || (isspace(line[len])))) {
+            line[len] = 0;
+            len--;
          }
 
          if (len < 0) { /* Line was entirely \n and/or spaces */
             len = 0;
          }
 
-         /* Detect multi-line */
-         if (line[len]=='\\') {
-            /* Multi-line value */
-            // Fixme: there is an issue with windows paths and multi-lines =(
-            // This issue has to be looked at under windows
-#ifdef __linux
-            last=len ;
-            continue ;
-#endif
-            last=0;
+         // Detect multi-line
+         if (line[len] == '\\') {
+            last = len;
+            continue;
          } else {
-            last=0 ;
+            last = 0;
          }
 
          switch (iniparser_line(line, section, key, val)) {
@@ -133,13 +124,13 @@ public:
             break;
          case eLINE_ERROR:
             // TODO: either log all errors or brake loop!!
-            errs++;
+            ++errs;
             break;
          default:
             break;
          }
          memset(line, 0, ASCIILINESZ);
-         last=0;
+         last = 0;
 
       }
 
@@ -151,17 +142,19 @@ public:
 
       fclose(in);
       return pIp;
-   };
+   }
+   ;
 
    //
    static bool Destroy(IBaIniParser *pHdl) {
       CBaIniParser *p = dynamic_cast<CBaIniParser*>(pHdl);
-      if (!p ) {
+      if (!p) {
          return false;
       }
       delete p;
       return true;
-   };
+   }
+   ;
 
    //
    void Dump(FILE * f) {
@@ -206,18 +199,18 @@ public:
 
       std::string keyt = sec;
       keyt.append(":");
-      int secLen  = keyt.length();
+      int secLen = keyt.length();
 
       // Only print the section name if it has a section
       if (sec[0]) {
          fprintf(f, "\n[%s]\n", sec);
       }
 
-
       // Iterate all entries and dump only the ones in the section
       for (auto kv : dic) {
          if (!kv.first.compare(0, secLen, keyt)) {
-            fprintf(f, "%s = %s\n", kv.first.c_str() + secLen, kv.second.c_str());
+            fprintf(f, "%s = %s\n", kv.first.c_str() + secLen,
+                  kv.second.c_str());
          }
       }
 
@@ -248,34 +241,39 @@ public:
 
       std::transform(tmpKey.begin(), tmpKey.end(), tmpKey.begin(), ::tolower);
       return GetString(tmpKey, tmpDef);
-   };
+   }
+   ;
 
    //
    virtual bool GetBool(const char *key, bool def) {
       std::string val = GetString(key, "!");
 
       const char *c = val.c_str();
-      if (c[0]=='y' || c[0]=='Y' || c[0]=='1' || c[0]=='t' || c[0]=='T') {
-          return true;
-      } else if (c[0]=='!' || c[0]=='n' || c[0]=='N' || c[0]=='0' ||
-                 c[0]=='f' || c[0]=='F') {
+      if (c[0] == 'y' || c[0] == 'Y' || c[0] == '1' || c[0] == 't'
+            || c[0] == 'T') {
+         return true;
+      } else if (c[0] == '!' || c[0] == 'n' || c[0] == 'N' || c[0] == '0'
+            || c[0] == 'f' || c[0] == 'F') {
          return false;
       }
 
       return def;
-   };
+   }
+   ;
 
    //
    virtual int GetInt(const char *key, int def) {
       std::string val = GetString(key, "!");
-      return BaToNumber(val.c_str(), (uint32_t)def);
-   };
+      return BaToNumber(val.c_str(), (uint32_t) def);
+   }
+   ;
 
    //
    virtual double GetDouble(const char *key, double def) {
       std::string val = GetString(key, "!");
       return BaToNumber(val.c_str(), def);
-   };
+   }
+   ;
 
    //
    virtual bool Set(const char *key, const char *val) {
@@ -304,7 +302,8 @@ public:
       }
 
       return dic.find(key) != dic.end();
-   };
+   }
+   ;
 
    // This function has the logic of the GetString() method and returns a
    // reference to the internal string on purpose to be able to return the
@@ -343,7 +342,7 @@ bool IBaIniParserDestroy(IBaIniParser *pHdl) {
 }
 
 /*------------------------------------------------------------------------------
-    C Interface
+ C Interface
  -----------------------------------------------------------------------------*/
 //
 TBaIniParseHdl BaIniParseCreate(const char *file) {
@@ -356,7 +355,8 @@ TBaBoolRC BaIniParseDestroy(TBaIniParseHdl hdl) {
 }
 
 //
-const char* BaIniParseGetString(TBaIniParseHdl hdl, const char *key, const char *def) {
+const char* BaIniParseGetString(TBaIniParseHdl hdl, const char *key,
+      const char *def) {
    if (!def) {
       def = "";
    }
@@ -438,163 +438,169 @@ void BaIniParseDump(TBaIniParseHdl hdl, FILE * f) {
    C_HDL_->Dump(f);
 }
 
-
-
 /*------------------------------------------------------------------------------
-    Local functions
+ Local functions
  -----------------------------------------------------------------------------*/
 
 /*-------------------------------------------------------------------------*/
 /*
-  @brief    Convert a string to lowercase.
-  @param    in   String to convert.
-  @param    out Output buffer.
-  @param    len Size of the out buffer.
-  @return   ptr to the out buffer or NULL if an error occured.
+ @brief    Convert a string to lowercase.
+ @param    in   String to convert.
+ @param    out Output buffer.
+ @param    len Size of the out buffer.
+ @return   ptr to the out buffer or 0 if an error occured.
 
-  This function convert a string into lowercase.
-  At most len - 1 elements of the input string will be converted.
+ This function convert a string into lowercase.
+ At most len - 1 elements of the input string will be converted.
  */
 /*--------------------------------------------------------------------------*/
 LOCAL const char *strlwc(const char *in, char *out, unsigned len) {
-    unsigned i ;
+   unsigned i;
 
-    if (in==NULL || out == NULL || len==0) return NULL ;
-    i=0 ;
-    while (in[i] != '\0' && i < len-1) {
-        out[i] = (char)tolower((int)in[i]);
-        i++ ;
-    }
-    out[i] = '\0';
-    return out ;
+   if (in == 0 || out == 0 || len == 0) {
+      return 0;
+   }
+
+   i = 0;
+   while (in[i] != '\0' && i < len - 1) {
+      out[i] = (char) tolower((int) in[i]);
+      ++i;
+   }
+
+   out[i] = '\0';
+   return out;
 }
 
 /*-------------------------------------------------------------------------*/
 /*
-  @brief    Duplicate a string
-  @param    s String to duplicate
-  @return   Pointer to a newly allocated string, to be freed with free()
+ @brief    Duplicate a string
+ @param    s String to duplicate
+ @return   Pointer to a newly allocated string, to be freed with free()
 
-  This is a replacement for strdup(). This implementation is provided
-  for systems that do not have it.
+ This is a replacement for strdup(). This implementation is provided
+ for systems that do not have it.
  */
 /*--------------------------------------------------------------------------*/
 LOCAL char * xstrdup(const char * s) {
-    char * t ;
-    size_t len ;
-    if (!s)
-        return NULL ;
+   char * t;
+   size_t len;
+   if (!s) {
+      return 0;
+   }
 
-    len = strlen(s) + 1 ;
-    t = (char*) malloc(len) ;
-    if (t) {
-        memcpy(t, s, len) ;
-    }
-    return t ;
+   len = strlen(s) + 1;
+   t = (char*) malloc(len);
+   if (t) {
+      memcpy(t, s, len);
+   }
+   return t;
 }
 
 /*-------------------------------------------------------------------------*/
 /*
-  @brief    Remove blanks at the beginning and the end of a string.
-  @param    str  String to parse and alter.
-  @return   unsigned New size of the string.
+ @brief    Remove blanks at the beginning and the end of a string.
+ @param    str  String to parse and alter.
+ @return   unsigned New size of the string.
  */
 /*--------------------------------------------------------------------------*/
 LOCAL unsigned strstrip(char *s) {
-    char *last = NULL ;
-    char *dest = s;
+   char *last = 0;
+   char *dest = s;
 
+   if (s == 0) {
+      return 0;
+   }
 
-    if (s==NULL) {
-       return 0;
-    }
+   last = s + strlen(s);
+   while (isspace((int) *s) && *s) {
+      ++s;
+   }
 
-    last = s + strlen(s);
-    while (isspace((int)*s) && *s) s++;
-    while (last > s) {
-        if (!isspace((int)*(last-1)))
-            break ;
-        last -- ;
-    }
-    *last = (char)0;
+   while (last > s) {
+      if (!isspace((int) *(last - 1))) {
+         break;
+      }
 
-    memmove(dest,s,last - s + 1);
-    return last - s;
+      last--;
+   }
+   *last = (char) 0;
+
+   memmove(dest, s, last - s + 1);
+   return last - s;
 }
 
 /*-------------------------------------------------------------------------*/
 /*
-  @brief    Load a single line from an INI file
-  @param    input_line  Input line, may be concatenated multi-line input
-  @param    section     Output space to store section
-  @param    key         Output space to store key
-  @param    value       Output space to store value
-  @return   line_status value
+ @brief    Load a single line from an INI file
+ @param    input_line  Input line, may be concatenated multi-line input
+ @param    section     Output space to store section
+ @param    key         Output space to store key
+ @param    value       Output space to store value
+ @return   line_status value
  */
 /*--------------------------------------------------------------------------*/
 LOCAL line_status iniparser_line(const char *input_line, char *section,
-    char *key, char *value
-    ) {
-    line_status sta ;
-    char * line = NULL;
-    size_t      len ;
+      char *key, char *value) {
+   line_status sta;
+   char * line = 0;
+   size_t len;
 
-    line = xstrdup(input_line);
-    len = strstrip(line);
+   line = xstrdup(input_line);
+   len = strstrip(line);
 
-    sta = eLINE_UNPROCESSED ;
-    if (len<1) {
-        /* Empty line */
-        sta = eLINE_EMPTY ;
-    } else if (line[0]=='#' || line[0]==';') {
-        /* Comment line */
-        sta = eLINE_COMMENT ;
-    } else if (line[0]=='[' && line[len-1]==']') {
-        /* Section name */
-        sscanf(line, "[%[^]]", section);
+   sta = eLINE_UNPROCESSED;
+   if (len < 1) {
+      /* Empty line */
+      sta = eLINE_EMPTY;
+   } else if (line[0] == '#' || line[0] == ';') {
+      /* Comment line */
+      sta = eLINE_COMMENT;
+   } else if (line[0] == '[' && line[len - 1] == ']') {
+      /* Section name */
+      sscanf(line, "[%[^]]", section);
 //        strcpy(section, line);
-        strstrip(section);
-        strlwc(section, section, len);
-        sta = eLINE_SECTION ;
-    } else if (sscanf (line, "%[^=] = \"%[^\"]\"", key, value) == 2
-           ||  sscanf (line, "%[^=] = '%[^\']'",   key, value) == 2) {
-        /* Usual key=value with quotes, with or without comments */
-        strstrip(key);
-        strlwc(key, key, len);
-        /* Don't strip spaces from values surrounded with quotes */
-        /*
-         * sscanf cannot handle '' or "" as empty values
-         * this is done here
-         */
-        if (!strcmp(value, "\"\"") || (!strcmp(value, "''"))) {
-            value[0]=0 ;
-        }
-        sta = eLINE_VALUE ;
-    } else if (sscanf (line, "%[^=] = %[^;#]", key, value) == 2) {
-        /* Usual key=value without quotes, with or without comments */
-        strstrip(key);
-        strlwc(key, key, len);
-        strstrip(value);
+      strstrip(section);
+      strlwc(section, section, len);
+      sta = eLINE_SECTION;
+   } else if (sscanf(line, "%[^=] = \"%[^\"]\"", key, value) == 2
+         || sscanf(line, "%[^=] = '%[^\']'", key, value) == 2) {
+      /* Usual key=value with quotes, with or without comments */
+      strstrip(key);
+      strlwc(key, key, len);
+      /* Don't strip spaces from values surrounded with quotes */
+      /*
+       * sscanf cannot handle '' or "" as empty values
+       * this is done here
+       */
+      if (!strcmp(value, "\"\"") || (!strcmp(value, "''"))) {
+         value[0] = 0;
+      }
+      sta = eLINE_VALUE;
+   } else if (sscanf(line, "%[^=] = %[^;#]", key, value) == 2) {
+      /* Usual key=value without quotes, with or without comments */
+      strstrip(key);
+      strlwc(key, key, len);
+      strstrip(value);
 
-        sta = eLINE_VALUE ;
-    } else if (sscanf(line, "%[^=] = %[;#]", key, value)==2
-           ||  sscanf(line, "%[^=] %[=]", key, value) == 2) {
-        /*
-         * Special cases:
-         * key=
-         * key=;
-         * key=#
-         */
-        strstrip(key);
-        strlwc(key, key, len);
-        value[0]=0 ;
-        sta = eLINE_VALUE ;
-    } else {
-        /* Generate syntax error */
-        sta = eLINE_ERROR ;
-    }
+      sta = eLINE_VALUE;
+   } else if (sscanf(line, "%[^=] = %[;#]", key, value) == 2
+         || sscanf(line, "%[^=] %[=]", key, value) == 2) {
+      /*
+       * Special cases:
+       * key=
+       * key=;
+       * key=#
+       */
+      strstrip(key);
+      strlwc(key, key, len);
+      value[0] = 0;
+      sta = eLINE_VALUE;
+   } else {
+      /* Generate syntax error */
+      sta = eLINE_ERROR;
+   }
 
-    free(line);
-    return sta ;
+   free(line);
+   return sta;
 }
 
