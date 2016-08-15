@@ -11,6 +11,7 @@
  *  General useful functions\n
  *   - Path functions
  *   - Number parsing
+ *   - File system
  */
 /*------------------------------------------------------------------------------
  */
@@ -174,9 +175,7 @@ static inline bool Exists(
    return stat(path.c_str(), &desc) == 0;
 }
 //@}
-
 } // BaFS
-
 
 /******************************************************************************/
 /** Namespace to wrap all path functions
@@ -445,6 +444,4 @@ inline double BaToNumber<double>(std::string s, double def, bool *pError) {
 }
 
 #endif // __cplusplus
-
-
 #endif /* BAUTILS_HPP_ */

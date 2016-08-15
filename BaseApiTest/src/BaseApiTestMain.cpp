@@ -20,8 +20,8 @@
 #include "cppunit/extensions/TestFactoryRegistry.h"
 #include "BaGenMacros.h"
 #include "ProgressListener.h"
-
 #include "TestTemplate.h"
+
 #include "BaCoreTest.h"
 #include "BaGpioTest.h"
 #include "BaComTest.h"
@@ -31,6 +31,9 @@
 #include "BaseApiTest.h"
 #include "BaProcTest.h"
 #include "BaProc.h"
+
+#include "CtrlPT1Test.h"
+
 
 //
 enum TTestSelection {
@@ -113,13 +116,14 @@ int main(int argc, char* argv[]) {
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CTestTemplate::suite());
 //   pSuite->addTest(CBaComTest::suite());
-   pSuite->addTest(CBaLogTest::suite());
+//   pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaGpioTest::suite());
 //   pSuite->addTest(CBaCoreTest::suite());
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());
 //   pSuite->addTest(CBaProcTest::suite());
+   pSuite->addTest(CCtrlPT1Test::suite());
    return pSuite;
 }
 
