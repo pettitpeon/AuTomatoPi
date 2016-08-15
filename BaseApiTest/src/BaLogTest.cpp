@@ -12,6 +12,7 @@
  */
 /*------------------------------------------------------------------------------
  */
+#include <unistd.h>
 #include <iostream>
 #include "BaLogTest.h"
 #include "BaGenMacros.h"

@@ -327,29 +327,6 @@ static inline T BaToNumber(
  */
 static inline std::string BaFString(
       const char *fmt, ///< [in] format string
-      ...              ///< [in] variable arguments
-      ) {
-
-   // Init arguments
-   va_list arg;
-   va_start(arg, fmt);
-
-   //
-   std::string res = BaFString(fmt, arg);
-
-   // Release resources
-   va_end(arg);
-
-   // Return generated string
-   return res;
-}
-
-/******************************************************************************/
-/** Creates a string formated C-style with a maximum length of 65534 chars
- *  @return formated string
- */
-static inline std::string BaFString(
-      const char *fmt, ///< [in] format string
       va_list arg      ///< [in] variable arguments
       ) {
 
@@ -365,6 +342,40 @@ static inline std::string BaFString(
    // Return generated string
    return std::string(msg);
 }
+
+/******************************************************************************/
+/** Creates a string formated C-style with a maximum length of 65534 chars
+ *  @return formated string
+ */
+static inline std::string BaFString(
+      const char *fmt, ///< [in] format string
+      ...              ///< [in] variable arguments
+      ) {
+
+   // Init arguments
+   va_list arg;
+   va_start(arg, fmt);
+
+   //
+   std::string res = BaFString(fmt, arg);
+
+//   // Check size
+//   uint16_t size = vsnprintf(0, 0, fmt, arg) + 1;
+//
+//   // buffer
+//   char msg[size];
+//
+//   // fill out the buffer
+//   vsnprintf(msg, size, fmt, arg);
+//
+//   // Release resources
+//   va_end(arg);
+//
+//   // Return generated string
+//   return std::string(msg);
+   return res;
+}
+
 
 /*------------------------------------------------------------------------------
     Specializations

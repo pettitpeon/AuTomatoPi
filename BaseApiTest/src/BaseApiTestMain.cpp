@@ -30,10 +30,11 @@
 #include "BaMsgTest.h"
 #include "BaseApiTest.h"
 #include "BaProcTest.h"
-#include "BaProc.h"
+#include "BaSwOsciTest.h"
 
 #include "CtrlPT1Test.h"
 
+#include "BaProc.h"
 
 //
 enum TTestSelection {
@@ -47,8 +48,8 @@ char gCWD[1024];
 
 static TTestSelection sSelection =
 //      eSingleTests;
-      eSingleSuites;
-//      eFullRegistry;
+//      eSingleSuites;
+      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -59,7 +60,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite);
 /*  ...
 **/
 int main(int argc, char* argv[]) {
-   auto start = std::chrono::system_clock::now();
+   auto start = std::chrono::steady_clock::now();
 
    // This disables buffering for stdout.
    setbuf(stdout, 0);
@@ -104,7 +105,7 @@ int main(int argc, char* argv[]) {
 
    testRunner.run(result);
    compOut.write();
-   std::chrono::duration<double> durSec = std::chrono::system_clock::now() - start;
+   std::chrono::duration<double> durSec = std::chrono::steady_clock::now() - start;
 
    std::cout << "Duration: " << durSec.count() << " s" <<std::endl;
 	return 0;
@@ -123,7 +124,8 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());
 //   pSuite->addTest(CBaProcTest::suite());
-   pSuite->addTest(CCtrlPT1Test::suite());
+//   pSuite->addTest(CCtrlPT1Test::suite());
+   pSuite->addTest(CBaSwOsciTest::suite());
    return pSuite;
 }
 
