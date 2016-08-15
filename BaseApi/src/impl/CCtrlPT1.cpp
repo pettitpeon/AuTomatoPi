@@ -5,12 +5,6 @@
  *   Module   : CCTrlPT1.cpp
  *   Date     : Apr 26, 2016
  *------------------------------------------------------------------------------
- *   Module description:
- */
-/** @file
- *  ...
- */
-/*------------------------------------------------------------------------------
  */
 
 
@@ -53,7 +47,7 @@ float CCtrlPT1::Update(float in) {
    return mLastValOut;
 }
 
-float CCtrlPT1::Update2(float in, float deltaTS) {
+float CCtrlPT1::UpdateVarSampT(float in, float deltaTS) {
    float tmpTPt1 = exp(-deltaTS/mTConstS);
    mLastValOut *= tmpTPt1;
    mLastValOut += (1.0f - tmpTPt1) * mLastValIn;

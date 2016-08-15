@@ -31,12 +31,14 @@ public:
 
    CPPUNIT_TEST_SUITE(CCtrlPT1Test);
 
-   CPPUNIT_TEST(Test);
+   CPPUNIT_TEST(Cpp);
+   CPPUNIT_TEST(C);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
-   void Test();
+   void Cpp();
+   void C();
 };
 
 #endif // CTRLPT1TEST_H_

@@ -8,7 +8,7 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  First order delay element PT1
  */
 /*------------------------------------------------------------------------------
  */
@@ -43,7 +43,12 @@ extern "C" {
 /** Create factory for ...
  *  @return Handle if success, otherwise, null
  */
-TCtrlPT1Hdl CtrlPT1Create();
+TCtrlPT1Hdl CtrlPT1Create(
+      float tConstS, /**< [in] Time constant in s. Has to be < 2 * sampTimeS
+         in order to respect the Nyquist sampling theorem */
+      float sampTimeS, ///< [in] Sample time in s
+      float initVal ///< [in] Initial value
+      );
 
 /******************************************************************************/
 /** Destroy and release resources
@@ -51,6 +56,40 @@ TCtrlPT1Hdl CtrlPT1Create();
  */
 TBaBoolRC CtrlPT1Destroy(
       TCtrlPT1Hdl hdl ///< [in] handle to destroy
+      );
+//@}
+
+/// @name PT1 Interface
+//@{
+/******************************************************************************/
+/** Update the first order delay element with fixed sample time
+ *  @return Output of the first order delay PT1: in-->PT1-->out
+ */
+float CtrlPT1Update(
+      TCtrlPT1Hdl hdl, ///< [in] handle to destroy
+      float in ///< [in] input value
+      );
+
+/******************************************************************************/
+/** Update the first order delay element with variable sample time (deltaTS)
+ *  @return Output of the first order delay PT1: in-->PT1-->out
+ */
+float CtrlPT1UpdateVarSampT(
+      TCtrlPT1Hdl hdl, ///< [in] handle to destroy
+      float in, ///< [in] input value
+      float deltaTS ///< [in] Time delta in s since last call or reset
+      );
+
+/******************************************************************************/
+/** Update the first order delay element with variable sample time (deltaTS)
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC CtrlPT1Reset(
+      TCtrlPT1Hdl hdl, ///< [in] handle to destroy
+      float tConstS, /**< [in] Time constant in s. Has to be < 2 * sampTimeS
+      in order to respect the Nyquist sampling theorem */
+      float sampTimeS, ///< [in] Sample time in s
+      float initVal ///< [in] Initial value
       );
 //@}
 
@@ -77,7 +116,7 @@ public:
    /** Update the first order delay element with variable sample time (deltaTS)
     *  @return Output of the first order delay PT1: in-->PT1-->out
     */
-   virtual float Update2(
+   virtual float UpdateVarSampT(
          float in, ///< [in] input value
          float deltaTS ///< [in] Time delta in s since last call or reset
          ) = 0;
@@ -103,7 +142,12 @@ public:
 /** Create factory for ...
  *  @return Handle if success, otherwise, null
  */
-extern "C" ICtrlPT1 * ICtrlPT1Create(float tConstS, float sampTimeS, float initVal);
+extern "C" ICtrlPT1 * ICtrlPT1Create(
+      float tConstS, /**< [in] Time constant in s. Has to be < 2 * sampTimeS
+         in order to respect the Nyquist sampling theorem */
+      float sampTimeS, ///< [in] Sample time in s
+      float initVal ///< [in] Initial value
+      );
 
 /******************************************************************************/
 /** Destroy and release resources

@@ -5,13 +5,8 @@
  *   Module   : CCtrlPT1.h
  *   Date     : Apr 26, 2016
  *------------------------------------------------------------------------------
- *   Module description:
  */
-/** @file
- *  ...
- */
-/*------------------------------------------------------------------------------
- */
+
 #ifndef CCTRLPT1_H_
 #define CCTRLPT1_H_
 
@@ -29,14 +24,7 @@
 /*------------------------------------------------------------------------------
  *  C interface
  */
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-
-
-#ifdef __cplusplus
-} // extern c
 
 /*------------------------------------------------------------------------------
  *  C++ Interface
@@ -55,7 +43,7 @@ public:
          );
 
    virtual float Update(float in);
-   virtual float Update2(float in, float deltaTS);
+   virtual float UpdateVarSampT(float in, float deltaTS);
    virtual bool Reset(float tConstS, float sampTimeS, float initVal);
 
    // Typical object oriented destructor must be virtual!
@@ -78,5 +66,4 @@ private:
    float mTPt1;
 };
 
-#endif // __cplusplus
 #endif // CCTRLPT1_H_
