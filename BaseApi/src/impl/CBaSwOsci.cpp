@@ -11,13 +11,16 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include <stdio.h>
+#include <iostream>
 #include "CBaSwOsci.h"
 #include "BaCore.h"
+#include "BaLogMacros.h"
 #include "BaUtils.hpp"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
+#define TAG "BaSwO"
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -41,16 +44,46 @@ typedef struct CBaSwOsci::TSWOsci {
 /*------------------------------------------------------------------------------
     C++ Interface
  -----------------------------------------------------------------------------*/
-CBaSwOsci* CBaSwOsci::Create() {
-   return new CBaSwOsci();
+CBaSwOsci* CBaSwOsci::Create(const char *name, bool toCnsole) {
+   if (!name) {
+      return 0;
+   }
+
+   CBaSwOsci *p = new CBaSwOsci(name, toCnsole);
+   std::ios_base::openmode om = std::ios_base::binary | std::ios_base::out;
+
+   // //////////////// Open ////////////////
+   p->mLog.open(name, om);
+   if (p->mLog.fail()) {
+      WARN_("Cannot open log file: %s", name);
+      delete p;
+      return 0;
+   }
+   // //////////////// Open ////////////////
+
+   return p;
 }
 
-
-bool CBaSwOsci::Register(void* pVar, EBaSwOsciType type, const char *name, const char *desc) {
-   if (!pVar || type <= eBaSwOsci_undef || type > eBaSwOsci_max || !name) {
+//
+bool CBaSwOsci::Destroy(CBaSwOsci* pHdl) {
+   CBaSwOsci *p = dynamic_cast<CBaSwOsci*>(pHdl);
+   if (!p ) {
       return false;
    }
 
+//   p->Flush();
+   p->mLog.close();
+
+   delete pHdl;
+   return true;
+}
+
+//
+bool CBaSwOsci::Register(void* pVar, EBaSwOsciType type, const char *name, const char *desc) {
+   if (!pVar || type <= eBaSwOsci_undef || type > eBaSwOsci_max || !name || mSampling) {
+      return false;
+   }
+   std::lock_guard<std::mutex> lck(mMtx);
    mRegister.push_back(new CBaSwOsci::TSWOsci(pVar, type, name, desc));
    return true;
 }
@@ -62,17 +95,16 @@ bool CBaSwOsci::Header() {
    }
 
    std::string s = "Time, Timestamp, ";
-
    for (TSWOsci *p : mRegister) {
-
-      if (p == mRegister.back()) {
-         s.append(p->name).append("\n");
-      } else {
+      if (p != mRegister.back()) {
          s.append(p->name).append(", ");
       }
    }
 
-   printf(s.c_str());
+   mLog << s << std::endl;
+   if (mToCnsole) {
+      std::cout << s << std::endl;
+   }
    return true;
 }
 
@@ -81,6 +113,12 @@ bool CBaSwOsci::Sample() {
    if (mRegister.empty()) {
       return false;
    }
+   std::lock_guard<std::mutex> lck(mMtx);
+
+   if (!mSampling) {
+      Header();
+   }
+   mSampling = true;
    TBaCoreTimeStamp ts = {0};
    char pBuf[BACORE_TSTAMPLEN];
    TBaCoreMonTStampUs tsm = BaCoreGetMonTStamp();
@@ -103,14 +141,21 @@ bool CBaSwOsci::Sample() {
          default: s += BaFString("N/A"); break;
       }
 
-      if (p == mRegister.back()) {
-         printf("%s\n", s.c_str());
-      } else {
+      if (p != mRegister.back()) {
          s += ", ";
       }
    }
 
+   mBuf.push_back(s);
+   if (mToCnsole) {
+      std::cout << s << std::endl;
+   }
+
    return true;
+}
+
+inline void CBaSwOsci::Flush() {
+
 }
 
 /*------------------------------------------------------------------------------

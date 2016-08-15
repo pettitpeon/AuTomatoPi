@@ -19,6 +19,9 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include <vector>
+#include <fstream> // std::ofstream
+#include <mutex>
+#include <string>
 #include "BaBool.h"
 
 /*------------------------------------------------------------------------------
@@ -54,25 +57,30 @@ typedef enum EBaSwOsciType {
 class CBaSwOsci {
 public:
 
-   static CBaSwOsci* Create(
-   );
+   static CBaSwOsci* Create(const char *name, bool toCnsole);
+   static bool Destroy(CBaSwOsci* pHdl);
 
-   /***************************************************************************/
-   /** ...
-    *  @return ...
-    */
 	virtual bool Register(void* pVar, EBaSwOsciType type, const char *name, const char *desc);
 	virtual bool Header();
 	virtual bool Sample();
 
+   // Force flush to disk
+   virtual void Flush();
 private:
-   CBaSwOsci() {};
+   CBaSwOsci(const char *name, bool toCnsole) : mSampling(false),
+   mToCnsole(toCnsole), mName(name) {};
+
    // Typical object oriented destructor must be virtual!
    virtual ~CBaSwOsci() {};
 
    struct TSWOsci;
+   bool mSampling;
+   bool mToCnsole;
+   const char *mName;
+   std::mutex mMtx; // Mutex to avoid simultaneous read and write of the buffer
    std::vector<TSWOsci*> mRegister;
-
+   std::ofstream mLog; // file stream
+   std::vector<std::string> mBuf; // Message queue
 };
 
 
