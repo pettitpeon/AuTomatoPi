@@ -12,16 +12,22 @@
  -----------------------------------------------------------------------------*/
 #include <stdio.h>
 #include <iostream>
+#include <chrono>
 #include "CBaSwOsci.h"
 #include "BaCore.h"
 #include "BaLogMacros.h"
 #include "BaUtils.hpp"
+#include "BaGenMacros.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #define TAG "BaSwO"
-
+#define MINSLEEP_US  10000
+#define CYCLE_US     50000
+#define CYCLECUM_US 500000
+#define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
+   (std::chrono::steady_clock::now() - start).count()
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
@@ -39,21 +45,24 @@ typedef struct CBaSwOsci::TSWOsci {
 /*------------------------------------------------------------------------------
     Static variables
  -----------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------
+    Local Functions
+ -----------------------------------------------------------------------------*/
 
 
 /*------------------------------------------------------------------------------
     C++ Interface
  -----------------------------------------------------------------------------*/
-CBaSwOsci* CBaSwOsci::Create(const char *name, bool toCnsole) {
+CBaSwOsci* CBaSwOsci::Create(const char *name, const char *path, bool toCnsole) {
    if (!name) {
       return 0;
    }
 
-   CBaSwOsci *p = new CBaSwOsci(name, toCnsole);
+   CBaSwOsci *p = new CBaSwOsci(name, path, toCnsole);
    std::ios_base::openmode om = std::ios_base::binary | std::ios_base::out;
 
    // //////////////// Open ////////////////
-   p->mLog.open(name, om);
+   p->mLog.open(BaPath::Concatenate(p->mPath, p->mName) + ".csv", om);
    if (p->mLog.fail()) {
       WARN_("Cannot open log file: %s", name);
       delete p;
@@ -61,6 +70,9 @@ CBaSwOsci* CBaSwOsci::Create(const char *name, bool toCnsole) {
    }
    // //////////////// Open ////////////////
 
+   std::string thName = p->mName + "wt";
+   p->mThrArg.pArg = p;
+   p->mThread = BaCoreCreateThread(thName.c_str(), thRout, &p->mThrArg, eBaCorePrio_High);
    return p;
 }
 
@@ -72,7 +84,11 @@ bool CBaSwOsci::Destroy(CBaSwOsci* pHdl) {
    }
 
 //   p->Flush();
-   p->mLog.close();
+//
+//   {
+//      std::lock_guard<std::mutex> lck(p->mMtx);
+//      p->mLog.close();
+//   }
 
    delete pHdl;
    return true;
@@ -155,9 +171,56 @@ bool CBaSwOsci::Sample() {
 }
 
 inline void CBaSwOsci::Flush() {
+   if (!mSampling) {
+      return;
+   }
 
+   // Avoid messing around with the buffer while it is being printed
+   std::lock_guard<std::mutex> lck(mMtx);
+
+   // Iterate messages in buffer
+   for (auto &msg : mBuf) {
+      // /////////// Log to disc ///////////////////////
+      mLog << msg << "\n";
+//      std::cout << msg << std::endl; // For testing and debugging
+      // ///////////////////////////////////////////////
+   }
+
+   mLog.flush();
+   mBuf.clear();
 }
 
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
+void CBaSwOsci::thRout(TBaCoreThreadArg *pArg) {
+   if (!pArg || !pArg->pArg) {
+      return;
+   }
+
+   CBaSwOsci* p = (CBaSwOsci*)(pArg->pArg);
+   int64_t cycleCum = 0;
+   int64_t dur = 0;
+   std::chrono::steady_clock::time_point start;
+   for ( ; !pArg->exitTh ; cycleCum += LASTCYCLE_US) {
+      start = std::chrono::steady_clock::now();
+
+      if (cycleCum > CYCLECUM_US) {
+         p->Flush();
+         TRACE_("flushed");
+         cycleCum -= CYCLECUM_US;
+      }
+
+
+
+      dur = (start - std::chrono::steady_clock::now()).count();
+      if (dur + MINSLEEP_US > CYCLE_US) {
+         TRACE_("%I64d: %I64d", MINSLEEP_US, cycleCum);
+         BaCoreUSleep(MINSLEEP_US);
+      } else {
+         TRACE_("%I64d: %I64d", CYCLE_US - dur, cycleCum);
+         BaCoreUSleep(CYCLE_US - dur);
+      }
+   }
+
+}

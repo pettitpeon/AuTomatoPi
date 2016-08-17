@@ -432,11 +432,14 @@ inline void CBaLog::Flush() {
       }
 
       // /////////// Log to disc ///////////////////////
-      mLog << msg << std::endl;
+      // No std::endl to avoid flushing too much
+      mLog << msg << "\n";
 //      std::cout << msg << std::endl; // For testing and debugging
       // ///////////////////////////////////////////////
 
    }
+
+   mLog.flush();
    mBuf.clear();
 }
 
@@ -521,24 +524,6 @@ bool CBaLog::log(EBaLogPrio prio, const char* tag, const char* msg) {
    BaCoreGetTStamp(&mTs);
    std::string entry(BaCoreTStampToStr(&mTs, mStrTStamp));
    entry.append( "|" + sPrioTochar[prio] + "|" + mTag + "| " + msg);
-
-   // ///////////// Original IMPLEMENTATION------------------------------------
-   // Get the time structure to generate time stamp
-//   auto nowT = CHRONOHRC::now();
-//   std::time_t tt = CHRONOHRC::to_time_t(nowT);
-//   struct tm timeStruct = tmp_4_9_2::localtime(tt);
-//
-//   // Get the milliseconds
-//   auto ms = CHRONO::duration_cast<CHRONO::milliseconds>(nowT.time_since_epoch());
-//   snprintf(mMillis, 4, "%03d", (int) (ms.count() % 1000));
-//
-//   // Get the tag
-//   reTag(tag, mTag);
-//
-//   // Put everything together
-//   std::string entry = tmp_4_9_2::put_time(&timeStruct, "%y/%m/%d %H:%M:%S") +
-//         "." + mMillis + "|" + sPrioTochar[prio] + "|" + mTag + "| " + msg;
-   // ///////////// Original IMPLEMENTATION------------------------------------
 
 
    // ////////////////// Write to buffer if it is not full /////////////////////

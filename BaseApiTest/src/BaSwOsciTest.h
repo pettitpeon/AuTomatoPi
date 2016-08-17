@@ -31,12 +31,16 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaSwOsciTest);
 
+   CPPUNIT_TEST(Init);
    CPPUNIT_TEST(Test);
+   CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
+   void Init();
    void Test();
+   void Exit();
 };
 
 #endif // BASWOSCITEST_H_

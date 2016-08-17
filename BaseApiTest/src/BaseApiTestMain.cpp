@@ -48,8 +48,8 @@ char gCWD[1024];
 
 static TTestSelection sSelection =
 //      eSingleTests;
-//      eSingleSuites;
-      eFullRegistry;
+      eSingleSuites;
+//      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);

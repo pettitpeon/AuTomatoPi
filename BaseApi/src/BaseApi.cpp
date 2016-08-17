@@ -38,14 +38,14 @@
 #define CTRLTASK "BaseApiCtrlTask"
 #define DEFDIR "/"
 #define MINSLEEP_US 10000
-#define LASTCYCLE std::chrono::duration_cast<std::chrono::microseconds> \
-   (std::chrono::high_resolution_clock::now() - start).count()
+#define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
+   (std::chrono::steady_clock::now() - start).count()
 
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-typedef std::chrono::high_resolution_clock::time_point TTimePoint;
-typedef std::chrono::duration<std::chrono::system_clock::rep, std::chrono::system_clock::period> TDuration;
+typedef std::chrono::steady_clock::time_point TTimePoint;
+typedef std::chrono::duration<std::chrono::steady_clock::rep, std::chrono::steady_clock::period> TDuration;
 
 /*------------------------------------------------------------------------------
  *  Local functions
@@ -201,8 +201,8 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    void *pArg = pOpts->updateArg;
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
-      start = std::chrono::high_resolution_clock::now();
+   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE_US) {
+      start = std::chrono::steady_clock::now();
 
       sStats.lastDurUs = BaCoreTimedUs(updFun, pArg);
       if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
@@ -365,8 +365,8 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    TRACE_("Ctrl thread started");
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE) {
-      start = std::chrono::high_resolution_clock::now();
+   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE_US) {
+      start = std::chrono::steady_clock::now();
       sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
       if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
          BaCoreUSleep(MINSLEEP_US);

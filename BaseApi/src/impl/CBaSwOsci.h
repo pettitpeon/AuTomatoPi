@@ -23,6 +23,7 @@
 #include <mutex>
 #include <string>
 #include "BaBool.h"
+#include "BaCore.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -57,7 +58,7 @@ typedef enum EBaSwOsciType {
 class CBaSwOsci {
 public:
 
-   static CBaSwOsci* Create(const char *name, bool toCnsole);
+   static CBaSwOsci* Create(const char *name, const char *path, bool toCnsole);
    static bool Destroy(CBaSwOsci* pHdl);
 
 	virtual bool Register(void* pVar, EBaSwOsciType type, const char *name, const char *desc);
@@ -67,8 +68,11 @@ public:
    // Force flush to disk
    virtual void Flush();
 private:
-   CBaSwOsci(const char *name, bool toCnsole) : mSampling(false),
-   mToCnsole(toCnsole), mName(name) {};
+
+   static void thRout(TBaCoreThreadArg *pArg);
+
+   CBaSwOsci(const char *name, const char *path, bool toCnsole) : mSampling(false),
+   mToCnsole(toCnsole), mThread(0), mThrArg {0}, mName(name), mPath(path) {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaSwOsci() {};
@@ -76,7 +80,10 @@ private:
    struct TSWOsci;
    bool mSampling;
    bool mToCnsole;
-   const char *mName;
+   TBaCoreThreadHdl mThread;
+   TBaCoreThreadArg mThrArg;
+   std::string mName;
+   std::string mPath;
    std::mutex mMtx; // Mutex to avoid simultaneous read and write of the buffer
    std::vector<TSWOsci*> mRegister;
    std::ofstream mLog; // file stream
