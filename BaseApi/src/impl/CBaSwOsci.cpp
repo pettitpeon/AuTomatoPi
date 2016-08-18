@@ -11,6 +11,10 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include <stdio.h>
+#ifdef __WIN32
+# define __STDC_FORMAT_MACROS
+#endif
+#include <inttypes.h>
 #include <iostream>
 #include <chrono>
 #include "CBaSwOsci.h"
@@ -26,8 +30,9 @@
 #define MINSLEEP_US  10000
 #define CYCLE_US     50000
 #define CYCLECUM_US 500000
+#define STEADYCLK   std::chrono::steady_clock
 #define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
-   (std::chrono::steady_clock::now() - start).count()
+   (STEADYCLK::now() - start).count()
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
@@ -83,14 +88,20 @@ bool CBaSwOsci::Destroy(CBaSwOsci* pHdl) {
       return false;
    }
 
-//   p->Flush();
-//
-//   {
-//      std::lock_guard<std::mutex> lck(p->mMtx);
-//      p->mLog.close();
-//   }
 
-   delete pHdl;
+
+   // No mutexes beyond this point
+   BaCoreDestroyThread(p->mThread, 0);
+   p->mThread = 0;
+
+   // delete p;
+   // The handle is deleted inside the thread. This is important because
+   // deleting the handle deletes the ofstream and if the thread tries to access
+   // it, CRASHHH!!. Deleting it in the thread result in one of the 2 following:
+   // 1. The thread releases the memory when it no longer needs it
+   // 2. The thread gets stuck and memory leaks
+
+
    return true;
 }
 
@@ -199,28 +210,40 @@ void CBaSwOsci::thRout(TBaCoreThreadArg *pArg) {
    }
 
    CBaSwOsci* p = (CBaSwOsci*)(pArg->pArg);
+   p->mThrRunning = true;
    int64_t cycleCum = 0;
-   int64_t dur = 0;
-   std::chrono::steady_clock::time_point start;
-   for ( ; !pArg->exitTh ; cycleCum += LASTCYCLE_US) {
-      start = std::chrono::steady_clock::now();
+   int64_t cycleDur = 0;
+   STEADYCLK::time_point start;
 
+   // Each cycle is CYCLE_US long. When the cumulative cycle is > CYCLECUM_US,
+   // then the actual process is executed. This is made to avoid long sleeps
+   // that might hurt the main thread when exiting this thread. This way the
+   // sleep is limited to a maximum of CYCLE_US
+   for ( ; !pArg->exitTh ; cycleCum += LASTCYCLE_US) {
+      start = STEADYCLK::now();
+
+      // If the cumulative cycle is over the limit, process!!!
       if (cycleCum > CYCLECUM_US) {
          p->Flush();
-         TRACE_("flushed");
+
+         // Keep the difference in the accumulator for more accuracy
          cycleCum -= CYCLECUM_US;
       }
 
-
-
-      dur = (start - std::chrono::steady_clock::now()).count();
-      if (dur + MINSLEEP_US > CYCLE_US) {
-         TRACE_("%I64d: %I64d", MINSLEEP_US, cycleCum);
+      cycleDur = (start - STEADYCLK::now()).count();
+      if (cycleDur + MINSLEEP_US > CYCLE_US) {
          BaCoreUSleep(MINSLEEP_US);
       } else {
-         TRACE_("%I64d: %I64d", CYCLE_US - dur, cycleCum);
-         BaCoreUSleep(CYCLE_US - dur);
+         BaCoreUSleep(CYCLE_US - cycleDur);
       }
    }
 
+   // Delete everything from the register
+   for(auto item : p->mRegister) {
+      delete item;
+   }
+   p->mRegister.clear();
+   p->mThread = 0;
+   delete p;
 }
+
