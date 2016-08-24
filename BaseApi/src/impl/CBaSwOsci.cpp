@@ -11,12 +11,13 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include <stdio.h>
-#ifdef __WIN32
-# define __STDC_FORMAT_MACROS
-#endif
+//#ifdef __WIN32
+//# define __STDC_FORMAT_MACROS
+//#endif
 #include <inttypes.h>
 #include <iostream>
 #include <chrono>
+#include <algorithm>
 #include "CBaSwOsci.h"
 #include "BaCore.h"
 #include "BaLogMacros.h"
@@ -27,9 +28,9 @@
     Defines
  -----------------------------------------------------------------------------*/
 #define TAG "BaSwO"
-#define MINSLEEP_US  10000
-#define CYCLE_US     50000
-#define CYCLECUM_US 500000
+#define MINSLEEP_US  10000 // 10 ms Minimum time that the thread will sleep
+#define CYCLE_US     50000 // 50 ms Regular cycle time
+#define CYCLECUM_US 500000 // 500 ms Duration after which the data will be processed
 #define STEADYCLK   std::chrono::steady_clock
 #define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
    (STEADYCLK::now() - start).count()
@@ -39,7 +40,7 @@
 typedef struct CBaSwOsci::TSWOsci {
    void *pVar;
    EBaSwOsciType type;
-   const char *name;
+   std::string name;
    const char *desc;
 
    TSWOsci() : pVar(0), type(eBaSwOsci_undef), name(0), desc(0) {};
@@ -58,12 +59,13 @@ typedef struct CBaSwOsci::TSWOsci {
 /*------------------------------------------------------------------------------
     C++ Interface
  -----------------------------------------------------------------------------*/
+// todo: should it be 100% multi threading?
 CBaSwOsci* CBaSwOsci::Create(const char *name, const char *path, bool toCnsole) {
    if (!name) {
       return 0;
    }
 
-   CBaSwOsci *p = new CBaSwOsci(name, path, toCnsole);
+   CBaSwOsci *p = new CBaSwOsci(name, path ? path : "", toCnsole);
    std::ios_base::openmode om = std::ios_base::binary | std::ios_base::out;
 
    // //////////////// Open ////////////////
@@ -82,13 +84,13 @@ CBaSwOsci* CBaSwOsci::Create(const char *name, const char *path, bool toCnsole) 
 }
 
 //
-bool CBaSwOsci::Destroy(CBaSwOsci* pHdl) {
+bool CBaSwOsci::Destroy(IBaSwOsci* pHdl) {
    CBaSwOsci *p = dynamic_cast<CBaSwOsci*>(pHdl);
    if (!p ) {
       return false;
    }
 
-
+   p->Flush();
 
    // No mutexes beyond this point
    BaCoreDestroyThread(p->mThread, 0);
@@ -101,7 +103,6 @@ bool CBaSwOsci::Destroy(CBaSwOsci* pHdl) {
    // 1. The thread releases the memory when it no longer needs it
    // 2. The thread gets stuck and memory leaks
 
-
    return true;
 }
 
@@ -110,8 +111,13 @@ bool CBaSwOsci::Register(void* pVar, EBaSwOsciType type, const char *name, const
    if (!pVar || type <= eBaSwOsci_undef || type > eBaSwOsci_max || !name || mSampling) {
       return false;
    }
+
+   // replace all ',' with '.'
+   std::string s = name;
+   std::replace(s.begin(), s.end(), ',', '.');
+
    std::lock_guard<std::mutex> lck(mMtx);
-   mRegister.push_back(new CBaSwOsci::TSWOsci(pVar, type, name, desc));
+   mRegister.push_back(new CBaSwOsci::TSWOsci(pVar, type, s.c_str(), desc));
    return true;
 }
 
@@ -125,6 +131,8 @@ bool CBaSwOsci::Header() {
    for (TSWOsci *p : mRegister) {
       if (p != mRegister.back()) {
          s.append(p->name).append(", ");
+      } else {
+         s.append(p->name);
       }
    }
 
@@ -182,7 +190,7 @@ bool CBaSwOsci::Sample() {
 }
 
 inline void CBaSwOsci::Flush() {
-   if (!mSampling) {
+   if (!mSampling || mBuf.empty()) {
       return;
    }
 
@@ -210,7 +218,6 @@ void CBaSwOsci::thRout(TBaCoreThreadArg *pArg) {
    }
 
    CBaSwOsci* p = (CBaSwOsci*)(pArg->pArg);
-   p->mThrRunning = true;
    int64_t cycleCum = 0;
    int64_t cycleDur = 0;
    STEADYCLK::time_point start;
@@ -244,6 +251,8 @@ void CBaSwOsci::thRout(TBaCoreThreadArg *pArg) {
    }
    p->mRegister.clear();
    p->mThread = 0;
+
+   // Delete the underlying object!!
    delete p;
 }
 

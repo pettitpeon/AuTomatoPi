@@ -17,7 +17,7 @@
  #include <winbase.h>
 #endif
 
-//#include <iostream> // uncomment for debugging
+#include <iostream> // uncomment for debugging
 #include <fstream>      // std::ifstream
 #include <chrono>
 #include <thread>
@@ -284,40 +284,48 @@ LOCAL void threadRoutine(TThreadDesc *pDesc) {
       return;
    }
 
-   // Get the native OS TID
-#ifdef __linux
-   pDesc->tid = syscall(SYS_gettid);
-#elif __WIN32
-   pDesc->tid = GetCurrentThreadId();
-#endif
-
-   pDesc->status = eRunning;
-
+   int8_t sched = SCHED_OTHER;
+   TBaCoreThreadArg *pArg = 0;
    // Wait for the pThread pointer to be assigned
    {
       std::lock_guard<std::mutex> lck(pDesc->mtx);
-   }
 
-   // Define the priority and scheduler
-   int8_t sched = SCHED_OTHER;
-   struct sched_param prio;
+      // TODO: do the right thing
+      if (pDesc->status == eDetached) {
+         std::cout << "Im gonna crash" << std::endl;
+      }
+      pDesc->status = eRunning;
+
+      // Get the native OS TID
 #ifdef __linux
-   prio.__sched_priority = prio2Prio(pDesc->prio);
-   // Set the soft real-time scheduler if required
-   sched = pDesc->prio > eBaCorePrio_Highest ? SCHED_FIFO : SCHED_OTHER;
+      pDesc->tid = syscall(SYS_gettid);
 #elif __WIN32
-   prio.sched_priority = prio2Prio(pDesc->prio);
+      pDesc->tid = GetCurrentThreadId();
+#endif
+
+      // Define the priority and scheduler
+
+      struct sched_param prio;
+#ifdef __linux
+      prio.__sched_priority = prio2Prio(pDesc->prio);
+      // Set the soft real-time scheduler if required
+      sched = pDesc->prio > eBaCorePrio_Highest ? SCHED_FIFO : SCHED_OTHER;
+#elif __WIN32
+      prio.sched_priority = prio2Prio(pDesc->prio);
 #endif
 
 
-   // Set thread name, scheduler, and priority
-   pthread_t hld = pDesc->pThread->native_handle();
-   pthread_setname_np(hld, pDesc->name.c_str());
-   pthread_setschedparam(hld, sched, &prio);
-
+      // TODO: problem here. if the destructor is called right after the
+      // constructor, the thread is destroyed before we get to this point
+      // Set thread name, scheduler, and priority
+      pthread_t hld = pDesc->pThread->native_handle();
+      pthread_setname_np(hld, pDesc->name.c_str());
+      pthread_setschedparam(hld, sched, &prio);
+      pArg = pDesc->pArg;
+   }
 
    // Call the actual thread entry function /////
-   pDesc->routine(pDesc->pArg);
+   pDesc->routine(pArg);
    // ///////////////////////////////////// /////
 
    // Check if the thread was detached to either notify of release the descriptor

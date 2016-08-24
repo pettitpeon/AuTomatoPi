@@ -32,14 +32,18 @@ public:
    CPPUNIT_TEST_SUITE(CBaSwOsciTest);
 
    CPPUNIT_TEST(Init);
-   CPPUNIT_TEST(Test);
+   CPPUNIT_TEST(ConcreteNiceWeather);
+   CPPUNIT_TEST(Interface);
+   CPPUNIT_TEST(Errors);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
    void Init();
-   void Test();
+   void ConcreteNiceWeather();
+   void Interface();
+   void Errors();
    void Exit();
 };
 

@@ -287,6 +287,12 @@ static inline std::string Concatenate(
 #endif
             ) {
 
+   // A slash or back slash at the beginning means absolute path. Therefore,
+   // if path1 is empty, return path2 as it is
+   if (path1.empty()) {
+      return path2;
+   }
+
    if (path1.back() == delimiter) {
       if (path2[0] == delimiter) {
          path1.resize(path1.length() - 1);
