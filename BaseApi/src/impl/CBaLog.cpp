@@ -58,6 +58,7 @@
 #define FULLPATH(PATH, NAME)  PATH + NAME + LOGEXT
 #define STRNOTFOUND    std::string::npos     // Return value for string not found
 #define SYSLOG_        _L_SETSYSLOGF
+#define FOREVER        200 // 200ms
 
 /*------------------------------------------------------------------------------
     Static variables
@@ -133,11 +134,13 @@ bool CBaLog::exit() {
       return true;
    }
 
+   bool rc = true;
+
    if (sLogdHdl != (void*)-1) {
-      BaCoreDestroyThread(sLogdHdl, 100);
+      rc = BaCoreDestroyThread(sLogdHdl, FOREVER);
    }
    sLogdHdl = 0;
-   return true;
+   return rc;
 }
 
 //
@@ -278,7 +281,7 @@ bool CBaLog::Destroy(IBaLog *pHdl, bool saveCfg) {
    }
 
    if (sLoggers.empty()) {
-      exit();
+      return exit();
    }
 
    return true;

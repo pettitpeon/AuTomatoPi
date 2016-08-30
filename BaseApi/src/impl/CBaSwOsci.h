@@ -47,7 +47,7 @@ class CBaSwOsci : public IBaSwOsci {
 public:
 
    static CBaSwOsci* Create(const char *name, const char *path, bool toCnsole);
-   static bool Destroy(IBaSwOsci* pHdl);
+   static bool Destroy(IBaSwOsci* pHdl, uint32_t timeoutMs);
 
 	virtual bool Register(void* pVar, EBaSwOsciType type, const char *name, const char *desc);
 	bool Header();

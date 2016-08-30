@@ -90,10 +90,11 @@ void CBaSwOsciTest::ConcreteNiceWeather() {
    usi *= 2;
    c *= 2;
    ASS(p->Sample());
-   ASS(CBaSwOsci::Destroy(p));
+   ASS(CBaSwOsci::Destroy(p, 500));
 
    // Test the header
    std::ifstream iS(RESPATH "BaSwOsciTest.csv");
+
    ASS(iS.good());
    std::string s;
    std::getline(iS, s, ','); // Header
@@ -167,6 +168,7 @@ void CBaSwOsciTest::Interface() {
    c *= 2;
    ASS(p->Sample());
    BaCoreMSleep(1);
+
    ASS(IBaSwOsciDestroy(p));
 
    // Test the header
@@ -191,7 +193,7 @@ void CBaSwOsciTest::Interface() {
    std::getline(iS, s, ',');
    std::getline(iS, s, ',');
 #ifdef __WIN32
-   ASS(s == " 3.14e-005");
+   ASS_MSG(s, s == " 3.14e-005");
 #else
    ASS(s == " 3.14e-05");
 #endif

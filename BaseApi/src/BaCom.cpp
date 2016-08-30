@@ -198,6 +198,10 @@ TBaBoolRC BaCom1WExit() {
 
                // The resources of this device are freed at the end of the
                // thread routine. This include the device itself (pDev)
+               // todo: change this to synchronous mode!
+               // TODO: a good idea is to send the exit message to all of them
+               // and then delete them one by one. This way they can all return
+               // parallelly
                BaCoreDestroyThread(pDev->updThread, 1);
             }
          }

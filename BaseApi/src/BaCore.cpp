@@ -29,6 +29,7 @@
  */
 #include "BaCore.h"
 #include "BaGenMacros.h"
+#include "BaLogMacros.h"
 #include "BaUtils.hpp"
 #include "BaTmpTime.hpp"
 
@@ -218,19 +219,19 @@ TBaCoreThreadHdl BaCoreCreateThread(const char *name, TBaCoreThreadFun routine,
 }
 
 //
-TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeOutMs) {
+TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
    TThreadDesc *pDesc = (TThreadDesc*)hdl;
    if (!pDesc || !pDesc->pThread) {
       return eBaBoolRC_Error;
    }
-
+   TBaBoolRC rc = eBaBoolRC_Success;
    // Mutex RAII lock
    {
       std::unique_lock<std::mutex> lck(pDesc->mtx);
       pDesc->pArg->exitTh = eBaBool_true;
 
       // Wait for the thread to end with a timeout
-      if (pDesc->cv.wait_for(lck, CHRONO_::milliseconds(timeOutMs),
+      if (pDesc->cv.wait_for(lck, CHRONO_::milliseconds(timeoutMs),
             // [cap list] (args) { body }
                 [&pDesc] () { return pDesc->status == eFinished; })
           ) {
@@ -240,7 +241,19 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeOutMs) {
          pDesc->status = eDetached;
          pDesc->pThread->detach();
 
+         // If the timeout elapsed, signal it
+         if (timeoutMs != 0) {
+            rc = eBaBoolRC_Error;
+            if (!WARN_("Th(%i:%s): Destroy timeout",
+                   pDesc->tid, pDesc->name.c_str())) {
+               BASYSLOG(TAG, "Th(%i:%s): Destroy timeout",
+                     pDesc->tid, pDesc->name.c_str());
+            }
+         }
       }
+
+      // todo: This finishes the thread? I do not think so, but pThread is used
+      // later on so it crashes
       delete pDesc->pThread;
       pDesc->pThread = 0;
    }
@@ -250,7 +263,7 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeOutMs) {
       delete pDesc;
    }
 
-   return eBaBoolRC_Success;
+   return rc;
 }
 
 //
@@ -290,12 +303,6 @@ LOCAL void threadRoutine(TThreadDesc *pDesc) {
    {
       std::lock_guard<std::mutex> lck(pDesc->mtx);
 
-      // TODO: do the right thing
-      if (pDesc->status == eDetached) {
-         std::cout << "Im gonna crash" << std::endl;
-      }
-      pDesc->status = eRunning;
-
       // Get the native OS TID
 #ifdef __linux
       pDesc->tid = syscall(SYS_gettid);
@@ -303,8 +310,19 @@ LOCAL void threadRoutine(TThreadDesc *pDesc) {
       pDesc->tid = GetCurrentThreadId();
 #endif
 
-      // Define the priority and scheduler
+      // This means that the thread was destroyed before it could start
+      // Inform and return
+      if (pDesc->status == eDetached) {
+        if (!WARN_("Th(%i:%s): Destroyed before starting",
+               pDesc->tid, pDesc->name.c_str())) {
+           BASYSLOG(TAG, "Th(%i:%s): Destroyed before starting",
+                 pDesc->tid, pDesc->name.c_str());
+        }
+         return;
+      }
 
+      pDesc->status = eRunning;
+      // Define the priority and scheduler
       struct sched_param prio;
 #ifdef __linux
       prio.__sched_priority = prio2Prio(pDesc->prio);
@@ -315,8 +333,8 @@ LOCAL void threadRoutine(TThreadDesc *pDesc) {
 #endif
 
 
-      // TODO: problem here. if the destructor is called right after the
-      // constructor, the thread is destroyed before we get to this point
+      // pThread gets destroyed if the thread destructor is called right after
+      // the thread creator.
       // Set thread name, scheduler, and priority
       pthread_t hld = pDesc->pThread->native_handle();
       pthread_setname_np(hld, pDesc->name.c_str());

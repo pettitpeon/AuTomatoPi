@@ -177,11 +177,13 @@ TBaCoreThreadHdl BaCoreCreateThread(
 /** Thread destructor. It signals the thread to end and waits a maximum of
  *  @c timeOutMs ms. If it timeouts, the thread detaches, stays alive, and
  *  releases the resources when the thread routine returns.
- *  @return Error if bad handle, or success
+ *  @return Error if bad handle or timeout and @c timeOutMs != 0, otherwise,
+ *  success
  */
 TBaBoolRC BaCoreDestroyThread(
       TBaCoreThreadHdl hdl, ///< [in] Thread handle
-      uint32_t timeOutMs    ///< [in] Timeout to wait in ms.
+      uint32_t timeoutMs    /**< [in] Timeout to wait in ms. If zero, no timeout
+      and behaves like an asynchronous call*/
       );
 
 /******************************************************************************/

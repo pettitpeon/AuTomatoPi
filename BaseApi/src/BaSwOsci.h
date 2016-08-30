@@ -32,7 +32,7 @@ typedef void* TBaSwOsciHdl;
 
 /// Data types of the variables logger
 typedef enum EBaSwOsciType {
-   eBaSwOsci_undef = -1, ///< 0
+   eBaSwOsci_undef = -1, ///< -1
    eBaSwOsci_int8 = 0, ///< 0
    eBaSwOsci_uint8,  ///< 1
    eBaSwOsci_int16,  ///< 2
@@ -56,20 +56,30 @@ extern "C" {
 /// @name Factory
 //@{
 /******************************************************************************/
-/** Create factory for ...
+/** Create factory
  *  @return Handle if success, otherwise, null
  */
 TBaSwOsciHdl BaSwOsciCreate(
-      const char *name,
-      const char *path,
-      TBaBool toCnsole
+      const char *name, ///< [in] Name
+      const char *path, ///< [in] Directory where to save the file
+      TBaBool toCnsole ///< [in] Flag to print to console too
       );
 
 /******************************************************************************/
-/** Destroy and release resources
+/** Destroy and release resources. Should not take more than 100ms to complete.
+ *  returns with error after 2s
  *  @return True if success, otherwise, false
  */
 TBaBoolRC BaSwOsciDestroy(
+      TBaSwOsciHdl hdl ///< [in] Handle to destroy
+      );
+
+/******************************************************************************/
+/** Sends signal to destroy and release resources asynchronously. Use this if
+ *  the task is time critical such as a real-time application.
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaSwOsciDestroyAsync(
       TBaSwOsciHdl hdl ///< [in] Handle to destroy
       );
 //@}
@@ -139,20 +149,30 @@ public:
 /// @name C++ Factory
 //@{
 /******************************************************************************/
-/** Create factory for ...
+/** Create factory
  *  @return Handle if success, otherwise, null
  */
 extern "C" IBaSwOsci *IBaSwOsciCreate(
-      const char *name,
-      const char *path,
-      TBaBool toCnsole
+      const char *name, ///< [in] Name
+      const char *path, ///< [in] Directory where to save the file
+      TBaBool toCnsole ///< [in] Flag to print to console too
       );
 
 /******************************************************************************/
-/** Destroy and release resources
- *  @return True if success, otherwise, false
+/** Destroy and release resources. Should not take more than 100ms to complete.
+ *  returns with error after 2s
+ *  @return false if error or timeout and @c timeoutMs != 0, otherwise, true
  */
 extern "C" TBaBoolRC IBaSwOsciDestroy(
+      IBaSwOsci *pHdl ///< [in] handle to destroy
+      );
+
+/******************************************************************************/
+/** Destroy and release resources. If @c timeoutMs = 0, it behaves like an
+ *  asynchronous call.
+ *  @return false if error or timeout and @c timeoutMs != 0, otherwise, true
+ */
+extern "C" TBaBoolRC IBaSwOsciDestroyAsync(
       IBaSwOsci *pHdl ///< [in] handle to destroy
       );
 //@}

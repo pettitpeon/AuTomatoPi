@@ -17,6 +17,7 @@
     Defines
  -----------------------------------------------------------------------------*/
 #define C_HDL_ ((IBaSwOsci*) hdl)
+#define FOREVER 2000 // 2s
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -32,7 +33,14 @@ TBaSwOsciHdl BaSwOsciCreate(const char *name, const char *path, TBaBool toCnsole
 
 //
 TBaBoolRC BaSwOsciDestroy(TBaSwOsciHdl hdl) {
-   return CBaSwOsci::Destroy(C_HDL_) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return CBaSwOsci::Destroy(C_HDL_, FOREVER) ?
+         eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaSwOsciDestroyAsync(TBaSwOsciHdl hdl) {
+   return CBaSwOsci::Destroy(C_HDL_, 0) ?
+         eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
@@ -66,7 +74,12 @@ IBaSwOsci *IBaSwOsciCreate(const char *name, const char *path, TBaBool toCnsole)
 
 //
 TBaBoolRC IBaSwOsciDestroy(IBaSwOsci *pHdl) {
-   return CBaSwOsci::Destroy(pHdl) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return CBaSwOsci::Destroy(pHdl, FOREVER) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC IBaSwOsciDestroyAsync(IBaSwOsci *pHdl) {
+   return CBaSwOsci::Destroy(pHdl, 0) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 /*------------------------------------------------------------------------------

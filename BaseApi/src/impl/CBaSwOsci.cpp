@@ -84,7 +84,7 @@ CBaSwOsci* CBaSwOsci::Create(const char *name, const char *path, bool toCnsole) 
 }
 
 //
-bool CBaSwOsci::Destroy(IBaSwOsci* pHdl) {
+bool CBaSwOsci::Destroy(IBaSwOsci* pHdl, uint32_t timeoutMs) {
    CBaSwOsci *p = dynamic_cast<CBaSwOsci*>(pHdl);
    if (!p ) {
       return false;
@@ -93,17 +93,21 @@ bool CBaSwOsci::Destroy(IBaSwOsci* pHdl) {
    p->Flush();
 
    // No mutexes beyond this point
-   BaCoreDestroyThread(p->mThread, 0);
+   TBaCoreThreadHdl th = p->mThread;
    p->mThread = 0;
 
+   // I destroy p.
+   bool rc = BaCoreDestroyThread(th, timeoutMs);
+
    // delete p;
+   // Do not touch p after this point
    // The handle is deleted inside the thread. This is important because
    // deleting the handle deletes the ofstream and if the thread tries to access
    // it, CRASHHH!!. Deleting it in the thread result in one of the 2 following:
    // 1. The thread releases the memory when it no longer needs it
    // 2. The thread gets stuck and memory leaks
 
-   return true;
+   return rc;
 }
 
 //
@@ -189,6 +193,7 @@ bool CBaSwOsci::Sample() {
    return true;
 }
 
+//
 inline void CBaSwOsci::Flush() {
    if (!mSampling || mBuf.empty()) {
       return;
