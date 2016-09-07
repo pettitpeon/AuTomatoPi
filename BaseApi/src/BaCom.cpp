@@ -31,6 +31,7 @@
 #include "BaCore.h"
 #include "BaGpio.h"
 #include "BaGenMacros.h"
+#include "BaLogMacros.h"
 #include "BaUtils.hpp"
 
 #define BUS1W   04
@@ -38,6 +39,8 @@
 #define RXD0    15
 #define SER_ALT  0
 #define ERRTEMP -300
+#define FOREVER  500
+#define TAG "BaCom"
 
 #ifdef __WIN32
 # define DEVPATH  "C:\\tmp\\devices\\"
@@ -183,6 +186,7 @@ TBaBoolRC BaCom1WExit() {
    if (!sp1w) {
       return eBaBoolRC_Success;
    }
+   TBaBoolRC rc = eBaBoolRC_Success;
 
    // Iterate the map of vectors
    for (auto kv : s1WDevs) {
@@ -191,19 +195,33 @@ TBaBoolRC BaCom1WExit() {
          continue;
       }
 
+      // Tell all threads to exit so they can start exiting in parallel
       for (auto pDev : *kv.second) {
          if (pDev && pDev->pIs) {
+
+            // The exit flag should not delete anything! see w1RdAsyncRout()
             if (pDev->updThread) {
                pDev->threadArg.exitTh = eBaBool_true;
-
-               // The resources of this device are freed at the end of the
-               // thread routine. This include the device itself (pDev)
-               // todo: change this to synchronous mode!
-               // TODO: a good idea is to send the exit message to all of them
-               // and then delete them one by one. This way they can all return
-               // parallelly
-               BaCoreDestroyThread(pDev->updThread, 1);
             }
+         }
+      }
+
+      // Destroy all threads
+      for (auto pDev : *kv.second) {
+         if (pDev) {
+            if (BaCoreDestroyThread(pDev->updThread, FOREVER)) {
+               // Only here is sure that the thread ended
+               pDev->updThread = 0;
+               delete pDev;
+            } else {
+               TBaCoreThreadInfo info = {0};
+               BaCoreGetThreadInfo(pDev->updThread, &info);
+               if(!WARN_("Th:%s(%i) did not exit correctly", info.name, info.tid)) {
+                  BASYSLOG(TAG, "Th:%s(%i) did not exit correctly", info.name, info.tid);
+               }
+               rc = false;
+            }
+
          }
       }
 
@@ -219,9 +237,9 @@ TBaBoolRC BaCom1WExit() {
    // Delete the GPIO. Zero it first so nobody can access it "in between"
    IBaGpio *tmp = sp1w;
    sp1w = 0;
-   TBaBoolRC rc = IBaGpioDelete(tmp);
 
-   return rc;
+   // Bitwise & desired!
+   return rc & IBaGpioDelete(tmp);
 }
 
 //
@@ -604,8 +622,8 @@ LOCAL void w1RdAsyncRout(TBaCoreThreadArg *pArg) {
    // stopped using them
    delete pDev->pIs;
    pDev->pIs = 0;
-   pDev->updThread = 0;
-   delete pDev;
+//   pDev->updThread = 0;
+//   delete pDev;
 }
 
 //

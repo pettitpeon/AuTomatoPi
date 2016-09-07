@@ -122,10 +122,10 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaCoreTest::suite());
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
-//   pSuite->addTest(CBaseApiTest::suite());
+   pSuite->addTest(CBaseApiTest::suite());
 //   pSuite->addTest(CBaProcTest::suite());
 //   pSuite->addTest(CCtrlPT1Test::suite());
-   pSuite->addTest(CBaSwOsciTest::suite());
+//   pSuite->addTest(CBaSwOsciTest::suite());
    return pSuite;
 }
 

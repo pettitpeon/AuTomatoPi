@@ -38,6 +38,7 @@
 #define CTRLTASK "BaseApiCtrlTask"
 #define DEFDIR "/"
 #define MINSLEEP_US 10000
+#define MAXSLEEP_US 50000
 #define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
    (std::chrono::steady_clock::now() - start).count()
 
@@ -269,6 +270,7 @@ TBaBoolRC BaApiStartCtrlThread(const TBaApiCtrlTaskOpts* pOpts) {
 //
 TBaBoolRC BaApiStopCtrlThread() {
    sExit = true;
+   //todo
    TBaBoolRC rc = BaCoreDestroyThread(sCtrlThread, 50);
    sCtrlThread = 0;
    resetStats(sStats);
@@ -362,16 +364,27 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    void (* update  )(void*) = pOpts->update;
    void * updateArg = pOpts->updateArg;
    uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
+   uint64_t cycleCumUs = 0;
    TRACE_("Ctrl thread started");
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE_US) {
+   for ( ; !sExit; sStats.updCnt++, cycleCumUs += LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
-      sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
+
+      // update Fun
+      if (cycleCumUs >= MAXSLEEP_US) {
+         sStats.lastCycleUs = cycleCumUs;
+         sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
+         cycleCumUs -= MAXSLEEP_US;
+      }
+      //
+
       if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
          BaCoreUSleep(MINSLEEP_US);
-      } else {
+      } else if (cycleCumUs/*todo*/) {
          BaCoreUSleep(sampTimeUs - sStats.lastDurUs);
+      } else {
+
       }
    }
    // ////////////////////////////////////////////////////////////////////

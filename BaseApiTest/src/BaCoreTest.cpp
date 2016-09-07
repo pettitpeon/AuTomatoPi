@@ -151,7 +151,7 @@ void CBaCoreTest::ThreadsNiceWeather() {
    CPPUNIT_ASSERT(info.isRunning);
    CPPUNIT_ASSERT(arg.pArg);
    CPPUNIT_ASSERT_EQUAL(testPrio, info.prio);
-   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 100));
+   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 110));
    hdl = 0;
 
 
@@ -190,7 +190,7 @@ void CBaCoreTest::ThreadsNiceWeather() {
    CPPUNIT_ASSERT(info.isRunning);
    CPPUNIT_ASSERT(arg.pArg);
    CPPUNIT_ASSERT_EQUAL(testPrio, info.prio);
-   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 100));
+   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 110));
    hdl = 0;
 
    // eBaCorePrio_RT_High /////////////////////////////
@@ -227,7 +227,7 @@ void CBaCoreTest::ThreadsNiceWeather() {
    CPPUNIT_ASSERT(info.isRunning);
    CPPUNIT_ASSERT(arg.pArg);
    CPPUNIT_ASSERT_EQUAL(testPrio, info.prio);
-   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 100));
+   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 110));
    hdl = 0;
 }
 
@@ -249,7 +249,7 @@ void CBaCoreTest::ThreadsSpecialCases() {
    BaCoreMSleep(100);
    CPPUNIT_ASSERT(info.isRunning);
    CPPUNIT_ASSERT_EQUAL(testPrio, info.prio);
-   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 10));
+   CPPUNIT_ASSERT(!BaCoreDestroyThread(hdl, 10));
    hdl = 0;
 
    // Test destroying a running thread which uses an exit flag
@@ -261,7 +261,7 @@ void CBaCoreTest::ThreadsSpecialCases() {
    CPPUNIT_ASSERT(info.isRunning);
    CPPUNIT_ASSERT(arg.pArg);
    CPPUNIT_ASSERT_EQUAL(testPrio, info.prio);
-   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 100));
+   CPPUNIT_ASSERT(BaCoreDestroyThread(hdl, 110));
    hdl = 0;
 
    // Destroy a null handle
