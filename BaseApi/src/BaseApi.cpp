@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#include <inttypes.h>
 
 // Portability headers
 #ifdef __linux
@@ -366,31 +367,35 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
    uint64_t cycleCumUs = MAXSLEEP_US;
    TRACE_("Ctrl thread started");
+   uint64_t toSleep;
 
    // This is the actual control loop ////////////////////////////////////
    for ( ; !sExit; sStats.updCnt++, cycleCumUs += LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
 
       // update Fun
-      if (cycleCumUs >= MAXSLEEP_US) {
+      if (cycleCumUs >= sampTimeUs) {
          sStats.lastCycleUs = cycleCumUs;
          sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
-         cycleCumUs = sStats.lastDurUs;
+         cycleCumUs = sStats.lastDurUs + (cycleCumUs- MAXSLEEP_US);
+         if (cycleCumUs > sampTimeUs) {
+            // todo Log with state
+            WARN_("Update() exceeded the sample time: %" PRIu64 "> %" PRIu64,
+                  cycleCumUs, sampTimeUs);
+         }
       }
 
       // Cycle > sample time
-      if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
-         BaCoreUSleep(MINSLEEP_US);
-         // todo: log?
-
+      if (cycleCumUs + MAXSLEEP_US <= sampTimeUs) {
+         BaCoreUSleep(MAXSLEEP_US);
+         break;
       // Cycle
-      } else if (cycleCumUs < /*todo*/) {
-         BaCoreUSleep(sampTimeUs - sStats.lastDurUs);
-
-
-      } else {
-
       }
+
+      toSleep = sampTimeUs - cycleCumUs;
+      BaCoreUSleep(toSleep < MINSLEEP_US ? MINSLEEP_US : toSleep);
+
+
    }
    // ////////////////////////////////////////////////////////////////////
 
