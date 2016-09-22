@@ -361,10 +361,10 @@ LOCAL void signalHdlr(int sig) {
 LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    TTimePoint start;
    const TBaApiCtrlTaskOpts* pOpts = (const TBaApiCtrlTaskOpts*) pArg->pArg;
-   void (* update  )(void*) = pOpts->update;
+   auto update  = pOpts->update;
    void * updateArg = pOpts->updateArg;
    uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
-   uint64_t cycleCumUs = 0;
+   uint64_t cycleCumUs = MAXSLEEP_US;
    TRACE_("Ctrl thread started");
 
    // This is the actual control loop ////////////////////////////////////
@@ -375,14 +375,19 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
       if (cycleCumUs >= MAXSLEEP_US) {
          sStats.lastCycleUs = cycleCumUs;
          sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
-         cycleCumUs -= MAXSLEEP_US;
+         cycleCumUs = sStats.lastDurUs;
       }
-      //
 
+      // Cycle > sample time
       if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
          BaCoreUSleep(MINSLEEP_US);
-      } else if (cycleCumUs/*todo*/) {
+         // todo: log?
+
+      // Cycle
+      } else if (cycleCumUs < /*todo*/) {
          BaCoreUSleep(sampTimeUs - sStats.lastDurUs);
+
+
       } else {
 
       }
