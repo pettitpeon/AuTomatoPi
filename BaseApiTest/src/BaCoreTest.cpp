@@ -47,11 +47,11 @@ void CBaCoreTest::SleepAndTiming() {
    int64_t dur = 0;
    dur = BaCoreTimedS(testTimingFun, (void*)1);
    std::cout << "1s == " << dur <<"s \n";
-   CPPUNIT_ASSERT_EQUAL(1LL, dur);
+   CPPUNIT_ASSERT_EQUAL((int64_t)1, dur);
 
    dur = BaCoreTimedMs(testTimingFun, (void*)10);
    std::cout << "10ms == " << dur <<"ms \n";
-   CPPUNIT_ASSERT_EQUAL(10LL, dur);
+   CPPUNIT_ASSERT_EQUAL((int64_t)0, dur);
 
    dur = BaCoreTimedUs(testTimingFun, (void*)300);
 #ifdef __linux
@@ -316,7 +316,7 @@ LOCAL void testTimingFun(void * arg) {
 // Auxiliary function for nice weather thread tests
 LOCAL void testThreadNiceWeatherFun(TBaCoreThreadArg *pArg) {
    for (int i = 0; i < 1000 && !pArg->exitTh; ++i) {
-      pArg->pArg = (void*) ((int)pArg->pArg + 1);
+      pArg->pArg = (void*) ((long long)pArg->pArg + 1);
       std::cout << "Thread " << (int64_t) pArg->pArg << " s\n";
       BaCoreMSleep(100);
    }
