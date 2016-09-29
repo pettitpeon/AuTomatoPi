@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
 // Portability headers
@@ -206,6 +207,7 @@ TBaBoolRC BaApiStartCtrlTask(const TBaApiCtrlTaskOpts* pOpts) {
    for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
 
+      // todo: Is there a need to make short sleeps like in the control thread?
       sStats.lastDurUs = BaCoreTimedUs(updFun, pArg);
       if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
          BaCoreUSleep(MINSLEEP_US);
@@ -259,6 +261,9 @@ TBaBoolRC BaApiStartCtrlThread(const TBaApiCtrlTaskOpts* pOpts) {
       return eBaBoolRC_Error;
    }
 
+   // Reset exit flag
+   sExit = 0;
+
    sStats.imRunning = eBaBool_true;
    sCtrlThreadArg.pArg = (void*)pOpts;
    sCtrlThread = BaCoreCreateThread(pOpts->name, ctrlThreadRout, &sCtrlThreadArg, pOpts->prio);
@@ -270,9 +275,9 @@ TBaBoolRC BaApiStartCtrlThread(const TBaApiCtrlTaskOpts* pOpts) {
 
 //
 TBaBoolRC BaApiStopCtrlThread() {
-   sExit = true;
+   sExit = 1;
    //todo
-   TBaBoolRC rc = BaCoreDestroyThread(sCtrlThread, 50);
+   TBaBoolRC rc = BaCoreDestroyThread(sCtrlThread, 2*MAXSLEEP_US/1000);
    sCtrlThread = 0;
    resetStats(sStats);
    // todo: exit function here instead? we do not have opts here with the callback
@@ -373,28 +378,33 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    for ( ; !sExit; sStats.updCnt++, cycleCumUs += LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
 
-      // update Fun
+      // The cycle time has elapsed. Call update
       if (cycleCumUs >= sampTimeUs) {
          sStats.lastCycleUs = cycleCumUs;
          sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
-         cycleCumUs = sStats.lastDurUs + (cycleCumUs- MAXSLEEP_US);
-         if (cycleCumUs > sampTimeUs) {
+
+         // The new cumulated cycle is
+         cycleCumUs = (cycleCumUs - sampTimeUs);
+
+         // If the update takes longer than the cycle time, log it.
+         if (sStats.lastDurUs > sampTimeUs) {
             // todo Log with state
-            WARN_("Update() exceeded the sample time: %" PRIu64 "> %" PRIu64,
-                  cycleCumUs, sampTimeUs);
+            WARN_("Update() exceeded the sample time: %" PRIu64 ">%" PRIu64,
+                  sStats.lastDurUs, sampTimeUs);
+            BaCoreUSleep(MINSLEEP_US);
+            continue;
          }
       }
 
-      // Cycle > sample time
+      // Cycle + MaxSleep < sample time: sleep the maximum possible
       if (cycleCumUs + MAXSLEEP_US <= sampTimeUs) {
          BaCoreUSleep(MAXSLEEP_US);
-         break;
-      // Cycle
+         continue;
       }
 
+      // Sleep the  required time or the minimum minimum possible
       toSleep = sampTimeUs - cycleCumUs;
       BaCoreUSleep(toSleep < MINSLEEP_US ? MINSLEEP_US : toSleep);
-
 
    }
    // ////////////////////////////////////////////////////////////////////

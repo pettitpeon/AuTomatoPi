@@ -23,7 +23,7 @@
 
 LOCAL TBaBoolRC initExit(void* arg);
 LOCAL void update(void *arg);
-
+LOCAL void loongUpdate(void *arg);
 
 TBaApiCtrlTaskOpts sOpts = {0};
 
@@ -33,6 +33,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CBaseApiTest );
 /*  ...
  */
 void CBaseApiTest::setUp() {
+   sOpts.update = update;
 }
 
 /* ****************************************************************************/
@@ -73,6 +74,65 @@ void CBaseApiTest::ControlTask() {
    CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
    CPPUNIT_ASSERT(BaApiStopCtrlThread());
+   CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(!stats.imRunning);
+
+#ifdef __WIN32
+   CPPUNIT_ASSERT(!BaApiStartCtrlTask(&sOpts));
+   BaCoreMSleep(slpMs);
+   CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(stats.imRunning);
+   CPPUNIT_ASSERT(!BaApiStopCtrlTask());
+   CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(!stats.imRunning);
+#else
+
+   CPPUNIT_ASSERT(BaApiStartCtrlTask(&sOpts));
+   BaCoreMSleep(slpMs);
+   CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
+
+   // This is the parent. therefore in the
+   CPPUNIT_ASSERT(stats.imRunning);
+
+   // should not start
+   CPPUNIT_ASSERT(!BaApiStartCtrlTask(&sOpts));
+
+   CPPUNIT_ASSERT(BaApiStopCtrlTask());
+   CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(!stats.imRunning);
+
+#endif
+
+   // Logger should not be set after stop
+   CPPUNIT_ASSERT(!TRACE_("test"));
+   CPPUNIT_ASSERT(BaApiInitLogger(sOpts.log));
+   CPPUNIT_ASSERT(TRACE_("test2"));
+   CPPUNIT_ASSERT(BaApiExitLogger());
+}
+
+/* ****************************************************************************/
+/*  Test the control task
+ */
+void CBaseApiTest::LongControlTask() {
+   TBaApiCtrlTaskStats stats;
+
+   // Logger should not be set before starting
+   CPPUNIT_ASSERT(!TRACE_("test"));
+   CPPUNIT_ASSERT(BaApiInitLogger(sOpts.log));
+   CPPUNIT_ASSERT(TRACE_("test2"));
+   CPPUNIT_ASSERT(BaApiExitLogger());
+
+   uint64_t slpMs = 500;
+   sOpts.update = loongUpdate;
+
+   CPPUNIT_ASSERT(BaApiStartCtrlThread(&sOpts));
+   BaCoreMSleep(slpMs);
+   CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(stats.imRunning);
+
+   // It will not be able to destroy the thread without timeout because the
+   // update function takes too long, so do not test it
+   BaApiStopCtrlThread();
    CPPUNIT_ASSERT(BaApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 
@@ -161,5 +221,15 @@ LOCAL void update(void *arg) {
    TRACE_("update(%s): cnt=%llu, dur=%llu us, cycle=%llu us",
          stats.imRunning ? "T" : "F", stats.updCnt, stats.lastDurUs, stats.lastCycleUs);
    BaCoreMSleep(1);
+   return;
+}
+
+//
+LOCAL void loongUpdate(void *arg) {
+   TBaApiCtrlTaskStats stats;
+   BaApiGetCtrlTaskStats(&stats);
+   TRACE_("update(%s): cnt=%llu, dur=%llu us, cycle=%llu us",
+         stats.imRunning ? "T" : "F", stats.updCnt, stats.lastDurUs, stats.lastCycleUs);
+   BaCoreMSleep(150);
    return;
 }

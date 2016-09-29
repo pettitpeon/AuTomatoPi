@@ -244,10 +244,10 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
          // If the timeout elapsed, signal it
          if (timeoutMs != 0) {
             rc = eBaBoolRC_Error;
-            if (!WARN_("Th(%i:%s): Destroy timeout",
-                   pDesc->tid, pDesc->name.c_str())) {
-               BASYSLOG(TAG, "Th(%i:%s): Destroy timeout",
-                     pDesc->tid, pDesc->name.c_str());
+            if (!WARN_("Th(%i:%s): Destroy timeout > %i ms",
+                  pDesc->tid, pDesc->name.c_str(), timeoutMs)) {
+               BASYSLOG(TAG, "Th(%i:%s): Destroy timeout > %i ms",
+                     pDesc->tid, pDesc->name.c_str(), timeoutMs);
             }
          }
       }

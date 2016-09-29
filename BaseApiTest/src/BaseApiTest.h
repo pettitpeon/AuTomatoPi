@@ -33,6 +33,7 @@ public:
 
    CPPUNIT_TEST(Init);
    CPPUNIT_TEST(ControlTask);
+   CPPUNIT_TEST(LongControlTask);
    CPPUNIT_TEST(Logger);
    CPPUNIT_TEST(Exit);
 
@@ -41,6 +42,7 @@ public:
 public:
    void Init();
    void ControlTask();
+   void LongControlTask();
    void Logger();
    void Exit();
 };
