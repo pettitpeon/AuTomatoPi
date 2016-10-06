@@ -74,7 +74,7 @@
  #define FLT_EQ(FLT1, FLT2, DELTA) (fabs((FLT1) - (FLT2)) < (DELTA))
 #endif
 
-/// Round to the nearest half
+/// Roundto the nearest half
 #ifndef ROUND_HALF
  #define ROUND_HALF(X) (X < 0) ? \
       ((float(int32_t((X*2)-0.5)))/2.0) : ((float(int32_t((X*2)+0.5)))/2.0)
@@ -104,6 +104,16 @@
 /// Calculates the file name without the path. Eg: MyFile.cpp. Requires string.h
 #ifndef FILE_NAME_
  #define FILE_NAME_ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#endif
+
+/// Times a function or code part and prints the time in seconds to console.
+/// Requires <chrono>
+#ifndef TIME_FUN_
+ #define TIME_FUN_(fun) \
+    auto start = std::chrono::steady_clock::now(); \
+    fun; \
+    std::chrono::duration<double> dur = (std::chrono::steady_clock::now() - start); \
+    std::cout << #fun << ": " << dur.count() << " s" << std::endl;
 #endif
 
 #endif /* GENMACROS_H_ */

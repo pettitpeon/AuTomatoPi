@@ -48,8 +48,8 @@ char gCWD[1024];
 
 static TTestSelection sSelection =
 //      eSingleTests;
-      eSingleSuites;
-//      eFullRegistry;
+//      eSingleSuites;
+      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -119,10 +119,10 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaComTest::suite());
 //   pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaGpioTest::suite());
-//   pSuite->addTest(CBaCoreTest::suite());
+   pSuite->addTest(CBaCoreTest::suite());
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
-   pSuite->addTest(CBaseApiTest::suite());
+//   pSuite->addTest(CBaseApiTest::suite());
 //   pSuite->addTest(CBaProcTest::suite());
 //   pSuite->addTest(CCtrlPT1Test::suite());
 //   pSuite->addTest(CBaSwOsciTest::suite());
@@ -133,7 +133,9 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 /*  ...
 **/
 LOCAL CPPUNIT_NS::TestSuite* AddTests(CPPUNIT_NS::TestSuite* pSuite) {
-   pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaCoreTest>("ThreadsSpecialCases", &CBaCoreTest::ThreadsSpecialCases));
+   pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaLogTest>("Init", &CBaLogTest::Init));
+   pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaLogTest>("FilesAndSizesOpts", &CBaLogTest::FilesAndSizesOpts));
+   pSuite->addTest( new CPPUNIT_NS::TestCaller<CBaLogTest>("Exit", &CBaLogTest::Exit));
    return pSuite;
 }
 

@@ -51,7 +51,7 @@ void CBaCoreTest::SleepAndTiming() {
 
    dur = BaCoreTimedMs(testTimingFun, (void*)10);
    std::cout << "10ms == " << dur <<"ms \n";
-   CPPUNIT_ASSERT_EQUAL((int64_t)0, dur);
+   CPPUNIT_ASSERT_EQUAL((int64_t)10, dur);
 
    dur = BaCoreTimedUs(testTimingFun, (void*)300);
 #ifdef __linux

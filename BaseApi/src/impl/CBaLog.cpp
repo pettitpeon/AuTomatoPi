@@ -26,6 +26,7 @@
 #include <map>
 #include <iostream>
 #include <ctime>
+#include <chrono>
 
 /*------------------------------------------------------------------------------
     Local Includes
@@ -82,15 +83,16 @@ LOCAL void reTag(const char* tagIn, char* tagOut);
 //
 void CBaLog::logRoutine(TBaCoreThreadArg *pArg) {
    while (!sLogdArg.exitTh) {
-      { // RAII Scope
-         std::lock_guard<std::mutex> lck(sMtx);
 
+      // Crate and delete have preference to avoid deadlocks.
+      // deleting a logger flushed it anyways
+      if (sMtx.try_lock()) {
          // iterate loggers
          for (auto &kv : sLoggers) {
             kv.second->Flush();
          }
+         sMtx.unlock();
       }
-
       BaCoreMSleep(50);
    }
 }
@@ -137,7 +139,9 @@ bool CBaLog::exit() {
    bool rc = true;
 
    if (sLogdHdl != (void*)-1) {
-      rc = BaCoreDestroyThread(sLogdHdl, FOREVER);
+
+      // ToDelete
+      TIME_FUN_( rc = BaCoreDestroyThread(sLogdHdl, 10*FOREVER) );
    }
    sLogdHdl = 0;
    return rc;
@@ -385,7 +389,6 @@ inline void CBaLog::Flush() {
    // Avoid messing around with the buffer while it is being printed
    std::lock_guard<std::mutex> lck(mMtx);
 
-
    // Iterate messages in buffer
    for (auto &msg : mBuf) {
 
@@ -417,6 +420,7 @@ inline void CBaLog::Flush() {
 //            std::cout << mFullPath << " to: " << mTmpPath << std::endl;
 
             if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
+               // toDelete?
                std::cout << errno << std::endl;
                mRenameFailed.SYSLOG_(TAG, "Cannot rename log: %s", mFullPath.c_str());
             } else {

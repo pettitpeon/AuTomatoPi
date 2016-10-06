@@ -45,7 +45,6 @@ typedef struct TTemp {
 static void stresserRout(TBaCoreThreadArg *pArg);
 static void stresser4Rout(TBaCoreThreadArg *pArg);
 
-static int sInit = 0;
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 
@@ -53,14 +52,12 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CBaLogTest );
 /*  ...
  */
 void CBaLogTest::setUp() {
-   sInit++;
 }
 
 /* ****************************************************************************/
 /*  ...
  */
 void CBaLogTest::tearDown() {
-   sInit--;
 }
 
 /* ****************************************************************************/
