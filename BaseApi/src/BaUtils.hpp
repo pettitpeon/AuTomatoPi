@@ -382,6 +382,66 @@ static inline std::string BaFString(
    return res;
 }
 
+/******************************************************************************/
+/** Reads a file and returns it in a std::string
+ *  @return string
+ */
+static inline std::string BaFileToString(std::ifstream* pIs, bool *pError) {
+   if (!pIs) {
+      return "";
+   }
+
+   bool err;
+   std::string s;
+   if (!pError) {
+      pError = &err;
+   }
+
+   // Check file size
+   pIs->seekg(0, std::ios::end);
+   std::string::size_type size = pIs->tellg();
+
+   if (size == std::string::npos) {
+      *pError = true;
+      return "";
+   }
+
+   // Resize string to size
+   std::cout << "size" << size << std::endl;
+   s.resize(size);
+
+   // Rewind stream
+   pIs->seekg(0, std::ios::beg);
+
+   // Read contents to string
+   pIs->read(&s[0], s.size());
+   *pError = false;
+
+   // Rewind the stream
+   pIs->clear();
+   pIs->seekg(0, std::ios::beg);
+
+   return s;
+}
+
+/******************************************************************************/
+/** Reads a file and returns it in a std::string
+ *  @return string
+ */
+static inline std::string BaProcFileToString(std::ifstream* pIs) {
+   if (!pIs) {
+      return "";
+   }
+
+   std::string s = "";
+   std::string line = "";
+
+   while (std::getline(*pIs, line)) {
+      s += line;
+   }
+
+   return s;
+}
 
 /*------------------------------------------------------------------------------
     Specializations

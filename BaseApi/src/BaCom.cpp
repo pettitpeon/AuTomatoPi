@@ -191,7 +191,6 @@ TBaBoolRC BaCom1WExit() {
    // Iterate the map of vectors
    for (auto kv : s1WDevs) {
       if (!kv.second) {
-//         printf("empty map spot\n"); // todelete
          continue;
       }
 

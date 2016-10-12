@@ -141,7 +141,7 @@ bool CBaLog::exit() {
    if (sLogdHdl != (void*)-1) {
 
       // ToDelete
-      TIME_FUN_( rc = BaCoreDestroyThread(sLogdHdl, 10*FOREVER) );
+      TIME_FUN_( rc = BaCoreDestroyThread(sLogdHdl, FOREVER) );
    }
    sLogdHdl = 0;
    return rc;
@@ -421,7 +421,7 @@ inline void CBaLog::Flush() {
 
             if (BaFS::Rename(mFullPath.c_str(), mTmpPath.c_str()) == -1) {
                // toDelete?
-               std::cout << errno << std::endl;
+//               std::cout << errno << std::endl;
                mRenameFailed.SYSLOG_(TAG, "Cannot rename log: %s", mFullPath.c_str());
             } else {
                mRenameFailed.Reset();

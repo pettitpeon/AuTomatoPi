@@ -13,7 +13,10 @@
 
 #include <BaIniParse.h>
 #include "BaGenMacros.h"
-#include "BaCore.h"
+#include "CppU.h"
+#include "BaPi.h"
+#include "BaUtils.hpp"
+
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CTestTemplate );
@@ -36,6 +39,10 @@ void CTestTemplate::tearDown() {
  */
 void CTestTemplate::Test() {
    std::cout << "Hello test template\n";
+
+   TBaPiBoard bi;
+   ASS(BaPiGetBoardInfo(&bi));
+   ASS(bi.boardModel != eBaPiModelUnknown);
 }
 
 
