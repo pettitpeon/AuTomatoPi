@@ -24,6 +24,7 @@
  */
 #include "BaBool.h"
 #include "BaCore.h"
+#include "BaPi.h"
 
 /// Serial device path
 #define BACOM_SERIALDEV "/dev/ttyAMA0"
@@ -117,7 +118,7 @@ const char* BaCom1WRdAsync(
  *  synchronous read. It takes about 1s. For soft real-time applications,
  *  the asynchronous call is suggested. The @c serNo must have the form:@n
  *  XX-XXXXXXXXXXXX [devFam]-[devID]
- *  @return Temperature in °C on success, otherwise -300
+ *  @return Temperature in ï¿½C on success, otherwise -300
  */
 float BaCom1WGetTemp(
       const char* serNo, /**< [in] Optional serial number of the sensor eg:

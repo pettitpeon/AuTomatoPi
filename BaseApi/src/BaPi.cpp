@@ -26,6 +26,7 @@
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
+#define CPUINFO_ "/proc/cpuinfo"
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -38,7 +39,7 @@ typedef struct TBoard_ {
    TBoard_() : hardware(""), revision(""), serial(""), init(false) {};
 } TBoard_;
 
-static TBoard_ sPiBoardInternal;
+static TBoard_ sPiBrdInt;
 static TBaPiBoard sPiBoard = {0};
 
 /*------------------------------------------------------------------------------
@@ -60,56 +61,68 @@ TBaBoolRC BaPiGetBoardInfo(TBaPiBoard *pBoardInf) {
       return eBaBoolRC_Error;
    }
 
-   if (sPiBoardInternal.init) {
+   if (sPiBrdInt.init) {
       *pBoardInf = sPiBoard;
       return eBaBoolRC_Success;
    }
 
-   iS.open("/proc/cpuinfo");
+   // Open the CPU info file from proc
+   iS.open(CPUINFO_);
    if(iS.fail()) {
       return eBaBoolRC_Error;
    }
 
+   // Get hardware, revision and serial from the cpuinfo file
    while (std::getline(iS, line)) {
       puts(line.c_str());
 
       pos = line.find("Hardware\t:");
       if (pos != std::string::npos) {
-         sPiBoardInternal.hardware = line.substr(pos + 11);
+         sPiBrdInt.hardware = line.substr(pos + 11);
          continue;
       }
 
       pos = line.find("Revision\t:");
       if (pos != std::string::npos) {
-         sPiBoardInternal.revision = line.substr(pos + 11);
+         sPiBrdInt.revision = line.substr(pos + 11);
          continue;
       }
 
       pos = line.find("Serial\t\t:");
       if (pos != std::string::npos) {
-         sPiBoardInternal.serial = line.substr(pos + 9);
+         sPiBrdInt.serial = line.substr(pos + 9);
          continue;
       }
    }
 
    iS.close();
-   sPiBoardInternal.init = true;
+   sPiBrdInt.init = true;
 
-   sPiBoard.hardware   = sPiBoardInternal.hardware.c_str();
-   sPiBoard.revision   = sPiBoardInternal.revision.c_str();
-   sPiBoard.serial     = sPiBoardInternal.serial.c_str();
+   sPiBoard.hardware   = sPiBrdInt.hardware.c_str();
+   sPiBoard.revision   = sPiBrdInt.revision.c_str();
+   sPiBoard.serial     = sPiBrdInt.serial.c_str();
    sPiBoard.boardModel = getBoardModel();
 
    *pBoardInf = sPiBoard;
    return eBaBoolRC_Success;
 }
 
+//
+EBaPiModel BaPiGetBoardModel() {
+   TBaPiBoard bi;
+   bi.boardModel = eBaPiModelUnknown;
+
+   BaPiGetBoardInfo(&bi);
+   return bi.boardModel;
+}
+
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
+//
 LOCAL EBaPiModel getBoardModel() {
-   std::string rev = sPiBoardInternal.revision.length() > 6 ?
-         sPiBoardInternal.revision.substr(4) : sPiBoardInternal.revision;
+   std::string rev = sPiBrdInt.revision.length() > 6 ?
+         sPiBrdInt.revision.substr(4) : sPiBrdInt.revision;
    rev = "0x" + rev;
 
    switch (BaToNumber(rev, 0u)) {

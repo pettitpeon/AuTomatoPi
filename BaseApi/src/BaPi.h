@@ -63,6 +63,12 @@ extern "C" {
  */
 TBaBool BaPiGetBoardInfo(TBaPiBoard *pBoardInf);
 
+/******************************************************************************/
+/** Get the board model from the RPi
+ *  @return True if success, otherwise, false
+ */
+EBaPiModel BaPiGetBoardModel();
+
 //@}
 
 

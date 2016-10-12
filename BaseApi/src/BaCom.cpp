@@ -50,6 +50,12 @@
 
 #define W1TEMPFAM 28
 
+ // I2C definitions
+ #define I2C_SLAVE 0x0703
+ #define I2C_SMBUS 0x0720   /* SMBus-level access */
+ #define I2C_SMBUS_READ  1
+ #define I2C_SMBUS_WRITE 0
+
 // Serial descriptor
 typedef struct TSerialDesc {
    int fd;
@@ -116,6 +122,28 @@ static int         spiFds [2] ;
 
 //
 TBaComHdl BaComI2CInit() {
+   const char *dev ;
+
+   EBaPiModel mod = BaPiGetBoardModel();
+
+   dev = mod < eBaPiModel2 ? "/dev/i2c-0" : "/dev/i2c-1";
+
+   int fd ;
+   int devAddr = 0;
+
+   if ((fd = open (dev, O_RDWR)) < 0) {
+      //error
+      return 0;
+   }
+
+   if (ioctl (fd, I2C_SLAVE, devAddr) < 0) {
+      // error
+      return 0;
+   }
+
+   return fd ;
+
+//   return wiringPiI2CSetupInterface (device, devId) ;
    return 0;
 }
 
@@ -520,7 +548,7 @@ LOCAL inline float w1ReadTemp(const char *dvrStr, TBaBool *pError) {
       return ERRTEMP;
    }
 
-   // Extract the values. Temp in milli °C
+   // Extract the values. Temp in milli ï¿½C
    // 96 01 4b 46 7f ff 0c 10 a0 : crc=a0 YES
    // 96 01 4b 46 7f ff 0c 10 a0 t=25375
 
