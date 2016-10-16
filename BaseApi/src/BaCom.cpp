@@ -17,6 +17,7 @@
 #include <vector>
 #include <sstream>
 #include <map>
+#include <mutex>
 
 #ifdef __linux
 # include <sys/ioctl.h>
@@ -50,11 +51,27 @@
 
 #define W1TEMPFAM 28
 
+// I2C GPIOs
+#define I2CSDA  02
+#define I2CSCL  03
  // I2C definitions
- #define I2C_SLAVE 0x0703
- #define I2C_SMBUS 0x0720   /* SMBus-level access */
- #define I2C_SMBUS_READ  1
- #define I2C_SMBUS_WRITE 0
+#define I2C_SLAVE 0x0703
+#define I2C_SMBUS 0x0720   /* SMBus-level access */
+#define I2C_SMBUS_READ  1
+#define I2C_SMBUS_WRITE 0
+ // SMBus transaction types
+#define I2C_SMBUS_QUICK           0
+#define I2C_SMBUS_BYTE            1
+#define I2C_SMBUS_BYTE_DATA       2
+#define I2C_SMBUS_WORD_DATA       3
+#define I2C_SMBUS_PROC_CALL       4
+#define I2C_SMBUS_BLOCK_DATA      5
+#define I2C_SMBUS_I2C_BLOCK_BROKEN  6
+#define I2C_SMBUS_BLOCK_PROC_CALL   7     /* SMBus 2.0 */
+#define I2C_SMBUS_I2C_BLOCK_DATA    8
+ // SMBus messages
+#define I2C_SMBUS_BLOCK_MAX   32 /* As specified in SMBus standard */
+#define I2C_SMBUS_I2C_BLOCK_MAX  32 /* Not specified but we use same structure */
 
 // Serial descriptor
 typedef struct TSerialDesc {
@@ -93,6 +110,23 @@ typedef struct T1wDev {
 // A map of pointers to vectors of device pointers. Careful with mem mgmt.
 typedef std::map<uint16_t, std::vector<T1wDev*>* > T1WDevs;
 
+// I2C structures
+typedef struct i2c_smbus_ioctl_data TI2cData;
+
+typedef union i2c_smbus_data {
+  uint8_t  byte;
+  uint16_t word;
+  uint8_t  block[I2C_SMBUS_BLOCK_MAX + 2]; // block [0] is used for length + one more for PEC
+} UI2cData;
+
+// I2C descriptor
+typedef struct TI2cDesc {
+   int fd;
+   std::mutex mtx;
+   IBaGpio *pSDA = 0;
+   IBaGpio *pSCL = 0;
+   TI2cDesc() : fd(0), pSDA(0), pSCL(0) {}
+} TI2cDesc;
 
 LOCAL inline speed_t srBaud2Speed(EBaComBaud baud);
 
@@ -103,6 +137,7 @@ LOCAL inline void    w1RdAsyncRout(TBaCoreThreadArg *pArg);
 LOCAL inline uint8_t w1GetFamId(std::string serNo);
 LOCAL inline T1wDev* w1GetFirstFamDev(uint8_t famID);
 LOCAL inline T1wDev* w1GetDev(const char* serNo);
+LOCAL inline int i2cAccess(int fd, uint8_t rw, uint8_t cmd, int size, UI2cData *data);
 
 // GPIO for the 1w bus. default GPIO 4, pin 7
 static IBaGpio *sp1w = 0;
@@ -120,36 +155,167 @@ const static uint16_t    spiDelay = 0 ;
 static uint32_t    spiSpeeds [2] ;
 static int         spiFds [2] ;
 
+// I2C variables
+static TI2cDesc sI2cHdl;
+
 //
-TBaComHdl BaComI2CInit() {
-   const char *dev ;
+TBaBoolRC BaComI2CInit() {
+   if (sI2cHdl.fd) {
+      return eBaBoolRC_Success;
+   }
+
+   std::lock_guard<std::mutex> lck(sI2cHdl.mtx);
 
    EBaPiModel mod = BaPiGetBoardModel();
+   const char* dev = mod < eBaPiModel2 ? "/dev/i2c-0" : "/dev/i2c-1";
 
-   dev = mod < eBaPiModel2 ? "/dev/i2c-0" : "/dev/i2c-1";
-
-   int fd ;
-   int devAddr = 0;
-
-   if ((fd = open (dev, O_RDWR)) < 0) {
-      //error
-      return 0;
+   sI2cHdl.pSDA = IBaGpioCreate(I2CSDA);
+   if(!sI2cHdl.pSDA) {
+      return eBaBoolRC_Error;
    }
 
-   if (ioctl (fd, I2C_SLAVE, devAddr) < 0) {
-      // error
-      return 0;
+   sI2cHdl.pSCL = IBaGpioCreate(I2CSCL);
+   if(!sI2cHdl.pSCL) {
+      IBaGpioDelete(sI2cHdl.pSDA);
+      sI2cHdl.pSDA = 0;
+      return eBaBoolRC_Error;
    }
 
-   return fd ;
+   sI2cHdl.pSDA->SetAlt(0);
+   sI2cHdl.pSCL->SetAlt(0);
 
-//   return wiringPiI2CSetupInterface (device, devId) ;
-   return 0;
+   if ((sI2cHdl.fd = open(dev, O_RDWR)) < 0) {
+      WARN_("Unable to open I2C device: %s", strerror(errno));
+      sI2cHdl.fd = 0;
+      IBaGpioDelete(sI2cHdl.pSDA);
+      sI2cHdl.pSDA = 0;
+      IBaGpioDelete(sI2cHdl.pSCL);
+      sI2cHdl.pSCL = 0;
+      return eBaBoolRC_Error;
+   }
+
+   return eBaBoolRC_Success;
 }
 
 //
-TBaBoolRC BaComI2CExit(TBaComHdl hdl) {
-   return 0;
+TBaBoolRC BaComI2CSelectDev(uint16_t devAddr) {
+   if (!sI2cHdl.fd) {
+      return BaComI2CInit();
+   }
+
+   std::lock_guard<std::mutex> lck(sI2cHdl.mtx);
+   if (ioctl (sI2cHdl.fd, I2C_SLAVE, devAddr) < 0) {
+      WARN_("Unable to select I2C device(%x): %s", devAddr, strerror(errno));
+      return eBaBoolRC_Error;
+   }
+
+   return eBaBoolRC_Success;
+}
+
+//
+uint8_t BaComI2CRead8(TBaBool *pError) {
+   if (!sI2cHdl.fd) {
+      return 0;
+   }
+
+   UI2cData data;
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+
+      // todo: implement a msg with state here?
+      return 0;
+   }
+
+   return data.byte;
+}
+
+//
+uint16_t BaComI2CRead16(TBaBool *pError) {
+   if (!sI2cHdl.fd) {
+      return 0;
+   }
+
+   UI2cData data;
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   return data.word;
+}
+
+//
+uint8_t BaComI2CReadReg8(uint32_t reg, TBaBool *pError) {
+   if (!sI2cHdl.fd) {
+      return 0;
+   }
+
+   UI2cData data;
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   return data.byte;
+}
+
+//
+uint16_t BaComI2CReadReg16(uint32_t reg, TBaBool *pError) {
+   if (!sI2cHdl.fd) {
+      return 0;
+   }
+
+   UI2cData data;
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   return data.word;
+}
+
+//239 /* Returns the number of read bytes */
+//240 static inline __s32 i2c_smbus_read_block_data(int file, __u8 command,
+//241                                               __u8 *values)
+//242 {
+//243     union i2c_smbus_data data;
+//244     int i;
+//245     if (i2c_smbus_access(file,I2C_SMBUS_READ,command,
+//246                          I2C_SMBUS_BLOCK_DATA,&data))
+//247         return -1;
+//248     else {
+//249         for (i = 1; i <= data.block[0]; i++)
+//250             values[i-1] = data.block[i];
+//251         return data.block[0];
+//252     }
+//253 }
+//
+TBaBoolRC BaComI2CExit() {
+   if (!sI2cHdl.fd) {
+      return eBaBoolRC_Success;
+   }
+
+   std::lock_guard<std::mutex> lck(sI2cHdl.mtx);
+   if (close((int) sI2cHdl.fd) < 0) {
+      WARN_("Unable to close I2C device: %s", strerror(errno));
+      sI2cHdl.fd = 0;
+      return eBaBoolRC_Error;
+   }
+
+   sI2cHdl.fd = 0;
+   IBaGpioDelete(sI2cHdl.pSDA);
+   sI2cHdl.pSDA = 0;
+   IBaGpioDelete(sI2cHdl.pSCL);
+   sI2cHdl.pSCL = 0;
+   return eBaBoolRC_Success;
 }
 
 #ifdef __linux
@@ -705,6 +871,17 @@ LOCAL inline T1wDev* w1GetDev(const char* serNo) {
    }
 
    return 0;
+}
+
+//
+LOCAL inline int i2cAccess(int fd, uint8_t rw, uint8_t cmd, int size, UI2cData *data) {
+   TI2cData args;
+
+   args.read_write = rw ;
+   args.command    = cmd ;
+   args.size       = size ;
+   args.data       = data ;
+   return ioctl(fd, I2C_SMBUS, &args) ;
 }
 
 

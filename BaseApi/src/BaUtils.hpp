@@ -407,7 +407,6 @@ static inline std::string BaFileToString(std::ifstream* pIs, bool *pError) {
    }
 
    // Resize string to size
-   std::cout << "size" << size << std::endl;
    s.resize(size);
 
    // Rewind stream

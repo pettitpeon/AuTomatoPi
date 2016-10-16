@@ -71,13 +71,56 @@ typedef enum EBaComBaud {
 extern "C" {
 #endif
 
-// Stubs!
-TBaComHdl BaComI2CInit();
-TBaBoolRC BaComI2CExit(TBaComHdl hdl);
+/// @name I2C bus
+//@{
+
+/******************************************************************************/
+/** Initializes the resources, reserves GPIOs SDA (2), SCL (3). todo: ID_SC, ID_SD
+ *  @return Error of success
+ */
+TBaBoolRC BaComI2CInit();
+
+/******************************************************************************/
+/** Releases the resources
+ *  @return Error or success
+ */
+TBaBoolRC BaComI2CExit();
+
+/******************************************************************************/
+/** Select a device to work with and initializes the bus if not initialized
+ *  @return Error of success
+ */
+TBaBoolRC BaComI2CSelectDev(
+      uint16_t devAddr ///< [in] Device address. see todo
+      );
+
+/******************************************************************************/
+/** Simple read
+ *  @return Data
+ */
+uint8_t BaComI2CRead8(
+      TBaBool *pError ///< [out] Optional error flag
+      );
+uint16_t BaComI2CRead16(
+      TBaBool *pError ///< [out] Optional error flag
+      );
+
+/******************************************************************************/
+/** Read register
+ *  @return Data
+ */
+uint8_t BaComI2CReadReg8(
+      uint32_t reg, ///< [in] Register number
+      TBaBool *pError ///< [out] Optional error flag
+      );
+uint16_t BaComI2CReadReg16(
+      uint32_t reg, ///< [in] Register number
+      TBaBool *pError ///< [out] Optional error flag
+      );
+//@} i2c bus
 
 TBaComHdl BaComSPIInit();
 TBaBoolRC BaComSPIExit(TBaComHdl hdl);
-// end stubs!
 
 
 /// @name One Wire bus
