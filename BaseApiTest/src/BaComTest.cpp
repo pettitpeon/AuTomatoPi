@@ -87,6 +87,26 @@ void CBaComTest::init() {
 /* ****************************************************************************/
 /*  ...
  */
+void CBaComTest::I2c() {
+   TBaBool err = 0;
+   BaComI2CInit();
+   BaComI2CSelectDev(72);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(0, &err), err);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(1, &err), err);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(2, &err), err);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(3, &err), err);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(4, &err), err);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(5, &err), err);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(6, &err), err);
+   printf("0x%04x, e:%i\n", BaComI2CReadReg16(7, &err), err);
+//   printf("0x%04x, e:%i\n", BaComI2CReadReg8(8, &err), err);
+
+   BaComI2CExit();
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
 void CBaComTest::Bus1W() {
    TBaBool error1 = eBaBool_false;
    TBaBool error2 = eBaBool_false;

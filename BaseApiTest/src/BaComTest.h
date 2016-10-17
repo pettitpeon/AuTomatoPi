@@ -31,7 +31,8 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaComTest);
    CPPUNIT_TEST(init);
-   CPPUNIT_TEST(Bus1W);
+   CPPUNIT_TEST(I2c);
+//   CPPUNIT_TEST(Bus1W);
 //   CPPUNIT_TEST(Config);
 //   CPPUNIT_TEST(Serial);
    CPPUNIT_TEST(exit);
@@ -40,6 +41,7 @@ public:
 
 public:
    void init();
+   void I2c();
    void Bus1W();
    void Config();
    void Serial();

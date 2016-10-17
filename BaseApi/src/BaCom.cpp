@@ -34,11 +34,8 @@
 #include "BaGenMacros.h"
 #include "BaLogMacros.h"
 #include "BaUtils.hpp"
+#include "BaGpioPinout.h"
 
-#define BUS1W   04
-#define TXD0    14
-#define RXD0    15
-#define SER_ALT  0
 #define ERRTEMP -300
 #define FOREVER  500
 #define TAG "BaCom"
@@ -51,9 +48,7 @@
 
 #define W1TEMPFAM 28
 
-// I2C GPIOs
-#define I2CSDA  02
-#define I2CSCL  03
+
  // I2C definitions
 #define I2C_SLAVE 0x0703
 #define I2C_SMBUS 0x0720   /* SMBus-level access */
@@ -80,8 +75,8 @@ typedef struct TSerialDesc {
    IBaGpio *pRXD0;
 
    TSerialDesc() : fd(0), pTXD0(0), pRXD0(0) {
-      pTXD0 = IBaGpioCreate(TXD0);
-      pRXD0 = IBaGpioCreate(RXD0);
+      pTXD0 = IBaGpioCreate(SERTXD0);
+      pRXD0 = IBaGpioCreate(SERRXD0);
    }
    ~TSerialDesc() {
       IBaGpioDelete(pTXD0);
@@ -169,12 +164,12 @@ TBaBoolRC BaComI2CInit() {
    EBaPiModel mod = BaPiGetBoardModel();
    const char* dev = mod < eBaPiModel2 ? "/dev/i2c-0" : "/dev/i2c-1";
 
-   sI2cHdl.pSDA = IBaGpioCreate(I2CSDA);
+   sI2cHdl.pSDA = IBaGpioCreate(I2CSDA1);
    if(!sI2cHdl.pSDA) {
       return eBaBoolRC_Error;
    }
 
-   sI2cHdl.pSCL = IBaGpioCreate(I2CSCL);
+   sI2cHdl.pSCL = IBaGpioCreate(I2CSCL1);
    if(!sI2cHdl.pSCL) {
       IBaGpioDelete(sI2cHdl.pSDA);
       sI2cHdl.pSDA = 0;
@@ -218,8 +213,8 @@ uint8_t BaComI2CRead8(TBaBool *pError) {
       return 0;
    }
 
-   UI2cData data;
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data) < 0) {
+   UI2cData data = {0};
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_QUICK, &data) < 0) {
       if (pError) {
          *pError = eBaBool_true;
       }
@@ -237,7 +232,7 @@ uint16_t BaComI2CRead16(TBaBool *pError) {
       return 0;
    }
 
-   UI2cData data;
+   UI2cData data = {0};
    if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data) < 0) {
       if (pError) {
          *pError = eBaBool_true;
@@ -254,8 +249,8 @@ uint8_t BaComI2CReadReg8(uint32_t reg, TBaBool *pError) {
       return 0;
    }
 
-   UI2cData data;
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE, &data) < 0) {
+   UI2cData data = {0};
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA, &data) < 0) {
       if (pError) {
          *pError = eBaBool_true;
       }
@@ -271,8 +266,8 @@ uint16_t BaComI2CReadReg16(uint32_t reg, TBaBool *pError) {
       return 0;
    }
 
-   UI2cData data;
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE, &data) < 0) {
+   UI2cData data = {0};
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA, &data) < 0) {
       if (pError) {
          *pError = eBaBool_true;
       }
