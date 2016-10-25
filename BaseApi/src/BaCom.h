@@ -90,8 +90,12 @@ TBaBoolRC BaComI2CExit();
 /** Select a device to work with and initializes the bus if not initialized
  *  @return Error of success
  */
-TBaBoolRC BaComI2CSelectDev(
+int BaComI2CSelectDev(
       uint16_t devAddr ///< [in] Device address. see todo
+      );
+
+
+uint64_t BaComI2CFuncs(
       );
 
 /******************************************************************************/
@@ -117,6 +121,24 @@ uint16_t BaComI2CReadReg16(
       uint32_t reg, ///< [in] Register number
       TBaBool *pError ///< [out] Optional error flag
       );
+
+/******************************************************************************/
+/** Write register
+ *  @return Data
+ */
+TBaBoolRC BaComI2CWriteReg16(
+      uint32_t reg, ///< [in] Register number
+      uint16_t val, ///< [in] value to write
+      TBaBool *pError ///< [out] Optional error flag
+      );
+
+TBaBoolRC BaComI2CWriteRegBlock(
+      uint32_t reg, ///< [in] Register number
+      uint8_t  *pBuf, ///< [in] value to write
+      uint32_t size,
+      TBaBool *pError ///< [out] Optional error flag
+      );
+
 //@} i2c bus
 
 TBaComHdl BaComSPIInit();

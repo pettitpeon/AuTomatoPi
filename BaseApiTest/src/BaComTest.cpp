@@ -18,6 +18,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <iostream>
+#include <unistd.h>    // read/write usleep toDelete
+#include <byteswap.h>
 
 #include "BaComTest.h"
 #include "BaCom.h"
@@ -43,6 +45,8 @@
 #endif
 
 #define TEST1W true
+#define CONVREG 0
+#define CONFREG 1
 
 LOCAL void* rdDvr(const char* str, size_t n);
 
@@ -89,17 +93,53 @@ void CBaComTest::init() {
  */
 void CBaComTest::I2c() {
    TBaBool err = 0;
-   BaComI2CInit();
-   BaComI2CSelectDev(72);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(0, &err), err);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(1, &err), err);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(2, &err), err);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(3, &err), err);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(4, &err), err);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(5, &err), err);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(6, &err), err);
-   printf("0x%04x, e:%i\n", BaComI2CReadReg16(7, &err), err);
-//   printf("0x%04x, e:%i\n", BaComI2CReadReg8(8, &err), err);
+   ASS(BaComI2CInit());
+   int fd = BaComI2CSelectDev(72);
+
+   // todo: Test funcs
+   uint64_t funcs = BaComI2CFuncs();
+   uint16_t readReg = 0;
+   uint16_t confReg = 0;
+
+   // ADS1115: http://www.ti.com/lit/ds/symlink/ads1113.pdf
+   // Configuration register
+   //               7654 3210 5432 1098
+   // 0x83C0:       1000 0011 1100 0000: 33728
+   //  5 Data rate -^^^| |||| |||| ||||
+   //  4 Comp Mode ----+ |||| |||| ||||
+   //  3 Comp Pol -------+||| |||| ||||
+   //  2 Comp Lat --------+|| |||| ||||
+   //  0 Comp Q -----------++ |||| ||||
+   // 15 Op Status -----------+||| ||||
+   // 14 Mux ------------------+++ ||||
+   //  9 Gain ---------------------+++|
+   //  8 Op mode ---------------------+
+
+   // Continuous Mode
+   confReg = 0b1000001111000000;
+   BaComI2CWriteReg16(CONFREG, confReg, &err);
+   readReg = BaComI2CReadReg16(CONFREG, &err);
+   printf("0x%04X, e:%i\n", readReg, err);
+
+   BaCoreMSleep(5);
+   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   printf("%f V\n", 6.144*readReg/32767.0);
+   BaCoreMSleep(5);
+   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   printf("%f V\n", 6.144*readReg/32767.0);
+
+   // One Shot Mode
+   confReg = 0b1000001111000001;
+   BaComI2CWriteReg16(CONFREG, confReg, &err);
+   readReg = BaComI2CReadReg16(CONFREG, &err);
+   printf("0x%04X, e:%i\n", readReg, err);
+
+   BaCoreMSleep(5);
+   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   printf("%f V\n", 6.144*readReg/32767.0);
+   BaCoreMSleep(5);
+   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   printf("%f V\n", 6.144*readReg/32767.0);
 
    BaComI2CExit();
 }

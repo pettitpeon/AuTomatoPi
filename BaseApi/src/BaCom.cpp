@@ -18,10 +18,12 @@
 #include <sstream>
 #include <map>
 #include <mutex>
+#include <byteswap.h>
 
 #ifdef __linux
 # include <sys/ioctl.h>
 # include <linux/i2c-dev.h>
+# include <linux/i2c.h>
 # include <termios.h>
 # include <linux/spi/spidev.h>
 #elif __WIN32
@@ -50,23 +52,23 @@
 
 
  // I2C definitions
-#define I2C_SLAVE 0x0703
-#define I2C_SMBUS 0x0720   /* SMBus-level access */
-#define I2C_SMBUS_READ  1
-#define I2C_SMBUS_WRITE 0
- // SMBus transaction types
-#define I2C_SMBUS_QUICK           0
-#define I2C_SMBUS_BYTE            1
-#define I2C_SMBUS_BYTE_DATA       2
-#define I2C_SMBUS_WORD_DATA       3
-#define I2C_SMBUS_PROC_CALL       4
-#define I2C_SMBUS_BLOCK_DATA      5
-#define I2C_SMBUS_I2C_BLOCK_BROKEN  6
-#define I2C_SMBUS_BLOCK_PROC_CALL   7     /* SMBus 2.0 */
-#define I2C_SMBUS_I2C_BLOCK_DATA    8
- // SMBus messages
-#define I2C_SMBUS_BLOCK_MAX   32 /* As specified in SMBus standard */
-#define I2C_SMBUS_I2C_BLOCK_MAX  32 /* Not specified but we use same structure */
+//#define I2C_SLAVE 0x0703
+//#define I2C_SMBUS 0x0720   /* SMBus-level access */
+//#define I2C_SMBUS_READ  1
+//#define I2C_SMBUS_WRITE 0
+// // SMBus transaction types
+////#define I2C_SMBUS_QUICK           0
+//#define I2C_SMBUS_BYTE            1
+//#define I2C_SMBUS_BYTE_DATA       2
+//#define I2C_SMBUS_WORD_DATA       3
+//#define I2C_SMBUS_PROC_CALL       4
+//#define I2C_SMBUS_BLOCK_DATA      5
+//#define I2C_SMBUS_I2C_BLOCK_BROKEN  6
+//#define I2C_SMBUS_BLOCK_PROC_CALL   7     /* SMBus 2.0 */
+//#define I2C_SMBUS_I2C_BLOCK_DATA    8
+// // SMBus messages
+//#define I2C_SMBUS_BLOCK_MAX   32 /* As specified in SMBus standard */
+//#define I2C_SMBUS_I2C_BLOCK_MAX  32 /* Not specified but we use same structure */
 
 // Serial descriptor
 typedef struct TSerialDesc {
@@ -108,11 +110,13 @@ typedef std::map<uint16_t, std::vector<T1wDev*>* > T1WDevs;
 // I2C structures
 typedef struct i2c_smbus_ioctl_data TI2cData;
 
-typedef union i2c_smbus_data {
-  uint8_t  byte;
-  uint16_t word;
-  uint8_t  block[I2C_SMBUS_BLOCK_MAX + 2]; // block [0] is used for length + one more for PEC
-} UI2cData;
+typedef union i2c_smbus_data UI2cData;
+
+//typedef union i2c_smbus_data {
+//  uint8_t  byte;
+//  uint16_t word;
+//  uint8_t  block[I2C_SMBUS_BLOCK_MAX + 2]; // block [0] is used for length + one more for PEC
+//} UI2cData;
 
 // I2C descriptor
 typedef struct TI2cDesc {
@@ -132,7 +136,7 @@ LOCAL inline void    w1RdAsyncRout(TBaCoreThreadArg *pArg);
 LOCAL inline uint8_t w1GetFamId(std::string serNo);
 LOCAL inline T1wDev* w1GetFirstFamDev(uint8_t famID);
 LOCAL inline T1wDev* w1GetDev(const char* serNo);
-LOCAL inline int i2cAccess(int fd, uint8_t rw, uint8_t cmd, int size, UI2cData *data);
+LOCAL inline int i2cAccess(int fd, uint8_t rw, uint8_t cmd, int size, i2c_smbus_data *data);
 
 // GPIO for the 1w bus. default GPIO 4, pin 7
 static IBaGpio *sp1w = 0;
@@ -193,7 +197,7 @@ TBaBoolRC BaComI2CInit() {
 }
 
 //
-TBaBoolRC BaComI2CSelectDev(uint16_t devAddr) {
+int BaComI2CSelectDev(uint16_t devAddr) {
    if (!sI2cHdl.fd) {
       return BaComI2CInit();
    }
@@ -204,7 +208,21 @@ TBaBoolRC BaComI2CSelectDev(uint16_t devAddr) {
       return eBaBoolRC_Error;
    }
 
-   return eBaBoolRC_Success;
+   return sI2cHdl.fd;
+}
+
+uint64_t BaComI2CFuncs() {
+   if (!sI2cHdl.fd) {
+      return BaComI2CInit();
+   }
+
+   uint64_t funcs = 0;
+   if (ioctl (sI2cHdl.fd, I2C_FUNCS, &funcs) < 0) {
+      WARN_("Unable to check funcs I2C device: %s", strerror(errno));
+      return eBaBoolRC_Error;
+   }
+
+   return funcs;
 }
 
 //
@@ -276,6 +294,32 @@ uint16_t BaComI2CReadReg16(uint32_t reg, TBaBool *pError) {
 
    return data.word;
 }
+
+TBaBoolRC BaComI2CWriteReg16(uint32_t reg, uint16_t val, TBaBool *pError) {
+   UI2cData data = {0};
+   data.word = val;
+
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_WORD_DATA, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+   return 1;
+}
+
+//TBaBoolRC BaComI2CWriteRegBlock(uint32_t reg, uint8_t *pBuf, uint32_t size, TBaBool *pError) {
+//   UI2cData data = {0};
+//   data.byte = val;
+//
+//   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BLOCK_DATA, &data) < 0) {
+//      if (pError) {
+//         *pError = eBaBool_true;
+//      }
+//      return 0;
+//   }
+//   return 1;
+//}
 
 //239 /* Returns the number of read bytes */
 //240 static inline __s32 i2c_smbus_read_block_data(int file, __u8 command,
