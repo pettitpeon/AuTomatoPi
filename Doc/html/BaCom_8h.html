@@ -58,12 +58,14 @@
 
 <p>Communications API.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="BaRPi_8h_source.html">BaRPi.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="BaCore_8h_source.html">BaCore.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaCom.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCom_8h__incl.svg" width="179" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCom_8h__incl.svg" width="234" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </div>
 <p><a href="BaCom_8h_source.html">Go to the source code of this file.</a></p>
@@ -102,6 +104,39 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">I2C bus Management</div></td></tr>
+<tr class="memitem:a3464a36d770f73acc550282077141c80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a3464a36d770f73acc550282077141c80">BaComI2CInit</a> ()</td></tr>
+<tr class="memdesc:a3464a36d770f73acc550282077141c80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources, reserves GPIOs SDA (2), SCL (3).  <a href="#a3464a36d770f73acc550282077141c80">More...</a><br /></td></tr>
+<tr class="separator:a3464a36d770f73acc550282077141c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5478e26b371c55c89b9d91f6ed3d1b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#ae5478e26b371c55c89b9d91f6ed3d1b4">BaComI2CExit</a> ()</td></tr>
+<tr class="memdesc:ae5478e26b371c55c89b9d91f6ed3d1b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases the resources.  <a href="#ae5478e26b371c55c89b9d91f6ed3d1b4">More...</a><br /></td></tr>
+<tr class="separator:ae5478e26b371c55c89b9d91f6ed3d1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a75fa558afeb9f0bcde9acbb03bca1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a9a75fa558afeb9f0bcde9acbb03bca1c">BaComI2CSelectDev</a> (uint16_t devAddr)</td></tr>
+<tr class="memdesc:a9a75fa558afeb9f0bcde9acbb03bca1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select a device to work with and initializes the bus if not initialized.  <a href="#a9a75fa558afeb9f0bcde9acbb03bca1c">More...</a><br /></td></tr>
+<tr class="separator:a9a75fa558afeb9f0bcde9acbb03bca1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a376b66c93597284146ed488dc63495d7"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a376b66c93597284146ed488dc63495d7">BaComI2CFuncs</a> ()</td></tr>
+<tr class="memdesc:a376b66c93597284146ed488dc63495d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the functionality of the device as described in linux/i2c.h.  <a href="#a376b66c93597284146ed488dc63495d7">More...</a><br /></td></tr>
+<tr class="separator:a376b66c93597284146ed488dc63495d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">I2C bus Read</div></td></tr>
+<tr class="memitem:ad9092f258ac9af11ca5b6f4f2603978a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#ad9092f258ac9af11ca5b6f4f2603978a">BaComI2CRead8</a> (<a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *pError)</td></tr>
+<tr class="memdesc:ad9092f258ac9af11ca5b6f4f2603978a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple 8-bit read.  <a href="#ad9092f258ac9af11ca5b6f4f2603978a">More...</a><br /></td></tr>
+<tr class="separator:ad9092f258ac9af11ca5b6f4f2603978a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad68dc1207377371300d4a97fd5f86a8a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#ad68dc1207377371300d4a97fd5f86a8a">BaComI2CReadReg8</a> (uint32_t reg, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *pError)</td></tr>
+<tr class="memdesc:ad68dc1207377371300d4a97fd5f86a8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read 8-bit register.  <a href="#ad68dc1207377371300d4a97fd5f86a8a">More...</a><br /></td></tr>
+<tr class="separator:ad68dc1207377371300d4a97fd5f86a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f55665f43f303f6320e1fd2e3cea653"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a5f55665f43f303f6320e1fd2e3cea653">BaComI2CReadReg16</a> (uint32_t reg, <a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *pError)</td></tr>
+<tr class="memdesc:a5f55665f43f303f6320e1fd2e3cea653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read 16-bit register.  <a href="#a5f55665f43f303f6320e1fd2e3cea653">More...</a><br /></td></tr>
+<tr class="separator:a5f55665f43f303f6320e1fd2e3cea653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">I2C bus write</div></td></tr>
+<tr class="memitem:a7f608fffc8055e230d59c9a77baea034"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a7f608fffc8055e230d59c9a77baea034">BaComI2CWrite8</a> (uint8_t val)</td></tr>
+<tr class="memdesc:a7f608fffc8055e230d59c9a77baea034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple 8-bit Write.  <a href="#a7f608fffc8055e230d59c9a77baea034">More...</a><br /></td></tr>
+<tr class="separator:a7f608fffc8055e230d59c9a77baea034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17c24c471792cb9e94bd266a86b41bf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a17c24c471792cb9e94bd266a86b41bf8">BaComI2CWriteReg8</a> (uint32_t reg, uint8_t val)</td></tr>
+<tr class="memdesc:a17c24c471792cb9e94bd266a86b41bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write 8-bit register.  <a href="#a17c24c471792cb9e94bd266a86b41bf8">More...</a><br /></td></tr>
+<tr class="separator:a17c24c471792cb9e94bd266a86b41bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a803f2ca92c372c1826625120f1b8f0aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a803f2ca92c372c1826625120f1b8f0aa">BaComI2CWriteReg16</a> (uint32_t reg, uint16_t val)</td></tr>
+<tr class="memdesc:a803f2ca92c372c1826625120f1b8f0aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write 16-bit register.  <a href="#a803f2ca92c372c1826625120f1b8f0aa">More...</a><br /></td></tr>
+<tr class="separator:a803f2ca92c372c1826625120f1b8f0aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">One Wire bus</div></td></tr>
 <tr class="memitem:a36457e41594d45b408d50a9dd23866e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2">BaCom1WInit</a> ()</td></tr>
 <tr class="memdesc:a36457e41594d45b408d50a9dd23866e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the resources, reserves GPIO 4 and calls <a class="el" href="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706" title="Scans for devices and saves them internally. ">BaCom1WGetDevices()</a>  <a href="#a36457e41594d45b408d50a9dd23866e2">More...</a><br /></td></tr>
@@ -147,6 +182,279 @@ Functions</h2></td></tr>
 <li>One Wire Bus </li>
 </ul>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a3464a36d770f73acc550282077141c80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComI2CInit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes the resources, reserves GPIOs SDA (2), SCL (3). </p>
+<p>todo: ID_SC, ID_SD </p><dl class="section return"><dt>Returns</dt><dd>Error of success </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae5478e26b371c55c89b9d91f6ed3d1b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComI2CExit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Releases the resources. </p>
+<dl class="section return"><dt>Returns</dt><dd>Error or success </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9a75fa558afeb9f0bcde9acbb03bca1c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComI2CSelectDev </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>devAddr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Select a device to work with and initializes the bus if not initialized. </p>
+<dl class="section return"><dt>Returns</dt><dd>Error of success </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">devAddr</td><td>Device address. see todo </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a376b66c93597284146ed488dc63495d7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t BaComI2CFuncs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the functionality of the device as described in linux/i2c.h. </p>
+<dl class="section return"><dt>Returns</dt><dd>Mask of functions </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad9092f258ac9af11ca5b6f4f2603978a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t BaComI2CRead8 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *&#160;</td>
+          <td class="paramname"><em>pError</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Simple 8-bit read. </p>
+<dl class="section return"><dt>Returns</dt><dd>Data </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">pError</td><td>Optional error flag </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad68dc1207377371300d4a97fd5f86a8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t BaComI2CReadReg8 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *&#160;</td>
+          <td class="paramname"><em>pError</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read 8-bit register. </p>
+<dl class="section return"><dt>Returns</dt><dd>Data </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>Register number </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pError</td><td>Optional error flag </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5f55665f43f303f6320e1fd2e3cea653"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t BaComI2CReadReg16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="BaBool_8h.html#a5fe1eb8d6ba045ac2251a8f369c2e7b6">TBaBool</a> *&#160;</td>
+          <td class="paramname"><em>pError</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read 16-bit register. </p>
+<dl class="section return"><dt>Returns</dt><dd>Data </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>Register number </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pError</td><td>Optional error flag </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7f608fffc8055e230d59c9a77baea034"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComI2CWrite8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Simple 8-bit Write. </p>
+<dl class="section return"><dt>Returns</dt><dd>Error or success </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a17c24c471792cb9e94bd266a86b41bf8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComI2CWriteReg8 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write 8-bit register. </p>
+<dl class="section return"><dt>Returns</dt><dd>Error or success </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>Register number </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a803f2ca92c372c1826625120f1b8f0aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a> BaComI2CWriteReg16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write 16-bit register. </p>
+<dl class="section return"><dt>Returns</dt><dd>Error or success </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>Register number </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a36457e41594d45b408d50a9dd23866e2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -198,8 +506,6 @@ Functions</h2></td></tr>
 
 <p>Scans for devices and saves them internally. </p>
 <p>This is automatically called by <a class="el" href="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2" title="Initializes the resources, reserves GPIO 4 and calls BaCom1WGetDevices() ">BaCom1WInit()</a> </p><dl class="section return"><dt>Returns</dt><dd>The number of devices found </dd></dl>
-
-<p>Referenced by <a class="el" href="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2">BaCom1WInit()</a>.</p>
 
 </div>
 </div>
@@ -266,7 +572,7 @@ XX-XXXXXXXXXXXX [devFam]-[devID] </p><dl class="section return"><dt>Returns</dt>
 
 <p>Gets the temperature from the sensor with family "28". </p>
 <p>This is a slow synchronous read. It takes about 1s. For soft real-time applications, the asynchronous call is suggested. The <code>serNo</code> must have the form:<br />
-XX-XXXXXXXXXXXX [devFam]-[devID] </p><dl class="section return"><dt>Returns</dt><dd>Temperature in °C on success, otherwise -300 </dd></dl>
+XX-XXXXXXXXXXXX [devFam]-[devID] </p><dl class="section return"><dt>Returns</dt><dd>Temperature in ï¿½C on success, otherwise -300 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">serNo</td><td>Optional serial number of the sensor eg: "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used </td></tr>
@@ -452,7 +758,7 @@ XX-XXXXXXXXXXXX [devFam]-[devID] </p><dl class="section return"><dt>Returns</dt>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 27 2016 21:15:10 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

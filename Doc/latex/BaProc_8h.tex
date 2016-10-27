@@ -11,7 +11,7 @@ Include dependency graph for Ba\+Proc.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=206pt]{BaProc_8h__incl}
+\includegraphics[width=198pt]{BaProc_8h__incl}
 \end{center}
 \end{figure}
 \subsection*{Macros}
@@ -91,10 +91,6 @@ Get the short name of own process.
 \begin{DoxyReturn}{Returns}
 on success, the process name, otherwise, 0 
 \end{DoxyReturn}
-
-
-Referenced by Ba\+Proc\+Write\+Ctrl\+Task\+Pid\+File(), and Ba\+Proc\+Write\+Own\+Pid\+File().
-
 \hypertarget{BaProc_8h_a73fc3532099b1f6d8ec26a69d065bca7}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Get\+Own\+Full\+Name@{Ba\+Proc\+Get\+Own\+Full\+Name}}
 \index{Ba\+Proc\+Get\+Own\+Full\+Name@{Ba\+Proc\+Get\+Own\+Full\+Name}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Get\+Own\+Full\+Name()}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Proc\+Get\+Own\+Full\+Name (
@@ -109,10 +105,6 @@ Get the full name of own process.
 \begin{DoxyReturn}{Returns}
 on success, the process name, otherwise, 0 
 \end{DoxyReturn}
-
-
-Referenced by Ba\+Proc\+Get\+Own\+Short\+Name().
-
 \hypertarget{BaProc_8h_a73d2aefbd3859030073bc2bbab6de07f}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Get\+P\+I\+D\+Name@{Ba\+Proc\+Get\+P\+I\+D\+Name}}
 \index{Ba\+Proc\+Get\+P\+I\+D\+Name@{Ba\+Proc\+Get\+P\+I\+D\+Name}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Get\+P\+I\+D\+Name(pid\+\_\+t pid, char buf[B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N])}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Proc\+Get\+P\+I\+D\+Name (
@@ -149,10 +141,6 @@ Write/overwrite the Control Task P\+I\+D file which is a special P\+I\+D file.
 This function is meant to be called from within the forked control task. \begin{DoxyReturn}{Returns}
 Success or error 
 \end{DoxyReturn}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
 \hypertarget{BaProc_8h_a524fd9c92965cdab16be46d9b8551f1c}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File}}
 \index{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File(char buf[B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N])}]{\setlength{\rightskip}{0pt plus 5cm}pid\+\_\+t Ba\+Proc\+Read\+Ctrl\+Task\+Pid\+File (
@@ -172,10 +160,6 @@ The P\+I\+D on success or 0 on error
 \mbox{\tt out}  & {\em buf} & Optional buffer to read the name of the binary \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Stop\+Ctrl\+Task(), and Ba\+Proc\+Pid\+File\+Is\+Running().
-
 \hypertarget{BaProc_8h_a236a46d6e33d23942605b54b9b4c1a21}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File}}
 \index{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File@{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Proc\+Del\+Ctrl\+Task\+Pid\+File (
@@ -190,10 +174,6 @@ Deletes the Control Task P\+I\+D file.
 \begin{DoxyReturn}{Returns}
 Success or error 
 \end{DoxyReturn}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
 \hypertarget{BaProc_8h_a482d93d161a58d213b2e0afb47adde14}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Write\+Own\+Pid\+File@{Ba\+Proc\+Write\+Own\+Pid\+File}}
 \index{Ba\+Proc\+Write\+Own\+Pid\+File@{Ba\+Proc\+Write\+Own\+Pid\+File}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Write\+Own\+Pid\+File()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Proc\+Write\+Own\+Pid\+File (
@@ -230,10 +210,6 @@ on success, the P\+I\+D, otherwise, 0
 \mbox{\tt in}  & {\em internal} & Flag to signal that the program was created with this A\+P\+I \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Proc\+Pid\+File\+Is\+Running().
-
 \hypertarget{BaProc_8h_a013102082e8b0f1c7148c1642194af6d}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Del\+Pid\+File@{Ba\+Proc\+Del\+Pid\+File}}
 \index{Ba\+Proc\+Del\+Pid\+File@{Ba\+Proc\+Del\+Pid\+File}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Del\+Pid\+File(const char $\ast$prog\+Name, T\+Ba\+Bool internal)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Proc\+Del\+Pid\+File (
@@ -278,10 +254,6 @@ true or false
 \mbox{\tt in}  & {\em internal} & Flag to signal that the program was created with this A\+P\+I \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
 \hypertarget{BaProc_8h_abcb0de82a78484519583fff8d18b7b50}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Set\+Own\+Prio@{Ba\+Proc\+Set\+Own\+Prio}}
 \index{Ba\+Proc\+Set\+Own\+Prio@{Ba\+Proc\+Set\+Own\+Prio}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Set\+Own\+Prio(\+E\+Ba\+Core\+Prio prio)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Proc\+Set\+Own\+Prio (
@@ -301,10 +273,6 @@ Error or success
 \mbox{\tt in}  & {\em prio} & New priority \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
 \hypertarget{BaProc_8h_a98f2e5bacc720d9d3ce9a666a890de6b}{}\index{Ba\+Proc.\+h@{Ba\+Proc.\+h}!Ba\+Proc\+Get\+Own\+Prio@{Ba\+Proc\+Get\+Own\+Prio}}
 \index{Ba\+Proc\+Get\+Own\+Prio@{Ba\+Proc\+Get\+Own\+Prio}!Ba\+Proc.\+h@{Ba\+Proc.\+h}}
 \subsubsection[{Ba\+Proc\+Get\+Own\+Prio()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf E\+Ba\+Core\+Prio} Ba\+Proc\+Get\+Own\+Prio (

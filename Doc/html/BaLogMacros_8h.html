@@ -62,13 +62,115 @@ Include dependency graph for BaLogMacros.h:</div>
 </div>
 </div>
 <p><a href="BaLogMacros_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Log Macros</div></td></tr>
+<tr class="memitem:af8f8c4db8a1f6b3502d826cdd2e8de52"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLogMacros_8h.html#af8f8c4db8a1f6b3502d826cdd2e8de52">TRACE_</a>(fmt, ...)&#160;&#160;&#160;<a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b">BaApiLogF</a>(<a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02">eBaLogPrio_Trace</a>, TAG, fmt, ##__VA_ARGS__)</td></tr>
+<tr class="memdesc:af8f8c4db8a1f6b3502d826cdd2e8de52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log with the given priority analog to <code>printf()</code> family.  <a href="#af8f8c4db8a1f6b3502d826cdd2e8de52">More...</a><br /></td></tr>
+<tr class="separator:af8f8c4db8a1f6b3502d826cdd2e8de52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afad173763727543cf4e09b6fb98046d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLogMacros_8h.html#afad173763727543cf4e09b6fb98046d0">WARN_</a>(fmt, ...)&#160;&#160;&#160;<a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b">BaApiLogF</a>(<a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996">eBaLogPrio_Warning</a>, TAG, fmt, ##__VA_ARGS__)</td></tr>
+<tr class="memdesc:afad173763727543cf4e09b6fb98046d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log with the given priority analog to <code>printf()</code> family.  <a href="#afad173763727543cf4e09b6fb98046d0">More...</a><br /></td></tr>
+<tr class="separator:afad173763727543cf4e09b6fb98046d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6032afff6465e251362043298d374c8e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaLogMacros_8h.html#a6032afff6465e251362043298d374c8e">ERROR_</a>(fmt, ...)&#160;&#160;&#160;<a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b">BaApiLogF</a>(<a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f">eBaLogPrio_Error</a>, TAG, fmt, ##__VA_ARGS__)</td></tr>
+<tr class="memdesc:a6032afff6465e251362043298d374c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log with the given priority analog to <code>printf()</code> family.  <a href="#a6032afff6465e251362043298d374c8e">More...</a><br /></td></tr>
+<tr class="separator:a6032afff6465e251362043298d374c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This header defines macros for logging more easily. </p>
 <p>They expect that TAG is previously defined </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="af8f8c4db8a1f6b3502d826cdd2e8de52"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b">BaApiLogF</a>(<a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916a5109ed3aaf795c26ad4a42c30b658a02">eBaLogPrio_Trace</a>, TAG, fmt, ##__VA_ARGS__)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log with the given priority analog to <code>printf()</code> family. </p>
+<p>This assumes that TAG is defined. see <code><a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b" title="Logging function that uses the the logger initialized with BaApiInitLogger() or BaApiInitLoggerDef() ...">BaApiLogF()</a></code> </p>
+
+</div>
+</div>
+<a class="anchor" id="afad173763727543cf4e09b6fb98046d0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WARN_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b">BaApiLogF</a>(<a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916af0ab8313b1b5d47e5a9e2c405a7e1996">eBaLogPrio_Warning</a>, TAG, fmt, ##__VA_ARGS__)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log with the given priority analog to <code>printf()</code> family. </p>
+<p>This assumes that TAG is defined. see <code><a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b" title="Logging function that uses the the logger initialized with BaApiInitLogger() or BaApiInitLoggerDef() ...">BaApiLogF()</a></code> </p>
+
+</div>
+</div>
+<a class="anchor" id="a6032afff6465e251362043298d374c8e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ERROR_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b">BaApiLogF</a>(<a class="el" href="BaLog_8h.html#ab14f00a81932b8b62d2e8c4a2d7e3916affcbdec070a745bc0b4a7ecd7bd2884f">eBaLogPrio_Error</a>, TAG, fmt, ##__VA_ARGS__)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log with the given priority analog to <code>printf()</code> family. </p>
+<p>This assumes that TAG is defined. see <code><a class="el" href="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b" title="Logging function that uses the the logger initialized with BaApiInitLogger() or BaApiInitLoggerDef() ...">BaApiLogF()</a></code> </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 27 2016 21:15:10 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

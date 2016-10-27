@@ -5,13 +5,15 @@
 Communications A\+P\+I.  
 
 
+{\ttfamily \#include $<$Ba\+R\+Pi.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Ba\+Core.\+h\char`\"{}}\\*
-Include dependency graph for Ba\+Com.\+h\+:\nopagebreak
+Include dependency graph for Ba\+Com.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=206pt]{BaCom_8h__incl}
+\includegraphics[width=247pt]{BaCom_8h__incl}
 \end{center}
 \end{figure}
 \subsection*{Macros}
@@ -42,6 +44,38 @@ Include dependency graph for Ba\+Com.\+h\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Baud enumeration. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
+\begin{Indent}{\bf I2\+C bus Management}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a3464a36d770f73acc550282077141c80}{Ba\+Com\+I2\+C\+Init} ()
+\begin{DoxyCompactList}\small\item\em Initializes the resources, reserves G\+P\+I\+Os S\+D\+A (2), S\+C\+L (3). \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_ae5478e26b371c55c89b9d91f6ed3d1b4}{Ba\+Com\+I2\+C\+Exit} ()
+\begin{DoxyCompactList}\small\item\em Releases the resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a9a75fa558afeb9f0bcde9acbb03bca1c}{Ba\+Com\+I2\+C\+Select\+Dev} (uint16\+\_\+t dev\+Addr)
+\begin{DoxyCompactList}\small\item\em Select a device to work with and initializes the bus if not initialized. \end{DoxyCompactList}\item 
+uint64\+\_\+t \hyperlink{BaCom_8h_a376b66c93597284146ed488dc63495d7}{Ba\+Com\+I2\+C\+Funcs} ()
+\begin{DoxyCompactList}\small\item\em Gets the functionality of the device as described in linux/i2c.\+h. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf I2\+C bus Read}\par
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{BaCom_8h_ad9092f258ac9af11ca5b6f4f2603978a}{Ba\+Com\+I2\+C\+Read8} (\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Simple 8-\/bit read. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{BaCom_8h_ad68dc1207377371300d4a97fd5f86a8a}{Ba\+Com\+I2\+C\+Read\+Reg8} (uint32\+\_\+t reg, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Read 8-\/bit register. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{BaCom_8h_a5f55665f43f303f6320e1fd2e3cea653}{Ba\+Com\+I2\+C\+Read\+Reg16} (uint32\+\_\+t reg, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Read 16-\/bit register. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf I2\+C bus write}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a7f608fffc8055e230d59c9a77baea034}{Ba\+Com\+I2\+C\+Write8} (uint8\+\_\+t val)
+\begin{DoxyCompactList}\small\item\em Simple 8-\/bit Write. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a17c24c471792cb9e94bd266a86b41bf8}{Ba\+Com\+I2\+C\+Write\+Reg8} (uint32\+\_\+t reg, uint8\+\_\+t val)
+\begin{DoxyCompactList}\small\item\em Write 8-\/bit register. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCom_8h_a803f2ca92c372c1826625120f1b8f0aa}{Ba\+Com\+I2\+C\+Write\+Reg16} (uint32\+\_\+t reg, uint16\+\_\+t val)
+\begin{DoxyCompactList}\small\item\em Write 16-\/bit register. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
 \begin{Indent}{\bf One Wire bus}\par
 \begin{DoxyCompactItemize}
 \item 
@@ -86,6 +120,193 @@ Communications A\+P\+I.
 \end{DoxyItemize}
 
 \subsection{Function Documentation}
+\hypertarget{BaCom_8h_a3464a36d770f73acc550282077141c80}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Init@{Ba\+Com\+I2\+C\+Init}}
+\index{Ba\+Com\+I2\+C\+Init@{Ba\+Com\+I2\+C\+Init}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Init()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+I2\+C\+Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a3464a36d770f73acc550282077141c80}
+
+
+Initializes the resources, reserves G\+P\+I\+Os S\+D\+A (2), S\+C\+L (3). 
+
+todo\+: I\+D\+\_\+\+S\+C, I\+D\+\_\+\+S\+D \begin{DoxyReturn}{Returns}
+Error of success 
+\end{DoxyReturn}
+\hypertarget{BaCom_8h_ae5478e26b371c55c89b9d91f6ed3d1b4}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Exit@{Ba\+Com\+I2\+C\+Exit}}
+\index{Ba\+Com\+I2\+C\+Exit@{Ba\+Com\+I2\+C\+Exit}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Exit()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+I2\+C\+Exit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_ae5478e26b371c55c89b9d91f6ed3d1b4}
+
+
+Releases the resources. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\hypertarget{BaCom_8h_a9a75fa558afeb9f0bcde9acbb03bca1c}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Select\+Dev@{Ba\+Com\+I2\+C\+Select\+Dev}}
+\index{Ba\+Com\+I2\+C\+Select\+Dev@{Ba\+Com\+I2\+C\+Select\+Dev}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Select\+Dev(uint16\+\_\+t dev\+Addr)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+I2\+C\+Select\+Dev (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{dev\+Addr}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a9a75fa558afeb9f0bcde9acbb03bca1c}
+
+
+Select a device to work with and initializes the bus if not initialized. 
+
+\begin{DoxyReturn}{Returns}
+Error of success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em dev\+Addr} & Device address. see todo \\
+\hline
+\end{DoxyParams}
+\hypertarget{BaCom_8h_a376b66c93597284146ed488dc63495d7}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Funcs@{Ba\+Com\+I2\+C\+Funcs}}
+\index{Ba\+Com\+I2\+C\+Funcs@{Ba\+Com\+I2\+C\+Funcs}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Funcs()}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t Ba\+Com\+I2\+C\+Funcs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a376b66c93597284146ed488dc63495d7}
+
+
+Gets the functionality of the device as described in linux/i2c.\+h. 
+
+\begin{DoxyReturn}{Returns}
+Mask of functions 
+\end{DoxyReturn}
+\hypertarget{BaCom_8h_ad9092f258ac9af11ca5b6f4f2603978a}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Read8@{Ba\+Com\+I2\+C\+Read8}}
+\index{Ba\+Com\+I2\+C\+Read8@{Ba\+Com\+I2\+C\+Read8}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Read8(\+T\+Ba\+Bool $\ast$p\+Error)}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Ba\+Com\+I2\+C\+Read8 (
+\begin{DoxyParamCaption}
+\item[{{\bf T\+Ba\+Bool} $\ast$}]{p\+Error}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_ad9092f258ac9af11ca5b6f4f2603978a}
+
+
+Simple 8-\/bit read. 
+
+\begin{DoxyReturn}{Returns}
+Data 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag \\
+\hline
+\end{DoxyParams}
+\hypertarget{BaCom_8h_ad68dc1207377371300d4a97fd5f86a8a}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Read\+Reg8@{Ba\+Com\+I2\+C\+Read\+Reg8}}
+\index{Ba\+Com\+I2\+C\+Read\+Reg8@{Ba\+Com\+I2\+C\+Read\+Reg8}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Read\+Reg8(uint32\+\_\+t reg, T\+Ba\+Bool $\ast$p\+Error)}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Ba\+Com\+I2\+C\+Read\+Reg8 (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{reg, }
+\item[{{\bf T\+Ba\+Bool} $\ast$}]{p\+Error}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_ad68dc1207377371300d4a97fd5f86a8a}
+
+
+Read 8-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Data 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag \\
+\hline
+\end{DoxyParams}
+\hypertarget{BaCom_8h_a5f55665f43f303f6320e1fd2e3cea653}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Read\+Reg16@{Ba\+Com\+I2\+C\+Read\+Reg16}}
+\index{Ba\+Com\+I2\+C\+Read\+Reg16@{Ba\+Com\+I2\+C\+Read\+Reg16}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Read\+Reg16(uint32\+\_\+t reg, T\+Ba\+Bool $\ast$p\+Error)}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t Ba\+Com\+I2\+C\+Read\+Reg16 (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{reg, }
+\item[{{\bf T\+Ba\+Bool} $\ast$}]{p\+Error}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a5f55665f43f303f6320e1fd2e3cea653}
+
+
+Read 16-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Data 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag \\
+\hline
+\end{DoxyParams}
+\hypertarget{BaCom_8h_a7f608fffc8055e230d59c9a77baea034}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Write8@{Ba\+Com\+I2\+C\+Write8}}
+\index{Ba\+Com\+I2\+C\+Write8@{Ba\+Com\+I2\+C\+Write8}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Write8(uint8\+\_\+t val)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+I2\+C\+Write8 (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{val}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a7f608fffc8055e230d59c9a77baea034}
+
+
+Simple 8-\/bit Write. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em val} & value to write \\
+\hline
+\end{DoxyParams}
+\hypertarget{BaCom_8h_a17c24c471792cb9e94bd266a86b41bf8}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Write\+Reg8@{Ba\+Com\+I2\+C\+Write\+Reg8}}
+\index{Ba\+Com\+I2\+C\+Write\+Reg8@{Ba\+Com\+I2\+C\+Write\+Reg8}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Write\+Reg8(uint32\+\_\+t reg, uint8\+\_\+t val)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+I2\+C\+Write\+Reg8 (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{reg, }
+\item[{uint8\+\_\+t}]{val}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a17c24c471792cb9e94bd266a86b41bf8}
+
+
+Write 8-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt in}  & {\em val} & value to write \\
+\hline
+\end{DoxyParams}
+\hypertarget{BaCom_8h_a803f2ca92c372c1826625120f1b8f0aa}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com\+I2\+C\+Write\+Reg16@{Ba\+Com\+I2\+C\+Write\+Reg16}}
+\index{Ba\+Com\+I2\+C\+Write\+Reg16@{Ba\+Com\+I2\+C\+Write\+Reg16}!Ba\+Com.\+h@{Ba\+Com.\+h}}
+\subsubsection[{Ba\+Com\+I2\+C\+Write\+Reg16(uint32\+\_\+t reg, uint16\+\_\+t val)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com\+I2\+C\+Write\+Reg16 (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{reg, }
+\item[{uint16\+\_\+t}]{val}
+\end{DoxyParamCaption}
+)}\label{BaCom_8h_a803f2ca92c372c1826625120f1b8f0aa}
+
+
+Write 16-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt in}  & {\em val} & value to write \\
+\hline
+\end{DoxyParams}
 \hypertarget{BaCom_8h_a36457e41594d45b408d50a9dd23866e2}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com1\+W\+Init@{Ba\+Com1\+W\+Init}}
 \index{Ba\+Com1\+W\+Init@{Ba\+Com1\+W\+Init}!Ba\+Com.\+h@{Ba\+Com.\+h}}
 \subsubsection[{Ba\+Com1\+W\+Init()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Com1\+W\+Init (
@@ -128,10 +349,6 @@ Scans for devices and saves them internally.
 This is automatically called by \hyperlink{BaCom_8h_a36457e41594d45b408d50a9dd23866e2}{Ba\+Com1\+W\+Init()} \begin{DoxyReturn}{Returns}
 The number of devices found 
 \end{DoxyReturn}
-
-
-Referenced by Ba\+Com1\+W\+Init().
-
 \hypertarget{BaCom_8h_a624dc3c42afb27ed7ad9514ab4cc8485}{}\index{Ba\+Com.\+h@{Ba\+Com.\+h}!Ba\+Com1\+W\+Rd\+Async@{Ba\+Com1\+W\+Rd\+Async}}
 \index{Ba\+Com1\+W\+Rd\+Async@{Ba\+Com1\+W\+Rd\+Async}!Ba\+Com.\+h@{Ba\+Com.\+h}}
 \subsubsection[{Ba\+Com1\+W\+Rd\+Async(const char $\ast$ser\+No, T\+Ba\+Core\+Mon\+T\+Stamp\+Us $\ast$p\+Ts)}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Com1\+W\+Rd\+Async (
@@ -169,7 +386,7 @@ Gets the temperature from the sensor with family \char`\"{}28\char`\"{}.
 
 This is a slow synchronous read. It takes about 1s. For soft real-\/time applications, the asynchronous call is suggested. The {\ttfamily ser\+No} must have the form\+:~\newline
 X\+X-\/\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X \mbox{[}dev\+Fam\mbox{]}-\/\mbox{[}dev\+I\+D\mbox{]} \begin{DoxyReturn}{Returns}
-Temperature in °\+C on success, otherwise -\/300 
+Temperature in ï¿½\+C on success, otherwise -\/300 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}

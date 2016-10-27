@@ -5,13 +5,13 @@
 O\+S level A\+P\+I.  
 
 
+{\ttfamily \#include $<$time.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
-{\ttfamily \#include $<$unistd.\+h$>$}\\*
 Include dependency graph for Ba\+Core.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=206pt]{BaCore_8h__incl}
+\includegraphics[width=198pt]{BaCore_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:\nopagebreak
@@ -107,7 +107,7 @@ const char $\ast$ \hyperlink{BaCore_8h_a505f6901474517229290f1f9278f5a99}{Ba\+Co
 \item 
 \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} \hyperlink{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}{Ba\+Core\+Create\+Thread} (const char $\ast$name, \hyperlink{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}{T\+Ba\+Core\+Thread\+Fun} routine, \hyperlink{structTBaCoreThreadArg}{T\+Ba\+Core\+Thread\+Arg} $\ast$p\+Arg, \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} prio)
 \begin{DoxyCompactList}\small\item\em Thread factory. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a3e568df0bc78e0f639718932d9c1f229}{Ba\+Core\+Destroy\+Thread} (\hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, uint32\+\_\+t time\+Out\+Ms)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}{Ba\+Core\+Destroy\+Thread} (\hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, uint32\+\_\+t timeout\+Ms)
 \begin{DoxyCompactList}\small\item\em Thread destructor. \end{DoxyCompactList}\item 
 \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}{Ba\+Core\+Get\+Thread\+Info} (const \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info} $\ast$p\+Info)
 \begin{DoxyCompactList}\small\item\em Get the thread info. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -204,10 +204,6 @@ if s = 0 $\vert$$\vert$ ms = 0 $\vert$$\vert$ us = 0, there is no sleep if ns = 
 \mbox{\tt in}  & {\em us} & Sleep time in us \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task(), and Ba\+Gpio\+Set\+Clk\+H\+W\+P\+W\+M().
-
 \hypertarget{BaCore_8h_a3bdde8e7955f8575a7a7bf94609a8f0a}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+N\+Sleep@{Ba\+Core\+N\+Sleep}}
 \index{Ba\+Core\+N\+Sleep@{Ba\+Core\+N\+Sleep}!Ba\+Core.\+h@{Ba\+Core.\+h}}
 \subsubsection[{Ba\+Core\+N\+Sleep(int64\+\_\+t ns)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Core\+N\+Sleep (
@@ -290,10 +286,6 @@ Time in the defined unit
 \mbox{\tt in}  & {\em p\+Arg} & Function arguments \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Task().
-
 \hypertarget{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+T\+Stamp@{Ba\+Core\+Get\+T\+Stamp}}
 \index{Ba\+Core\+Get\+T\+Stamp@{Ba\+Core\+Get\+T\+Stamp}!Ba\+Core.\+h@{Ba\+Core.\+h}}
 \subsubsection[{Ba\+Core\+Get\+T\+Stamp(\+T\+Ba\+Core\+Time\+Stamp $\ast$p\+Stamp)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Core\+Get\+T\+Stamp (
@@ -360,36 +352,28 @@ Thread handle
 \mbox{\tt in}  & {\em prio} & Thread priority \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Start\+Ctrl\+Thread(), Ba\+Com1\+W\+Get\+Devices(), and Ba\+Gpio\+Start\+S\+W\+P\+W\+M().
-
-\hypertarget{BaCore_8h_a3e568df0bc78e0f639718932d9c1f229}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}}
+\hypertarget{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}}
 \index{Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Destroy\+Thread(\+T\+Ba\+Core\+Thread\+Hdl hdl, uint32\+\_\+t time\+Out\+Ms)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Destroy\+Thread (
+\subsubsection[{Ba\+Core\+Destroy\+Thread(\+T\+Ba\+Core\+Thread\+Hdl hdl, uint32\+\_\+t timeout\+Ms)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Destroy\+Thread (
 \begin{DoxyParamCaption}
 \item[{{\bf T\+Ba\+Core\+Thread\+Hdl}}]{hdl, }
-\item[{uint32\+\_\+t}]{time\+Out\+Ms}
+\item[{uint32\+\_\+t}]{timeout\+Ms}
 \end{DoxyParamCaption}
-)}\label{BaCore_8h_a3e568df0bc78e0f639718932d9c1f229}
+)}\label{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}
 
 
 Thread destructor. 
 
 It signals the thread to end and waits a maximum of {\ttfamily time\+Out\+Ms} ms. If it timeouts, the thread detaches, stays alive, and releases the resources when the thread routine returns. \begin{DoxyReturn}{Returns}
-Error if bad handle, or success 
+Error if bad handle or timeout and {\ttfamily time\+Out\+Ms} != 0, otherwise, success 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em hdl} & Thread handle \\
 \hline
-\mbox{\tt in}  & {\em time\+Out\+Ms} & Timeout to wait in ms. \\
+\mbox{\tt in}  & {\em timeout\+Ms} & Timeout to wait in ms. If zero, no timeout and behaves like an asynchronous call \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Api\+Stop\+Ctrl\+Thread(), Ba\+Com1\+W\+Exit(), and Ba\+Gpio\+Stop\+S\+W\+P\+W\+M().
-
 \hypertarget{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+Thread\+Info@{Ba\+Core\+Get\+Thread\+Info}}
 \index{Ba\+Core\+Get\+Thread\+Info@{Ba\+Core\+Get\+Thread\+Info}!Ba\+Core.\+h@{Ba\+Core.\+h}}
 \subsubsection[{Ba\+Core\+Get\+Thread\+Info(const T\+Ba\+Core\+Thread\+Hdl hdl, T\+Ba\+Core\+Thread\+Info $\ast$p\+Info)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Get\+Thread\+Info (

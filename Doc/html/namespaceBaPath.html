@@ -66,6 +66,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a70f965f0c97d211e1f91dc2f16e05195"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195">ChangeFileExtension</a> (std::string path, std::string ext, char delimiter= '/')</td></tr>
 <tr class="memdesc:a70f965f0c97d211e1f91dc2f16e05195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the extension of a path.  <a href="#a70f965f0c97d211e1f91dc2f16e05195">More...</a><br /></td></tr>
 <tr class="separator:a70f965f0c97d211e1f91dc2f16e05195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4038d1b6c1fb3beb13b50b68f54c652d"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBaPath.html#a4038d1b6c1fb3beb13b50b68f54c652d">Concatenate</a> (std::string path1, std::string path2, char delimiter= '/')</td></tr>
+<tr class="memdesc:a4038d1b6c1fb3beb13b50b68f54c652d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenates <code>path1</code> with <code>path2</code> and adds or removes a delimiter when required.  <a href="#a4038d1b6c1fb3beb13b50b68f54c652d">More...</a><br /></td></tr>
+<tr class="separator:a4038d1b6c1fb3beb13b50b68f54c652d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Namespace to wrap all path functions. </p>
@@ -114,8 +117,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195">ChangeFileExtension()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a41d87786f4a43d64094624187ac90dca"></a>
@@ -161,8 +162,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Referenced by <a class="el" href="BaProc_8h.html#a73fc3532099b1f6d8ec26a69d065bca7">BaProcGetOwnFullName()</a>, <a class="el" href="BaProc_8h.html#afedb73be073c8b608dfff1bacbdbdc25">BaProcPidFileIsRunning()</a>, <a class="el" href="namespaceBaPath.html#a70f965f0c97d211e1f91dc2f16e05195">ChangeFileExtension()</a>, and <a class="el" href="namespaceBaPath.html#a42b3acac9c048e45a531c9dc4be319f1">GetFileExtension()</a>.</p>
 
 </div>
 </div>
@@ -266,14 +265,66 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaProc_8h.html#a013102082e8b0f1c7148c1642194af6d">BaProcDelPidFile()</a>, <a class="el" href="BaProc_8h.html#a96b3ee236e4731559f69eca02a5e3d88">BaProcReadPidFile()</a>, and <a class="el" href="BaProc_8h.html#a482d93d161a58d213b2e0afb47adde14">BaProcWriteOwnPidFile()</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a4038d1b6c1fb3beb13b50b68f54c652d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string BaPath::Concatenate </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>path1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>path2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>delimiter</em> = <code>'/'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Concatenates <code>path1</code> with <code>path2</code> and adds or removes a delimiter when required. </p>
+<p>E.g.:</p><ul>
+<li>"/foo/bar", "baz.txt" &ndash;&gt; "/foo/bar/baz.dat"</li>
+<li>"/foo/bar/", "/baz.txt" &ndash;&gt; "/foo/bar/baz.dat"</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>The path with the new extension </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">path1</td><td>Path part 1 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">path2</td><td>Path part 2 </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 7 2016 20:40:07 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 27 2016 21:15:11 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

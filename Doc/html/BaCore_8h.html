@@ -58,12 +58,12 @@
 
 <p>OS level API.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
-<code>#include &lt;unistd.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;time.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="BaBool_8h_source.html">BaBool.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BaCore.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__incl.svg" width="179" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="BaCore_8h__incl.svg" width="168" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -176,9 +176,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a91ad70ff751bb8afd38fe7fd3bc7e1e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaCore_8h.html#a2898da7dd1b0e998b8c64dca81dff404">TBaCoreThreadHdl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a91ad70ff751bb8afd38fe7fd3bc7e1e1">BaCoreCreateThread</a> (const char *name, <a class="el" href="BaCore_8h.html#ae50095c02ffddc39ec0df7f19e52c559">TBaCoreThreadFun</a> routine, <a class="el" href="structTBaCoreThreadArg.html">TBaCoreThreadArg</a> *pArg, <a class="el" href="BaCore_8h.html#a2021b3f630464ad65ce8f08ab10dc910">EBaCorePrio</a> prio)</td></tr>
 <tr class="memdesc:a91ad70ff751bb8afd38fe7fd3bc7e1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread factory.  <a href="#a91ad70ff751bb8afd38fe7fd3bc7e1e1">More...</a><br /></td></tr>
 <tr class="separator:a91ad70ff751bb8afd38fe7fd3bc7e1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e568df0bc78e0f639718932d9c1f229"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a3e568df0bc78e0f639718932d9c1f229">BaCoreDestroyThread</a> (<a class="el" href="BaCore_8h.html#a2898da7dd1b0e998b8c64dca81dff404">TBaCoreThreadHdl</a> hdl, uint32_t timeOutMs)</td></tr>
-<tr class="memdesc:a3e568df0bc78e0f639718932d9c1f229"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread destructor.  <a href="#a3e568df0bc78e0f639718932d9c1f229">More...</a><br /></td></tr>
-<tr class="separator:a3e568df0bc78e0f639718932d9c1f229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0135e688ca9ae4e687e4c774917e1067"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a0135e688ca9ae4e687e4c774917e1067">BaCoreDestroyThread</a> (<a class="el" href="BaCore_8h.html#a2898da7dd1b0e998b8c64dca81dff404">TBaCoreThreadHdl</a> hdl, uint32_t timeoutMs)</td></tr>
+<tr class="memdesc:a0135e688ca9ae4e687e4c774917e1067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread destructor.  <a href="#a0135e688ca9ae4e687e4c774917e1067">More...</a><br /></td></tr>
+<tr class="separator:a0135e688ca9ae4e687e4c774917e1067"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3063c6580150f08a015d37bcd9cd3bb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="BaBool_8h.html#a84d5a0de4729ca4c89f2479c605dbf3d">TBaBoolRC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaCore_8h.html#a3063c6580150f08a015d37bcd9cd3bb6">BaCoreGetThreadInfo</a> (const <a class="el" href="BaCore_8h.html#a2898da7dd1b0e998b8c64dca81dff404">TBaCoreThreadHdl</a> hdl, <a class="el" href="structTBaCoreThreadInfo.html">TBaCoreThreadInfo</a> *pInfo)</td></tr>
 <tr class="memdesc:a3063c6580150f08a015d37bcd9cd3bb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the thread info.  <a href="#a3063c6580150f08a015d37bcd9cd3bb6">More...</a><br /></td></tr>
 <tr class="separator:a3063c6580150f08a015d37bcd9cd3bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -304,8 +304,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>, and <a class="el" href="BaGpio_8h.html#a4212de0e0d110fc9c98bb0a03f91c720">BaGpioSetClkHWPWM()</a>.</p>
 
 </div>
 </div>
@@ -440,8 +438,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508">BaApiStartCtrlTask()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a5890e7e91b8c1895f6a474781c489eb8"></a>
@@ -552,11 +548,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="BaseApi_8h.html#a81ad517fcd3fbf12c5fc57273eb0ce94">BaApiStartCtrlThread()</a>, <a class="el" href="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706">BaCom1WGetDevices()</a>, and <a class="el" href="BaGpio_8h.html#aad89a86e462d6c700eb0f26a93d5c690">BaGpioStartSWPWM()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a3e568df0bc78e0f639718932d9c1f229"></a>
+<a class="anchor" id="a0135e688ca9ae4e687e4c774917e1067"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -570,7 +564,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>timeOutMs</em>&#160;</td>
+          <td class="paramname"><em>timeoutMs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -581,16 +575,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Thread destructor. </p>
-<p>It signals the thread to end and waits a maximum of <code>timeOutMs</code> ms. If it timeouts, the thread detaches, stays alive, and releases the resources when the thread routine returns. </p><dl class="section return"><dt>Returns</dt><dd>Error if bad handle, or success </dd></dl>
+<p>It signals the thread to end and waits a maximum of <code>timeOutMs</code> ms. If it timeouts, the thread detaches, stays alive, and releases the resources when the thread routine returns. </p><dl class="section return"><dt>Returns</dt><dd>Error if bad handle or timeout and <code>timeOutMs</code> != 0, otherwise, success </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hdl</td><td>Thread handle </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeOutMs</td><td>Timeout to wait in ms. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeoutMs</td><td>Timeout to wait in ms. If zero, no timeout and behaves like an asynchronous call </td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Referenced by <a class="el" href="BaseApi_8h.html#abf560df382cc0fa41c71a555a567befd">BaApiStopCtrlThread()</a>, <a class="el" href="BaCom_8h.html#a1db343e7949ded79fd54ed5c49dfbdfa">BaCom1WExit()</a>, and <a class="el" href="BaGpio_8h.html#a79b33d8a85223b99b6f6ad6d2fa6edc9">BaGpioStopSWPWM()</a>.</p>
 
 </div>
 </div>
@@ -633,7 +625,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 27 2016 21:15:10 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

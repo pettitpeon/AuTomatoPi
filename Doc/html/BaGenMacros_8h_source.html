@@ -140,12 +140,20 @@
 <div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="BaGenMacros_8h.html#a633384e5d5fa26e07db9e7d078b06117">  106</a></span>&#160;<span class="preprocessor"> #define FILE_NAME_ (strrchr(__FILE__, &#39;/&#39;) ? strrchr(__FILE__, &#39;/&#39;) + 1 : __FILE__)</span></div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* GENMACROS_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#ifndef TIME_FUN_</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="BaGenMacros_8h.html#a8170837187d85e164f0c7c58c7ce5e89">  112</a></span>&#160;<span class="preprocessor"> #define TIME_FUN_(fun) \</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">    auto start = std::chrono::steady_clock::now(); \</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">    fun; \</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">    std::chrono::duration&lt;double&gt; dur = (std::chrono::steady_clock::now() - start); \</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">    std::cout &lt;&lt; #fun &lt;&lt; &quot;: &quot; &lt;&lt; dur.count() &lt;&lt; &quot; s&quot; &lt;&lt; std::endl;</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* GENMACROS_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="BaGenMacros_8h_html_af94e4e21ed04253852b7d127965b5801"><div class="ttname"><a href="BaGenMacros_8h.html#af94e4e21ed04253852b7d127965b5801">SWAP</a></div><div class="ttdeci">void SWAP(T &amp;x, T &amp;y)</div><div class="ttdoc">Generic swap function. </div><div class="ttdef"><b>Definition:</b> BaGenMacros.h:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 27 2016 21:15:10 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

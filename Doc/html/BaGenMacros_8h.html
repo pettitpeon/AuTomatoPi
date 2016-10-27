@@ -84,7 +84,7 @@ Macros</h2></td></tr>
 <tr class="separator:a919dba5d5cb6ad3ce4df87973d24bcf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeccbc832685b82394b474605a03f9025"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeccbc832685b82394b474605a03f9025"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaGenMacros_8h.html#aeccbc832685b82394b474605a03f9025">ROUND_HALF</a>(X)</td></tr>
-<tr class="memdesc:aeccbc832685b82394b474605a03f9025"><td class="mdescLeft">&#160;</td><td class="mdescRight">Round to the nearest half. <br /></td></tr>
+<tr class="memdesc:aeccbc832685b82394b474605a03f9025"><td class="mdescLeft">&#160;</td><td class="mdescRight">Roundto the nearest half. <br /></td></tr>
 <tr class="separator:aeccbc832685b82394b474605a03f9025"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0746d479d8433b89404db6bd60f5449"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0746d479d8433b89404db6bd60f5449"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaGenMacros_8h.html#aa0746d479d8433b89404db6bd60f5449">INRANGE</a>(VAL,  <a class="el" href="BaGenMacros_8h.html#ad2f3678bf5eae3684fc497130b946eae">MIN</a>,  <a class="el" href="BaGenMacros_8h.html#aff9931d7524c88e07743af6535b20761">MAX</a>)&#160;&#160;&#160;((<a class="el" href="BaGenMacros_8h.html#ad2f3678bf5eae3684fc497130b946eae">MIN</a>) &lt;= (VAL) &amp;&amp; (VAL) &lt;= (<a class="el" href="BaGenMacros_8h.html#aff9931d7524c88e07743af6535b20761">MAX</a>))</td></tr>
@@ -106,6 +106,9 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaGenMacros_8h.html#a633384e5d5fa26e07db9e7d078b06117">FILE_NAME_</a>&#160;&#160;&#160;(strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)</td></tr>
 <tr class="memdesc:a633384e5d5fa26e07db9e7d078b06117"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the file name without the path. Eg: MyFile.cpp. Requires string.h. <br /></td></tr>
 <tr class="separator:a633384e5d5fa26e07db9e7d078b06117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8170837187d85e164f0c7c58c7ce5e89"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaGenMacros_8h.html#a8170837187d85e164f0c7c58c7ce5e89">TIME_FUN_</a>(fun)</td></tr>
+<tr class="memdesc:a8170837187d85e164f0c7c58c7ce5e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Times a function or code part and prints the time in seconds to console.  <a href="#a8170837187d85e164f0c7c58c7ce5e89">More...</a><br /></td></tr>
+<tr class="separator:a8170837187d85e164f0c7c58c7ce5e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Min and max limit macros</div></td></tr>
 <tr class="memitem:ad2f3678bf5eae3684fc497130b946eae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad2f3678bf5eae3684fc497130b946eae"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="BaGenMacros_8h.html#ad2f3678bf5eae3684fc497130b946eae">MIN</a>(X,  Y)&#160;&#160;&#160;((X) &lt; (Y) ? (X) : (Y))</td></tr>
@@ -131,10 +134,34 @@ template&lt;class T &gt; </td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>General Macros or generic templated functions. </p>
 <p>Do not include this header in another header file, only in implementation files, .c or .cpp. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a8170837187d85e164f0c7c58c7ce5e89"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TIME_FUN_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fun</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">auto</span> start = std::chrono::steady_clock::now(); \</div>
+<div class="line">    fun; \</div>
+<div class="line">    std::chrono::duration&lt;double&gt; dur = (std::chrono::steady_clock::now() - start); \</div>
+<div class="line">    std::cout &lt;&lt; #fun &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; dur.count() &lt;&lt; <span class="stringliteral">&quot; s&quot;</span> &lt;&lt; std::endl;</div>
+</div><!-- fragment -->
+<p>Times a function or code part and prints the time in seconds to console. </p>
+<p>Requires &lt;chrono&gt; </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 7 2016 20:40:06 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 27 2016 21:15:10 for BaseApi by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

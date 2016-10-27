@@ -1,0 +1,71 @@
+\hypertarget{classIBaSwOsci}{}\section{I\+Ba\+Sw\+Osci Class Reference}
+\label{classIBaSwOsci}\index{I\+Ba\+Sw\+Osci@{I\+Ba\+Sw\+Osci}}
+
+
+Software oscilloscope C++ interface.  
+
+
+
+
+{\ttfamily \#include $<$Ba\+Sw\+Osci.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classIBaSwOsci_ac04ce939f45bd7c9cc7270c9dcb3c02d}{Register} (void $\ast$p\+Var, \hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}{E\+Ba\+Sw\+Osci\+Type} type, const char $\ast$name, const char $\ast$desc)=0
+\begin{DoxyCompactList}\small\item\em Registers a variable to the logger so it can be sampled. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIBaSwOsci_a72219859525f1c1af136d1a8081bb1a7}{Sample} ()=0
+\begin{DoxyCompactList}\small\item\em Samples the registered variables to be written to a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Software oscilloscope C++ interface. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classIBaSwOsci_ac04ce939f45bd7c9cc7270c9dcb3c02d}{}\index{I\+Ba\+Sw\+Osci@{I\+Ba\+Sw\+Osci}!Register@{Register}}
+\index{Register@{Register}!I\+Ba\+Sw\+Osci@{I\+Ba\+Sw\+Osci}}
+\subsubsection[{Register(void $\ast$p\+Var, E\+Ba\+Sw\+Osci\+Type type, const char $\ast$name, const char $\ast$desc)=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Sw\+Osci\+::\+Register (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{p\+Var, }
+\item[{{\bf E\+Ba\+Sw\+Osci\+Type}}]{type, }
+\item[{const char $\ast$}]{name, }
+\item[{const char $\ast$}]{desc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaSwOsci_ac04ce939f45bd7c9cc7270c9dcb3c02d}
+
+
+Registers a variable to the logger so it can be sampled. 
+
+After the first {\ttfamily \hyperlink{classIBaSwOsci_a72219859525f1c1af136d1a8081bb1a7}{Sample()}} is called, registering is no longer possible \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Var} & Pointer to the variable \\
+\hline
+\mbox{\tt in}  & {\em type} & Type of the variable pointer \\
+\hline
+\mbox{\tt in}  & {\em name} & Variable name. Any commas in the name will be replaced \\
+\hline
+\mbox{\tt in}  & {\em desc} & Variable description \\
+\hline
+\end{DoxyParams}
+\hypertarget{classIBaSwOsci_a72219859525f1c1af136d1a8081bb1a7}{}\index{I\+Ba\+Sw\+Osci@{I\+Ba\+Sw\+Osci}!Sample@{Sample}}
+\index{Sample@{Sample}!I\+Ba\+Sw\+Osci@{I\+Ba\+Sw\+Osci}}
+\subsubsection[{Sample()=0}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool I\+Ba\+Sw\+Osci\+::\+Sample (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classIBaSwOsci_a72219859525f1c1af136d1a8081bb1a7}
+
+
+Samples the registered variables to be written to a file. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaSwOsci_8h}{Ba\+Sw\+Osci.\+h}\end{DoxyCompactItemize}

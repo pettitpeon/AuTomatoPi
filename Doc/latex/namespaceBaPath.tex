@@ -16,7 +16,9 @@ static std\+::string \hyperlink{namespaceBaPath_a41d87786f4a43d64094624187ac90dc
 static std\+::string \hyperlink{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}{Get\+File\+Extension} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
 \begin{DoxyCompactList}\small\item\em Gets the extension of a path. \end{DoxyCompactList}\item 
 static std\+::string \hyperlink{namespaceBaPath_a70f965f0c97d211e1f91dc2f16e05195}{Change\+File\+Extension} (std\+::string path, std\+::string ext, char delimiter= \textquotesingle{}/\textquotesingle{})
-\begin{DoxyCompactList}\small\item\em Changes the extension of a path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Changes the extension of a path. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{namespaceBaPath_a4038d1b6c1fb3beb13b50b68f54c652d}{Concatenate} (std\+::string path1, std\+::string path2, char delimiter= \textquotesingle{}/\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em Concatenates {\ttfamily path1} with {\ttfamily path2} and adds or removes a delimiter when required. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
@@ -49,10 +51,6 @@ The directory part of the path (without filename)
 \mbox{\tt in}  & {\em path} & Full path \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Change\+File\+Extension().
-
 \hypertarget{namespaceBaPath_a41d87786f4a43d64094624187ac90dca}{}\index{Ba\+Path@{Ba\+Path}!Get\+Filename@{Get\+Filename}}
 \index{Get\+Filename@{Get\+Filename}!Ba\+Path@{Ba\+Path}}
 \subsubsection[{Get\+Filename(std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Path\+::\+Get\+Filename (
@@ -78,10 +76,6 @@ The filename including the extension
 \mbox{\tt in}  & {\em path} & Full path \\
 \hline
 \end{DoxyParams}
-
-
-Referenced by Ba\+Proc\+Get\+Own\+Full\+Name(), Ba\+Proc\+Pid\+File\+Is\+Running(), Change\+File\+Extension(), and Get\+File\+Extension().
-
 \hypertarget{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}{}\index{Ba\+Path@{Ba\+Path}!Get\+File\+Extension@{Get\+File\+Extension}}
 \index{Get\+File\+Extension@{Get\+File\+Extension}!Ba\+Path@{Ba\+Path}}
 \subsubsection[{Get\+File\+Extension(std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Path\+::\+Get\+File\+Extension (
@@ -138,7 +132,32 @@ The path with the new extension
 \mbox{\tt in}  & {\em ext} & Extension to replace \\
 \hline
 \end{DoxyParams}
+\hypertarget{namespaceBaPath_a4038d1b6c1fb3beb13b50b68f54c652d}{}\index{Ba\+Path@{Ba\+Path}!Concatenate@{Concatenate}}
+\index{Concatenate@{Concatenate}!Ba\+Path@{Ba\+Path}}
+\subsubsection[{Concatenate(std\+::string path1, std\+::string path2, char delimiter= \textquotesingle{}/\textquotesingle{})}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Path\+::\+Concatenate (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{path1, }
+\item[{std\+::string}]{path2, }
+\item[{char}]{delimiter = {\ttfamily \textquotesingle{}/\textquotesingle{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{namespaceBaPath_a4038d1b6c1fb3beb13b50b68f54c652d}
 
 
-Referenced by Ba\+Proc\+Del\+Pid\+File(), Ba\+Proc\+Read\+Pid\+File(), and Ba\+Proc\+Write\+Own\+Pid\+File().
+Concatenates {\ttfamily path1} with {\ttfamily path2} and adds or removes a delimiter when required. 
 
+E.\+g.\+:
+\begin{DoxyItemize}
+\item \char`\"{}/foo/bar\char`\"{}, \char`\"{}baz.\+txt\char`\"{} --$>$ \char`\"{}/foo/bar/baz.\+dat\char`\"{}
+\item \char`\"{}/foo/bar/\char`\"{}, \char`\"{}/baz.\+txt\char`\"{} --$>$ \char`\"{}/foo/bar/baz.\+dat\char`\"{}
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+The path with the new extension 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em path1} & Path part 1 \\
+\hline
+\mbox{\tt in}  & {\em path2} & Path part 2 \\
+\hline
+\end{DoxyParams}

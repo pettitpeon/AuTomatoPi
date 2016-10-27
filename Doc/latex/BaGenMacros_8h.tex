@@ -25,7 +25,7 @@ General Macros or generic templated functions.
 \begin{DoxyCompactList}\small\item\em Float equality with a delta. Requires math.\+h. \end{DoxyCompactList}\item 
 \hypertarget{BaGenMacros_8h_aeccbc832685b82394b474605a03f9025}{}\#define \hyperlink{BaGenMacros_8h_aeccbc832685b82394b474605a03f9025}{R\+O\+U\+N\+D\+\_\+\+H\+A\+L\+F}(X)\label{BaGenMacros_8h_aeccbc832685b82394b474605a03f9025}
 
-\begin{DoxyCompactList}\small\item\em Round to the nearest half. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Roundto the nearest half. \end{DoxyCompactList}\item 
 \hypertarget{BaGenMacros_8h_aa0746d479d8433b89404db6bd60f5449}{}\#define \hyperlink{BaGenMacros_8h_aa0746d479d8433b89404db6bd60f5449}{I\+N\+R\+A\+N\+G\+E}(V\+A\+L,  \hyperlink{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}{M\+I\+N},  \hyperlink{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}{M\+A\+X})~((\hyperlink{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}{M\+I\+N}) $<$= (V\+A\+L) \&\& (V\+A\+L) $<$= (\hyperlink{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}{M\+A\+X}))\label{BaGenMacros_8h_aa0746d479d8433b89404db6bd60f5449}
 
 \begin{DoxyCompactList}\small\item\em Returns if min $<$= val $<$= max. \end{DoxyCompactList}\item 
@@ -40,7 +40,9 @@ General Macros or generic templated functions.
 \begin{DoxyCompactList}\small\item\em Set all fields of an array A\+R\+R of size N to 0. \end{DoxyCompactList}\item 
 \hypertarget{BaGenMacros_8h_a633384e5d5fa26e07db9e7d078b06117}{}\#define \hyperlink{BaGenMacros_8h_a633384e5d5fa26e07db9e7d078b06117}{F\+I\+L\+E\+\_\+\+N\+A\+M\+E\+\_\+}~(strrchr(\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+, \textquotesingle{}/\textquotesingle{}) ? strrchr(\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+, \textquotesingle{}/\textquotesingle{}) + 1 \+: \+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+)\label{BaGenMacros_8h_a633384e5d5fa26e07db9e7d078b06117}
 
-\begin{DoxyCompactList}\small\item\em Calculates the file name without the path. Eg\+: My\+File.\+cpp. Requires string.\+h. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Calculates the file name without the path. Eg\+: My\+File.\+cpp. Requires string.\+h. \end{DoxyCompactList}\item 
+\#define \hyperlink{BaGenMacros_8h_a8170837187d85e164f0c7c58c7ce5e89}{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}(fun)
+\begin{DoxyCompactList}\small\item\em Times a function or code part and prints the time in seconds to console. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \begin{Indent}{\bf Min and max limit macros}\par
 \begin{DoxyCompactItemize}
 \item 
@@ -66,3 +68,24 @@ General Macros or generic templated functions.
 General Macros or generic templated functions. 
 
 Do not include this header in another header file, only in implementation files, .c or .cpp. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{BaGenMacros_8h_a8170837187d85e164f0c7c58c7ce5e89}{}\index{Ba\+Gen\+Macros.\+h@{Ba\+Gen\+Macros.\+h}!T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+@{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}}
+\index{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+@{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}!Ba\+Gen\+Macros.\+h@{Ba\+Gen\+Macros.\+h}}
+\subsubsection[{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+(
+\begin{DoxyParamCaption}
+\item[{}]{fun}
+\end{DoxyParamCaption}
+)}\label{BaGenMacros_8h_a8170837187d85e164f0c7c58c7ce5e89}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{auto} start = std::chrono::steady\_clock::now(); \(\backslash\)
+    fun; \(\backslash\)
+    std::chrono::duration<double> dur = (std::chrono::steady\_clock::now() - start); \(\backslash\)
+    std::cout << #fun << \textcolor{stringliteral}{": "} << dur.count() << \textcolor{stringliteral}{" s"} << std::endl;
+\end{DoxyCode}
+
+
+Times a function or code part and prints the time in seconds to console. 
+
+Requires $<$chrono$>$ 
