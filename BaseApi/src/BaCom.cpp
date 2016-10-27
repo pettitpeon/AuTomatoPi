@@ -9,6 +9,8 @@
  */
 /*------------------------------------------------------------------------------
  */
+#ifndef __WIN32
+
 #include <unistd.h>
 #include <fcntl.h>
 #include <string>
@@ -18,7 +20,7 @@
 #include <sstream>
 #include <map>
 #include <mutex>
-#include <byteswap.h>
+
 
 #ifdef __linux
 # include <sys/ioctl.h>
@@ -197,146 +199,6 @@ TBaBoolRC BaComI2CInit() {
 }
 
 //
-int BaComI2CSelectDev(uint16_t devAddr) {
-   if (!sI2cHdl.fd) {
-      return BaComI2CInit();
-   }
-
-   std::lock_guard<std::mutex> lck(sI2cHdl.mtx);
-   if (ioctl (sI2cHdl.fd, I2C_SLAVE, devAddr) < 0) {
-      WARN_("Unable to select I2C device(%x): %s", devAddr, strerror(errno));
-      return eBaBoolRC_Error;
-   }
-
-   return sI2cHdl.fd;
-}
-
-uint64_t BaComI2CFuncs() {
-   if (!sI2cHdl.fd) {
-      return BaComI2CInit();
-   }
-
-   uint64_t funcs = 0;
-   if (ioctl (sI2cHdl.fd, I2C_FUNCS, &funcs) < 0) {
-      WARN_("Unable to check funcs I2C device: %s", strerror(errno));
-      return eBaBoolRC_Error;
-   }
-
-   return funcs;
-}
-
-//
-uint8_t BaComI2CRead8(TBaBool *pError) {
-   if (!sI2cHdl.fd) {
-      return 0;
-   }
-
-   UI2cData data = {0};
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_QUICK, &data) < 0) {
-      if (pError) {
-         *pError = eBaBool_true;
-      }
-
-      // todo: implement a msg with state here?
-      return 0;
-   }
-
-   return data.byte;
-}
-
-//
-uint16_t BaComI2CRead16(TBaBool *pError) {
-   if (!sI2cHdl.fd) {
-      return 0;
-   }
-
-   UI2cData data = {0};
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data) < 0) {
-      if (pError) {
-         *pError = eBaBool_true;
-      }
-      return 0;
-   }
-
-   return data.word;
-}
-
-//
-uint8_t BaComI2CReadReg8(uint32_t reg, TBaBool *pError) {
-   if (!sI2cHdl.fd) {
-      return 0;
-   }
-
-   UI2cData data = {0};
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA, &data) < 0) {
-      if (pError) {
-         *pError = eBaBool_true;
-      }
-      return 0;
-   }
-
-   return data.byte;
-}
-
-//
-uint16_t BaComI2CReadReg16(uint32_t reg, TBaBool *pError) {
-   if (!sI2cHdl.fd) {
-      return 0;
-   }
-
-   UI2cData data = {0};
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA, &data) < 0) {
-      if (pError) {
-         *pError = eBaBool_true;
-      }
-      return 0;
-   }
-
-   return data.word;
-}
-
-TBaBoolRC BaComI2CWriteReg16(uint32_t reg, uint16_t val, TBaBool *pError) {
-   UI2cData data = {0};
-   data.word = val;
-
-   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_WORD_DATA, &data) < 0) {
-      if (pError) {
-         *pError = eBaBool_true;
-      }
-      return 0;
-   }
-   return 1;
-}
-
-//TBaBoolRC BaComI2CWriteRegBlock(uint32_t reg, uint8_t *pBuf, uint32_t size, TBaBool *pError) {
-//   UI2cData data = {0};
-//   data.byte = val;
-//
-//   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BLOCK_DATA, &data) < 0) {
-//      if (pError) {
-//         *pError = eBaBool_true;
-//      }
-//      return 0;
-//   }
-//   return 1;
-//}
-
-//239 /* Returns the number of read bytes */
-//240 static inline __s32 i2c_smbus_read_block_data(int file, __u8 command,
-//241                                               __u8 *values)
-//242 {
-//243     union i2c_smbus_data data;
-//244     int i;
-//245     if (i2c_smbus_access(file,I2C_SMBUS_READ,command,
-//246                          I2C_SMBUS_BLOCK_DATA,&data))
-//247         return -1;
-//248     else {
-//249         for (i = 1; i <= data.block[0]; i++)
-//250             values[i-1] = data.block[i];
-//251         return data.block[0];
-//252     }
-//253 }
-//
 TBaBoolRC BaComI2CExit() {
    if (!sI2cHdl.fd) {
       return eBaBoolRC_Success;
@@ -354,6 +216,185 @@ TBaBoolRC BaComI2CExit() {
    sI2cHdl.pSDA = 0;
    IBaGpioDelete(sI2cHdl.pSCL);
    sI2cHdl.pSCL = 0;
+   return eBaBoolRC_Success;
+}
+
+TBaBoolRC BaComI2CSelectDev(uint16_t devAddr) {
+   if (!sI2cHdl.fd) {
+      if (!BaComI2CInit()) {
+         return eBaBoolRC_Error;
+      }
+   }
+
+   std::lock_guard<std::mutex> lck(sI2cHdl.mtx);
+   if (ioctl (sI2cHdl.fd, I2C_SLAVE, devAddr) < 0) {
+      WARN_("Unable to select I2C device(%x): %s", devAddr, strerror(errno));
+      return eBaBoolRC_Error;
+   }
+
+   return eBaBoolRC_Success;
+}
+
+//
+// linux/i2c.h
+// Bit Macro
+// 00: I2C_FUNC_SMBUS_WRITE_I2C_BLOCK
+// 01: I2C_FUNC_SMBUS_READ_I2C_BLOCK
+// 02: I2C_FUNC_SMBUS_WRITE_BLOCK_DATA
+// 03: I2C_FUNC_SMBUS_READ_BLOCK_DATA
+// 04: I2C_FUNC_SMBUS_PROC_CALL
+// 05: I2C_FUNC_SMBUS_WRITE_WORD_DATA
+// 06: I2C_FUNC_SMBUS_READ_WORD_DATA
+// 07: I2C_FUNC_SMBUS_WRITE_BYTE_DATA
+// 08: I2C_FUNC_SMBUS_READ_BYTE_DATA
+// 09: I2C_FUNC_SMBUS_WRITE_BYTE
+// 10: I2C_FUNC_SMBUS_READ_BYTE
+// 11: I2C_FUNC_SMBUS_QUICK
+// 12: I2C_FUNC_SMBUS_BLOCK_PROC_CALL
+// ...
+// 22: I2C_FUNC_SMBUS_BLOCK_PROC_CALL
+// 23: I2C_FUNC_NOSTART
+// 24: I2C_FUNC_SMBUS_PEC
+// 25: I2C_FUNC_PROTOCOL_MANGLING
+// 26: I2C_FUNC_10BIT_ADDR
+// 27: I2C_FUNC_I2C
+uint64_t BaComI2CFuncs() {
+   if (!sI2cHdl.fd) {
+      return BaComI2CInit();
+   }
+
+   uint64_t funcs = 0;
+   if (ioctl (sI2cHdl.fd, I2C_FUNCS, &funcs) < 0) {
+      WARN_("Unable to check funcs I2C device: %s", strerror(errno));
+      return eBaBoolRC_Error;
+   }
+
+   return funcs;
+}
+
+//
+uint8_t BaComI2CRead8(TBaBool *pError) {
+   if (!sI2cHdl.fd) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   UI2cData data = {0};
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+
+      // todo: implement a msg with state here?
+      return 0;
+   }
+
+   return data.byte;
+}
+
+//
+uint8_t BaComI2CReadReg8(uint32_t reg, TBaBool *pError) {
+   if (!sI2cHdl.fd) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   UI2cData data = {0};
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   return data.byte;
+}
+
+//
+uint16_t BaComI2CReadReg16(uint32_t reg, TBaBool *pError) {
+   if (!sI2cHdl.fd) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   UI2cData data = {0};
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA, &data) < 0) {
+      if (pError) {
+         *pError = eBaBool_true;
+      }
+      return 0;
+   }
+
+   return data.word;
+}
+
+//
+TBaBoolRC BaComI2CWrite8(uint8_t val) {
+   if (!sI2cHdl.fd) {
+      return eBaBoolRC_Error;
+   }
+
+   UI2cData data = {0};
+   data.word = val;
+
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, 0, I2C_SMBUS_BYTE, &data) < 0) {
+      return eBaBoolRC_Error;
+   }
+
+   return eBaBoolRC_Success;
+}
+
+//
+TBaBoolRC BaComI2CWriteReg8(uint32_t reg, uint8_t val) {
+   if (!sI2cHdl.fd) {
+      return eBaBoolRC_Error;
+   }
+
+   UI2cData data = {0};
+   data.word = val;
+
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BYTE_DATA, &data) < 0) {
+      return eBaBoolRC_Error;
+   }
+
+   return eBaBoolRC_Success;
+}
+
+//
+TBaBoolRC BaComI2CWriteReg16(uint32_t reg, uint16_t val) {
+   if (!sI2cHdl.fd) {
+      return eBaBoolRC_Error;
+   }
+
+   UI2cData data = {0};
+   data.word = val;
+
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_WORD_DATA, &data) < 0) {
+      return eBaBoolRC_Error;
+   }
+
+   return eBaBoolRC_Success;
+}
+
+//
+TBaBoolRC BaComI2CWriteRegBlock(uint32_t reg, uint8_t *pBuf, uint32_t size) {
+   if (!sI2cHdl.fd) {
+      return eBaBoolRC_Error;
+   }
+
+   UI2cData data = {0};
+   memcpy(data.block, pBuf, size);
+
+   if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BLOCK_DATA, &data) < 0) {
+      return eBaBoolRC_Error;
+   }
+
    return eBaBoolRC_Success;
 }
 
@@ -623,7 +664,6 @@ void *BaCom1WGetValue(const char* serNo, TBaCom1wReadFun cb, TBaBool *pError) {
    return cb(contents.c_str(), contents.size());
 }
 
-#ifdef __linux
 //
 TBaComSerHdl BaComSerInit(const char *dev, EBaComBaud baud) {
    TSerialDesc *p = new TSerialDesc();
@@ -742,7 +782,6 @@ LOCAL inline speed_t srBaud2Speed(EBaComBaud baud) {
    }
    return 0;
 }
-#endif
 
 //
 LOCAL inline float w1ReadTemp(const char *dvrStr, TBaBool *pError) {
@@ -923,4 +962,4 @@ LOCAL inline int i2cAccess(int fd, uint8_t rw, uint8_t cmd, int size, UI2cData *
    return ioctl(fd, I2C_SMBUS, &args) ;
 }
 
-
+#endif // __arm__

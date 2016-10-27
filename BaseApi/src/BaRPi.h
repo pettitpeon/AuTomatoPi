@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAPI_H_
-#define BAPI_H_
+#ifndef BARPI_H_
+#define BARPI_H_
 
 /*------------------------------------------------------------------------------
     Includes
@@ -65,7 +65,7 @@ TBaBool BaPiGetBoardInfo(TBaPiBoard *pBoardInf);
 
 /******************************************************************************/
 /** Get the board model from the RPi
- *  @return True if success, otherwise, false
+ *  @return The board model
  */
 EBaPiModel BaPiGetBoardModel();
 
@@ -76,4 +76,4 @@ EBaPiModel BaPiGetBoardModel();
 #ifdef __cplusplus
 }
 #endif
-#endif // BAPI_H_
+#endif // BARPI_H_

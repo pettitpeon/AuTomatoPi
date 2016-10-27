@@ -10,6 +10,7 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
+#include <BaRPi.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -18,7 +19,6 @@
 #include <sstream>
 #include <string>
 
-#include "BaPi.h"
 #include "BaUtils.hpp"
 #include "BaGenMacros.h"
 
@@ -74,8 +74,6 @@ TBaBoolRC BaPiGetBoardInfo(TBaPiBoard *pBoardInf) {
 
    // Get hardware, revision and serial from the cpuinfo file
    while (std::getline(iS, line)) {
-      puts(line.c_str());
-
       pos = line.find("Hardware\t:");
       if (pos != std::string::npos) {
          sPiBrdInt.hardware = line.substr(pos + 11);
@@ -119,7 +117,15 @@ EBaPiModel BaPiGetBoardModel() {
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
-//
+// http://elinux.org/RPi_HardwareHistory#Board_Revision_History
+// Raspberry Pi Model A: 0007, 0008, 0009
+// Raspberry Pi Model B (Rev 1.0, 256Mb): 0002, 0003
+// Raspberry Pi Model B (Rev 2.0, 256Mb): 0004, 0005, 0006
+// Raspberry Pi Model B (Rev 2.0, 512Mb): 000d, 000e, 000f
+// Raspberry Pi Model A+: 0012
+// Raspberry Pi Model B+: 0010, 0013
+// Raspberry Pi 2 Model B: 1041
+// Raspberry Pi 3 Model B: 2082
 LOCAL EBaPiModel getBoardModel() {
    std::string rev = sPiBrdInt.revision.length() > 6 ?
          sPiBrdInt.revision.substr(4) : sPiBrdInt.revision;

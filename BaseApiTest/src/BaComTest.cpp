@@ -13,13 +13,14 @@
 /*------------------------------------------------------------------------------
  */
 
-#if 1
+#ifndef __WIN32
 
 #include <string.h>
 #include <stdlib.h>
 #include <iostream>
 #include <unistd.h>    // read/write usleep toDelete
 #include <byteswap.h>
+#include <linux/i2c.h>
 
 #include "BaComTest.h"
 #include "BaCom.h"
@@ -47,6 +48,7 @@
 #define TEST1W true
 #define CONVREG 0
 #define CONFREG 1
+#define ADDRADS1115 72
 
 LOCAL void* rdDvr(const char* str, size_t n);
 
@@ -93,16 +95,38 @@ void CBaComTest::init() {
  */
 void CBaComTest::I2c() {
    TBaBool err = 0;
-   ASS(BaComI2CInit());
-   int fd = BaComI2CSelectDev(72);
-
-   // todo: Test funcs
-   uint64_t funcs = BaComI2CFuncs();
    uint16_t readReg = 0;
    uint16_t confReg = 0;
 
+   ASS(BaComI2CInit());
+   ASS(BaComI2CSelectDev(ADDRADS1115));
+
+   // Test functions
+   uint64_t funcs = BaComI2CFuncs();
+   ASS(funcs & I2C_FUNC_SMBUS_WRITE_I2C_BLOCK);
+   ASS(funcs & I2C_FUNC_SMBUS_READ_I2C_BLOCK  );
+   ASS(funcs & I2C_FUNC_SMBUS_WRITE_BLOCK_DATA);
+   ASS(!(funcs & I2C_FUNC_SMBUS_READ_BLOCK_DATA));
+   ASS(funcs & I2C_FUNC_SMBUS_PROC_CALL      );
+   ASS(funcs & I2C_FUNC_SMBUS_WRITE_WORD_DATA);
+   ASS(funcs & I2C_FUNC_SMBUS_READ_WORD_DATA );
+   ASS(funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA);
+   ASS(funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA );
+   ASS(funcs & I2C_FUNC_SMBUS_WRITE_BYTE     );
+   ASS(funcs & I2C_FUNC_SMBUS_READ_BYTE      );
+   ASS(funcs & I2C_FUNC_SMBUS_QUICK          );
+   ASS(!(funcs & I2C_FUNC_SMBUS_BLOCK_PROC_CALL));
+   // ...
+   ASS(!(funcs & I2C_FUNC_SMBUS_BLOCK_PROC_CALL));
+   ASS(!(funcs & I2C_FUNC_NOSTART));
+   ASS(funcs & I2C_FUNC_SMBUS_PEC          );
+   ASS(!(funcs & I2C_FUNC_PROTOCOL_MANGLING));
+   ASS(!(funcs & I2C_FUNC_10BIT_ADDR));
+   ASS(funcs & I2C_FUNC_I2C          );
+
    // ADS1115: http://www.ti.com/lit/ds/symlink/ads1113.pdf
    // Configuration register
+   //                Byte 0    Byte 1
    //               7654 3210 5432 1098
    // 0x83C0:       1000 0011 1100 0000: 33728
    //  5 Data rate -^^^| |||| |||| ||||
@@ -117,31 +141,68 @@ void CBaComTest::I2c() {
 
    // Continuous Mode
    confReg = 0b1000001111000000;
-   BaComI2CWriteReg16(CONFREG, confReg, &err);
+   ASS(BaComI2CWriteReg16(CONFREG, confReg));
    readReg = BaComI2CReadReg16(CONFREG, &err);
+   ASS_EQ(readReg, (uint16_t)0x8340);
+   ASS(!err);
    printf("0x%04X, e:%i\n", readReg, err);
 
+   // Voltage read
    BaCoreMSleep(5);
    readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   // Same as original register, but without status flag
+   ASS(!err);
    printf("%f V\n", 6.144*readReg/32767.0);
    BaCoreMSleep(5);
+   // Byte order must be swapped to get the right int
    readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
    printf("%f V\n", 6.144*readReg/32767.0);
+   ASS(!err);
 
    // One Shot Mode
    confReg = 0b1000001111000001;
-   BaComI2CWriteReg16(CONFREG, confReg, &err);
+   ASS(BaComI2CWriteReg16(CONFREG, confReg));
    readReg = BaComI2CReadReg16(CONFREG, &err);
+   ASS(!err);
    printf("0x%04X, e:%i\n", readReg, err);
 
+   // voltage read
    BaCoreMSleep(5);
+   // Byte order must be swapped to get the right int
    readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
-   printf("%f V\n", 6.144*readReg/32767.0);
-   BaCoreMSleep(5);
-   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
-   printf("%f V\n", 6.144*readReg/32767.0);
+   ASS(!err);
+   printf("%f V, 0x%04x\n", 6.144*readReg/32767.0, readReg);
+   ASS_EQ(uint8_t(readReg >> 8), BaComI2CRead8(&err));
+   ASS(!err);
+   ASS_EQ(uint8_t(readReg >> 8), BaComI2CReadReg8(CONVREG, &err));
+   ASS(!err);
 
-   BaComI2CExit();
+   ASS(BaComI2CExit());
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaComTest::I2cError() {
+   TBaBool err = eBaBool_false;
+   BaComI2CRead8(&err);
+   ASS(err);
+   err = eBaBool_false;
+   BaComI2CReadReg8(0, &err);
+   ASS(err);
+   err = eBaBool_false;
+   BaComI2CReadReg16(0, &err);
+   ASS(err);
+   err = eBaBool_false;
+
+   ASS(!BaComI2CWrite8(0));
+   ASS(!BaComI2CWriteReg8(0, 0));
+   ASS(!BaComI2CWriteReg16(0, 0));
+
+   ASS(BaComI2CSelectDev(ADDRADS1115));
+   BaComI2CRead8(&err);
+   ASS(!err);
+   ASS(BaComI2CExit());
 }
 
 /* ****************************************************************************/
@@ -276,5 +337,29 @@ LOCAL void* rdDvr(const char* str, size_t n) {
    return out;
 }
 
+// linux/i2c.h
+// Bit ADS115 Macro
+// 00: 1      I2C_FUNC_SMBUS_WRITE_I2C_BLOCK SMBus write_i2c_block_data comman
+// 01: 1      I2C_FUNC_SMBUS_READ_I2C_BLOCK
+// 02: 1      I2C_FUNC_SMBUS_WRITE_BLOCK_DATA
+// 03: 0      I2C_FUNC_SMBUS_READ_BLOCK_DATA
+// 04: 1      I2C_FUNC_SMBUS_PROC_CALL
+// 05: 1      I2C_FUNC_SMBUS_WRITE_WORD_DATA
+// 06: 1      I2C_FUNC_SMBUS_READ_WORD_DATA
+// 07: 1      I2C_FUNC_SMBUS_WRITE_BYTE_DATA
+// 08: 1      I2C_FUNC_SMBUS_READ_BYTE_DATA
+// 09: 1      I2C_FUNC_SMBUS_WRITE_BYTE
+// 10: 1      I2C_FUNC_SMBUS_READ_BYTE
+// 11: 1      I2C_FUNC_SMBUS_QUICK
+// 12: 0      I2C_FUNC_SMBUS_BLOCK_PROC_CALL
+// ...
+// 22: 0      I2C_FUNC_SMBUS_BLOCK_PROC_CALL
+// 23: 0      I2C_FUNC_NOSTART
+// 24: 1      I2C_FUNC_SMBUS_PEC
+// 25: 0      I2C_FUNC_PROTOCOL_MANGLING
+// 26: 0      I2C_FUNC_10BIT_ADDR
+// 27: 1      I2C_FUNC_I2C
 
-#endif // __linux
+
+#endif // __WIN32
+

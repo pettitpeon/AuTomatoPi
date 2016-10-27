@@ -22,9 +22,9 @@
 /*------------------------------------------------------------------------------
  *  Includes
  */
+#include <BaRPi.h>
 #include "BaBool.h"
 #include "BaCore.h"
-#include "BaPi.h"
 
 /// Serial device path
 #define BACOM_SERIALDEV "/dev/ttyAMA0"
@@ -71,7 +71,7 @@ typedef enum EBaComBaud {
 extern "C" {
 #endif
 
-/// @name I2C bus
+/// @name I2C bus Management
 //@{
 
 /******************************************************************************/
@@ -90,56 +90,74 @@ TBaBoolRC BaComI2CExit();
 /** Select a device to work with and initializes the bus if not initialized
  *  @return Error of success
  */
-int BaComI2CSelectDev(
+TBaBoolRC BaComI2CSelectDev(
       uint16_t devAddr ///< [in] Device address. see todo
       );
 
-
-uint64_t BaComI2CFuncs(
-      );
-
 /******************************************************************************/
-/** Simple read
+/** Gets the functionality of the device as described in linux/i2c.h
+ *  @return Mask of functions
+ */
+uint64_t BaComI2CFuncs();
+//@} i2c bus management
+
+/// @name I2C bus Read
+//@{
+/******************************************************************************/
+/** Simple 8-bit read
  *  @return Data
  */
 uint8_t BaComI2CRead8(
       TBaBool *pError ///< [out] Optional error flag
       );
-uint16_t BaComI2CRead16(
-      TBaBool *pError ///< [out] Optional error flag
-      );
 
 /******************************************************************************/
-/** Read register
+/** Read 8-bit register
  *  @return Data
  */
 uint8_t BaComI2CReadReg8(
       uint32_t reg, ///< [in] Register number
       TBaBool *pError ///< [out] Optional error flag
       );
+
+/******************************************************************************/
+/** Read 16-bit register
+ *  @return Data
+ */
 uint16_t BaComI2CReadReg16(
       uint32_t reg, ///< [in] Register number
       TBaBool *pError ///< [out] Optional error flag
       );
+//@} i2c bus read
+
+/// @name I2C bus write
+//@{
+/******************************************************************************/
+/** Simple 8-bit Write
+ *  @return Error or success
+ */
+TBaBoolRC BaComI2CWrite8(
+      uint8_t val ///< [in] value to write
+      );
 
 /******************************************************************************/
-/** Write register
- *  @return Data
+/** Write 8-bit register
+ *  @return Error or success
+ */
+TBaBoolRC BaComI2CWriteReg8(
+      uint32_t reg, ///< [in] Register number
+      uint8_t val ///< [in] value to write
+      );
+
+/******************************************************************************/
+/** Write 16-bit register
+ *  @return Error or success
  */
 TBaBoolRC BaComI2CWriteReg16(
       uint32_t reg, ///< [in] Register number
-      uint16_t val, ///< [in] value to write
-      TBaBool *pError ///< [out] Optional error flag
+      uint16_t val ///< [in] value to write
       );
-
-TBaBoolRC BaComI2CWriteRegBlock(
-      uint32_t reg, ///< [in] Register number
-      uint8_t  *pBuf, ///< [in] value to write
-      uint32_t size,
-      TBaBool *pError ///< [out] Optional error flag
-      );
-
-//@} i2c bus
+//@} i2c bus write
 
 TBaComHdl BaComSPIInit();
 TBaBoolRC BaComSPIExit(TBaComHdl hdl);

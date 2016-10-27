@@ -2,44 +2,48 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : TestTemplate.cpp
- *   Date     : 23/06/2015
+ *   Module   : BaRPiTest.cpp
+ *   Date     : Oct 27, 2016
  *------------------------------------------------------------------------------
  *   Module description:
  */
-
+/** @file
+ *  ...
+ */
+/*------------------------------------------------------------------------------
+ */
 #include <iostream>
-#include "TestTemplate.h"
-
-#include <BaIniParse.h>
-#include "BaRPi.h"
+#include "BaRPiTest.h"
 #include "BaGenMacros.h"
 #include "CppU.h"
-#include "BaUtils.hpp"
+#include "BaRPi.h"
 
-
-
-CPPUNIT_TEST_SUITE_REGISTRATION( CTestTemplate );
-
+CPPUNIT_TEST_SUITE_REGISTRATION( CBaRPiTest );
 
 /* ****************************************************************************/
 /*  ...
  */
-void CTestTemplate::setUp() {
+void CBaRPiTest::setUp() {
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CTestTemplate::tearDown() {
+void CBaRPiTest::tearDown() {
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CTestTemplate::Test() {
-   std::cout << "Hello test template\n";
+void CBaRPiTest::Test() {
+   TBaPiBoard bi;
 
+#ifdef __arm__
+   ASS(BaPiGetBoardInfo(&bi));
+   ASS(bi.boardModel != eBaPiModelUnknown);
+   ASS(BaPiGetBoardModel() != eBaPiModelUnknown);
+#else
+   ASS(!BaPiGetBoardInfo(&bi));
+   ASS(BaPiGetBoardModel() == eBaPiModelUnknown);
+#endif
 }
-
-
