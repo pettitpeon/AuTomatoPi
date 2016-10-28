@@ -140,8 +140,8 @@ bool CBaLog::exit() {
 
    if (sLogdHdl != (void*)-1) {
 
-      // ToDelete
-      TIME_FUN_( rc = BaCoreDestroyThread(sLogdHdl, FOREVER) );
+//      TIME_FUN_( rc = BaCoreDestroyThread(sLogdHdl, FOREVER) ); //DBG
+      rc = BaCoreDestroyThread(sLogdHdl, FOREVER);
    }
    sLogdHdl = 0;
    return rc;

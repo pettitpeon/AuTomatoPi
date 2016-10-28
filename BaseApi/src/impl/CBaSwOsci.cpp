@@ -31,9 +31,9 @@
 #define MINSLEEP_US  10000 // 10 ms Minimum time that the thread will sleep
 #define CYCLE_US     50000 // 50 ms Regular cycle time
 #define CYCLECUM_US 500000 // 500 ms Duration after which the data will be processed
-#define STEADYCLK   std::chrono::steady_clock
+#define STEADYCLK_   std::chrono::steady_clock
 #define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
-   (STEADYCLK::now() - start).count()
+   (STEADYCLK_::now() - start).count()
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
@@ -225,14 +225,14 @@ void CBaSwOsci::thRout(TBaCoreThreadArg *pArg) {
    CBaSwOsci* p = (CBaSwOsci*)(pArg->pArg);
    int64_t cycleCum = 0;
    int64_t cycleDur = 0;
-   STEADYCLK::time_point start;
+   STEADYCLK_::time_point start;
 
    // Each cycle is CYCLE_US long. When the cumulative cycle is > CYCLECUM_US,
    // then the actual process is executed. This is made to avoid long sleeps
    // that might hurt the main thread when exiting this thread. This way the
    // sleep is limited to a maximum of CYCLE_US
    for ( ; !pArg->exitTh ; cycleCum += LASTCYCLE_US) {
-      start = STEADYCLK::now();
+      start = STEADYCLK_::now();
 
       // If the cumulative cycle is over the limit, process!!!
       if (cycleCum > CYCLECUM_US) {
@@ -242,7 +242,7 @@ void CBaSwOsci::thRout(TBaCoreThreadArg *pArg) {
          cycleCum -= CYCLECUM_US;
       }
 
-      cycleDur = (start - STEADYCLK::now()).count();
+      cycleDur = (STEADYCLK_::now() - start).count();
       if (cycleDur + MINSLEEP_US > CYCLE_US) {
          BaCoreUSleep(MINSLEEP_US);
       } else {

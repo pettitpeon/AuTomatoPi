@@ -38,7 +38,7 @@
  */
 #define TAG "BaCore"
 #define CHRONO_    std::chrono
-#define STEADCLOCK_  CHRONO_::steady_clock
+#define STEADYCLK_  CHRONO_::steady_clock
 #define CHRONOHRC_  CHRONO_::high_resolution_clock
 #define CTRLTASK   "BaseApiCtrlTask"
 #define TASKNAMESZ 16
@@ -52,8 +52,8 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-typedef STEADCLOCK_::time_point TTimePoint;
-typedef CHRONO_::duration<STEADCLOCK_::rep, STEADCLOCK_::period> TDuration;
+typedef STEADYCLK_::time_point TTimePoint;
+typedef CHRONO_::duration<STEADYCLK_::rep, STEADYCLK_::period> TDuration;
 
 typedef enum EStatus {
    eInitializing = 0,
@@ -131,7 +131,7 @@ void BaCoreGetTStamp(TBaCoreTimeStamp *pStamp) {
 TBaCoreMonTStampUs BaCoreGetMonTStamp() {
 
    // The steady clock runs in nanoseconds. Round to micros
-   return round1000(STEADCLOCK_::now().time_since_epoch().count());
+   return round1000(STEADYCLK_::now().time_since_epoch().count());
 }
 
 // Stamp length is 22
@@ -231,10 +231,14 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
       pDesc->pArg->exitTh = eBaBool_true;
 
       // Wait for the thread to end with a timeout
+      // TODELETE
+      auto start = STEADYCLK_::now();
       if (pDesc->cv.wait_for(lck, CHRONO_::milliseconds(timeoutMs),
             // [cap list] (args) { body }
                 [&pDesc] () { return pDesc->status == eFinished; })
           ) {
+         std::chrono::duration<double> dur = (STEADYCLK_::now() - start);
+         std::cout  << ": " << dur.count() << " s" << std::endl;
          pDesc->pThread->join();
       } else {
          // Detach it, let it live, and release the memory
@@ -395,9 +399,9 @@ LOCAL int prio2Prio(EBaCorePrio prio) {
 
 //
 LOCAL TDuration timed(TBaCoreFun func, void* pArg) {
-   const TTimePoint start = std::chrono::steady_clock::now();
+   const TTimePoint start = STEADYCLK_::now();
    func(pArg);
-   const TTimePoint end = std::chrono::steady_clock::now();
+   const TTimePoint end = STEADYCLK_::now();
    return end - start;
 }
 

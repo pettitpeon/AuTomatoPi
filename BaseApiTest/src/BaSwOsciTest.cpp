@@ -90,7 +90,7 @@ void CBaSwOsciTest::ConcreteNiceWeather() {
    usi *= 2;
    c *= 2;
    ASS(p->Sample());
-   ASS(CBaSwOsci::Destroy(p, 500));
+   ASS(CBaSwOsci::Destroy(p, 300));
 
    // Test the header
    std::ifstream iS(RESPATH "BaSwOsciTest.csv");

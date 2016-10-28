@@ -35,9 +35,9 @@ public:
    CPPUNIT_TEST(init);
    CPPUNIT_TEST(I2c);
    CPPUNIT_TEST(I2cError);
-//   CPPUNIT_TEST(Bus1W);
-//   CPPUNIT_TEST(Config);
-//   CPPUNIT_TEST(Serial);
+   CPPUNIT_TEST(Bus1W);
+   CPPUNIT_TEST(Config);
+   CPPUNIT_TEST(Serial);
    CPPUNIT_TEST(exit);
 
    CPPUNIT_TEST_SUITE_END();

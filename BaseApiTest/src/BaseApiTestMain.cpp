@@ -126,7 +126,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaseApiTest::suite());
 //   pSuite->addTest(CBaProcTest::suite());
 //   pSuite->addTest(CCtrlPT1Test::suite());
-//   pSuite->addTest(CBaSwOsciTest::suite());
+   pSuite->addTest(CBaSwOsciTest::suite());
 //   pSuite->addTest(CBaRPiTest::suite());
    return pSuite;
 }
