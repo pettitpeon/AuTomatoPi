@@ -22,6 +22,7 @@
 
 // One Wire Bus
 #define BUS1W    04
+#define W1TEMPFAM 28
 
 // Serial Interface
 #define SERTXD0  14
