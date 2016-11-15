@@ -18,12 +18,13 @@
 #include <string.h>
 
 #include "BaIpc.h"
+#include "CBaIpcSvr.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #define C_HDL_ ((IBaIpc*) hdl)
-#define DEF_PIPE "/tmp/BaIpc.fifo"
+#define DEF_PIPE PIPEDIR
 
 
 /*------------------------------------------------------------------------------
@@ -39,6 +40,20 @@ static int sWrFifo = -1;
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
+//
+TBaBool BaIpcInitClnt() {
+   int fd = open(DEF_PIPE, O_WRONLY | O_NONBLOCK);
+
+   if (fd < 0) {
+      printf("%i\n", errno);
+      return eBaBoolRC_Error;
+   }
+
+   sWrFifo = fd;
+   return eBaBoolRC_Success;
+}
+
+
 //
 TBaBoolRC BaIpcCreatePipeReader() {
    if (sRdFifo != -1) {
@@ -108,18 +123,17 @@ TBaBoolRC BaIpcReadPipe(void* pData, size_t size) {
    return eBaBoolRC_Success;
 }
 
-TBaBoolRC BaIpcWritePipe(const void* pData, size_t size) {
+size_t BaIpcWritePipe(const void* pData, size_t size) {
    if (sWrFifo < 0 || !pData) {
       return eBaBoolRC_Error;
    }
 
-   int rc = write(sWrFifo, pData, size);
-   if (rc < 0) {
+   size_t bytesWr = write(sWrFifo, pData, size);
+   if (bytesWr < 0) {
       printf("%s\n", strerror(errno));
-      return eBaBoolRC_Error;
    }
 
-   return eBaBoolRC_Success;
+   return bytesWr;
 }
 
 

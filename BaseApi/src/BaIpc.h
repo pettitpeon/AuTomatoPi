@@ -30,12 +30,27 @@
 /// C message handle
 typedef void* TBaIpcHdl;
 
+
+
+/// IPC message
+typedef struct TBaIpcVarReq {
+   int32_t type;
+   union {
+      uint64_t i;
+      char str[1000];
+      char dat[1000];
+   } data;
+};
+
+
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+TBaBool BaIpcInitClnt();
 
 /// @name Factory
 //@{
@@ -66,7 +81,7 @@ TBaBoolRC BaIpcReadPipe(
       size_t size
       );
 
-TBaBoolRC BaIpcWritePipe(
+size_t BaIpcWritePipe(
       const void* pData,
       size_t size
       );
