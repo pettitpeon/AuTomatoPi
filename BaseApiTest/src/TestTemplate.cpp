@@ -16,12 +16,15 @@
 #include "BaGenMacros.h"
 #include "CppU.h"
 #include "BaUtils.hpp"
+#include "impl/CBaIpcSvr.h"
+#include "BaLogMacros.h"
 
 #include "BaIpc.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#define TAG "tplTst"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CTestTemplate );
 
@@ -42,20 +45,37 @@ void CTestTemplate::tearDown() {
 /*  ...
  */
 void CTestTemplate::Test() {
-   std::cout << "Hello test template\n";
+   TBaLogOptions opt = {0};
+   BaLogSetDefOpts(&opt);
+   opt.out = eBaLogOut_Console;
+   opt.name = "Tmpl";
 
-   char buf[1024] = {0};
+   TBaLogDesc log = {0};
+   log.pLog = IBaLogCreate(&opt);
 
-   TBaBoolRC rc = BaIpcCreatePipeReader();
-   rc = BaIpcCreatePipeWriter();
+   BaApiInitLogger(log);
 
-   rc = BaIpcReadPipe(&buf, 1024);
 
-   /* write "Hi" to the FIFO */
-   rc = BaIpcWritePipe("Hi", sizeof("Hi"));
+   TRACE_("Hello test template");
 
-   rc = BaIpcReadPipe(&buf, 1024);
-   std::cout << buf << std::endl;
+   TRACE_("svr(%i)", BaIpcInitSvr());
+
+   BaCoreMSleep(500);
+   TRACE_("clnt(%i)", BaIpcInitClnt());
+
+//   char buf[1024] = {0};
+//
+//   TBaBoolRC rc = BaIpcCreatePipeReader();
+//   rc = BaIpcCreatePipeWriter();
+
+//   rc = BaIpcReadPipe(&buf, 1024);
+//
+//   /* write "Hi" to the FIFO */
+//   rc = BaIpcWritePipe("Hi", sizeof("Hi"));
+//
+//   rc = BaIpcReadPipe(&buf, 1024);
+//   std::cout << buf << std::endl;
 }
+
 
 

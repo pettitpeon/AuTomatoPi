@@ -19,13 +19,14 @@
 
 #include "BaIpc.h"
 #include "CBaIpcSvr.h"
+#include "BaLogMacros.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #define C_HDL_ ((IBaIpc*) hdl)
 #define DEF_PIPE PIPEDIR
-
+#define TAG "BaIpc"
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -41,8 +42,9 @@ static int sWrFifo = -1;
     C Interface
  -----------------------------------------------------------------------------*/
 //
-TBaBool BaIpcInitClnt() {
-   int fd = open(DEF_PIPE, O_WRONLY | O_NONBLOCK);
+TBaBoolRC BaIpcInitClnt() {
+   int fd = open(DEF_PIPE "BaIpc1.fifo", O_WRONLY/* | O_NONBLOCK*/);
+   int fdRd = open(DEF_PIPE "BaIpc2.fifo", O_RDONLY | O_NONBLOCK);
 
    if (fd < 0) {
       printf("%i\n", errno);
@@ -50,7 +52,23 @@ TBaBool BaIpcInitClnt() {
    }
 
    sWrFifo = fd;
-   return eBaBoolRC_Success;
+   TBaIpcMsg msg = {0};
+   msg.cmd = eBaIpcCmdGetPipePair;
+
+   BaIpcWritePipe(sWrFifo, (const char*)&msg, sizeof(TBaIpcMsg));
+   for (int i = 0; i < 50; ++i) {
+      BaCoreMSleep(20);
+      BaIpcReadPipe(fdRd, (char*)&msg, sizeof(TBaIpcMsg));
+      if (msg.cmd == eBaIpcReplyPipePair) {
+
+         TBaIpcClntPipes* pPipes = (TBaIpcClntPipes*)msg.data.data;
+         if (pPipes->fdWr == sWrFifo && pPipes->fdRd == fdRd) {
+            sRdFifo = pPipes->fdRd;
+            return eBaBoolRC_Success;
+         }
+      }
+   }
+   return eBaBoolRC_Error;
 }
 
 
@@ -109,12 +127,12 @@ TBaBoolRC BaIpcDestroyPipe() {
    return eBaBoolRC_Success;
 }
 
-TBaBoolRC BaIpcReadPipe(void* pData, size_t size) {
-   if (sRdFifo < 0 || !pData) {
+TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t size) {
+   if (fd < 0 || !pData) {
       return eBaBoolRC_Error;
    }
 
-   int rc = read(sRdFifo, pData, size);
+   int rc = read(fd, pData, size);
    if (rc < 0) {
       printf("%s\n", strerror(errno));
       return eBaBoolRC_Error;
@@ -123,17 +141,28 @@ TBaBoolRC BaIpcReadPipe(void* pData, size_t size) {
    return eBaBoolRC_Success;
 }
 
-size_t BaIpcWritePipe(const void* pData, size_t size) {
-   if (sWrFifo < 0 || !pData) {
+TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz) {
+   if (fd < 0 || !pData) {
       return eBaBoolRC_Error;
    }
 
-   size_t bytesWr = write(sWrFifo, pData, size);
-   if (bytesWr < 0) {
-      printf("%s\n", strerror(errno));
-   }
+   size_t bytesWr = 0;
+   size_t offset = 0;
+   do {
+      bytesWr = write(fd, (const void*)(pData + offset), sz - offset);
+      offset += bytesWr;
+      if (bytesWr < 0) {
+         ERROR_("IPC write failed: %s", strerror(errno));
+         return eBaBoolRC_Error;
+      }
 
-   return bytesWr;
+      if (offset > sz) {
+         ERROR_("IPC write failed");
+         return eBaBoolRC_Error;
+      }
+   } while (bytesWr != 0);
+
+   return eBaBoolRC_Success;
 }
 
 

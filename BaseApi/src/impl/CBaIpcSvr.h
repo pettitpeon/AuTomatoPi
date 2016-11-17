@@ -35,8 +35,9 @@
 typedef enum EBaIpcCmd {
    eBaIpcCmdGetPipePair = 1,
    eBaIpcCmdCall,
-   eBaIpcCmdGerVar,
-   eBaIpcCmdMax = eBaIpcCmdGerVar
+   eBaIpcCmdGetVar,
+   eBaIpcReplyPipePair,
+   eBaIpcCmdMax = eBaIpcReplyPipePair
 } EBaIpcCmd;
 typedef int32_t TBaIpcCmd;
 
@@ -46,6 +47,11 @@ typedef struct TBaIpcMsg {
       char data[1020];
    } data;
 } TBaIpcMsg;
+
+typedef struct TBaIpcClntPipes {
+   int fdRd;
+   int fdWr;
+} TBaIpcClntPipes;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -101,25 +107,26 @@ public:
    static CBaPipePair* Create(const char *name, TBaCoreThreadFun rout);
    static bool Destroy(CBaPipePair *pHdl);
 
-   virtual size_t Read(
-         void* pData,
-         size_t size
-         );
+//   virtual size_t Read(
+//         void* pData,
+//         size_t size
+//         );
+//
+//   virtual size_t Write(
+//         const void* pData,
+//         size_t size
+//         );
 
-   virtual size_t Write(
-         const void* pData,
-         size_t size
-         );
+//   virtual void GetClientFds(int* pFdRd, int* pFdWr);
+   virtual TBaIpcClntPipes GetClientFds();
 
-   virtual void GetClientFds(int* pFdRd, int* pFdWr);
-
-   CBaPipePair() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0} {};
+   CBaPipePair() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0} {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaPipePair() {};
 
 private:
-   static void SvrRout(TBaCoreThreadArg *pArg);
+   static void svrRout(TBaCoreThreadArg *pArg);
    bool handleIpcMsg(int fdRd);
 
    CBaPipe* mpRd; // server reads here

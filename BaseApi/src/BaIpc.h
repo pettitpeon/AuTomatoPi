@@ -40,7 +40,7 @@ typedef struct TBaIpcVarReq {
       char str[1000];
       char dat[1000];
    } data;
-};
+} TBaIpcVarReq;
 
 
 /*------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ typedef struct TBaIpcVarReq {
 extern "C" {
 #endif
 
-TBaBool BaIpcInitClnt();
+TBaBoolRC BaIpcInitClnt();
 
 /// @name Factory
 //@{
@@ -76,15 +76,9 @@ TBaBoolRC BaIpcDestroyPipe(
       );
 //@}
 
-TBaBoolRC BaIpcReadPipe(
-      void* pData,
-      size_t size
-      );
+TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t sz);
 
-size_t BaIpcWritePipe(
-      const void* pData,
-      size_t size
-      );
+TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz);
 
 
 #ifdef __cplusplus
