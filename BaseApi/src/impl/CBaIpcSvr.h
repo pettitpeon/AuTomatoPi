@@ -69,7 +69,9 @@ public:
       eTypeWr      // The server writes
    };
 
-   static CBaPipe* Create(EType type);
+   static CBaPipe* Create(EType type, std::string name, bool overwrite);
+   static CBaPipe* CreateSvrRd();
+   static CBaPipe* CreateSvrWr();
 
    static bool Destroy(
          CBaPipe* pHdl
@@ -88,6 +90,8 @@ public:
    virtual int GetServerFd() { return mType == eTypeRd ? mFdRd : mFdWr; };
    virtual int GetClientFd() { return mType == eTypeRd ? mFdWr : mFdRd; };
    virtual EType GetType () { return mType; };
+
+   virtual inline void OpenSvrWr();
 
    // Typical object oriented destructor must be virtual!
    CBaPipe() : mFdRd(-1), mFdWr(-1), mName(""), mType(eTypeRd) {};
@@ -120,7 +124,7 @@ public:
 //   virtual void GetClientFds(int* pFdRd, int* pFdWr);
    virtual TBaIpcClntPipes GetClientFds();
 
-   CBaPipePair() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0} {};
+   CBaPipePair() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0}, mMsg{0} {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaPipePair() {};
@@ -136,6 +140,8 @@ private:
    TBaCoreThreadHdl mTh;
    TBaCoreThreadArg mThArg;
    struct epoll_event mEv;
+   TBaIpcMsg mMsg;
+
 };
 
 
