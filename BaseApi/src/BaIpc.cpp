@@ -43,11 +43,11 @@ static int sWrFifo = -1;
  -----------------------------------------------------------------------------*/
 //
 TBaBoolRC BaIpcInitClnt() {
-   int fd = open(DEF_PIPE "BaIpc1.fifo", O_WRONLY/* | O_NONBLOCK*/);
+   int fd = open(DEF_PIPE "BaIpc1.fifo", O_WRONLY | O_NONBLOCK);
    int fdRd = open(DEF_PIPE "BaIpc2.fifo", O_RDONLY | O_NONBLOCK);
 
    if (fd < 0) {
-      printf("%i\n", errno);
+      ERROR_("%s", strerror(errno));
       return eBaBoolRC_Error;
    }
 
@@ -71,6 +71,19 @@ TBaBoolRC BaIpcInitClnt() {
    return eBaBoolRC_Error;
 }
 
+//
+TBaBoolRC BaIpcCallFun(){
+   if (sRdFifo == -1 || sWrFifo == -1) {
+      return eBaBoolRC_Error;
+   }
+   TBaIpcMsg msg = {0};
+
+   msg.cmd = eBaIpcCmdCall;
+   memcpy(msg.data.data, &"hello", sizeof("hello"));
+
+   BaIpcWritePipe(sWrFifo, (char*) &msg, sizeof(TBaIpcMsg));
+   return BaIpcWritePipe(sWrFifo, (char*) &msg, sizeof(TBaIpcMsg));
+}
 
 //
 TBaBoolRC BaIpcCreatePipeReader() {

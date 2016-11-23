@@ -63,6 +63,10 @@ void CTestTemplate::Test() {
    BaCoreMSleep(500);
    TRACE_("clnt(%i)", BaIpcInitClnt());
 
+   BaIpcWritePipe(0,0,0);
+
+   BaCoreMSleep(500);
+
 //   char buf[1024] = {0};
 //
 //   TBaBoolRC rc = BaIpcCreatePipeReader();

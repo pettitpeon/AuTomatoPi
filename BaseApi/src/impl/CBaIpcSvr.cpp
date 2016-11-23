@@ -238,12 +238,12 @@ CBaPipePair* CBaPipePair::Create(const char *name, TBaCoreThreadFun rout) {
       return 0;
    }
 
-   p->mpWr = CBaPipe::Create(CBaPipe::eTypeWr);
-   if (!p->mpWr) {
-      CBaPipe::Destroy(p->mpRd);
-      p->mpRd = 0;
-      return 0;
-   }
+//   p->mpWr = CBaPipe::Create(CBaPipe::eTypeWr);
+//   if (!p->mpWr) {
+//      CBaPipe::Destroy(p->mpRd);
+//      p->mpRd = 0;
+//      return 0;
+//   }
 
    p->mFdEp = epoll_create1(0);
    if (p->mFdEp < 0) {
@@ -256,7 +256,7 @@ CBaPipePair* CBaPipePair::Create(const char *name, TBaCoreThreadFun rout) {
    }
 
    p->mEv.events = EPOLLIN | EPOLLPRI | EPOLLERR | EPOLLHUP;
-   p->mEv.data.fd = p->mpRd->GetClientFd();
+   p->mEv.data.fd = p->mpRd->GetServerFd();
    if (epoll_ctl(p->mFdEp, EPOLL_CTL_ADD, p->mEv.data.fd, &p->mEv) < 0) {
       CBaPipe::Destroy(p->mpRd);
       p->mpRd = 0;
@@ -318,21 +318,18 @@ void CBaPipePair::svrRout(TBaCoreThreadArg *pArg) {
 
       // wait for something to do...
       int nfds = epoll_wait(p->mFdEp, pEvents, MAXEVENTS, EPOLLTIMEOUTMS);
-
-      TRACE_("polled(%i)", nfds);
-
       if (nfds < 0) {
-         ERROR_("Error in epoll_wait");
+         ERROR_("Error in epoll_wait: %s", strerror(errno));
       }
+      TRACE_("polled(%i)", nfds);
 
       // for each ready socket
       for(int i = 0; i < nfds; i++) {
          if (!(pEvents[i].events & EPOLLIN)) {
             // An error has occurred on this fd, or the socket is not
             // ready for reading (why were we notified then?)
-            fprintf (stderr, "epoll error\n");
-            close (pEvents[i].data.fd);
-            ERROR_("Error in epoll fd (%i)", pEvents[i].data.fd);
+            ERROR_("Error in epoll fd (%i): %s", pEvents[i].data.fd, strerror(errno));
+//            close (pEvents[i].data.fd);
             continue;
          }
          // do something with the fd (pipe)
@@ -340,7 +337,7 @@ void CBaPipePair::svrRout(TBaCoreThreadArg *pArg) {
 
       }
 
-      BaCoreMSleep(10);
+      BaCoreMSleep(50);
    }
 
    free(pEvents);
@@ -349,7 +346,7 @@ void CBaPipePair::svrRout(TBaCoreThreadArg *pArg) {
 //
 bool CBaPipePair::handleIpcMsg(int fdRd) {
 
-   if (fdRd != mpRd->GetClientFd()) {
+   if (fdRd == -1) {
       // error?
       TRACE_("invalid fd(%i)", fdRd);
       return false;
@@ -366,13 +363,20 @@ bool CBaPipePair::handleIpcMsg(int fdRd) {
    do {
       rc = mpRd->Read(pRawMsg + offset, sz - offset);
       offset += rc;
-      if (rc < 0 || offset >= sz) {
+      if (rc < 0 || offset > sz) {
          free(pRawMsg);
          return false;
       }
    } while (rc != 0);
 
    pMsg = (TBaIpcMsg *)pRawMsg;
+
+   if (!mpWr) {
+      mpWr = CBaPipe::Create(CBaPipe::eTypeWr);
+      if (!mpWr) {
+         return false;
+      }
+   }
 
    switch (pMsg->cmd) {
       case eBaIpcCmdGetPipePair: {

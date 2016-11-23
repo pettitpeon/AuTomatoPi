@@ -52,6 +52,8 @@ extern "C" {
 
 TBaBoolRC BaIpcInitClnt();
 
+TBaBoolRC BaIpcCallFun();
+
 /// @name Factory
 //@{
 /******************************************************************************/
