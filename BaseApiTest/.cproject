@@ -321,6 +321,7 @@
 								</option>
 								<option id="gnu.c.compiler.option.dialect.std.1953608571" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.dialect.flags.1106939456" name="Other dialect flags" superClass="gnu.c.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<option id="gnu.c.compiler.option.misc.pic.1200876876" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.55813328" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2117032275" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
@@ -337,6 +338,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.804058059" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.2101924938" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.pic.1133687236" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.48369171" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.2022844455" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
@@ -413,16 +415,10 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.146385879;cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.146385879.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.279073887;cdt.managedbuild.tool.gnu.cpp.compiler.input.1103495186">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.873642752;cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.873642752.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.2117032275;cdt.managedbuild.tool.gnu.cpp.compiler.input.48369171">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.2093508042;cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.;cdt.managedbuild.tool.gnu.cross.c.compiler.1771252879;cdt.managedbuild.tool.gnu.c.compiler.input.243377597">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.146385879;cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.146385879.;cdt.managedbuild.tool.gnu.cross.c.compiler.85722185;cdt.managedbuild.tool.gnu.c.compiler.input.1344227611">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.873642752;cdt.managedbuild.config.gnu.cross.exe.debug.2093508042.873642752.;cdt.managedbuild.tool.gnu.cross.c.compiler.2141042554;cdt.managedbuild.tool.gnu.c.compiler.input.55813328">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1744839448;cdt.managedbuild.config.gnu.cross.exe.release.1744839448.;cdt.managedbuild.tool.gnu.cross.c.compiler.1203209914;cdt.managedbuild.tool.gnu.c.compiler.input.559848693">
