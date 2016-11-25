@@ -37,7 +37,9 @@ typedef enum EBaIpcCmd {
    eBaIpcCmdCall,
    eBaIpcCmdGetVar,
    eBaIpcReplyPipePair,
-   eBaIpcCmdMax = eBaIpcReplyPipePair
+   eBaIpcReplyCmdCall,
+   eBaIpcReplyCmdGetVar,
+   eBaIpcCmdMax = eBaIpcReplyCmdGetVar
 } EBaIpcCmd;
 typedef int32_t TBaIpcCmd;
 
@@ -69,7 +71,12 @@ public:
       eTypeWr      // The server writes
    };
 
-   static CBaPipe* Create(EType type, std::string name, bool overwrite);
+   static CBaPipe* Create(
+         EType type,
+         std::string name,
+         bool overwrite
+         );
+
    static CBaPipe* CreateSvrRd();
    static CBaPipe* CreateSvrWr();
 
@@ -87,11 +94,12 @@ public:
          size_t size
          );
 
+   // Does not have to be successful
+   virtual inline void OpenSvrWr();
+
    virtual int GetServerFd() { return mType == eTypeRd ? mFdRd : mFdWr; };
    virtual int GetClientFd() { return mType == eTypeRd ? mFdWr : mFdRd; };
    virtual EType GetType () { return mType; };
-
-   virtual inline void OpenSvrWr();
 
    // Typical object oriented destructor must be virtual!
    CBaPipe() : mFdRd(-1), mFdWr(-1), mName(""), mType(eTypeRd) {};
@@ -105,11 +113,17 @@ private:
    EType mType;
 };
 
-class CBaPipePair {
+class CBaPipePairSvr {
 public:
 
-   static CBaPipePair* Create(const char *name, TBaCoreThreadFun rout);
-   static bool Destroy(CBaPipePair *pHdl);
+   static CBaPipePairSvr* Create(
+         const char *name,
+         TBaCoreThreadFun rout
+         );
+
+   static bool Destroy(
+         CBaPipePairSvr *pHdl
+         );
 
 //   virtual size_t Read(
 //         void* pData,
@@ -124,23 +138,28 @@ public:
 //   virtual void GetClientFds(int* pFdRd, int* pFdWr);
    virtual TBaIpcClntPipes GetClientFds();
 
-   CBaPipePair() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0}, mMsg{0} {};
+   CBaPipePairSvr() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0}, mMsg{0} {};
 
    // Typical object oriented destructor must be virtual!
-   virtual ~CBaPipePair() {};
+   virtual ~CBaPipePairSvr() {};
 
 private:
-   static void svrRout(TBaCoreThreadArg *pArg);
-   bool handleIpcMsg(int fdRd);
+   static void svrRout(
+         TBaCoreThreadArg *pArg
+         );
+
+   bool handleIpcMsg(
+         int fdRds
+         );
 
    CBaPipe* mpRd; // server reads here
    CBaPipe* mpWr; // server writes here
-   int mFdEp;
+   int mFdEp;  // epoll fd
 
    TBaCoreThreadHdl mTh;
    TBaCoreThreadArg mThArg;
-   struct epoll_event mEv;
-   TBaIpcMsg mMsg;
+   struct epoll_event mEv; // epoll event
+   TBaIpcMsg mMsg; // Msg used for reading and writing
 
 };
 

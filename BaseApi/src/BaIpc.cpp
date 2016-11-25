@@ -43,8 +43,8 @@ static int sWrFifo = -1;
  -----------------------------------------------------------------------------*/
 //
 TBaBoolRC BaIpcInitClnt() {
-   int fdWr = open(DEF_PIPE "BaIpcRd.fifo", O_WRONLY | O_NONBLOCK);
-   int fdRd = open(DEF_PIPE "BaIpcWr.fifo", O_RDONLY | O_NONBLOCK);
+   int fdWr = open(DEF_PIPE "BaIpcSvrRd.fifo", O_WRONLY | O_NONBLOCK);
+   int fdRd = open(DEF_PIPE "BaIpcSvrWr.fifo", O_RDONLY | O_NONBLOCK);
 
    if (fdWr < 0) {
       ERROR_("%s", strerror(errno));

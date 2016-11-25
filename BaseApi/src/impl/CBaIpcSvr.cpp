@@ -34,17 +34,17 @@
 #define MAXPIPES 256
 #define MAXEVENTS 64
 #define EPOLLTIMEOUTMS 50
-#define PIPESVRNAME "fifoSvr"
+#define PIPESVRNAME "BaIpcFifoSvr"
 #define FOREVER 500
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
 typedef struct TPipeSvr {
-   CBaPipePair *pPipes;
-   TBaCoreThreadArg thArg;
-   TBaCoreThreadHdl th;
+   CBaPipePairSvr *pPipes;
+//   TBaCoreThreadArg thArg;
+//   TBaCoreThreadHdl th;
    std::mutex mtx;
-   TPipeSvr() : pPipes(0), thArg{0}, th(0) {};
+   TPipeSvr() : pPipes(0)/*, thArg{0}, th(0)*/ {};
 } TPipeSvr;
 
 /*------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ TBaBoolRC BaIpcInitSvr() {
       return eBaBoolRC_Success;
    }
 
-   sPipeSvr.pPipes = CBaPipePair::Create(0, 0);
+   sPipeSvr.pPipes = CBaPipePairSvr::Create(0, 0);
 
    return sPipeSvr.pPipes ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
@@ -80,8 +80,6 @@ TBaBoolRC BaIpcExitSvr() {
       return eBaBoolRC_Success;
    }
 
-
-
    return eBaBoolRC_Success;
 }
 
@@ -90,7 +88,6 @@ TBaBoolRC BaIpcExitSvr() {
  -----------------------------------------------------------------------------*/
 
 CBaPipe* CBaPipe::Create(EType type, std::string path, bool overwrite) {
-
    CBaPipe myPipe;
 
    myPipe.mName = path;
@@ -112,7 +109,7 @@ CBaPipe* CBaPipe::Create(EType type, std::string path, bool overwrite) {
       rc = mkfifo(myPipe.mName.c_str(), S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
    }
 
-
+   //
    if (rc < 0 && errno != EEXIST) {
       WARN_("Make fifo failed: %s\n", strerror(errno));
       return 0;
@@ -134,13 +131,10 @@ CBaPipe* CBaPipe::Create(EType type, std::string path, bool overwrite) {
       myPipe.OpenSvrWr();
    }
 
+   // Allocate new pipe
    return new CBaPipe(myPipe);
 }
 
-//
-inline void CBaPipe::OpenSvrWr() {
-   mFdWr = open(mName.c_str(), O_RDWR | O_NONBLOCK);
-}
 
 //
 CBaPipe* CBaPipe::CreateSvrRd() {
@@ -165,7 +159,7 @@ bool CBaPipe::Destroy(CBaPipe* pHdl) {
 
    delete pHdl;
    return true;
-}//
+}
 
 //
 size_t CBaPipe::Read(void* pData, size_t size) {
@@ -192,22 +186,29 @@ bool CBaPipe::Write(const void* pData, size_t size) {
 }
 
 //
-CBaPipePair* CBaPipePair::Create(const char *name, TBaCoreThreadFun rout) {
+inline void CBaPipe::OpenSvrWr() {
+   mFdWr = open(mName.c_str(), O_RDWR | O_NONBLOCK);
+}
+
+//
+CBaPipePairSvr* CBaPipePairSvr::Create(const char *name, TBaCoreThreadFun rout) {
+
+   // If no name or routine, set defaults
    if (!rout) {
-      rout = CBaPipePair::svrRout;
+      rout = CBaPipePairSvr::svrRout;
    }
    if (!name) {
       name = PIPESVRNAME;
    }
 
-
-   CBaPipePair* p = new CBaPipePair();
+   CBaPipePairSvr* p = new CBaPipePairSvr();
    if (!p) {
       return 0;
    }
 
    p->mpRd = CBaPipe::CreateSvrRd();
    if (!p->mpRd) {
+      delete p;
       return 0;
    }
 
@@ -250,7 +251,7 @@ CBaPipePair* CBaPipePair::Create(const char *name, TBaCoreThreadFun rout) {
 }
 
 //
-bool CBaPipePair::Destroy(CBaPipePair *pHdl) {
+bool CBaPipePairSvr::Destroy(CBaPipePairSvr *pHdl) {
    if (!pHdl) {
       return false;
    }
@@ -274,7 +275,7 @@ bool CBaPipePair::Destroy(CBaPipePair *pHdl) {
 }
 
 //
-TBaIpcClntPipes CBaPipePair::GetClientFds() {
+TBaIpcClntPipes CBaPipePairSvr::GetClientFds() {
    TBaIpcClntPipes pipes;
 
    pipes.fdRd = mpWr->GetClientFd();
@@ -284,9 +285,9 @@ TBaIpcClntPipes CBaPipePair::GetClientFds() {
 }
 
 //
-void CBaPipePair::svrRout(TBaCoreThreadArg *pArg) {
+void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
 
-   CBaPipePair* p = (CBaPipePair*)pArg->pArg;
+   CBaPipePairSvr* p = (CBaPipePairSvr*)pArg->pArg;
    struct epoll_event *pEvents;
    pEvents = (epoll_event*)calloc(MAXEVENTS, sizeof(pEvents));
 
@@ -305,11 +306,12 @@ void CBaPipePair::svrRout(TBaCoreThreadArg *pArg) {
          if (!(pEvents[i].events & EPOLLIN)) {
             // An error has occurred on this fd, or the socket is not
             // ready for reading (why were we notified then?)
+            // TODO: msg with state?
             ERROR_("Error in epoll fd (%i): %s", pEvents[i].data.fd, strerror(errno));
-//            close (pEvents[i].data.fd);
             continue;
          }
-         // do something with the fd (pipe)
+
+         // Do something with the fd (pipe)
          p->handleIpcMsg(pEvents[i].data.fd);
 
       }
@@ -321,7 +323,7 @@ void CBaPipePair::svrRout(TBaCoreThreadArg *pArg) {
 }
 
 //
-bool CBaPipePair::handleIpcMsg(int fdRd) {
+bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
 
    if (fdRd == -1) {
       // error?
@@ -330,8 +332,6 @@ bool CBaPipePair::handleIpcMsg(int fdRd) {
    }
 
    size_t sz = sizeof(TBaIpcMsg);
-   char *pRawMsg = (char *)calloc(1, sz);
-
    mMsg = {0};
 
    // If not all was read at once, continue reading
@@ -345,34 +345,45 @@ bool CBaPipePair::handleIpcMsg(int fdRd) {
       }
    } while (rc != 0);
 
-
+   // Check if there is a Wr fd to reply
    if (mpWr->GetServerFd() < 0) {
       mpWr->OpenSvrWr();
    }
 
    switch (mMsg.cmd) {
       case eBaIpcCmdGetPipePair: {
-         TBaIpcClntPipes pipes = GetClientFds();
          mMsg.cmd = eBaIpcReplyPipePair;
-         memcpy(mMsg.data.data, &pipes, sizeof(TBaIpcClntPipes));
-         rc = mpWr->Write((char*)&mMsg, sizeof(TBaIpcMsg));
-         TRACE_("Answered(%i)", rc);
 
+         // dummy answer
+         strcpy(mMsg.data.data, "GetPipes");
          break;
       }
       case eBaIpcCmdCall:
+         mMsg.cmd = eBaIpcReplyCmdCall;
+//         mMsg.data.data; // This is the name of the function to be called
+         memset(mMsg.data.data, 0, sizeof(mMsg.data.data));
 
+         // dummy answer
+         strcpy(mMsg.data.data, "CallFun");
          break;
       case eBaIpcCmdGetVar:
+         mMsg.cmd = eBaIpcReplyCmdGetVar;
+//         mMsg.data.data; // This is the name of the variable to be called
+         memset(mMsg.data.data, 0, sizeof(mMsg.data.data));
+
+         // dummy answer
+         strcpy(mMsg.data.data, "GetVar");
 
          break;
       default:
          ERROR_("IPC msg failed");
-         free(pRawMsg);
          return eBaBoolRC_Error;
    }
 
-   free(pRawMsg);
+   mMsg.cmd = eBaIpcReplyPipePair;
+   rc = mpWr->Write((char*)&mMsg, sizeof(TBaIpcMsg));
+   TRACE_("Answered(%i)", rc); // todelete
+
    return rc;
 }
 
