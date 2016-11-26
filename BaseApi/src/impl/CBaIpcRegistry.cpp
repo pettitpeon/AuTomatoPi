@@ -44,6 +44,7 @@
 //
 CBaIpcRegistry* CBaIpcRegistry::Create() {
 
+
    return 0;
 }
 
