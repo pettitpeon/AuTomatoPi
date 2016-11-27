@@ -130,10 +130,14 @@ typedef struct TBaIpcRegVar {
     C++ Interface
  -----------------------------------------------------------------------------*/
 
-
 template <class R, class... A>
 class CBaIpcFunctor {
 public:
+
+   static_assert(
+         std::is_fundamental<R>::value ||
+         std::is_same<R, const char *>::value
+         , "Bad return type");
 
    typedef R(*TFun)(A...);
 
@@ -151,6 +155,7 @@ public:
    };
 
    CBaIpcFunctor(TFun fun) : mFun(fun) { };
+   CBaIpcFunctor() : mFun(0) { };
 
    CBaIpcFunctor(A... arg) : mFun(0), mArgs(std::make_tuple(arg...)) { };
 private:
@@ -168,9 +173,11 @@ private:
    };
 
    template<int ...S>
-   R callFunc(seq<S...>)
-   {
-     return mFun(std::get<S>(mArgs) ...);
+   R callFunc(seq<S...>) {
+//      std::string ret = static_cast<std::string> (mFun(std::get<S>(mArgs) ...));
+//      R ret2;
+      return mFun(std::get<S>(mArgs) ...);
+
    }
 
 public:
@@ -183,6 +190,8 @@ private:
 
 class CBaIpcRegistry {
 public:
+
+
    static CBaIpcRegistry* Create();
 
    static bool Destroy(
@@ -190,9 +199,12 @@ public:
          );
 
    template <class R, class... A>
-   bool Register(CBaIpcFunctor<R, A...> &ftor) {
+   bool Register(R(*fun)(A...)) {
+      typename CBaIpcFunctor<R, A...>::TFun fun2;
+      fun2 = fun;
 
-      mFunReg["0"] = &ftor;
+      CBaIpcFunctor<R, A...> *pFtor = new CBaIpcFunctor<R, A...>(fun);
+      mFunReg["0"] = pFtor;
 
       return false;
    };
@@ -218,19 +230,22 @@ double iTimesD(int i, double d) {
    return i*d;
 }
 
+const char* strFun(const char* s) {
+   return s;
+}
+
 int main(int argc, char* argv[]) {
 
    CBaIpcRegistry reg;
-   CBaIpcFunctor<double, int, double> ftor(1, 2.0);
-   ftor.mFun = iTimesD;
-   reg.Register(ftor);
+   CBaIpcFunctor<double, int, double> ftor(iTimesD);
+   reg.Register(strFun);
 
-   std::cout << reg.Call<double>(4, 5.0) << " hello IPC " << ftor(2, 3.0) << std::endl;
+// std::cout << reg.Call<double>(4, 5.0) << " hello IPC " << ftor(2, 3.0) << std::endl;
 
+   std::cout << reg.Call<const char *>("Hello registry") << " hello IPC" << std::endl;
 
    return 0;
 }
-
 
 
 #endif
