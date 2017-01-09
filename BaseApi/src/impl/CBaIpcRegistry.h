@@ -20,6 +20,23 @@
 #include <functional>
 #include <tuple>
 
+typedef enum EBaIpcVarType {
+   eBaIpcVarTypeUnkn = 0,
+   eBaIpcVarTypeU8,
+   eBaIpcVarTypeU16,
+   eBaIpcVarTypeU32,
+   eBaIpcVarTypeU64,
+   eBaIpcVarTypeI8,
+   eBaIpcVarTypeI16,
+   eBaIpcVarTypeI32,
+   eBaIpcVarTypeI64,
+   eBaIpcVarTypeFlt,
+   eBaIpcVarTypeDou,
+   eBaIpcVarTypeStr,
+   eBaIpcVarTypePtr,
+   eBaIpcVarTypeMax = eBaIpcVarTypePtr
+} EBaIpcVarType;
+
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
@@ -28,6 +45,34 @@ typedef struct TBaIpcRegVar {
    int type;
    size_t sz;
 } TBaIpcRegVar;
+
+// s, i, f, d
+// The primitive type int32 is enough to represent everything from char to
+// int32 signed or unsigned because the relying memory is the same
+// 64bit quantities are handled extra
+// Float and double must be handled extra as well because the relying memory
+// is different
+typedef struct TBaIpcRegFun {
+   void *pFun;
+   std::string type;
+} TBaIpcRegFun;
+
+
+///
+typedef struct TBaIpcArg {
+   union {
+      void *p;
+      float f;
+      double d;
+      int32_t i;
+      int64_t I;
+   };
+} TBaIpcArg;
+
+///
+typedef struct TBaIpcFunArg {
+   TBaIpcArg a[3];
+} TBaIpcFunArg;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -38,43 +83,43 @@ typedef struct TBaIpcRegVar {
  -----------------------------------------------------------------------------*/
 
 
-template <class R, class... A>
-class CBaIpcFunctor {
-public:
-
-   typedef R(*TFun)(A...);
-
-   void SaveArgs(A... arg) {
-      mArgs = std::make_tuple(arg...);
-   };
-
-   R operator()() {
-//      return mFun(mArgs...);
-      return callFunc(typename gens<sizeof...(A)>::type());
-   };
-
-private:
-
-   // Magic
-   template<int...>
-   struct seq {};
-
-   template<int N, int... S>
-   struct gens : gens<N-1, N-1, S...> {};
-
-   template<int... S>
-   struct gens<0, S...> {
-      typedef seq<S...> type;
-   };
-
-   template<R, int ...S>
-   R callFunc(seq<S...>)
-   {
-     return func(std::get<S>(mArgs) ...);
-   }
-   TFun mFun;
-   std::tuple<A...> mArgs;
-};
+//template <class R, class... A>
+//class CBaIpcFunctor {
+//public:
+//
+//   typedef R(*TFun)(A...);
+//
+//   void SaveArgs(A... arg) {
+//      mArgs = std::make_tuple(arg...);
+//   };
+//
+//   R operator()() {
+////      return mFun(mArgs...);
+//      return callFunc(typename gens<sizeof...(A)>::type());
+//   };
+//
+//private:
+//
+//   // Magic
+//   template<int...>
+//   struct seq {};
+//
+//   template<int N, int... S>
+//   struct gens : gens<N-1, N-1, S...> {};
+//
+//   template<int... S>
+//   struct gens<0, S...> {
+//      typedef seq<S...> type;
+//   };
+//
+//   template<R, int ...S>
+//   R callFunc(seq<S...>)
+//   {
+//     return func(std::get<S>(mArgs) ...);
+//   }
+//   TFun mFun;
+//   std::tuple<A...> mArgs;
+//};
 
 
 class CBaIpcRegistry {
@@ -85,27 +130,39 @@ public:
          CBaIpcRegistry *pHadl
          );
 
-   template <class R, class... A>
-   bool Register(CBaIpcFunctor<R, A...> &ftor) {
 
-      mFunReg["0"] = &ftor;
+   virtual bool RegisterFun(std::string name, TBaIpcRegFun fun);
+
+   virtual bool RemoveFun(std::string name) {
+      return mFunReg.erase(name) > 0;
+   };
+
+   virtual bool CallFun(std::string name, TBaIpcFunArg a);
+
+   virtual bool RegisterVar(std::string name, TBaIpcRegVar var) {
+      if (varIsValid(var)) {
+         return mVarReg.emplace(name, var).second;
+      }
 
       return false;
    };
 
-   template <class R, class... A>
-   R Call(A... arg) {
-      return mFunReg["0"](arg...);
+   virtual bool RemoveVar(std::string name) {
+      return mVarReg.erase(name) > 0;
    };
 
    CBaIpcRegistry();
    virtual ~CBaIpcRegistry() {};
 
 private:
+   bool varIsValid(const TBaIpcRegVar &rVar) {
+      return rVar.pVar && rVar.type > eBaIpcVarTypeUnkn && rVar.type <= eBaIpcVarTypeMax &&
+            // if str || ptr, force sz != 0
+            ((rVar.type != eBaIpcVarTypeStr && rVar.type != eBaIpcVarTypePtr) || !rVar.sz);
+   }
 
-   std::map<std::string, void *> mFunReg;
+   std::map<std::string, TBaIpcRegFun> mFunReg;
    std::map<std::string, TBaIpcRegVar> mVarReg;
-
 };
 
 

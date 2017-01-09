@@ -149,7 +149,8 @@ TBaCoreMonTStampUs BaCoreGetMonTStamp();
 /******************************************************************************/
 /** Converts time stamp structure to string. If the user gives a buffer (@c pBuf),
  *  it is used and returned. If the buffer is null, the string is mallocated and
- *  user must free the returned pointer to avoid memory leaks
+ *  user must free the returned pointer to avoid memory leaks. The string is
+ *  22 char long and has the following format: Y/M/D h:min:s.ms
  *  @return Time stamp string if success, otherwise, null
  */
 const char* BaCoreTStampToStr(
