@@ -46,12 +46,13 @@ typedef struct TBaIpcRegVar {
    size_t sz;
 } TBaIpcRegVar;
 
-// s, i, f, d
+// s, i, f, d, I
 // The primitive type int32 is enough to represent everything from char to
 // int32 signed or unsigned because the relying memory is the same
 // 64bit quantities are handled extra
 // Float and double must be handled extra as well because the relying memory
 // is different
+// return type, parameters: "v,idf"
 typedef struct TBaIpcRegFun {
    void *pFun;
    std::string type;
