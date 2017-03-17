@@ -19,7 +19,9 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include <string>
-#include <sys/epoll.h>
+#ifdef __linux
+# include <sys/epoll.h>
+#endif
 #include "BaBool.h"
 #include "BaCore.h"
 

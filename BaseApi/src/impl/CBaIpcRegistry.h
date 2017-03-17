@@ -19,6 +19,7 @@
 #include <string>
 #include <functional>
 #include <tuple>
+#include "BaIpcRegistry.h"
 
 typedef enum EBaIpcVarType {
    eBaIpcVarTypeUnkn = 0,
@@ -40,40 +41,7 @@ typedef enum EBaIpcVarType {
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
-typedef struct TBaIpcRegVar {
-   void *pVar;
-   int type;
-   size_t sz;
-} TBaIpcRegVar;
 
-// s, i, f, d, I
-// The primitive type int32 is enough to represent everything from char to
-// int32 signed or unsigned because the relying memory is the same
-// 64bit quantities are handled extra
-// Float and double must be handled extra as well because the relying memory
-// is different
-// return type, parameters: "v,idf"
-typedef struct TBaIpcRegFun {
-   void *pFun;
-   std::string type;
-} TBaIpcRegFun;
-
-
-///
-typedef struct TBaIpcArg {
-   union {
-      void *p;
-      float f;
-      double d;
-      int32_t i;
-      int64_t I;
-   };
-} TBaIpcArg;
-
-///
-typedef struct TBaIpcFunArg {
-   TBaIpcArg a[3];
-} TBaIpcFunArg;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -123,22 +91,28 @@ typedef struct TBaIpcFunArg {
 //};
 
 
-class CBaIpcRegistry {
+class CBaIpcRegistry : public IBaIpcRegistry{
 public:
    static CBaIpcRegistry* Create();
 
    static bool Destroy(
-         CBaIpcRegistry *pHadl
+         CBaIpcRegistry *pHdl
          );
 
+   virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) {
+      std::string sType = fun.type;
 
-   virtual bool RegisterFun(std::string name, TBaIpcRegFun fun);
+      if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':') {
+         return false;
+      }
+      return mFunReg.emplace(name, fun).second;
+   }
 
    virtual bool RemoveFun(std::string name) {
       return mFunReg.erase(name) > 0;
    };
 
-   virtual bool CallFun(std::string name, TBaIpcFunArg a);
+   virtual bool CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pOut);
 
    virtual bool RegisterVar(std::string name, TBaIpcRegVar var) {
       if (varIsValid(var)) {
@@ -152,10 +126,11 @@ public:
       return mVarReg.erase(name) > 0;
    };
 
-   CBaIpcRegistry();
+private:
+
+   CBaIpcRegistry() {};
    virtual ~CBaIpcRegistry() {};
 
-private:
    bool varIsValid(const TBaIpcRegVar &rVar) {
       return rVar.pVar && rVar.type > eBaIpcVarTypeUnkn && rVar.type <= eBaIpcVarTypeMax &&
             // if str || ptr, force sz != 0

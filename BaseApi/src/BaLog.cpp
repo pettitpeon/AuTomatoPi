@@ -177,6 +177,8 @@ IBaLog * IBaLogCreate(const TBaLogOptions *pOpts) {
 
 //
 TBaBoolRC IBaLogDestroy(IBaLog *pHdl, TBaBool saveCfg) {
+
+   // TODO: dynamic cast has to be done here instead of in CBaLog?
    return CBaLog::Destroy(pHdl, saveCfg);
 }
 

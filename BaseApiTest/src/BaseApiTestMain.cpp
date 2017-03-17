@@ -32,6 +32,7 @@
 #include "BaProcTest.h"
 #include "BaSwOsciTest.h"
 #include "BaRPiTest.h"
+#include "BaIpcTest.h"
 
 #include "CtrlPT1Test.h"
 
@@ -116,7 +117,7 @@ int main(int argc, char* argv[]) {
 /*  ...
 **/
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
-   pSuite->addTest(CTestTemplate::suite());
+//   pSuite->addTest(CTestTemplate::suite());
 //   pSuite->addTest(CBaComTest::suite());
 //   pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaGpioTest::suite());
@@ -128,6 +129,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CCtrlPT1Test::suite());
 //   pSuite->addTest(CBaSwOsciTest::suite());
 //   pSuite->addTest(CBaRPiTest::suite());
+   pSuite->addTest(CBaIpcTest::suite());
    return pSuite;
 }
 
