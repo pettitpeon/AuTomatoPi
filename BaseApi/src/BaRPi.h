@@ -55,8 +55,6 @@ extern "C" {
 #endif
 
 
-/// @name Factory
-
 /******************************************************************************/
 /** Get the board information from the RPi
  *  @return True if success, otherwise, false

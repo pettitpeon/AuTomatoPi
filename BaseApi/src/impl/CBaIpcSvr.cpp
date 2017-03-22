@@ -17,11 +17,13 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 #include <mutex>
 
 #include "BaUtils.hpp"
 #include "BaLogMacros.h"
 #include "BaGenMacros.h"
+#include "CBaIpcRegistry.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -299,7 +301,11 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
       if (nfds < 0) {
          ERROR_("Error in epoll_wait: %s", strerror(errno));
       }
-      TRACE_("polled(%i)", nfds);
+
+      // todo: delete
+      if (nfds > 0) {
+         TRACE_("polled(%i)", nfds);
+      }
 
       // for each ready socket
       for(int i = 0; i < nfds; i++) {
@@ -355,16 +361,26 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
          mMsg.cmd = eBaIpcReplyPipePair;
 
          // dummy answer
-         strcpy(mMsg.data.data, "GetPipes");
+         TBaIpcClntPipes pipes;
+         pipes.fdWr = mpRd->GetServerFd();
+         pipes.fdRd = mpWr->GetServerFd();
+         memcpy(mMsg.data.data, &pipes, sizeof(pipes));
+
          break;
       }
-      case eBaIpcCmdCall:
+      case eBaIpcCmdCall: {
          mMsg.cmd = eBaIpcReplyCmdCall;
 //         mMsg.data.data; // This is the name of the function to be called
-         memset(mMsg.data.data, 0, sizeof(mMsg.data.data));
+         TBaIpcFunCall *pFc = (TBaIpcFunCall*) mMsg.data.data;
+
+         TBaIpcArg ret = {0};
+         CBaIpcRegistry::SCallFun(pFc->name, pFc->a, &ret);
+         memcpy(mMsg.data.data, &ret, sizeof(ret));
+
 
          // dummy answer
-         strcpy(mMsg.data.data, "CallFun");
+//         strcpy(mMsg.data.data, "CallFun");
+      }
          break;
       case eBaIpcCmdGetVar:
          mMsg.cmd = eBaIpcReplyCmdGetVar;
@@ -380,9 +396,9 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
          return eBaBoolRC_Error;
    }
 
-   mMsg.cmd = eBaIpcReplyPipePair;
+   //mMsg.cmd = eBaIpcReplyPipePair;
    rc = mpWr->Write((char*)&mMsg, sizeof(TBaIpcMsg));
-   TRACE_("Answered(%i)", rc); // todelete
+   TRACE_("Answered(%i, %i)", rc, mMsg.cmd); // todelete
 
    return rc;
 }

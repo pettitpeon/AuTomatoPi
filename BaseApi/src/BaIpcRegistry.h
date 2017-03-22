@@ -46,18 +46,20 @@ typedef struct TBaIpcRegVar {
 // return type, parameters: "v,idf"
 typedef struct TBaIpcRegFun {
    void *pFun;
-   char *type;
+   const char *type;
 } TBaIpcRegFun;
 
 
 ///
 typedef struct TBaIpcArg {
    union {
-      void *p;
-      float f;
-      double d;
-      int32_t i;
-      int64_t I;
+      void    *p;
+      float    f;
+      double   d;
+      int32_t  i;
+      uint32_t u;
+      int64_t  I;
+      uint64_t U;
    };
 } TBaIpcArg;
 
@@ -101,15 +103,35 @@ TBaBoolRC BaIpcRegistryDestroy(
 class IBaIpcRegistry {
 public:
 
+   /// @name Functions registry
+   //@{
    /***************************************************************************/
-   /** ...
-    *  @return ...
+   /** Register a function to the IPC registry
+    *  @return true if success
     */
-   virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) = 0;
+   virtual bool RegisterFun(
+         std::string name, ///< [in] Function name
+         TBaIpcRegFun fun ///< [in] Function descriptor
+         ) = 0;
 
-   virtual bool RemoveFun(std::string name) = 0;
+   /***************************************************************************/
+   /** Unregister a function from the IPC registry
+    *  @return true if success
+    */
+   virtual bool UnregisterFun(
+         std::string name ///< [in] Function name
+         ) = 0;
 
-   virtual bool CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pOut) = 0;
+   /***************************************************************************/
+   /** Register a function to the IPC registry
+    *  @return true if success
+    */
+   virtual bool CallFun(
+         std::string name, ///< [in] Function name
+         TBaIpcFunArg a, ///< [in] Function arguments
+         TBaIpcArg *pRet ///< [out] Function return value
+         ) = 0;
+   //@}
 
    virtual bool RegisterVar(std::string name, TBaIpcRegVar var) = 0;
 

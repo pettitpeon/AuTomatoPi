@@ -223,9 +223,30 @@ public:
          IBaLog* pLog,    ///< [in] Handle of the target logger
          EBaLogPrio prio, ///< [in] Message priority
          const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
-         const char *msg  ///< [in] Message format
+         const char *msg  ///< [in] Message
          ) = 0;
    //@}
+
+   /***************************************************************************/
+   /** Logs a message to the default log with state and maximum length of 65534
+    *  chars
+    */
+   virtual void SetDefLog(
+         EBaLogPrio prio, ///< [in] Message priority
+         const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+         const char *msg  ///< [in] Message
+         ) = 0;
+
+   /***************************************************************************/
+   /** Logs a message to the default log with state and maximum length of 65534
+    *  chars
+    */
+   virtual void SetDefLogF(
+         EBaLogPrio prio, ///< [in] Message priority
+         const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+         const char *fmt, ///< [in] Message format
+         ...              ///< [in] Format arguments
+         ) = 0;
 
    /// @name Get, reset
    //@{

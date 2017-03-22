@@ -83,6 +83,19 @@ public:
          const char *msg
          );
 
+   virtual void SetDefLog(
+         EBaLogPrio prio, ///< [in] Message priority
+         const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+         const char *msg  ///< [in] Message
+         );
+
+   virtual void SetDefLogF(
+         EBaLogPrio prio, ///< [in] Message priority
+         const char *tag, ///< [in] Optional tag of maximum 6 chars + 7th terminating null
+         const char *fmt,
+         ...
+         );
+
    virtual void Reset() { mSet = false; };
    virtual bool Get() { return mSet; };
 

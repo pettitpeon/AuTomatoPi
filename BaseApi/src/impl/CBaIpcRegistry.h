@@ -41,63 +41,30 @@ typedef enum EBaIpcVarType {
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
+///
+typedef struct TBaIpcFunCall {
+   const char* name;
+   TBaIpcFunArg a;
+} TBaIpcFunCall;
 
 
-/*------------------------------------------------------------------------------
-    C Interface
- -----------------------------------------------------------------------------*/
+double TestRegFun(uint32_t i, float f);
 
 /*------------------------------------------------------------------------------
     C++ Interface
  -----------------------------------------------------------------------------*/
 
-
-//template <class R, class... A>
-//class CBaIpcFunctor {
-//public:
-//
-//   typedef R(*TFun)(A...);
-//
-//   void SaveArgs(A... arg) {
-//      mArgs = std::make_tuple(arg...);
-//   };
-//
-//   R operator()() {
-////      return mFun(mArgs...);
-//      return callFunc(typename gens<sizeof...(A)>::type());
-//   };
-//
-//private:
-//
-//   // Magic
-//   template<int...>
-//   struct seq {};
-//
-//   template<int N, int... S>
-//   struct gens : gens<N-1, N-1, S...> {};
-//
-//   template<int... S>
-//   struct gens<0, S...> {
-//      typedef seq<S...> type;
-//   };
-//
-//   template<R, int ...S>
-//   R callFunc(seq<S...>)
-//   {
-//     return func(std::get<S>(mArgs) ...);
-//   }
-//   TFun mFun;
-//   std::tuple<A...> mArgs;
-//};
-
-
-class CBaIpcRegistry : public IBaIpcRegistry{
+class CBaIpcRegistry : public IBaIpcRegistry {
 public:
    static CBaIpcRegistry* Create();
 
    static bool Destroy(
          CBaIpcRegistry *pHdl
          );
+
+   static bool SRegisterFun(std::string name, TBaIpcRegFun fun);
+
+   static bool SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet);
 
    virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) {
       std::string sType = fun.type;
@@ -108,11 +75,11 @@ public:
       return mFunReg.emplace(name, fun).second;
    }
 
-   virtual bool RemoveFun(std::string name) {
+   virtual bool UnregisterFun(std::string name) {
       return mFunReg.erase(name) > 0;
    };
 
-   virtual bool CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pOut);
+   virtual bool CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet);
 
    virtual bool RegisterVar(std::string name, TBaIpcRegVar var) {
       if (varIsValid(var)) {
@@ -127,7 +94,6 @@ public:
    };
 
 private:
-
    CBaIpcRegistry() {};
    virtual ~CBaIpcRegistry() {};
 

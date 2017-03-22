@@ -18,6 +18,7 @@
 
 #include "CBaMsg.h"
 #include "BaUtils.hpp"
+#include "BaseApi.h"
 
 //
 void CBaMsg::SetPrintF(const char *fmt, ...) {
@@ -74,5 +75,23 @@ void CBaMsg::SetLog(IBaLog* pLog, EBaLogPrio prio, const char *tag, const char *
    if(pLog && !mSet) {
       pLog->Log(prio, tag, msg);
       mSet = true;
+   }
+}
+
+//
+void CBaMsg::SetDefLog(EBaLogPrio prio, const char *tag, const char *msg) {
+   if(!mSet) {
+      mSet = BaApiLogF(prio, tag, msg);
+   }
+}
+
+//
+void CBaMsg::SetDefLogF(EBaLogPrio prio, const char *tag, const char *fmt, ...) {
+   if(!mSet) {
+      va_list arg;
+      va_start(arg, fmt);
+      std::string s = BaFString(fmt, arg);
+      va_end(arg);
+      mSet = BaApiLogF(prio, tag, s.c_str());
    }
 }

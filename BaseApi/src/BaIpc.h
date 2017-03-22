@@ -19,6 +19,7 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include "BaBool.h"
+#include "BaIpcRegistry.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -52,7 +53,11 @@ extern "C" {
 
 TBaBoolRC BaIpcInitClnt();
 
-TBaBoolRC BaIpcCallFun();
+TBaBoolRC BaIpcCallFun(
+      const char* name,
+      TBaIpcFunArg a,
+      TBaIpcArg *pRet
+      );
 
 /// @name Factory
 //@{

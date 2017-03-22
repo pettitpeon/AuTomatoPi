@@ -31,12 +31,14 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaIpcTest);
 
-   CPPUNIT_TEST(Test);
+   CPPUNIT_TEST(FunRegistry);
+   CPPUNIT_TEST(IPC);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
-   void Test();
+   void FunRegistry();
+   void IPC();
 };
 
 #endif // BAIPCTEST_H_

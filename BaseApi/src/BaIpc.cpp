@@ -20,6 +20,7 @@
 #include "BaIpc.h"
 #include "CBaIpcSvr.h"
 #include "BaLogMacros.h"
+#include "CBaIpcRegistry.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -56,14 +57,18 @@ TBaBoolRC BaIpcInitClnt() {
    msg.cmd = eBaIpcCmdGetPipePair;
 
    BaIpcWritePipe(sWrFifo, (const char*)&msg, sizeof(TBaIpcMsg));
+
    for (int i = 0; i < 50; ++i) {
       BaCoreMSleep(20);
       BaIpcReadPipe(fdRd, (char*)&msg, sizeof(TBaIpcMsg));
       if (msg.cmd == eBaIpcReplyPipePair) {
 
-         TBaIpcClntPipes* pPipes = (TBaIpcClntPipes*)msg.data.data;
-         if (pPipes->fdWr == sWrFifo && pPipes->fdRd == fdRd) {
-            sRdFifo = pPipes->fdRd;
+         TBaIpcClntPipes* p = (TBaIpcClntPipes*)&msg.data.data;
+         printf("eBaIpcReplyPipePair: r %i=%i,  w %i=%i\n",
+               p->fdRd, fdRd, p->fdWr, fdWr);
+
+         if (p->fdWr == sWrFifo && p->fdRd == fdRd) {
+            sRdFifo = p->fdRd;
             return eBaBoolRC_Success;
          }
       }
@@ -72,17 +77,35 @@ TBaBoolRC BaIpcInitClnt() {
 }
 
 //
-TBaBoolRC BaIpcCallFun(){
+TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
    if (sRdFifo == -1 || sWrFifo == -1) {
       return eBaBoolRC_Error;
    }
    TBaIpcMsg msg = {0};
 
    msg.cmd = eBaIpcCmdCall;
-   memcpy(msg.data.data, &"hello", sizeof("hello"));
+   TBaIpcFunCall fc;
+   fc.name = name;
+   fc.a = a;
+   memcpy(msg.data.data, &fc, sizeof(fc));
 
-   BaIpcWritePipe(sWrFifo, (char*) &msg, sizeof(TBaIpcMsg));
-   return BaIpcWritePipe(sWrFifo, (char*) &msg, sizeof(TBaIpcMsg));
+   // send mesg
+   if (!BaIpcWritePipe(sWrFifo, (char*) &msg, sizeof(TBaIpcMsg))) {
+      return eBaBoolRC_Error;
+   }
+
+   // todo: wait for reply??
+   for (int i = 0; i < 10; ++i) {
+      BaCoreMSleep(100);
+      memset(msg.data.data, 0, sizeof(msg.data.data));
+      BaIpcReadPipe(sRdFifo, (char*)&msg, sizeof(TBaIpcMsg));
+      if (msg.cmd == eBaIpcReplyCmdCall) {
+         *pRet = *((TBaIpcArg*)msg.data.data);
+         return eBaBoolRC_Success;
+      }
+   }
+
+   return eBaBoolRC_Error;
 }
 
 //
@@ -93,14 +116,14 @@ TBaBoolRC BaIpcCreatePipeReader() {
 
    int rc = mkfifo(DEF_PIPE, S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
    if (rc != 0) {
-      printf("%s\n", strerror(errno));
+      printf("BaIpcCreatePipeReader: %s\n", strerror(errno));
       return eBaBoolRC_Error;
    }
 
    int fd = open(DEF_PIPE, O_RDONLY | O_NONBLOCK);
 
    if (fd < 0) {
-      printf("%s\n", strerror(errno));
+      printf("BaIpcCreatePipeReader: %s\n", strerror(errno));
       return eBaBoolRC_Error;
    }
 
@@ -147,7 +170,8 @@ TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t size) {
 
    int rc = read(fd, pData, size);
    if (rc < 0) {
-      printf("%s\n", strerror(errno));
+      //todo: this can be a spamming message
+      printf("BaIpcReadPipe: %s\n", strerror(errno));
       return eBaBoolRC_Error;
    }
 
