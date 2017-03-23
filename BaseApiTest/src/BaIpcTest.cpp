@@ -44,6 +44,11 @@ void CBaIpcTest::tearDown() {
       regFun.type = TYPE;
 
 
+double TestRegFun(uint32_t i, float f) {
+   return f + i;
+}
+
+
 /* ****************************************************************************/
 /*  ...
  */
@@ -58,9 +63,6 @@ void CBaIpcTest::FunRegistry() {
    TBaIpcArg tOut = {0};
 
    a.a[0].i = 7777777;
-
-   ret = pReg->CallFun("dummy", a, &tOut);
-   std::cout << tOut.d << "\n" << (double)(a.a[1].f + a.a[0].u) << std::endl;
 
    //fun.pFun = reinterpret_cast<void*>(testFunInt);
    SET_FUN(fun, tFunInt, "I:If");

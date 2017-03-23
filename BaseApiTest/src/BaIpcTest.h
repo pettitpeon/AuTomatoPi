@@ -32,7 +32,7 @@ public:
    CPPUNIT_TEST_SUITE(CBaIpcTest);
 
    CPPUNIT_TEST(FunRegistry);
-   CPPUNIT_TEST(IPC);
+   //CPPUNIT_TEST(IPC);
 
    CPPUNIT_TEST_SUITE_END();
 

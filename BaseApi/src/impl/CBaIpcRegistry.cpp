@@ -17,6 +17,7 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
+#include <string.h>
 #include "CBaIpcRegistry.h"
 #include "BaLogMacros.h"
 #include "BaGenMacros.h"
@@ -25,6 +26,35 @@
     Defines
  -----------------------------------------------------------------------------*/
 #define TAG "IpcReg"
+#define ANYVOIDSWITCH(args...)                          \
+   switch (rFun.type[i+2]) {                            \
+   case 'i':                                            \
+      return callVoid(rFun, as, i+1, args, as.a[i].i);  \
+   case 'I':                                            \
+      return callVoid(rFun, as, i+1, args, as.a[i].I);  \
+   case 'd':                                            \
+      return callVoid(rFun, as, i+1, args, as.a[i].d);  \
+   case 'f':                                            \
+      return callVoid(rFun, as, i+1, args, as.a[i].f);  \
+                                                        \
+    default:                                            \
+      break;                                            \
+   }
+
+#define ANYCALLSWITCH(args...)                                     \
+   switch (rFun.type[i+2]) {                                       \
+   case 'i':                                                       \
+      return callAny<TR>(rFun, as, i+1, args, as.a[i].i, rRet);    \
+   case 'I':                                                       \
+      return callAny<TR>(rFun, as, i+1, args, as.a[i].I, rRet);    \
+   case 'd':                                                       \
+      return callAny<TR>(rFun, as, i+1, args, as.a[i].d, rRet);    \
+   case 'f':                                                       \
+      return callAny<TR>(rFun, as, i+1, args, as.a[i].f, rRet);    \
+                                                                   \
+    default:                                                       \
+      break;                                                       \
+   }
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -33,22 +63,51 @@
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &rA);
 
-template <typename T>
-LOCAL bool callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &rA, T &rRet);
+
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i);
+
+template <typename TA1>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1);
+
+template <typename TA1, typename TA2>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2);
+
+template <typename TA1, typename TA2, typename TA3>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3);
+
+template <typename TA1, typename TA2, typename TA3, typename TA4>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3, TA4 a4);
+
+template <typename TR>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      bool &rRet);
+
+template <typename TR, typename TA1>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, bool &rRet);
+
+template <typename TR, typename TA1, typename TA2>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, bool &rRet);
+
+template <typename TR, typename TA1, typename TA2, typename TA3>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3, bool &rRet);
+
+template <typename TR, typename TA1, typename TA2, typename TA3, typename TA4>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3, TA4 a4, bool &rRet);
 
 /*------------------------------------------------------------------------------
     Local variables
  -----------------------------------------------------------------------------*/
 static CBaIpcRegistry* spReg = CBaIpcRegistry::Create();
 
-/*------------------------------------------------------------------------------
-    Test function
- -----------------------------------------------------------------------------*/
-double TestRegFun(uint32_t i, float f) {
-   return f + i;
-}
 
 /*------------------------------------------------------------------------------
     C++ Interface
@@ -83,10 +142,15 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
    }
 
    // Output
+   bool rc = false;
    TBaIpcArg tRet = {0};
    pRet = pRet ? pRet : &tRet;
 
    TBaIpcRegFun fun = it->second;
+
+   if (!fun.type || strlen(fun.type) < 3 || fun.type[1] != ':') {
+      return false;
+   }
 
    // 'I' has pointer, I8, I16, I32 and I64. Also unsigned
    // d and f have to be handled separately.
@@ -94,157 +158,173 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
    // todo: use memcopy to copy the whole 8 bytes of return value?
    switch (fun.type[0]) {
       case 'v':
-         callVoid(fun, a);
-         return true;
+         return callVoid(fun, a, 0);
          break;
+      case 'i':
+         pRet->i = callAny<int32_t>(fun, a, 0, rc);
+         return rc;
       case 'I':
-         callAny<int64_t>(fun, a, pRet->I);
-         return true;
+         pRet->I = callAny<int64_t>(fun, a, 0, rc);
+         return rc;
       case 'f':
-         callAny<float>(fun, a, pRet->f);
-         break;
+         pRet->f = callAny<float>(fun, a, 0, rc);
+         return rc;
       case 'd':
-         callAny<double>(fun, a, pRet->d);
-         break;
+         pRet->d = callAny<double>(fun, a, 0, rc);
+         return rc;
       default : return false;
    }
 
    return false;
 };
 
-// "v:idf"
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &rA) {
-
-   std::string sType = rFun.type;
-
-   //
-   if (rFun.type[1] != ':') {
-      // TODO: error
-      return false;
+//
+template <typename TR, typename TA1, typename TA2, typename TA3, typename TA4>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3, TA4 a4, bool &rRet) {
+   if (i+2 >= strlen(rFun.type)) {
+      rRet = true;
+      return ((TR(*)(TA1, TA2, TA3, TA4))rFun.pFun)(a1, a2, a3, a4);
    }
-
-   // No parameters
-   if (rFun.type[2] == 'v')      { ((void(*)()) rFun.pFun)(); return true; }
-
-   // 3
-   if (sType.substr(2) == "I")   { ((void(*)(int64_t))rFun.pFun)(rA.a[0].I); return true; }
-   if (sType.substr(2) == "f")   { ((void(*)(float))  rFun.pFun)(rA.a[0].f); return true; }
-   if (sType.substr(2) == "d")   { ((void(*)(double)) rFun.pFun)(rA.a[0].d); return true; }
-
-   // 3 x 3 = 9
-   if (sType.substr(2) == "II")  { ((void(*)(int64_t, int64_t))rFun.pFun)(rA.a[0].I, rA.a[1].I); return true; }
-   if (sType.substr(2) == "If")  { ((void(*)(int64_t, float))  rFun.pFun)(rA.a[0].I, rA.a[1].f); return true; }
-   if (sType.substr(2) == "Id")  { ((void(*)(int64_t, double)) rFun.pFun)(rA.a[0].I, rA.a[1].d); return true; }
-
-   if (sType.substr(2) == "fI")  { ((void(*)(int64_t, int64_t))rFun.pFun)(rA.a[0].f, rA.a[1].I); return true; }
-   if (sType.substr(2) == "ff")  { ((void(*)(int64_t, float))  rFun.pFun)(rA.a[0].f, rA.a[1].f); return true; }
-   if (sType.substr(2) == "fd")  { ((void(*)(int64_t, double)) rFun.pFun)(rA.a[0].f, rA.a[1].d); return true; }
-
-   if (sType.substr(2) == "dI")  { ((void(*)(int64_t, int64_t))rFun.pFun)(rA.a[0].d, rA.a[1].I); return true; }
-   if (sType.substr(2) == "df")  { ((void(*)(int64_t, float))  rFun.pFun)(rA.a[0].d, rA.a[1].f); return true; }
-   if (sType.substr(2) == "dd")  { ((void(*)(int64_t, double)) rFun.pFun)(rA.a[0].d, rA.a[1].d); return true; }
-
-   // 3 x 3 x 3 = 27
-   if (sType.substr(2) == "III") { ((void(*)(int64_t, int64_t, int64_t))rFun.pFun)(rA.a[0].I, rA.a[1].I, rA.a[2].I); return true; }
-   if (sType.substr(2) == "IIf") { ((void(*)(int64_t, int64_t, float))  rFun.pFun)(rA.a[0].I, rA.a[1].I, rA.a[2].f); return true; }
-   if (sType.substr(2) == "IId") { ((void(*)(int64_t, int64_t, double)) rFun.pFun)(rA.a[0].I, rA.a[1].I, rA.a[2].d); return true; }
-
-   if (sType.substr(2) == "IfI") { ((void(*)(int64_t, float, int64_t))rFun.pFun)(rA.a[0].I, rA.a[1].f, rA.a[2].I); return true; }
-   if (sType.substr(2) == "Iff") { ((void(*)(int64_t, float, float))  rFun.pFun)(rA.a[0].I, rA.a[1].f, rA.a[2].f); return true; }
-   if (sType.substr(2) == "Ifd") { ((void(*)(int64_t, float, double)) rFun.pFun)(rA.a[0].I, rA.a[1].f, rA.a[2].d); return true; }
-
-   if (sType.substr(2) == "IdI") { ((void(*)(int64_t, double, int64_t))rFun.pFun)(rA.a[0].I, rA.a[1].d, rA.a[2].I); return true; }
-   if (sType.substr(2) == "Idf") { ((void(*)(int64_t, double, float))  rFun.pFun)(rA.a[0].I, rA.a[1].d, rA.a[2].f); return true; }
-   if (sType.substr(2) == "Idd") { ((void(*)(int64_t, double, double)) rFun.pFun)(rA.a[0].I, rA.a[1].d, rA.a[2].d); return true; }
-   //
-   if (sType.substr(2) == "fII") { ((void(*)(float, int64_t, int64_t))rFun.pFun)(rA.a[0].f, rA.a[1].I, rA.a[2].I); return true; }
-   if (sType.substr(2) == "fIf") { ((void(*)(float, int64_t, float))  rFun.pFun)(rA.a[0].f, rA.a[1].I, rA.a[2].f); return true; }
-   if (sType.substr(2) == "fId") { ((void(*)(float, int64_t, double)) rFun.pFun)(rA.a[0].f, rA.a[1].I, rA.a[2].d); return true; }
-
-   if (sType.substr(2) == "ffI") { ((void(*)(float, float, int64_t))rFun.pFun)(rA.a[0].f, rA.a[1].f, rA.a[2].I); return true; }
-   if (sType.substr(2) == "fff") { ((void(*)(float, float, float))  rFun.pFun)(rA.a[0].f, rA.a[1].f, rA.a[2].f); return true; }
-   if (sType.substr(2) == "ffd") { ((void(*)(float, float, double)) rFun.pFun)(rA.a[0].f, rA.a[1].f, rA.a[2].d); return true; }
-
-   if (sType.substr(2) == "fdI") { ((void(*)(float, double, int64_t))rFun.pFun)(rA.a[0].f, rA.a[1].d, rA.a[2].I); return true; }
-   if (sType.substr(2) == "fdf") { ((void(*)(float, double, float))  rFun.pFun)(rA.a[0].f, rA.a[1].d, rA.a[2].f); return true; }
-   if (sType.substr(2) == "fdd") { ((void(*)(float, double, double)) rFun.pFun)(rA.a[0].f, rA.a[1].d, rA.a[2].d); return true; }
-   //
-   if (sType.substr(2) == "dII") { ((void(*)(double, int64_t, int64_t))rFun.pFun)(rA.a[0].d, rA.a[1].I, rA.a[2].I); return true; }
-   if (sType.substr(2) == "dIf") { ((void(*)(double, int64_t, float))  rFun.pFun)(rA.a[0].d, rA.a[1].I, rA.a[2].f); return true; }
-   if (sType.substr(2) == "dId") { ((void(*)(double, int64_t, double)) rFun.pFun)(rA.a[0].d, rA.a[1].I, rA.a[2].d); return true; }
-
-   if (sType.substr(2) == "dfI") { ((void(*)(double, float, int64_t))rFun.pFun)(rA.a[0].d, rA.a[1].f, rA.a[2].I); return true; }
-   if (sType.substr(2) == "dff") { ((void(*)(double, float, float))  rFun.pFun)(rA.a[0].d, rA.a[1].f, rA.a[2].f); return true; }
-   if (sType.substr(2) == "dfd") { ((void(*)(double, float, double)) rFun.pFun)(rA.a[0].d, rA.a[1].f, rA.a[2].d); return true; }
-
-   if (sType.substr(2) == "ddI") { ((void(*)(double, double, int64_t))rFun.pFun)(rA.a[0].d, rA.a[1].d, rA.a[2].I); return true; }
-   if (sType.substr(2) == "ddf") { ((void(*)(double, double, float))  rFun.pFun)(rA.a[0].d, rA.a[1].d, rA.a[2].f); return true; }
-   if (sType.substr(2) == "ddd") { ((void(*)(double, double, double)) rFun.pFun)(rA.a[0].d, rA.a[1].d, rA.a[2].d); return true; }
-
-   // TODO: here error!
-   return false;
+   return 0;
 }
 
-// "I:idf"
-template <typename T>
-LOCAL bool callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &rA, T &rRet) {
-   std::string sType = rFun.type;
+//
+template <typename TR, typename TA1, typename TA2, typename TA3>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3, bool &rRet) {
 
-   //
-   if (rFun.type[1] != ':') {
-      // TODO: error
-      return 0;
+   if (i+2 >= strlen(rFun.type)) {
+      rRet = true;
+      return ((TR(*)(TA1, TA2, TA3))rFun.pFun)(a1, a2, a3);
    }
 
-   // No parameters
-   if (rFun.type[2] == 'v')      { rRet =  ((T(*)()) rFun.pFun)(); return true; }
+   ANYCALLSWITCH(a1, a2, a3);
+   return 0;
+}
 
-   // 3
-   if (sType.substr(2) == "I")   { rRet = ((T(*)(int64_t)) rFun.pFun)(rA.a[0].I); return true; }
-   if (sType.substr(2) == "f")   { rRet = ((T(*)(float))   rFun.pFun)(rA.a[0].f); return true; }
-   if (sType.substr(2) == "d")   { rRet = ((T(*)(double))  rFun.pFun)(rA.a[0].d); return true; }
+//
+template <typename TR, typename TA1, typename TA2>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, bool &rRet) {
+   if (i+2 >= strlen(rFun.type)) {
+      rRet = true;
+      return ((TR(*)(TA1, TA2))rFun.pFun)(a1, a2);
+   }
 
-   // 3 x 3 = 9
-   if (sType.substr(2) == "II")  { rRet = ((T(*)(int64_t, int64_t)) rFun.pFun)(rA.a[0].I, rA.a[1].I); return true; }
-   if (sType.substr(2) == "If")  { rRet = ((T(*)(int64_t, float))   rFun.pFun)(rA.a[0].I, rA.a[1].f); return true; }
-   if (sType.substr(2) == "Id")  { rRet = ((T(*)(int64_t, double))  rFun.pFun)(rA.a[0].I, rA.a[1].d); return true; }
-   if (sType.substr(2) == "fI")  { rRet = ((T(*)(int64_t, int64_t)) rFun.pFun)(rA.a[0].f, rA.a[1].I); return true; }
-   if (sType.substr(2) == "ff")  { rRet = ((T(*)(int64_t, float))   rFun.pFun)(rA.a[0].f, rA.a[1].f); return true; }
-   if (sType.substr(2) == "fd")  { rRet = ((T(*)(int64_t, double))  rFun.pFun)(rA.a[0].f, rA.a[1].d); return true; }
-   if (sType.substr(2) == "dI")  { rRet = ((T(*)(int64_t, int64_t)) rFun.pFun)(rA.a[0].d, rA.a[1].I); return true; }
-   if (sType.substr(2) == "df")  { rRet = ((T(*)(int64_t, float))   rFun.pFun)(rA.a[0].d, rA.a[1].f); return true; }
-   if (sType.substr(2) == "dd")  { rRet = ((T(*)(int64_t, double))  rFun.pFun)(rA.a[0].d, rA.a[1].d); return true; }
+   ANYCALLSWITCH(a1, a2);
+   return 0;
+}
 
-   // 3 x 3 x 3 = 27
-   if (sType.substr(2) == "III") { rRet = ((T(*)(int64_t, int64_t, int64_t)) rFun.pFun)(rA.a[0].I, rA.a[1].I, rA.a[2].I); return true; }
-   if (sType.substr(2) == "IIf") { rRet = ((T(*)(int64_t, int64_t, float))   rFun.pFun)(rA.a[0].I, rA.a[1].I, rA.a[2].f); return true; }
-   if (sType.substr(2) == "IId") { rRet = ((T(*)(int64_t, int64_t, double))  rFun.pFun)(rA.a[0].I, rA.a[1].I, rA.a[2].d); return true; }
-   if (sType.substr(2) == "IfI") { rRet = ((T(*)(int64_t, float, int64_t))   rFun.pFun)(rA.a[0].I, rA.a[1].f, rA.a[2].I); return true; }
-   if (sType.substr(2) == "Iff") { rRet = ((T(*)(int64_t, float, float))     rFun.pFun)(rA.a[0].I, rA.a[1].f, rA.a[2].f); return true; }
-   if (sType.substr(2) == "Ifd") { rRet = ((T(*)(int64_t, float, double))    rFun.pFun)(rA.a[0].I, rA.a[1].f, rA.a[2].d); return true; }
-   if (sType.substr(2) == "IdI") { rRet = ((T(*)(int64_t, double, int64_t))  rFun.pFun)(rA.a[0].I, rA.a[1].d, rA.a[2].I); return true; }
-   if (sType.substr(2) == "Idf") { rRet = ((T(*)(int64_t, double, float))    rFun.pFun)(rA.a[0].I, rA.a[1].d, rA.a[2].f); return true; }
-   if (sType.substr(2) == "Idd") { rRet = ((T(*)(int64_t, double, double))   rFun.pFun)(rA.a[0].I, rA.a[1].d, rA.a[2].d); return true; }
-   if (sType.substr(2) == "fII") { rRet = ((T(*)(float, int64_t, int64_t))   rFun.pFun)(rA.a[0].f, rA.a[1].I, rA.a[2].I); return true; }
-   if (sType.substr(2) == "fIf") { rRet = ((T(*)(float, int64_t, float))     rFun.pFun)(rA.a[0].f, rA.a[1].I, rA.a[2].f); return true; }
-   if (sType.substr(2) == "fId") { rRet = ((T(*)(float, int64_t, double))    rFun.pFun)(rA.a[0].f, rA.a[1].I, rA.a[2].d); return true; }
-   if (sType.substr(2) == "ffI") { rRet = ((T(*)(float, float, int64_t))     rFun.pFun)(rA.a[0].f, rA.a[1].f, rA.a[2].I); return true; }
-   if (sType.substr(2) == "fff") { rRet = ((T(*)(float, float, float))       rFun.pFun)(rA.a[0].f, rA.a[1].f, rA.a[2].f); return true; }
-   if (sType.substr(2) == "ffd") { rRet = ((T(*)(float, float, double))      rFun.pFun)(rA.a[0].f, rA.a[1].f, rA.a[2].d); return true; }
-   if (sType.substr(2) == "fdI") { rRet = ((T(*)(float, double, int64_t))    rFun.pFun)(rA.a[0].f, rA.a[1].d, rA.a[2].I); return true; }
-   if (sType.substr(2) == "fdf") { rRet = ((T(*)(float, double, float))      rFun.pFun)(rA.a[0].f, rA.a[1].d, rA.a[2].f); return true; }
-   if (sType.substr(2) == "fdd") { rRet = ((T(*)(float, double, double))     rFun.pFun)(rA.a[0].f, rA.a[1].d, rA.a[2].d); return true; }
-   if (sType.substr(2) == "dII") { rRet = ((T(*)(double, int64_t, int64_t))  rFun.pFun)(rA.a[0].d, rA.a[1].I, rA.a[2].I); return true; }
-   if (sType.substr(2) == "dIf") { rRet = ((T(*)(double, int64_t, float))    rFun.pFun)(rA.a[0].d, rA.a[1].I, rA.a[2].f); return true; }
-   if (sType.substr(2) == "dId") { rRet = ((T(*)(double, int64_t, double))   rFun.pFun)(rA.a[0].d, rA.a[1].I, rA.a[2].d); return true; }
-   if (sType.substr(2) == "dfI") { rRet = ((T(*)(double, float, int64_t))    rFun.pFun)(rA.a[0].d, rA.a[1].f, rA.a[2].I); return true; }
-   if (sType.substr(2) == "dff") { rRet = ((T(*)(double, float, float))      rFun.pFun)(rA.a[0].d, rA.a[1].f, rA.a[2].f); return true; }
-   if (sType.substr(2) == "dfd") { rRet = ((T(*)(double, float, double))     rFun.pFun)(rA.a[0].d, rA.a[1].f, rA.a[2].d); return true; }
-   if (sType.substr(2) == "ddI") { rRet = ((T(*)(double, double, int64_t))   rFun.pFun)(rA.a[0].d, rA.a[1].d, rA.a[2].I); return true; }
-   if (sType.substr(2) == "ddf") { rRet = ((T(*)(double, double, float))     rFun.pFun)(rA.a[0].d, rA.a[1].d, rA.a[2].f); return true; }
-   if (sType.substr(2) == "ddd") { rRet = ((T(*)(double, double, double))    rFun.pFun)(rA.a[0].d, rA.a[1].d, rA.a[2].d); return true; }
+//
+template <typename TR, typename TA1>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, bool &rRet) {
+   if (i+2 >= strlen(rFun.type)) {
+      rRet = true;
+      return ((TR(*)(TA1))rFun.pFun)(a1);
+   }
+
+   ANYCALLSWITCH(a1);
+   return 0;
+}
+
+//
+template <typename TR>
+LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      bool &rRet) {
+   if (i+2 >= strlen(rFun.type)) {
+      rRet = true;
+      return ((TR(*)())rFun.pFun)();
+   }
+
+   switch (rFun.type[i+2]) {
+   case 'i':
+      return callAny<TR>(rFun, as, i+1, as.a[i].i, rRet);
+   case 'I':
+      return callAny<TR>(rFun, as, i+1, as.a[i].I, rRet);
+   case 'd':
+      return callAny<TR>(rFun, as, i+1, as.a[i].d, rRet);
+   case 'f':
+      return callAny<TR>(rFun, as, i+1, as.a[i].f, rRet);
+
+    default:
+      break;
+   }
+   return 0;
+}
+
+//
+template <typename TA1, typename TA2, typename TA3, typename TA4>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3, TA4 a4) {
+   if (i+2 >= strlen(rFun.type)) {
+      ((void (*)(TA1, TA2, TA3, TA4))rFun.pFun)(a1, a2, a3, a4);
+      return true;
+   }
 
    return false;
 }
 
+//
+template <typename TA1, typename TA2, typename TA3>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2, TA3 a3) {
+   if (i+2 >= strlen(rFun.type)) {
+      ((void (*)(TA1, TA2, TA3))rFun.pFun)(a1, a2, a3);
+      return true;
+   }
+
+   ANYVOIDSWITCH(a1, a2, a3)
+   return false;
+}
+
+//
+template <typename TA1, typename TA2>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1, TA2 a2) {
+   if (i+2 >= strlen(rFun.type)) {
+      ((void (*)(TA1, TA2))rFun.pFun)(a1, a2);
+      return true;
+   }
+
+   ANYVOIDSWITCH(a1, a2);
+   return false;
+}
+
+//
+template <typename TA1>
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+      TA1 a1) {
+   if (i+2 >= strlen(rFun.type)) {
+      ((void (*)(TA1))rFun.pFun)(a1);
+      return true;
+   }
+
+   ANYVOIDSWITCH(a1);
+   return false;
+}
+
+//
+LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i) {
+   if (i+2 >= strlen(rFun.type)) {
+      ((void (*)())rFun.pFun)();
+      return true;
+   }
+
+   switch (rFun.type[i+2]) {
+   case 'i':
+      return callVoid(rFun, as, i+1, as.a[i].i);
+   case 'I':
+      return callVoid(rFun, as, i+1, as.a[i].I);
+   case 'd':
+      return callVoid(rFun, as, i+1, as.a[i].d);
+   case 'f':
+      return callVoid(rFun, as, i+1, as.a[i].f);
+
+    default:
+      break;
+   }
+   return false;
+}
 
