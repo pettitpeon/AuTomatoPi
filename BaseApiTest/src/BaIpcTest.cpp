@@ -21,12 +21,20 @@
 #include "impl/CBaIpcRegistry.h"
 #include "impl/CBaIpcSvr.h"
 #include "BaseApi.h"
+#include "CppU.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaIpcTest );
 
-LOCAL int tFunInt(uint32_t i, float f);
-LOCAL float tFunflt(uint32_t i, float f);
-LOCAL double tFundbl(uint32_t i, float f);
+
+LOCAL void funvv();
+LOCAL void funvi(int32_t i);
+LOCAL double fundiIfd(int32_t i, int64_t I, float f, double d)
+   { return i + I + f + d; };
+template<typename T> LOCAL T funTT(T TT) {return TT; };
+template<typename T> LOCAL T funTTTTT(T T1, T T2, T T3, T T4)
+   { return T1 + T2 + T3 + T4; };
+
+static int32_t sInt = 0;
 
 /* ****************************************************************************/
 /*  ...
@@ -52,41 +60,103 @@ double TestRegFun(uint32_t i, float f) {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaIpcTest::FunRegistry() {
+void CBaIpcTest::FunRegNiceWeather() {
    CPPUNIT_ASSERT(true);
    bool ret = false;
+
+   // Creation and normal use
    CBaIpcRegistry* pReg = CBaIpcRegistry::Create();
    TBaIpcRegFun fun;
-   TBaIpcFunArg a;
-   a.a[0].I = INT64_MAX;
-   a.a[1].f = 7.77e7;
+   TBaIpcFunArg a = {0};
    TBaIpcArg tOut = {0};
+   sInt = 0;
 
-   a.a[0].i = 7777777;
-
-   //fun.pFun = reinterpret_cast<void*>(testFunInt);
-   SET_FUN(fun, tFunInt, "I:If");
-//   fun.pFun = (void*) testFunInt;
-//   fun.type = "I:If";
-   SET_FUN(fun, tFunInt, "I:If");
+   SET_FUN(fun, funvv, "v:v");
    ret = pReg->RegisterFun(fun.type, fun);
-
-
+   ASS(ret);
    ret = pReg->CallFun(fun.type, a, &tOut);
-   std::cout << tOut.i << "\n" << (int)((uint32_t)a.a[0].i + a.a[1].f) << std::endl;
+   ASS(ret);
+   ASS_EQ(1, sInt);
 
-   SET_FUN(fun, tFunflt, "f:If");
+   SET_FUN(fun, funvi, "v:i");
    ret = pReg->RegisterFun(fun.type, fun);
+   ASS(ret);
+   a.a[0].i = 7;
    ret = pReg->CallFun(fun.type, a, &tOut);
-   std::cout << tOut.f << "\n" << (float)((uint32_t)a.a[0].i + a.a[1].f) << std::endl;
+   ASS(ret);
+   ASS_EQ(7, sInt);
 
-   SET_FUN(fun, tFundbl, "d:If");
+   SET_FUN(fun, funTT<int32_t>, "i:i");
    ret = pReg->RegisterFun(fun.type, fun);
+   ASS(ret);
+   a.a[0].i = 7;
    ret = pReg->CallFun(fun.type, a, &tOut);
-   std::cout << tOut.d << "\n" << (double)((uint32_t)a.a[0].i + a.a[1].f) << std::endl;
+   ASS(ret);
+   ASS_EQ(7, tOut.i);
 
-   ret = false;
+   SET_FUN(fun, funTT<double>, "d:d");
+   ret = pReg->RegisterFun(fun.type, fun);
+   ASS(ret);
+   a.a[0].d = 7;
+   ret = pReg->CallFun(fun.type, a, &tOut);
+   ASS(ret);
+   ASS_D_EQ(7.0, tOut.d, 0.0);
 
+   SET_FUN(fun, funTTTTT<int64_t>, "I:IIII");
+   ret = pReg->RegisterFun(fun.type, fun);
+   ASS(ret);
+   a.a[0].I = 1;
+   a.a[1].I = 2;
+   a.a[2].I = 3;
+   a.a[3].I = 4;
+   ret = pReg->CallFun(fun.type, a, &tOut);
+   ASS(ret);
+   ASS_EQ(10ll, tOut.I);
+
+   //fundiIfd
+   SET_FUN(fun, fundiIfd, "d:iIfd");
+   ret = pReg->RegisterFun(fun.type, fun);
+   ASS(ret);
+   a.a[0].i = 1;
+   a.a[1].I = 2;
+   a.a[2].f = 3.3f;
+   a.a[3].d = 4.4;
+   ret = pReg->CallFun(fun.type, a, &tOut);
+   ASS(ret);
+   ASS_D_EQ(10.7, tOut.d, 0.0001);
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaIpcTest::FunRegErrors() {
+   CPPUNIT_ASSERT(true);
+   bool ret = false;
+
+   // Creation
+   CBaIpcRegistry* pReg = CBaIpcRegistry::Create();
+   TBaIpcRegFun fun;
+   TBaIpcFunArg a = {0};
+   TBaIpcArg tOut = {0};
+   sInt = 0;
+
+   SET_FUN(fun, funvv, "q:v");
+   ret = pReg->RegisterFun(fun.type, fun);
+   ASS(ret);
+   ret = pReg->CallFun(fun.type, a, &tOut);
+   ASS(!ret);
+
+   SET_FUN(fun, funvv, "qv");
+   ret = pReg->RegisterFun(fun.type, fun);
+   ASS(!ret);
+   ret = pReg->CallFun(fun.type, a, &tOut);
+   ASS(!ret);
+
+   SET_FUN(fun, funvv, "I:iiiii");
+   ret = pReg->RegisterFun(fun.type, fun);
+   ASS(!ret);
+   ret = pReg->CallFun(fun.type, a, &tOut);
+   ASS(!ret);
 }
 
 
@@ -142,21 +212,14 @@ void CBaIpcTest::IPC() {
    std::cout << "Exit Parent:" << ret << std::endl;
 }
 
-
 //
-LOCAL int tFunInt(uint32_t i, float f) {
-   int ret = i + f;
-   return ret;
+LOCAL void funvv() {
+   sInt++;
 }
 
-//
-LOCAL float tFunflt(uint32_t i, float f) {
-   float ret = i + f;
-   return ret;
+LOCAL void funvi(int32_t i) {
+   sInt = i;
 }
 
-//
-LOCAL double tFundbl(uint32_t i, float f) {
-   double ret = i + f;
-   return ret;
-}
+
+

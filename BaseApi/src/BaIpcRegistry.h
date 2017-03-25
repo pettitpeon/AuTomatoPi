@@ -24,7 +24,7 @@
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-
+#define BAIPCMAXARG 4
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
@@ -51,19 +51,6 @@ typedef struct TBaIpcRegFun {
 
 
 ///
-//typedef struct TBaIpcArg {
-//   union {
-//      void    *p;
-//      float    f;
-//      double   d;
-//      int32_t  i;
-//      uint32_t u;
-//      int64_t  I;
-//      uint64_t U;
-//   };
-//} TBaIpcArg;
-
-///
 typedef union TBaIpcArg {
       void    *p;
       float    f;
@@ -76,7 +63,7 @@ typedef union TBaIpcArg {
 
 ///
 typedef struct TBaIpcFunArg {
-   TBaIpcArg a[3];
+   TBaIpcArg a[BAIPCMAXARG];
 } TBaIpcFunArg;
 
 /*------------------------------------------------------------------------------

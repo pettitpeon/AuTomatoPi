@@ -69,7 +69,7 @@ public:
    virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) {
       std::string sType = fun.type;
 
-      if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':') {
+      if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':' || sType.length() > BAIPCMAXARG + 2) {
          return false;
       }
       return mFunReg.emplace(name, fun).second;

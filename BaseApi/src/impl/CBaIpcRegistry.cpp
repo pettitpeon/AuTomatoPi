@@ -148,7 +148,7 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
 
    TBaIpcRegFun fun = it->second;
 
-   if (!fun.type || strlen(fun.type) < 3 || fun.type[1] != ':') {
+   if (!fun.type || strlen(fun.type) < 3 || fun.type[1] != ':' || strlen(fun.type) > BAIPCMAXARG + 2) {
       return false;
    }
 
@@ -247,7 +247,9 @@ LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
       return callAny<TR>(rFun, as, i+1, as.a[i].d, rRet);
    case 'f':
       return callAny<TR>(rFun, as, i+1, as.a[i].f, rRet);
-
+   case 'v':
+      rRet = true;
+      return ((TR(*)())rFun.pFun)();
     default:
       break;
    }
@@ -321,7 +323,9 @@ LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i
       return callVoid(rFun, as, i+1, as.a[i].d);
    case 'f':
       return callVoid(rFun, as, i+1, as.a[i].f);
-
+   case 'v':
+      ((void (*)(void))rFun.pFun)();
+      return true;
     default:
       break;
    }
