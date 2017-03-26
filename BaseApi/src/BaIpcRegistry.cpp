@@ -48,6 +48,7 @@ TBaBoolRC IBaIpcRegistryDestroy(IBaIpcRegistry *pHdl) {
    if (p) {
       return CBaIpcRegistry::Destroy(p) ? eBaBoolRC_Success : eBaBoolRC_Error;
    }
+
    return eBaBoolRC_Error;
 }
 

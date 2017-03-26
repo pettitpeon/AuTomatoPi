@@ -66,6 +66,8 @@ public:
 
    static bool SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet);
 
+   static void SClearFunRegistry();
+
    virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) {
       std::string sType = fun.type;
 
@@ -77,6 +79,10 @@ public:
 
    virtual bool UnregisterFun(std::string name) {
       return mFunReg.erase(name) > 0;
+   };
+
+   virtual void ClearFunRegistry() {
+      return mFunReg.clear();
    };
 
    virtual bool CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet);

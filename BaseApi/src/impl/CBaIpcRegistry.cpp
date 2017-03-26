@@ -135,6 +135,12 @@ bool CBaIpcRegistry::SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet)
 }
 
 //
+void CBaIpcRegistry::SClearFunRegistry() {
+   spReg->ClearFunRegistry();
+   return;
+}
+
+//
 bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) {
    auto it = mFunReg.find(name);
    if (it == mFunReg.end()) {

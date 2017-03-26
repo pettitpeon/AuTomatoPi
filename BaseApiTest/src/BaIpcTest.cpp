@@ -61,7 +61,7 @@ double TestRegFun(uint32_t i, float f) {
 /*  ...
  */
 void CBaIpcTest::FunRegNiceWeather() {
-   CPPUNIT_ASSERT(true);
+   ASS(true);
    bool ret = false;
 
    // Creation and normal use
@@ -130,7 +130,7 @@ void CBaIpcTest::FunRegNiceWeather() {
 /*  ...
  */
 void CBaIpcTest::FunRegErrors() {
-   CPPUNIT_ASSERT(true);
+   ASS(true);
    bool ret = false;
 
    // Creation
@@ -157,6 +157,13 @@ void CBaIpcTest::FunRegErrors() {
    ASS(!ret);
    ret = pReg->CallFun(fun.type, a, &tOut);
    ASS(!ret);
+
+   SET_FUN(fun, 0, "");
+   ret = pReg->RegisterFun(fun.type, fun);
+   ASS(!ret);
+   ret = pReg->CallFun(fun.type, a, &tOut);
+   ASS(!ret);
+
 }
 
 
@@ -186,7 +193,7 @@ void CBaIpcTest::IPC() {
       CBaIpcRegistry::SRegisterFun("dummy", fun);
 
       BaIpcInitSvr();
-      BaCoreSleep(30);
+      BaCoreSleep(3);
       BaIpcExitSvr();
 
       std::cout << "Exit Child" << std::endl;
@@ -208,7 +215,7 @@ void CBaIpcTest::IPC() {
    rc = BaIpcCallFun("dummy", a, &r);
 
    std::cout << rc << "r:" << r.d << std::endl;
-   BaCoreSleep(10);
+   BaCoreSleep(3);
    std::cout << "Exit Parent:" << ret << std::endl;
 }
 

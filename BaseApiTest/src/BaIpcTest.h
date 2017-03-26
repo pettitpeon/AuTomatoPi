@@ -33,7 +33,7 @@ public:
 
    CPPUNIT_TEST(FunRegNiceWeather);
    CPPUNIT_TEST(FunRegErrors);
-   //CPPUNIT_TEST(IPC);
+   CPPUNIT_TEST(IPC);
 
    CPPUNIT_TEST_SUITE_END();
 

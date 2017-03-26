@@ -19,18 +19,24 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include <stddef.h>
-#include <string>
 #include "BaBool.h"
+#ifdef __cplusplus
+# include <string>
+#endif
+
+
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #define BAIPCMAXARG 4
+
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
 /// C message handle
 typedef void* TBaIpcRegistryHdl;
 
+///
 typedef struct TBaIpcRegVar {
    void *pVar;
    int type;
@@ -48,7 +54,6 @@ typedef struct TBaIpcRegFun {
    void *pFun;
    const char *type;
 } TBaIpcRegFun;
-
 
 ///
 typedef union TBaIpcArg {
@@ -121,6 +126,12 @@ public:
          ) = 0;
 
    /***************************************************************************/
+   /** Unregister all functions from the registry
+    *  @return true if success
+    */
+   virtual void ClearFunRegistry() = 0;
+
+   /***************************************************************************/
    /** Register a function to the IPC registry
     *  @return true if success
     */
@@ -131,9 +142,12 @@ public:
          ) = 0;
    //@}
 
+   /// @name Variables registry
+   //@{
    virtual bool RegisterVar(std::string name, TBaIpcRegVar var) = 0;
 
    virtual bool RemoveVar(std::string name) = 0;
+   //@}
 
    // Typical object oriented destructor must be virtual!
    virtual ~IBaIpcRegistry() {};
