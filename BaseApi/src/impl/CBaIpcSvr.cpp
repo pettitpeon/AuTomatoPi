@@ -41,49 +41,18 @@
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
-typedef struct TPipeSvr {
-   CBaPipePairSvr *pPipes;
-//   TBaCoreThreadArg thArg;
-//   TBaCoreThreadHdl th;
-   std::mutex mtx;
-   TPipeSvr() : pPipes(0)/*, thArg{0}, th(0)*/ {};
-} TPipeSvr;
 
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
-//LOCAL void pipeSvrRout(TBaCoreThreadArg *pArg);
 
 /*------------------------------------------------------------------------------
     Local variables
  -----------------------------------------------------------------------------*/
 
-static TPipeSvr sPipeSvr;
-
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
-//
-TBaBoolRC BaIpcInitSvr() {
-   std::lock_guard<std::mutex> lck(sPipeSvr.mtx);
-   if (sPipeSvr.pPipes != 0) {
-      return eBaBoolRC_Success;
-   }
-
-   sPipeSvr.pPipes = CBaPipePairSvr::Create(0, 0);
-
-   return sPipeSvr.pPipes ? eBaBoolRC_Success : eBaBoolRC_Error;
-}
-
-//
-TBaBoolRC BaIpcExitSvr() {
-   std::lock_guard<std::mutex> lck(sPipeSvr.mtx);
-   if (sPipeSvr.pPipes == 0) {
-      return eBaBoolRC_Success;
-   }
-
-   return eBaBoolRC_Success;
-}
 
 /*------------------------------------------------------------------------------
     C++ Interface
@@ -277,22 +246,13 @@ bool CBaPipePairSvr::Destroy(CBaPipePairSvr *pHdl) {
 }
 
 //
-TBaIpcClntPipes CBaPipePairSvr::GetClientFds() {
-   TBaIpcClntPipes pipes;
-
-   pipes.fdRd = mpWr->GetClientFd();
-   pipes.fdWr = mpRd->GetClientFd();
-
-   return pipes;
-}
-
-//
 void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
 
    CBaPipePairSvr* p = (CBaPipePairSvr*)pArg->pArg;
    struct epoll_event *pEvents;
    pEvents = (epoll_event*)calloc(MAXEVENTS, sizeof(pEvents));
 
+   p->mSvrRunning = eBaBool_true;
    TRACE_("IPC sever started successfully");
    while (!p->mThArg.exitTh) {
 
@@ -325,6 +285,7 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
       BaCoreMSleep(50);
    }
 
+   p->mSvrRunning = eBaBool_false;
    free(pEvents);
 }
 
@@ -341,7 +302,7 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
    mMsg = {0};
 
    // If not all was read at once, continue reading
-   int rc = 0;
+   size_t rc = 0;
    uint32_t offset = 0;
    do {
       rc = mpRd->Read(((char*) &mMsg) + offset, sz - offset);
@@ -357,17 +318,10 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
    }
 
    switch (mMsg.cmd) {
-      case eBaIpcCmdGetPipePair: {
-         mMsg.cmd = eBaIpcReplyPipePair;
-
-         // dummy answer
-         TBaIpcClntPipes pipes;
-         pipes.fdWr = mpRd->GetServerFd();
-         pipes.fdRd = mpWr->GetServerFd();
-         memcpy(mMsg.data.data, &pipes, sizeof(pipes));
-
+      case eBaIpcCmdGetSvrStatus:
+         mMsg.cmd = eBaIpcReplySvrRuns;
          break;
-      }
+
       case eBaIpcCmdCall: {
          mMsg.cmd = eBaIpcReplyCmdCall;
 //         mMsg.data.data; // This is the name of the function to be called

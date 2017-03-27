@@ -2,8 +2,8 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaIpc.h
- *   Date     : Nov 7, 2016
+ *   Module   : BaIpcSvr.h
+ *   Date     : 27.03.2017
  *------------------------------------------------------------------------------
  *   Module description:
  */
@@ -12,14 +12,13 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAIPC_H_
-#define BAIPC_H_
+#ifndef BAIPCSVR_H_
+#define BAIPCSVR_H_
 
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
 #include "BaBool.h"
-#include "BaIpcRegistry.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -28,21 +27,6 @@
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
-/// C message handle
-typedef void* TBaIpcHdl;
-
-
-
-/// IPC message
-typedef struct TBaIpcVarReq {
-   int32_t type;
-   union {
-      uint64_t i;
-      char str[1000];
-      char dat[1000];
-   } data;
-} TBaIpcVarReq;
-
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -51,47 +35,23 @@ typedef struct TBaIpcVarReq {
 extern "C" {
 #endif
 
-TBaBoolRC BaIpcInitSvr();
-
-TBaBoolRC BaIpcSvrRunning();
-
-TBaBoolRC BaIpcExitSvr();
+/// @name Factory
+//@{
+/******************************************************************************/
+/** Create factory for ...
+ *  @return Handle if success, otherwise, null
+ */
+TBaBoolRC BaIpcSvrInit();
 
 /******************************************************************************/
-/** Initialize the IPC client. This should be called in an external program
- *  which wishes to communicate with the control task.
+/** Destroy and release resources
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcInitClnt();
-
-/******************************************************************************/
-/** Exit the IPC client releasing the resources. This should be called in an
- *  external program which wishes to close the communication with the control
- *  task.
- *  @return True if success, otherwise, false
- */
-TBaBoolRC BaIpcExitClnt();
-
-/******************************************************************************/
-/** Remotely call (RPC) a registered function from the control task
- *  @return True if success, otherwise, false
- */
-TBaBoolRC BaIpcCallFun(
-      const char* name, ///< [in] Function name
-      TBaIpcFunArg a, ///< [in] Function arguments
-      TBaIpcArg *pRet ///< [out] Function return value
-      );
-
-
-// todo: hide from the interface
-TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t sz);
-
-//
-TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz);
+TBaBoolRC BaIpcSvrExit();
+//@}
 
 
 #ifdef __cplusplus
 } // extern c
-
 #endif // __cplusplus
-#endif // BAIPC_H_
+#endif // BAIPCSVR_H_

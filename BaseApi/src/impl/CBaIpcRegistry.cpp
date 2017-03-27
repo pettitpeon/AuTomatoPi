@@ -125,12 +125,46 @@ bool CBaIpcRegistry::Destroy(CBaIpcRegistry* pHdl) {
 }
 
 //
+bool CBaIpcRegistry::SInitRegistry() {
+   if (spReg) {
+      return true;
+   }
+
+   spReg = CBaIpcRegistry::Create();
+   return spReg ? true : false;
+}
+
+//
+bool CBaIpcRegistry::SExitRegistry() {
+   if (!spReg) {
+      return true;
+   }
+   CBaIpcRegistry* p = spReg;
+   spReg = 0;
+   return CBaIpcRegistry::Destroy(p);
+}
+
+//
 bool CBaIpcRegistry::SRegisterFun(std::string name, TBaIpcRegFun fun) {
-   return spReg->RegisterFun(name, fun);;
+   if (!spReg) {
+      return false;
+   }
+   return spReg->RegisterFun(name, fun);
+}
+
+//
+bool CBaIpcRegistry::SUnregisterFun(std::string name) {
+   if (!spReg) {
+      return false;
+   }
+   return spReg->UnregisterFun(name);
 }
 
 //
 bool CBaIpcRegistry::SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) {
+   if (!spReg) {
+      return false;
+   }
    return spReg->CallFun(name, a, pRet);
 }
 

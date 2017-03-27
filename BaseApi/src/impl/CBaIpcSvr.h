@@ -35,10 +35,10 @@
     Type definitions
  -----------------------------------------------------------------------------*/
 typedef enum EBaIpcCmd {
-   eBaIpcCmdGetPipePair = 1,
+   eBaIpcCmdGetSvrStatus = 1,
    eBaIpcCmdCall,
    eBaIpcCmdGetVar,
-   eBaIpcReplyPipePair,
+   eBaIpcReplySvrRuns,
    eBaIpcReplyCmdCall,
    eBaIpcReplyCmdGetVar,
    eBaIpcCmdMax = eBaIpcReplyCmdGetVar
@@ -52,16 +52,9 @@ typedef struct TBaIpcMsg {
    } data;
 } TBaIpcMsg;
 
-typedef struct TBaIpcClntPipes {
-   int fdRd;
-   int fdWr;
-} TBaIpcClntPipes;
-
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
-TBaBoolRC BaIpcInitSvr();
-TBaBoolRC BaIpcExitSvr();
 
 /*------------------------------------------------------------------------------
     C++ Interface
@@ -87,22 +80,22 @@ public:
          CBaPipe* pHdl
          );
 
-   virtual size_t Read(
+   size_t Read(
          void* pData,
          size_t size
          );
 
-   virtual bool Write(
+   bool Write(
          const void* pData,
          size_t size
          );
 
    // Does not have to be successful
-   virtual inline void OpenSvrWr();
+   inline void OpenSvrWr();
 
-   virtual int GetServerFd() { return mType == eTypeRd ? mFdRd : mFdWr; };
-   virtual int GetClientFd() { return mType == eTypeRd ? mFdWr : mFdRd; };
-   virtual EType GetType () { return mType; };
+   int GetServerFd() { return mType == eTypeRd ? mFdRd : mFdWr; };
+   int GetClientFd() { return mType == eTypeRd ? mFdWr : mFdRd; };
+   EType GetType () { return mType; };
 
    // Typical object oriented destructor must be virtual!
    CBaPipe() : mFdRd(-1), mFdWr(-1), mName(""), mType(eTypeRd) {};
@@ -128,28 +121,16 @@ public:
          CBaPipePairSvr *pHdl
          );
 
-//   virtual size_t Read(
-//         void* pData,
-//         size_t size
-//         );
-//
-//   virtual size_t Write(
-//         const void* pData,
-//         size_t size
-//         );
+   TBaBool SvrRunning() { return mSvrRunning; };
 
-//   virtual void GetClientFds(int* pFdRd, int* pFdWr);
-   virtual TBaIpcClntPipes GetClientFds();
-
-   CBaPipePairSvr() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0}, mMsg{0} {};
+   CBaPipePairSvr() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0},
+         mMsg{0}, mSvrRunning(eBaBool_false) {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaPipePairSvr() {};
 
 private:
-   static void svrRout(
-         TBaCoreThreadArg *pArg
-         );
+   static void svrRout(TBaCoreThreadArg *pArg);
 
    bool handleIpcMsg(
          int fdRds
@@ -163,6 +144,7 @@ private:
    TBaCoreThreadArg mThArg;
    struct epoll_event mEv; // epoll event
    TBaIpcMsg mMsg; // Msg used for reading and writing
+   volatile TBaBool mSvrRunning;
 
 };
 

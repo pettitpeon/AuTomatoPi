@@ -62,7 +62,13 @@ public:
          CBaIpcRegistry *pHdl
          );
 
+   static bool SInitRegistry();
+
+   static bool SExitRegistry();
+
    static bool SRegisterFun(std::string name, TBaIpcRegFun fun);
+
+   static bool SUnregisterFun(std::string name);
 
    static bool SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet);
 

@@ -16,64 +16,128 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <mutex>
 
 #include "BaIpc.h"
 #include "CBaIpcSvr.h"
 #include "BaLogMacros.h"
 #include "CBaIpcRegistry.h"
+#include "BaGenMacros.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #define C_HDL_ ((IBaIpc*) hdl)
-#define DEF_PIPE PIPEDIR
 #define TAG "BaIpc"
 
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
+typedef struct TPipeSvr {
+   CBaPipePairSvr *pPipes;
+   std::mutex mtx;
+   TPipeSvr() : pPipes(0) {};
+} TPipeSvr;
+
 
 /*------------------------------------------------------------------------------
     Static vars
  -----------------------------------------------------------------------------*/
 static int sRdFifo = -1;
 static int sWrFifo = -1;
+static TPipeSvr sPipeSvr;
 
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
+
+//
+TBaBoolRC BaIpcInitSvr() {
+   std::lock_guard<std::mutex> lck(sPipeSvr.mtx);
+   if (sPipeSvr.pPipes != 0) {
+      return eBaBoolRC_Success;
+   }
+
+   sPipeSvr.pPipes = CBaPipePairSvr::Create(0, 0);
+
+   return sPipeSvr.pPipes ? eBaBoolRC_Success : eBaBoolRC_Error;
+
+}
+
+//
+TBaBoolRC BaIpcSvrRunning() {
+   return sPipeSvr.pPipes ? sPipeSvr.pPipes->SvrRunning() : eBaBool_false;
+}
+
+//
+TBaBoolRC BaIpcExitSvr() {
+   std::lock_guard<std::mutex> lck(sPipeSvr.mtx);
+   if (sPipeSvr.pPipes == 0) {
+      return eBaBoolRC_Success;
+   }
+
+   return eBaBoolRC_Success;
+}
+
 //
 TBaBoolRC BaIpcInitClnt() {
-   int fdWr = open(DEF_PIPE "BaIpcSvrRd.fifo", O_WRONLY | O_NONBLOCK);
-   int fdRd = open(DEF_PIPE "BaIpcSvrWr.fifo", O_RDONLY | O_NONBLOCK);
+   if (sRdFifo != -1 && sWrFifo != -1) {
+      return eBaBoolRC_Success;
+   }
+
+   int fdWr = open(PIPEDIR "BaIpcSvrRd.fifo", O_WRONLY | O_NONBLOCK);
+   int fdRd = open(PIPEDIR "BaIpcSvrWr.fifo", O_RDONLY | O_NONBLOCK);
 
    if (fdWr < 0) {
       ERROR_("%s", strerror(errno));
       return eBaBoolRC_Error;
    }
 
-   sWrFifo = fdWr;
-   TBaIpcMsg msg = {0};
-   msg.cmd = eBaIpcCmdGetPipePair;
+   if (fdRd < 0) {
+      close(fdWr);
+      ERROR_("%s", strerror(errno));
+      return eBaBoolRC_Error;
+   }
 
+   sWrFifo = fdWr;
+   sRdFifo = fdRd;
+   TBaIpcMsg msg = {0};
+   msg.cmd = eBaIpcCmdGetSvrStatus;
+
+   // Check if the server is running
    BaIpcWritePipe(sWrFifo, (const char*)&msg, sizeof(TBaIpcMsg));
 
-   for (int i = 0; i < 50; ++i) {
+   for (int i = 1; i < 50; ++i) {
       BaCoreMSleep(20);
       BaIpcReadPipe(fdRd, (char*)&msg, sizeof(TBaIpcMsg));
-      if (msg.cmd == eBaIpcReplyPipePair) {
-
-         TBaIpcClntPipes* p = (TBaIpcClntPipes*)&msg.data.data;
-         printf("eBaIpcReplyPipePair: r %i=%i,  w %i=%i\n",
-               p->fdRd, fdRd, p->fdWr, fdWr);
-
-         if (p->fdWr == sWrFifo && p->fdRd == fdRd) {
-            sRdFifo = p->fdRd;
-            return eBaBoolRC_Success;
-         }
+      if (msg.cmd == eBaIpcReplySvrRuns) {
+         TRACE_("Server is running");
+         return eBaBoolRC_Success;
       }
    }
+
+   // todo: Return error or success?
+   TRACE_("Server is not running");
    return eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcExitClnt() {
+   int rc = 0;
+   rc = close(sWrFifo);
+   if (rc == -1) {
+      WARN_("Pipe(%i) did not close: %s", sWrFifo, strerror(errno));
+   }
+
+   rc |= close(sRdFifo);
+   if (rc == -1) {
+      WARN_("Pipe(%i) did not close: %s", sRdFifo, strerror(errno));
+   }
+
+   sRdFifo = -1;
+   sWrFifo = -1;
+
+   return !rc ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
@@ -95,12 +159,14 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
    }
 
    // todo: wait for reply??
-   for (int i = 0; i < 10; ++i) {
-      BaCoreMSleep(100);
+   for (int i = 0; i < 100; ++i) {
+      BaCoreMSleep(10);
       memset(msg.data.data, 0, sizeof(msg.data.data));
       BaIpcReadPipe(sRdFifo, (char*)&msg, sizeof(TBaIpcMsg));
       if (msg.cmd == eBaIpcReplyCmdCall) {
          *pRet = *((TBaIpcArg*)msg.data.data);
+         // todo: delete
+         TRACE_("Call delay %i ms", i*10);
          return eBaBoolRC_Success;
       }
    }
@@ -109,75 +175,27 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
 }
 
 //
-TBaBoolRC BaIpcCreatePipeReader() {
-   if (sRdFifo != -1) {
-      return eBaBoolRC_Success;
-   }
-
-   int rc = mkfifo(DEF_PIPE, S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
-   if (rc != 0) {
-      printf("BaIpcCreatePipeReader: %s\n", strerror(errno));
-      return eBaBoolRC_Error;
-   }
-
-   int fd = open(DEF_PIPE, O_RDONLY | O_NONBLOCK);
-
-   if (fd < 0) {
-      printf("BaIpcCreatePipeReader: %s\n", strerror(errno));
-      return eBaBoolRC_Error;
-   }
-
-   sRdFifo = fd;
-   return eBaBoolRC_Success;
-}
-
-TBaBoolRC BaIpcCreatePipeWriter() {
-   if (sWrFifo != -1) {
-      return eBaBoolRC_Success;
-   }
-
-   if (sRdFifo < 0) {
-      return BaIpcCreatePipeReader();
-   }
-
-   int fd = open(DEF_PIPE, O_WRONLY | O_NONBLOCK);
-
-   if (fd < 0) {
-      printf("%i\n", errno);
-      return eBaBoolRC_Error;
-   }
-
-   sWrFifo = fd;
-   return eBaBoolRC_Success;
-}
-
-//
-TBaBoolRC BaIpcDestroyPipe() {
-   if (sRdFifo < 0) {
-      return eBaBoolRC_Error;
-   }
-
-   close((int) sRdFifo);
-   unlink(DEF_PIPE);
-
-   return eBaBoolRC_Success;
-}
-
 TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t size) {
    if (fd < 0 || !pData) {
       return eBaBoolRC_Error;
    }
 
-   int rc = read(fd, pData, size);
-   if (rc < 0) {
-      //todo: this can be a spamming message
-      printf("BaIpcReadPipe: %s\n", strerror(errno));
-      return eBaBoolRC_Error;
-   }
+   // If not all was read at once, continue reading
+   size_t rc = 0;
+   size_t offset = 0;
+   do {
+      rc = read(fd, pData + offset, size - offset);
+      offset += rc;
+      if (rc < 0 || offset > size) {
+         WARN_("Read failed(fd %i): %s", fd, strerror(errno));
+         return eBaBoolRC_Error;
+      }
+   } while (rc != 0);
 
    return eBaBoolRC_Success;
 }
 
+//
 TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz) {
    if (fd < 0 || !pData) {
       return eBaBoolRC_Error;
@@ -189,7 +207,7 @@ TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz) {
       bytesWr = write(fd, (const void*)(pData + offset), sz - offset);
       offset += bytesWr;
       if (bytesWr < 0) {
-         ERROR_("IPC write failed: %s", strerror(errno));
+         WARN_("IPC write failed: %s", strerror(errno));
          return eBaBoolRC_Error;
       }
 
@@ -201,26 +219,4 @@ TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz) {
 
    return eBaBoolRC_Success;
 }
-
-
-/*------------------------------------------------------------------------------
-    C++ Factories
- -----------------------------------------------------------------------------*/
-//
-IBaIpc * IBaIpcCreate() {
-   return 0;
-}
-
-//
-TBaBoolRC IBaIpcDestroy(IBaIpc *pHdl) {
-   return eBaBoolRC_Success;
-}
-
-/*------------------------------------------------------------------------------
-    C++ Interface
- -----------------------------------------------------------------------------*/
-
-/*------------------------------------------------------------------------------
-    Local functions
- -----------------------------------------------------------------------------*/
 

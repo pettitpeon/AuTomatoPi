@@ -14,6 +14,7 @@
  */
 #include <unistd.h>
 #include <iostream>
+#include <chrono>
 #include "BaIpcTest.h"
 #include "BaGenMacros.h"
 #include "BaIpc.h"
@@ -52,8 +53,9 @@ void CBaIpcTest::tearDown() {
       regFun.type = TYPE;
 
 
-double TestRegFun(uint32_t i, float f) {
-   return f + i;
+LOCAL int32_t testRegFun(int32_t i) {
+   sInt = i;
+   return sInt;
 }
 
 
@@ -124,6 +126,9 @@ void CBaIpcTest::FunRegNiceWeather() {
    ret = pReg->CallFun(fun.type, a, &tOut);
    ASS(ret);
    ASS_D_EQ(10.7, tOut.d, 0.0001);
+
+   ASS(pReg->UnregisterFun(fun.type));
+   pReg->ClearFunRegistry();
 }
 
 /* ****************************************************************************/
@@ -166,7 +171,95 @@ void CBaIpcTest::FunRegErrors() {
 
 }
 
+//
+void CBaIpcTest::IPCServer() {
+   ASS(true);
+   CPPUNIT_ASSERT(BaApiInitLoggerDef("testDef"));
+   ASS(BaIpcInitSvr());
+   int i;
+   for (i = 0; i < 500 && !BaIpcSvrRunning(); ++i) {
+      BaCoreMSleep(10);
+   }
 
+   ASS(BaIpcInitClnt());
+   ASS(BaIpcInitClnt());
+
+   TBaIpcRegFun fun;
+   fun.pFun = (void*) testRegFun;
+   fun.type = "i:i";
+   ASS(CBaIpcRegistry::SRegisterFun("testRegFun", fun));
+
+   sInt = 1;
+   TBaIpcFunArg a = {0};
+   a.a[0].i = 7;
+   TBaIpcArg r;
+   r.I = 0;
+
+   TBaCoreMonTStampUs us = BaCoreGetMonTStamp();
+   ASS(BaIpcCallFun("testRegFun", a, &r));
+   us = BaCoreGetMonTStamp() - us;
+   std::cout << "Call duration: " << us/1000.0 << "ms" << std::endl;
+   ASS_EQ(r.i, sInt);
+
+   CBaIpcRegistry::SClearFunRegistry();
+   ASS(BaIpcExitClnt());
+   ASS(BaIpcExitSvr());
+}
+
+//
+void CBaIpcTest::IPCRealClientServer() {
+   CPPUNIT_ASSERT(true);
+   bool rc = false;
+
+   // todo: delete log file?
+   CPPUNIT_ASSERT(BaApiInitLoggerDef("testDef"));
+
+   pid_t pid = fork();
+
+   ASS(pid != -1);
+
+   if (pid == 0) {
+      // Child is client
+      std::cout << "Child - Client" << std::endl;
+      BaCoreMSleep(10);
+      rc = BaIpcInitClnt();
+      std::cout << "Client init: " << rc << std::endl;
+      TBaIpcFunArg a = {0};
+      a.a[0].i = 7;
+      TBaIpcArg r;
+      r.I = 0;
+      rc = BaIpcCallFun("dummy", a, &r);
+
+      std::cout << "Exit Child" << std::endl;
+      exit(0);
+   }
+
+   // parent is server
+   std::cout << "Parent - Server:" << pid << std::endl;
+   TBaIpcRegFun fun;
+   fun.pFun = (void*) testRegFun;
+   fun.type = "i:i";
+   CBaIpcRegistry::SRegisterFun("dummy", fun);
+   sInt = 0;
+
+   ASS(BaIpcInitSvr());
+   rc = false;
+   int i = 0;
+   for (i = 0; i < 20; ++i) {
+      BaCoreMSleep(50);
+      if (sInt == 7) {
+         rc = true;
+         break;
+      }
+   }
+   ASS(rc);
+
+   ASS(BaIpcExitSvr());
+
+   std::cout << "Exit Parent:" << pid << std::endl;
+}
+
+//
 void CBaIpcTest::IPC() {
    CPPUNIT_ASSERT(true);
    bool rc = eBaBool_false;
@@ -187,7 +280,7 @@ void CBaIpcTest::IPC() {
 
 
       TBaIpcRegFun fun;
-      fun.pFun = (void*) TestRegFun;
+      fun.pFun = (void*) testRegFun;
       fun.type = "d:If";
 
       CBaIpcRegistry::SRegisterFun("dummy", fun);
