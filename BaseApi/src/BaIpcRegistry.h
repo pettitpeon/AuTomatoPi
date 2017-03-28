@@ -8,7 +8,10 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  API for functions and variables registries. The API gives the freedom to
+ *  create registries at the user's discretion, or use the embedded "local"
+ *  registry. The IPC API uses the local registry to call functions and
+ *  variables remotely.
  */
 /*------------------------------------------------------------------------------
  */
@@ -55,20 +58,20 @@ typedef struct TBaIpcRegFun {
    const char *type;
 } TBaIpcRegFun;
 
-///
+/// Argument type union
 typedef union TBaIpcArg {
       void    *p;
       float    f;
       double   d;
-      int32_t  i;
+      int32_t  i; ///< This includes all the smaller types
       uint32_t u;
       int64_t  I;
       uint64_t U;
 } TBaIpcArg;
 
-///
+/// Structure to hold the arguments of a function to be called
 typedef struct TBaIpcFunArg {
-   TBaIpcArg a[BAIPCMAXARG];
+   TBaIpcArg a[BAIPCMAXARG]; ///< Array of arguments
 } TBaIpcFunArg;
 
 /*------------------------------------------------------------------------------
@@ -78,7 +81,56 @@ typedef struct TBaIpcFunArg {
 extern "C" {
 #endif
 
-/// @name Factory
+/// @name Local Functions registry
+//@{
+/******************************************************************************/
+/** Initialize the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalInit();
+
+/******************************************************************************/
+/** Exit the local registry and release resources
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalExit();
+
+/******************************************************************************/
+/** Register a function in the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalRegisterFun(
+      const char* name, ///< [in] Function name
+      TBaIpcRegFun fun ///< [in] Function to register
+      );
+
+/******************************************************************************/
+/** Remove a function from the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalUnregisterFun(
+      const char* name ///< [in] Function name
+      );
+
+/******************************************************************************/
+/** Call a function from the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalCallFun(
+      const char* name, ///< [in] Function name
+      TBaIpcFunArg a, ///< [in] Function arguments
+      TBaIpcArg *pRet ///< [out] Function return value
+      );
+
+/******************************************************************************/
+/** Clear the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalClearFunRegistry();
+//@}
+
+
+/// @name Registry Factory
 //@{
 /******************************************************************************/
 /** Create factory for ...
@@ -95,6 +147,44 @@ TBaBoolRC BaIpcRegistryDestroy(
       );
 //@}
 
+/// @name Functions registry
+//@{
+/******************************************************************************/
+/** Register a function in the registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryRegisterFun(
+      TBaIpcRegistryHdl hdl, ///< [in] Handle
+      const char* name, ///< [in] Function name
+      TBaIpcRegFun fun ///< [in] Function to register
+      );
+
+/******************************************************************************/
+/** Remove a function from the registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryUnregisterFun(
+      TBaIpcRegistryHdl hdl, ///< [in] Handle
+      const char* name ///< [in] Function name
+      );
+
+/******************************************************************************/
+/** Clear the registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryClearFunRegistry();
+
+/******************************************************************************/
+/** Call a function from the registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryCallFun(
+      TBaIpcRegistryHdl hdl, ///< [in] Handle
+      const char* name, ///< [in] Function name
+      TBaIpcFunArg a, ///< [in] Function arguments
+      TBaIpcArg *pRet ///< [out] Function return value
+      );
+//@}
 
 #ifdef __cplusplus
 } // extern c

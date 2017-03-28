@@ -34,6 +34,46 @@ TBaIpcRegistryHdl BaIpcRegistryCreate() {
 TBaBoolRC BaIpcRegistryDestroy(TBaIpcRegistryHdl hdl) {
    return IBaIpcRegistryDestroy(C_HDL_);
 }
+
+//
+TBaBoolRC BaIpcRegistryRegisterFun(TBaIpcRegistryHdl hdl, const char* name,
+      TBaIpcRegFun fun) {
+   if (!hdl || !name) {
+      return eBaBoolRC_Error;
+   }
+
+   return C_HDL_->RegisterFun(name, fun) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryUnregisterFun(TBaIpcRegistryHdl hdl, const char* name) {
+   if (!hdl || !name) {
+      return eBaBoolRC_Error;
+   }
+
+   return C_HDL_->UnregisterFun(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryClearFunRegistry(TBaIpcRegistryHdl hdl) {
+   if (!hdl) {
+      return eBaBoolRC_Error;
+   }
+   C_HDL_->ClearFunRegistry();
+
+   return  eBaBoolRC_Success;
+}
+
+//
+TBaBoolRC BaIpcRegistryCallFun(TBaIpcRegistryHdl hdl, const char* name,
+      TBaIpcFunArg a, TBaIpcArg *pRet) {
+   if (!hdl || !name) {
+      return eBaBoolRC_Error;
+   }
+
+   return C_HDL_->CallFun(name, a, pRet) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
 /*------------------------------------------------------------------------------
     C++ Factories
  -----------------------------------------------------------------------------*/

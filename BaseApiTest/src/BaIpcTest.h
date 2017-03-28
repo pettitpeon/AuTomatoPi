@@ -31,20 +31,24 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaIpcTest);
 
+   CPPUNIT_TEST(Init);
 //   CPPUNIT_TEST(FunRegNiceWeather);
 //   CPPUNIT_TEST(FunRegErrors);
    CPPUNIT_TEST(IPCServer);
 //   CPPUNIT_TEST(IPCRealClientServer);
    //CPPUNIT_TEST(IPC);
+   CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
+   void Init();
    void FunRegNiceWeather();
    void FunRegErrors();
    void IPCServer();
    void IPCRealClientServer();
    void IPC();
+   void Exit();
 };
 
 #endif // BAIPCTEST_H_

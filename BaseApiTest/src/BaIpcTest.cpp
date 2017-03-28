@@ -18,7 +18,6 @@
 #include "BaIpcTest.h"
 #include "BaGenMacros.h"
 #include "BaIpc.h"
-//#include "impl/CBaIpcRegistry.h"
 #include "impl/CBaIpcRegistry.h"
 #include "impl/CBaIpcSvr.h"
 #include "BaseApi.h"
@@ -26,6 +25,8 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaIpcTest );
 
+#define LOGFILE "testDef"
+#define LOGDIR "/var/log/"
 
 LOCAL void funvv();
 LOCAL void funvi(int32_t i);
@@ -58,6 +59,9 @@ LOCAL int32_t testRegFun(int32_t i) {
    return sInt;
 }
 
+void CBaIpcTest::Init() {
+   ASS(BaApiInitLoggerDef(LOGFILE));
+}
 
 /* ****************************************************************************/
 /*  ...
@@ -174,7 +178,6 @@ void CBaIpcTest::FunRegErrors() {
 //
 void CBaIpcTest::IPCServer() {
    ASS(true);
-   CPPUNIT_ASSERT(BaApiInitLoggerDef("testDef"));
    ASS(BaIpcInitSvr());
    int i;
    for (i = 0; i < 500 && !BaIpcSvrRunning(); ++i) {
@@ -210,9 +213,6 @@ void CBaIpcTest::IPCServer() {
 void CBaIpcTest::IPCRealClientServer() {
    CPPUNIT_ASSERT(true);
    bool rc = false;
-
-   // todo: delete log file?
-   CPPUNIT_ASSERT(BaApiInitLoggerDef("testDef"));
 
    pid_t pid = fork();
 
@@ -264,9 +264,6 @@ void CBaIpcTest::IPC() {
    CPPUNIT_ASSERT(true);
    bool rc = eBaBool_false;
 
-   // todo: delete log file?
-   CPPUNIT_ASSERT(BaApiInitLoggerDef("testDef"));
-
    pid_t ret = fork();
 
    if (ret == -1) {
@@ -293,7 +290,6 @@ void CBaIpcTest::IPC() {
       return;
    }
 
-
    // parent is client
    std::cout << "Parent:" << ret << std::endl;
    BaCoreSleep(1);
@@ -313,10 +309,17 @@ void CBaIpcTest::IPC() {
 }
 
 //
+void CBaIpcTest::Exit() {
+   ASS(BaApiExitLogger());
+   remove(LOGDIR LOGFILE ".log");
+}
+
+//
 LOCAL void funvv() {
    sInt++;
 }
 
+//
 LOCAL void funvi(int32_t i) {
    sInt = i;
 }
