@@ -136,7 +136,6 @@ TBaBoolRC BaIpcInitClnt() {
       }
    }
 
-   // todo: Return error or success?
    TRACE_("Server is not running");
    return eBaBoolRC_Error;
 }

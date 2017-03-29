@@ -194,6 +194,11 @@ TBaBoolRC BaIpcRegistryCallFun(
     C++ Interface
  -----------------------------------------------------------------------------*/
 
+/******************************************************************************/
+/** Interface to use a registry object. This interface is used under the hood
+ *  for the "local" registry. If you are interested in using the local registry
+ *  for the IPC server, please use the @c BaIpcRegistryLocal C-interface.
+ */
 class IBaIpcRegistry {
 public:
 
@@ -233,6 +238,7 @@ public:
          ) = 0;
    //@}
 
+   // todo
    /// @name Variables registry
    //@{
    virtual bool RegisterVar(std::string name, TBaIpcRegVar var) = 0;
@@ -247,7 +253,7 @@ public:
 /// @name C++ Factory
 //@{
 /******************************************************************************/
-/** Create factory for ...
+/** Create factory for a functions and variables registry
  *  @return Handle if success, otherwise, null
  */
 extern "C" IBaIpcRegistry * IBaIpcRegistryCreate();

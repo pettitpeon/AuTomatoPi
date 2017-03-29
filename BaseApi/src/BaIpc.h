@@ -33,15 +33,15 @@ typedef void* TBaIpcHdl;
 
 
 
-/// IPC message
-typedef struct TBaIpcVarReq {
-   int32_t type;
-   union {
-      uint64_t i;
-      char str[1000];
-      char dat[1000];
-   } data;
-} TBaIpcVarReq;
+// IPC message
+//typedef struct TBaIpcVarReq {
+//   int32_t type;
+//   union {
+//      uint64_t i;
+//      char str[1000];
+//      char dat[1000];
+//   } data;
+//} TBaIpcVarReq;
 
 
 /*------------------------------------------------------------------------------
@@ -53,10 +53,26 @@ extern "C" {
 
 /// @name Server Interface
 //@{
+/******************************************************************************/
+/** Initializes and starts the server thread. It does not wait to check if it
+ *  started successfully
+ *  @return True if success, otherwise, false
+ */
 TBaBoolRC BaIpcInitSvr();
 
+/******************************************************************************/
+/** Get the server status. Returns only if the server started or stopped
+ *  successfully, and no heart beat of any kind.
+ *  @return True if the server thread started running, false if stopped.
+ */
 TBaBoolRC BaIpcSvrRunning();
 
+/******************************************************************************/
+/** Sends exit signal to the IPC server and waits with a timeout for it to stop.
+ *  If it timeouts, there is a small memory leak, but the thread exits when it
+ *  frees itself.
+ *  @return True if success, otherwise, false
+ */
 TBaBoolRC BaIpcExitSvr();
 //@}
 

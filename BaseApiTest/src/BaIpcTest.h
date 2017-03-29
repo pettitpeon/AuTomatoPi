@@ -36,7 +36,6 @@ public:
    CPPUNIT_TEST(FunRegErrors);
    CPPUNIT_TEST(IPCServer);
    CPPUNIT_TEST(IPCRealClientServer);
-   //CPPUNIT_TEST(IPC);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
@@ -47,7 +46,6 @@ public:
    void FunRegErrors();
    void IPCServer();
    void IPCRealClientServer();
-   void IPC();
    void Exit();
 };
 

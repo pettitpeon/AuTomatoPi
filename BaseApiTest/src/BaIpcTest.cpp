@@ -266,55 +266,6 @@ void CBaIpcTest::IPCRealClientServer() {
 }
 
 //
-void CBaIpcTest::IPC() {
-   CPPUNIT_ASSERT(true);
-   bool rc = eBaBool_false;
-
-   pid_t ret = fork();
-
-   if (ret == -1) {
-      // error
-      return;
-   }
-
-   if (ret == 0) {
-      // child is server
-      std::cout << "Child" << std::endl;
-
-
-      TBaIpcRegFun fun;
-      fun.pFun = (void*) testRegFun;
-      fun.type = "d:If";
-
-      CBaIpcRegistry::SRegisterFun("dummy", fun);
-
-      BaIpcInitSvr();
-      BaCoreSleep(3);
-      BaIpcExitSvr();
-
-      std::cout << "Exit Child" << std::endl;
-      return;
-   }
-
-   // parent is client
-   std::cout << "Parent:" << ret << std::endl;
-   BaCoreSleep(1);
-   rc = BaIpcInitClnt();
-   std::cout << rc << std::endl;
-   TBaIpcFunArg a;
-   a.a[0].i = 77777;
-   a.a[0].f = 7e7;
-   TBaIpcArg r;
-   r.I = 0;
-
-   rc = BaIpcCallFun("dummy", a, &r);
-
-   std::cout << rc << "r:" << r.d << std::endl;
-   BaCoreSleep(3);
-   std::cout << "Exit Parent:" << ret << std::endl;
-}
-
-//
 void CBaIpcTest::Exit() {
    ASS(BaApiExitLogger());
    remove(LOGDIR LOGFILE ".log");
