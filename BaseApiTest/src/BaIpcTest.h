@@ -32,10 +32,10 @@ public:
    CPPUNIT_TEST_SUITE(CBaIpcTest);
 
    CPPUNIT_TEST(Init);
-//   CPPUNIT_TEST(FunRegNiceWeather);
-//   CPPUNIT_TEST(FunRegErrors);
+   CPPUNIT_TEST(FunRegNiceWeather);
+   CPPUNIT_TEST(FunRegErrors);
    CPPUNIT_TEST(IPCServer);
-//   CPPUNIT_TEST(IPCRealClientServer);
+   CPPUNIT_TEST(IPCRealClientServer);
    //CPPUNIT_TEST(IPC);
    CPPUNIT_TEST(Exit);
 

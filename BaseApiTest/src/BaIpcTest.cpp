@@ -22,6 +22,7 @@
 #include "impl/CBaIpcSvr.h"
 #include "BaseApi.h"
 #include "CppU.h"
+#include "BaUtils.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaIpcTest );
 
@@ -190,7 +191,12 @@ void CBaIpcTest::IPCServer() {
    TBaIpcRegFun fun;
    fun.pFun = (void*) testRegFun;
    fun.type = "i:i";
+
    ASS(CBaIpcRegistry::SRegisterFun("testRegFun", fun));
+   std::string name;
+   for (int i = 0; i < 5000; ++i) {
+      ASS(CBaIpcRegistry::SRegisterFun(BaFString("testRegFun_%i", i), fun));
+   }
 
    sInt = 1;
    TBaIpcFunArg a = {0};

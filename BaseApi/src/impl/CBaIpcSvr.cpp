@@ -30,9 +30,6 @@
  -----------------------------------------------------------------------------*/
 #define TAG     "CIPC"
 #define PIPENAME "BaIpc"
-#define PIPEEXT ".fifo"
-#define SERVER_RD   PIPENAME "SvrRd"
-#define SERVER_WR   PIPENAME "SvrWr"
 #define MAXPIPES 256
 #define MAXEVENTS 64
 #define EPOLLTIMEOUTMS 50
@@ -109,12 +106,12 @@ CBaPipe* CBaPipe::Create(EType type, std::string path, bool overwrite) {
 
 //
 CBaPipe* CBaPipe::CreateSvrRd() {
-   return Create(eTypeRd, PIPEDIR SERVER_RD PIPEEXT, true);
+   return Create(eTypeRd, CBAIPCPIPEDIR CBAIPCSERVER_RD, true);
 }
 
 //
 CBaPipe* CBaPipe::CreateSvrWr() {
-   return Create(eTypeWr, PIPEDIR SERVER_WR PIPEEXT, true);
+   return Create(eTypeWr, CBAIPCPIPEDIR CBAIPCSERVER_WR, true);
 }
 
 //
@@ -172,10 +169,17 @@ CBaPipePairSvr* CBaPipePairSvr::Create(const char *name, TBaCoreThreadFun rout) 
       name = PIPESVRNAME;
    }
 
+
    CBaPipePairSvr* p = new CBaPipePairSvr();
    if (!p) {
       return 0;
    }
+
+   if (!p->pIPCHandlerMsg || !p->pPollMsg) {
+      delete p;
+      return 0;
+   }
+
 
    p->mpRd = CBaPipe::CreateSvrRd();
    if (!p->mpRd) {
@@ -259,21 +263,23 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
       // wait for something to do...
       int nfds = epoll_wait(p->mFdEp, pEvents, MAXEVENTS, EPOLLTIMEOUTMS);
       if (nfds < 0) {
-         ERROR_("Error in epoll_wait: %s", strerror(errno));
+         p->pPollMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+               "Error in epoll_wait: %s", strerror(errno));
+         continue;
       }
 
-      // todo: delete
-      if (nfds > 0) {
-         TRACE_("polled(%i)", nfds);
-      }
+      // Trace here if debugging needed
+//      if (nfds > 0) {
+//         TRACE_("polled(%i)", nfds);
+//      }
 
       // for each ready socket
       for(int i = 0; i < nfds; i++) {
          if (!(pEvents[i].events & EPOLLIN)) {
             // An error has occurred on this fd, or the socket is not
             // ready for reading (why were we notified then?)
-            // TODO: msg with state?
-            ERROR_("Error in epoll fd (%i): %s", pEvents[i].data.fd, strerror(errno));
+            p->pPollMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+                  "Error in epoll fd (%i): %s", pEvents[i].data.fd, strerror(errno));
             continue;
          }
 
@@ -283,8 +289,10 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
       }
 
       BaCoreMSleep(50);
+      p->pPollMsg->Reset();
    }
 
+   TRACE_("IPC sever exited successfully");
    p->mSvrRunning = eBaBool_false;
    free(pEvents);
 }
@@ -301,6 +309,7 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
    size_t sz = sizeof(TBaIpcMsg);
    mMsg = {0};
 
+   // Read the actual message from the pipe
    // If not all was read at once, continue reading
    size_t rc = 0;
    uint32_t offset = 0;
@@ -308,52 +317,56 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
       rc = mpRd->Read(((char*) &mMsg) + offset, sz - offset);
       offset += rc;
       if (rc < 0 || offset > sz) {
+         pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+               "Unrecognizable IPC message(%i)", fdRd);
          return false;
       }
    } while (rc != 0);
 
-   // Check if there is a Wr fd to reply
+   // Check if there is a Wr pipe to reply
    if (mpWr->GetServerFd() < 0) {
       mpWr->OpenSvrWr();
    }
 
+   // Handle the command
    switch (mMsg.cmd) {
-      case eBaIpcCmdGetSvrStatus:
-         mMsg.cmd = eBaIpcReplySvrRuns;
-         break;
 
-      case eBaIpcCmdCall: {
-         mMsg.cmd = eBaIpcReplyCmdCall;
-//         mMsg.data.data; // This is the name of the function to be called
-         TBaIpcFunCall *pFc = (TBaIpcFunCall*) mMsg.data.data;
+   // Server status
+   case eBaIpcCmdGetSvrStatus:
+      mMsg.cmd = eBaIpcReplySvrRuns;
+      break;
 
-         TBaIpcArg ret = {0};
-         CBaIpcRegistry::SCallFun(pFc->name, pFc->a, &ret);
-         memcpy(mMsg.data.data, &ret, sizeof(ret));
+   // Function call
+   case eBaIpcCmdCall: {
+      mMsg.cmd = eBaIpcReplyCmdCall;
+      TBaIpcFunCall *pFc = (TBaIpcFunCall*) mMsg.data.data;
+      TBaIpcArg ret = {0};
+      CBaIpcRegistry::SCallFun(pFc->name, pFc->a, &ret);
+      memcpy(mMsg.data.data, &ret, sizeof(ret));
+   }
+      break;
 
+   // Variable request
+   case eBaIpcCmdGetVar:
+      mMsg.cmd = eBaIpcReplyCmdGetVar;
+      memset(mMsg.data.data, 0, sizeof(mMsg.data.data));
 
-         // dummy answer
-//         strcpy(mMsg.data.data, "CallFun");
-      }
-         break;
-      case eBaIpcCmdGetVar:
-         mMsg.cmd = eBaIpcReplyCmdGetVar;
-//         mMsg.data.data; // This is the name of the variable to be called
-         memset(mMsg.data.data, 0, sizeof(mMsg.data.data));
+      // dummy answer
+      strcpy(mMsg.data.data, "GetVar");
 
-         // dummy answer
-         strcpy(mMsg.data.data, "GetVar");
+      break;
 
-         break;
-      default:
-         ERROR_("IPC msg failed");
-         return eBaBoolRC_Error;
+   // Error
+   default:
+      mMsg.cmd = eBaIpcCmdError;
+      rc = false;
+      pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+            "Unrecognizable IPC message(%i)", fdRd);
    }
 
-   //mMsg.cmd = eBaIpcReplyPipePair;
-   rc = mpWr->Write((char*)&mMsg, sizeof(TBaIpcMsg));
-   TRACE_("Answered(%i, %i)", rc, mMsg.cmd); // todelete
-
+   // Write the answer on the pipe
+   pIPCHandlerMsg->Reset();
+   rc |= mpWr->Write((char*)&mMsg, sizeof(TBaIpcMsg));
    return rc;
 }
 

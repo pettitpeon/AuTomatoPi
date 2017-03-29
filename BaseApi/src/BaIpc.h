@@ -51,12 +51,17 @@ typedef struct TBaIpcVarReq {
 extern "C" {
 #endif
 
+/// @name Server Interface
+//@{
 TBaBoolRC BaIpcInitSvr();
 
 TBaBoolRC BaIpcSvrRunning();
 
 TBaBoolRC BaIpcExitSvr();
+//@}
 
+/// @name Client Interface
+//@{
 /******************************************************************************/
 /** Initialize the IPC client. This should be called in an external program
  *  which wishes to communicate with the control task.
@@ -81,13 +86,8 @@ TBaBoolRC BaIpcCallFun(
       TBaIpcFunArg a, ///< [in] Function arguments
       TBaIpcArg *pRet ///< [out] Function return value
       );
+//@}
 
-
-// todo: hide from the interface
-TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t sz);
-
-//
-TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz);
 
 
 #ifdef __cplusplus

@@ -24,25 +24,32 @@
 #endif
 #include "BaBool.h"
 #include "BaCore.h"
-
+#include "BaMsg.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-#define PIPEDIR "/run/user/0/"
+#define CBAIPCPIPEDIR "/run/user/0/"
+#define CBAIPCSERVER_RD "BaIpcSvrRd.fifo"
+#define CBAIPCSERVER_WR "BaIpcSvrWr.fifo"
 
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
+
+/// IPC protocol requests and replies
 typedef enum EBaIpcCmd {
-   eBaIpcCmdGetSvrStatus = 1,
-   eBaIpcCmdCall,
-   eBaIpcCmdGetVar,
-   eBaIpcReplySvrRuns,
-   eBaIpcReplyCmdCall,
-   eBaIpcReplyCmdGetVar,
+   eBaIpcCmdError = 0, ///< Error
+   eBaIpcCmdGetSvrStatus, /**< Sever status request. It is used when client is
+                               initialized */
+   eBaIpcCmdCall, ///< Function call request
+   eBaIpcCmdGetVar, ///< Variable request
+   eBaIpcReplySvrRuns, ///< Server is running reply
+   eBaIpcReplyCmdCall, ///< Function call reply
+   eBaIpcReplyCmdGetVar, ///< Variable request command
    eBaIpcCmdMax = eBaIpcReplyCmdGetVar
 } EBaIpcCmd;
+
 typedef int32_t TBaIpcCmd;
 
 typedef struct TBaIpcMsg {
@@ -124,10 +131,14 @@ public:
    TBaBool SvrRunning() { return mSvrRunning; };
 
    CBaPipePairSvr() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0},
-         mMsg{0}, mSvrRunning(eBaBool_false) {};
+         mMsg{0}, mSvrRunning(eBaBool_false),
+         pIPCHandlerMsg(IBaMsgCreate()), pPollMsg(IBaMsgCreate()) {};
 
    // Typical object oriented destructor must be virtual!
-   virtual ~CBaPipePairSvr() {};
+   virtual ~CBaPipePairSvr() {
+      IBaMsgDestroy(pIPCHandlerMsg);
+      IBaMsgDestroy(pPollMsg);
+   };
 
 private:
    static void svrRout(TBaCoreThreadArg *pArg);
@@ -144,7 +155,11 @@ private:
    TBaCoreThreadArg mThArg;
    struct epoll_event mEv; // epoll event
    TBaIpcMsg mMsg; // Msg used for reading and writing
+
    volatile TBaBool mSvrRunning;
+
+   IBaMsg *pIPCHandlerMsg;
+   IBaMsg *pPollMsg;
 
 };
 

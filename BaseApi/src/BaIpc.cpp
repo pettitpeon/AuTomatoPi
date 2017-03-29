@@ -23,12 +23,16 @@
 #include "BaLogMacros.h"
 #include "CBaIpcRegistry.h"
 #include "BaGenMacros.h"
+#include "BaMsg.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #define C_HDL_ ((IBaIpc*) hdl)
 #define TAG "BaIpc"
+#define WRPIPE CBAIPCPIPEDIR CBAIPCSERVER_RD // RD svr is WR clnt
+#define RDPIPE CBAIPCPIPEDIR CBAIPCSERVER_WR // WR svr is RD clnt
+
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -39,12 +43,19 @@ typedef struct TPipeSvr {
    TPipeSvr() : pPipes(0) {};
 } TPipeSvr;
 
+//
+LOCAL TBaBoolRC readClntPipe(char* pData, size_t sz);
+LOCAL TBaBoolRC writeClntPipe(const char* pData, size_t sz);
+
 
 /*------------------------------------------------------------------------------
     Static vars
  -----------------------------------------------------------------------------*/
-static int sRdFifo = -1;
-static int sWrFifo = -1;
+static int sClntRdFifo = -1;
+static int sClntWrFifo = -1;
+static IBaMsg *spClntRdMsg = 0;
+static IBaMsg *spClntWrMsg = 0;
+
 static TPipeSvr sPipeSvr;
 
 /*------------------------------------------------------------------------------
@@ -61,7 +72,6 @@ TBaBoolRC BaIpcInitSvr() {
    sPipeSvr.pPipes = CBaPipePairSvr::Create(0, 0);
 
    return sPipeSvr.pPipes ? eBaBoolRC_Success : eBaBoolRC_Error;
-
 }
 
 //
@@ -76,17 +86,27 @@ TBaBoolRC BaIpcExitSvr() {
       return eBaBoolRC_Success;
    }
 
-   return eBaBoolRC_Success;
+   auto p = sPipeSvr.pPipes;
+   sPipeSvr.pPipes = 0;
+   return CBaPipePairSvr::Destroy(p) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
-//
+/* ****************************************************************************
+ *  CLIENT side
+ ******************************************************************************/
 TBaBoolRC BaIpcInitClnt() {
-   if (sRdFifo != -1 && sWrFifo != -1) {
+   if (sClntRdFifo != -1 && sClntWrFifo != -1 && spClntRdMsg && spClntWrMsg) {
       return eBaBoolRC_Success;
    }
 
-   int fdWr = open(PIPEDIR "BaIpcSvrRd.fifo", O_WRONLY | O_NONBLOCK);
-   int fdRd = open(PIPEDIR "BaIpcSvrWr.fifo", O_RDONLY | O_NONBLOCK);
+   spClntRdMsg = spClntRdMsg ? spClntRdMsg : IBaMsgCreate();
+   spClntWrMsg = spClntWrMsg ? spClntWrMsg : IBaMsgCreate();
+   if (!spClntRdMsg || !spClntWrMsg) {
+      return eBaBoolRC_Error;
+   }
+
+   int fdWr = open(WRPIPE, O_WRONLY | O_NONBLOCK);
+   int fdRd = open(RDPIPE, O_RDONLY | O_NONBLOCK);
 
    if (fdWr < 0) {
       ERROR_("%s", strerror(errno));
@@ -99,17 +119,17 @@ TBaBoolRC BaIpcInitClnt() {
       return eBaBoolRC_Error;
    }
 
-   sWrFifo = fdWr;
-   sRdFifo = fdRd;
+   sClntWrFifo = fdWr;
+   sClntRdFifo = fdRd;
    TBaIpcMsg msg = {0};
    msg.cmd = eBaIpcCmdGetSvrStatus;
 
    // Check if the server is running
-   BaIpcWritePipe(sWrFifo, (const char*)&msg, sizeof(TBaIpcMsg));
+   writeClntPipe((const char*)&msg, sizeof(TBaIpcMsg));
 
    for (int i = 1; i < 50; ++i) {
       BaCoreMSleep(20);
-      BaIpcReadPipe(fdRd, (char*)&msg, sizeof(TBaIpcMsg));
+      readClntPipe((char*)&msg, sizeof(TBaIpcMsg));
       if (msg.cmd == eBaIpcReplySvrRuns) {
          TRACE_("Server is running");
          return eBaBoolRC_Success;
@@ -124,25 +144,30 @@ TBaBoolRC BaIpcInitClnt() {
 //
 TBaBoolRC BaIpcExitClnt() {
    int rc = 0;
-   rc = close(sWrFifo);
+   rc = close(sClntWrFifo);
    if (rc == -1) {
-      WARN_("Pipe(%i) did not close: %s", sWrFifo, strerror(errno));
+      WARN_("Pipe(%i) did not close: %s", sClntWrFifo, strerror(errno));
    }
 
-   rc |= close(sRdFifo);
+   rc |= close(sClntRdFifo);
    if (rc == -1) {
-      WARN_("Pipe(%i) did not close: %s", sRdFifo, strerror(errno));
+      WARN_("Pipe(%i) did not close: %s", sClntRdFifo, strerror(errno));
    }
 
-   sRdFifo = -1;
-   sWrFifo = -1;
+   sClntRdFifo = -1;
+   sClntWrFifo = -1;
+
+   IBaMsgDestroy(spClntRdMsg);
+   IBaMsgDestroy(spClntWrMsg);
+   spClntRdMsg = 0;
+   spClntWrMsg = 0;
 
    return !rc ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
 TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
-   if (sRdFifo == -1 || sWrFifo == -1) {
+   if (sClntRdFifo == -1 || sClntWrFifo == -1) {
       return eBaBoolRC_Error;
    }
    TBaIpcMsg msg = {0};
@@ -154,7 +179,7 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
    memcpy(msg.data.data, &fc, sizeof(fc));
 
    // send mesg
-   if (!BaIpcWritePipe(sWrFifo, (char*) &msg, sizeof(TBaIpcMsg))) {
+   if (!writeClntPipe((char*) &msg, sizeof(TBaIpcMsg))) {
       return eBaBoolRC_Error;
    }
 
@@ -162,7 +187,7 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
    for (int i = 0; i < 100; ++i) {
       BaCoreMSleep(10);
       memset(msg.data.data, 0, sizeof(msg.data.data));
-      BaIpcReadPipe(sRdFifo, (char*)&msg, sizeof(TBaIpcMsg));
+      readClntPipe((char*)&msg, sizeof(TBaIpcMsg));
       if (msg.cmd == eBaIpcReplyCmdCall) {
          *pRet = *((TBaIpcArg*)msg.data.data);
          // todo: delete
@@ -175,8 +200,8 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
 }
 
 //
-TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t size) {
-   if (fd < 0 || !pData) {
+LOCAL TBaBoolRC readClntPipe(char* pData, size_t size) {
+   if (sClntRdFifo < 0 || !pData) {
       return eBaBoolRC_Error;
    }
 
@@ -184,39 +209,44 @@ TBaBoolRC BaIpcReadPipe(int fd, char* pData, size_t size) {
    size_t rc = 0;
    size_t offset = 0;
    do {
-      rc = read(fd, pData + offset, size - offset);
+      rc = read(sClntRdFifo, pData + offset, size - offset);
       offset += rc;
       if (rc < 0 || offset > size) {
-         WARN_("Read failed(fd %i): %s", fd, strerror(errno));
+         spClntRdMsg->SetDefLogF(eBaLogPrio_Warning, TAG,
+               "Read failed(fd %i): %s", sClntRdFifo, strerror(errno));
          return eBaBoolRC_Error;
       }
    } while (rc != 0);
 
+   spClntRdMsg->Reset();
    return eBaBoolRC_Success;
 }
 
 //
-TBaBoolRC BaIpcWritePipe(int fd, const char* pData, size_t sz) {
-   if (fd < 0 || !pData) {
+LOCAL TBaBoolRC writeClntPipe(const char* pData, size_t sz) {
+   if (sClntWrFifo < 0 || !pData) {
       return eBaBoolRC_Error;
    }
 
    size_t bytesWr = 0;
    size_t offset = 0;
    do {
-      bytesWr = write(fd, (const void*)(pData + offset), sz - offset);
+      bytesWr = write(sClntWrFifo, (const void*)(pData + offset), sz - offset);
       offset += bytesWr;
       if (bytesWr < 0) {
-         WARN_("IPC write failed: %s", strerror(errno));
+         spClntWrMsg->SetDefLogF(eBaLogPrio_Warning, TAG,
+               "IPC write failed: %s", strerror(errno));
          return eBaBoolRC_Error;
       }
 
       if (offset > sz) {
-         ERROR_("IPC write failed");
+         spClntWrMsg->SetDefLog(eBaLogPrio_Warning, TAG,
+               "IPC write failed");
          return eBaBoolRC_Error;
       }
    } while (bytesWr != 0);
 
+   spClntWrMsg->Reset();
    return eBaBoolRC_Success;
 }
 

@@ -63,7 +63,7 @@ void CTestTemplate::Test() {
    BaCoreMSleep(500);
    TRACE_("clnt(%i)", BaIpcInitClnt());
 
-   BaIpcWritePipe(0,0,0);
+//   writeClntPipe(0,0,0);
 
    BaCoreMSleep(500);
 
