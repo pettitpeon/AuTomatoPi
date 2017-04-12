@@ -182,17 +182,18 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
       return eBaBoolRC_Error;
    }
 
+   memset(msg.data.data, 0, sizeof(msg.data.data));
+
    // todo: wait for reply??
    for (int i = 0; i < 100; ++i) {
-      BaCoreMSleep(10);
-      memset(msg.data.data, 0, sizeof(msg.data.data));
-      readClntPipe((char*)&msg, sizeof(TBaIpcMsg));
-      if (msg.cmd == eBaIpcReplyCmdCall) {
+      if (readClntPipe((char*)&msg, sizeof(TBaIpcMsg)) && msg.cmd == eBaIpcReplyCmdCall) {
          *pRet = *((TBaIpcArg*)msg.data.data);
          // todo: delete
          TRACE_("Call delay %i ms", i*10);
          return eBaBoolRC_Success;
       }
+
+      BaCoreMSleep(10);
    }
 
    return eBaBoolRC_Error;

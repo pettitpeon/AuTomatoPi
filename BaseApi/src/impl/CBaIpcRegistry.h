@@ -21,23 +21,6 @@
 #include <tuple>
 #include "BaIpcRegistry.h"
 
-typedef enum EBaIpcVarType {
-   eBaIpcVarTypeUnkn = 0,
-   eBaIpcVarTypeU8,
-   eBaIpcVarTypeU16,
-   eBaIpcVarTypeU32,
-   eBaIpcVarTypeU64,
-   eBaIpcVarTypeI8,
-   eBaIpcVarTypeI16,
-   eBaIpcVarTypeI32,
-   eBaIpcVarTypeI64,
-   eBaIpcVarTypeFlt,
-   eBaIpcVarTypeDou,
-   eBaIpcVarTypeStr,
-   eBaIpcVarTypePtr,
-   eBaIpcVarTypeMax = eBaIpcVarTypePtr
-} EBaIpcVarType;
-
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
@@ -105,14 +88,15 @@ public:
       return mVarReg.erase(name) > 0;
    };
 
+   virtual bool CallVar(std::string name, TBaIpcRegVar *pVar);
+   virtual bool SetVar(std::string name, TBaIpcRegVar *pVar);
+
 private:
    CBaIpcRegistry() {};
    virtual ~CBaIpcRegistry() {};
 
    bool varIsValid(const TBaIpcRegVar &rVar) {
-      return rVar.pVar && rVar.type > eBaIpcVarTypeUnkn && rVar.type <= eBaIpcVarTypeMax &&
-            // if str || ptr, force sz != 0
-            ((rVar.type != eBaIpcVarTypeStr && rVar.type != eBaIpcVarTypePtr) || !rVar.sz);
+      return (rVar.pVar && rVar.sz > 0 && rVar.sz < BAIPCMAXVARSZ);
    }
 
    std::map<std::string, TBaIpcRegFun> mFunReg;

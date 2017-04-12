@@ -22,17 +22,20 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include <stddef.h>
-#include "BaBool.h"
 #ifdef __cplusplus
 # include <string>
 #endif
+#include "BaBool.h"
 
+// todo refactor
+#include "impl/CBaIpcSvr.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 /// MAximum number of arguments in registry function
 #define BAIPCMAXARG 4
+#define BAIPCMAXVARSZ (CBAIPCMSGSZ)
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -40,11 +43,12 @@
 /// C message handle
 typedef void* TBaIpcRegistryHdl;
 
+
 ///
 typedef struct TBaIpcRegVar {
    void *pVar;
-   int type;
    size_t sz;
+   TBaBool wr;
 } TBaIpcRegVar;
 
 // s, i, f, d, I
@@ -270,3 +274,4 @@ extern "C" TBaBoolRC IBaIpcRegistryDestroy(
 
 #endif // __cplusplus
 #endif // BAIPCREGISTRY_H_
+

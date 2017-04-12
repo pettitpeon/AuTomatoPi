@@ -39,6 +39,8 @@ template<typename T> LOCAL T funTTTTT(T T1, T T2, T T3, T T4)
 
 static int32_t sInt = 0;
 
+static char sStr[] = "init";
+
 /* ****************************************************************************/
 /*  ...
  */
@@ -64,6 +66,37 @@ void CBaIpcTest::Init() {
    ASS(BaApiInitLoggerDef(LOGFILE));
 }
 
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaIpcTest::VarRegNiceWeather() {
+   ASS(true);
+   // Creation and normal use
+   CBaIpcRegistry* pReg = CBaIpcRegistry::Create();
+   TBaIpcRegVar var;
+   std::string s = "init";
+
+   var.pVar = (void*)sStr;
+   var.sz = sizeof(strlen(sStr));
+   var.wr = eBaBool_true;
+
+   ASS(pReg->RegisterVar("TestString", var));
+
+   var = {0};
+   ASS(pReg->CallVar("TestString", &var));
+   ASS(s == (const char*)var.pVar);
+
+   var.pVar = (void*)"new";
+   var.sz = sizeof(strlen("new"));
+   ASS(pReg->SetVar("TestString", &var));
+
+   s = "new";
+   ASS(s == sStr);
+
+   var = {0};
+   ASS(pReg->CallVar("TestString", &var));
+   ASS(s == (const char*)var.pVar);
+}
 /* ****************************************************************************/
 /*  ...
  */
@@ -134,6 +167,8 @@ void CBaIpcTest::FunRegNiceWeather() {
 
    ASS(pReg->UnregisterFun(fun.type));
    pReg->ClearFunRegistry();
+
+   CBaIpcRegistry::Destroy(pReg);
 }
 
 /* ****************************************************************************/

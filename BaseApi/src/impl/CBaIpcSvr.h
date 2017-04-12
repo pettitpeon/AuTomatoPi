@@ -32,6 +32,7 @@
 #define CBAIPCPIPEDIR "/run/user/0/"
 #define CBAIPCSERVER_RD "BaIpcSvrRd.fifo"
 #define CBAIPCSERVER_WR "BaIpcSvrWr.fifo"
+#define CBAIPCMSGSZ     1020
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -55,7 +56,7 @@ typedef int32_t TBaIpcCmd;
 typedef struct TBaIpcMsg {
    TBaIpcCmd cmd;
    union Data {
-      char data[1020];
+      char data[CBAIPCMSGSZ];
    } data;
 } TBaIpcMsg;
 

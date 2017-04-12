@@ -32,6 +32,7 @@ public:
    CPPUNIT_TEST_SUITE(CBaIpcTest);
 
    CPPUNIT_TEST(Init);
+   CPPUNIT_TEST(VarRegNiceWeather);
    CPPUNIT_TEST(FunRegNiceWeather);
    CPPUNIT_TEST(FunRegErrors);
    CPPUNIT_TEST(IPCServer);
@@ -42,6 +43,7 @@ public:
 
 public:
    void Init();
+   void VarRegNiceWeather();
    void FunRegNiceWeather();
    void FunRegErrors();
    void IPCServer();

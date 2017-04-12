@@ -219,6 +219,42 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
 };
 
 //
+bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVar *pVar) {
+   if (!pVar || name == "") {
+      return false;
+   }
+
+   auto it = mVarReg.find(name);
+   if (it == mVarReg.end() || !varIsValid(it->second)) {
+      return false;
+   }
+
+
+   *pVar = (it->second);
+   return true;
+}
+
+//
+bool CBaIpcRegistry::SetVar(std::string name, TBaIpcRegVar *pVar) {
+   if (!pVar || name == "" || pVar->wr != eBaBool_true || !varIsValid(*pVar)) {
+      return false;
+   }
+
+   auto it = mVarReg.find(name);
+   if (it == mVarReg.end() || !varIsValid(it->second)) {
+      return false;
+   }
+
+   // Do not allow to write more than the original size
+   if (it->second.sz < pVar->sz) {
+      return false;
+   }
+
+   memcpy(it->second.pVar, pVar->pVar, pVar->sz);
+   return true;
+}
+
+//
 template <typename TR, typename TA1, typename TA2, typename TA3, typename TA4>
 LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3, TA4 a4, bool &rRet) {

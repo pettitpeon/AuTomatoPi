@@ -32,7 +32,6 @@
 typedef void* TBaIpcHdl;
 
 
-
 // IPC message
 //typedef struct TBaIpcVarReq {
 //   int32_t type;
