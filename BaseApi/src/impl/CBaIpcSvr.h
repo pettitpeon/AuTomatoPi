@@ -25,6 +25,7 @@
 #include "BaBool.h"
 #include "BaCore.h"
 #include "BaMsg.h"
+#include "BaIpc.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -32,7 +33,7 @@
 #define CBAIPCPIPEDIR "/run/user/0/"
 #define CBAIPCSERVER_RD "BaIpcSvrRd.fifo"
 #define CBAIPCSERVER_WR "BaIpcSvrWr.fifo"
-#define CBAIPCMSGSZ     1020
+//#define CBAIPCMSGSZ     1020
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -56,7 +57,7 @@ typedef int32_t TBaIpcCmd;
 typedef struct TBaIpcMsg {
    TBaIpcCmd cmd;
    union Data {
-      char data[CBAIPCMSGSZ];
+      char data[BAIPCMSGSZ];
    } data;
 } TBaIpcMsg;
 

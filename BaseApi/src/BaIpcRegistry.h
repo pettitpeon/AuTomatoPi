@@ -27,15 +27,13 @@
 #endif
 #include "BaBool.h"
 
-// todo refactor
-#include "impl/CBaIpcSvr.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 /// MAximum number of arguments in registry function
 #define BAIPCMAXARG 4
-#define BAIPCMAXVARSZ (CBAIPCMSGSZ)
+#define BAIPCMAXVARSZ 1020
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -43,27 +41,33 @@
 /// C message handle
 typedef void* TBaIpcRegistryHdl;
 
-
-///
+/// Variable descriptor of the variables registry
 typedef struct TBaIpcRegVar {
-   void *pVar;
-   size_t sz;
-   TBaBool wr;
+   void *pVar; ///< Pointer to the variable to be registered
+   size_t sz; ///< Size in bytes of the variable to be registered
+   TBaBool wr; ///< Flag to determine if the variable can be overwritten
 } TBaIpcRegVar;
 
-// s, i, f, d, I
-// The primitive type int32 is enough to represent everything from char to
-// int32 signed or unsigned because the relying memory is the same
-// 64bit quantities are handled extra
-// Float and double must be handled extra as well because the relying memory
-// is different
-// return type, parameters: "v,idf"
+/** Function descriptor of the functions registry.
+ *  The @c type string is defined as one character, a semicolon and a string,
+ *  eg.: i:IIf. The first character is the return type of the function. The
+ *  string of characters after the semicolon are the parameter types in order.
+ *  The valid characters and types are
+ *   - v: void
+ *   - i: integer types of 4 bytes or less. It includes unsigned types and pointers
+ *   - I: 64 bit integer types including unsigned
+ *   - f: float
+ *   - d: double
+ *  If there are no parameters, only a single 'v' is allowed after the
+ *  semicolon.
+ *
+ */
 typedef struct TBaIpcRegFun {
    void *pFun;
    const char *type;
 } TBaIpcRegFun;
 
-/// Argument type union
+/// Argument type union. It is used to cast return values and single arguments.
 typedef union TBaIpcArg {
       void    *p;
       float    f;
@@ -232,7 +236,7 @@ public:
    virtual void ClearFunRegistry() = 0;
 
    /***************************************************************************/
-   /** Register a function to the IPC registry
+   /** Call a function from the functions registry
     *  @return true if success
     */
    virtual bool CallFun(
@@ -242,12 +246,33 @@ public:
          ) = 0;
    //@}
 
-   // todo
    /// @name Variables registry
    //@{
-   virtual bool RegisterVar(std::string name, TBaIpcRegVar var) = 0;
+   /***************************************************************************/
+   /** Register a function to the IPC registry
+    *  @return true if success
+    */
+   virtual bool RegisterVar(
+         std::string name, TBaIpcRegVar var
+         ) = 0;
 
-   virtual bool RemoveVar(std::string name) = 0;
+   virtual bool UnregisterVar(
+         std::string name
+         ) = 0;
+
+   /***************************************************************************/
+   /** Register a function to the IPC registry
+    *  @return true if success
+    */
+   virtual bool CallVar(
+         std::string name,
+         TBaIpcRegVar *pVar
+         ) = 0;
+
+   virtual bool SetVar(
+         std::string name,
+         TBaIpcRegVar *pVar
+         ) = 0;
    //@}
 
    // Typical object oriented destructor must be virtual!

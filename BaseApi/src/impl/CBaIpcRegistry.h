@@ -84,7 +84,7 @@ public:
       return false;
    };
 
-   virtual bool RemoveVar(std::string name) {
+   virtual bool UnregisterVar(std::string name) {
       return mVarReg.erase(name) > 0;
    };
 
