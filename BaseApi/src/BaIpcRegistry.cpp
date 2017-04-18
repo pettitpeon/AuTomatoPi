@@ -10,6 +10,7 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
+#include <string.h>
 #include "BaIpcRegistry.h"
 #include "CBaIpcRegistry.h"
 #include "BaBool.h"
@@ -25,6 +26,85 @@
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
+
+//
+TBaBoolRC BaIpcRegistryLocalInit() {
+   return CBaIpcRegistry::SInitRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalExit() {
+   return CBaIpcRegistry::SExitRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalRegisterFun(const char* name, TBaIpcRegFun fun) {
+   if (!name) {
+      return eBaBoolRC_Error;
+   }
+
+   return CBaIpcRegistry::SRegisterFun(name, fun) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalUnregisterFun(const char* name) {
+   if (!name) {
+      return eBaBoolRC_Error;
+   }
+
+   return CBaIpcRegistry::SUnregisterFun(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
+   if (!name) {
+      return eBaBoolRC_Error;
+   }
+
+   return CBaIpcRegistry::SCallFun(name, a , pRet) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalClearFunRegistry() {
+   return CBaIpcRegistry::SClearFunRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalRegisterVar(const char* name, TBaIpcRegVar var) {
+   if (!name) {
+      return eBaBoolRC_Error;
+   }
+
+   return CBaIpcRegistry::SRegisterVar(name, var) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalUnregisterVar(const char* name) {
+   if (!name) {
+      return eBaBoolRC_Error;
+   }
+
+   return CBaIpcRegistry::SUnregisterVar(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalCallVar(const char* name, TBaIpcRegVarOut *pVar) {
+   if (!name || !pVar) {
+      return eBaBoolRC_Error;
+   }
+
+   return CBaIpcRegistry::SCallVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryLocalSetVar(const char* name, TBaIpcRegVar var) {
+   if (!name) {
+      return eBaBoolRC_Error;
+   }
+
+   return CBaIpcRegistry::SSetVar(name, var) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
 //
 TBaIpcRegistryHdl BaIpcRegistryCreate() {
    return CBaIpcRegistry::Create();
@@ -55,7 +135,7 @@ TBaBoolRC BaIpcRegistryUnregisterFun(TBaIpcRegistryHdl hdl, const char* name) {
 }
 
 //
-TBaBoolRC BaIpcRegistryClearFunRegistry(TBaIpcRegistryHdl hdl) {
+TBaBoolRC BaIpcRegistryClearFunReg(TBaIpcRegistryHdl hdl) {
    if (!hdl) {
       return eBaBoolRC_Error;
    }
@@ -74,6 +154,15 @@ TBaBoolRC BaIpcRegistryCallFun(TBaIpcRegistryHdl hdl, const char* name,
    return C_HDL_->CallFun(name, a, pRet) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
+//
+//
+TBaBoolRC BaIpcRegistryCallVar(TBaIpcRegistryHdl hdl, const char* name, TBaIpcRegVarOut *pVar) {
+   if (!hdl || !name || !pVar) {
+      return eBaBoolRC_Error;
+   }
+
+   return C_HDL_->CallVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
 /*------------------------------------------------------------------------------
     C++ Factories
  -----------------------------------------------------------------------------*/

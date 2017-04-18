@@ -86,25 +86,25 @@ void CBaIpcTest::VarRegNiceWeather() {
 
    // Test the return value of the registered var
    var = {0};
-   ASS(pReg->CallVar("TestString", &var));
+   ASS(pReg->CallVarInternal("TestString", var));
    ASS(s == (const char*)var.pVar);
 
    // Change the var directly and test again
-   strncpy(sStr, "ini", 3);
    s = "ini";
-   ASS(pReg->CallVar("TestString", &var));
+   strncpy(sStr, "ini", s.length() + 1);
+   ASS(pReg->CallVarInternal("TestString", var));
    ASS(s == (const char*)var.pVar);
 
    // Change through the registered var and check against the direct var
    var.pVar = (void*)"new";
    var.sz = sizeof(strlen("new"));
-   ASS(pReg->SetVar("TestString", &var));
+   ASS(pReg->SetVar("TestString", var));
    s = "new";
    ASS(s == sStr);
 
    // Finally check against the registered var
    var = {0};
-   ASS(pReg->CallVar("TestString", &var));
+   ASS(pReg->CallVarInternal("TestString", var));
    ASS(s == (const char*)var.pVar);
 }
 

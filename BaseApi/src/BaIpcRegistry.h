@@ -44,7 +44,7 @@ typedef void* TBaIpcRegistryHdl;
 /// Variable descriptor of the variables registry
 typedef struct TBaIpcRegVar {
    void *pVar; ///< Pointer to the variable to be registered
-   size_t sz; ///< Size in bytes of the variable to be registered
+   size_t sz; ///< Size in bytes of the variable to be registered. Must be <= BAIPCMAXVARSZ
    TBaBool wr; ///< Flag to determine if the variable can be overwritten
 } TBaIpcRegVar;
 
@@ -59,13 +59,29 @@ typedef struct TBaIpcRegVar {
  *   - f: float
  *   - d: double
  *  If there are no parameters, only a single 'v' is allowed after the
- *  semicolon.
+ *  semicolon, e.g., f:v
  *
  */
 typedef struct TBaIpcRegFun {
-   void *pFun;
-   const char *type;
+   void *pFun; ///< Pointer to the function casted to void
+   const char *type; ///< Function type definition
 } TBaIpcRegFun;
+
+/// Variable descriptor buffer for retrieving values of the variables registry
+/// without getting access to the underlying memory.
+typedef struct TBaIpcRegVarOut {
+   union {
+      char data[BAIPCMAXVARSZ];
+      void    *p;
+      float    f;
+      double   d;
+      int32_t  i; ///< This includes all the smaller types
+      uint32_t u;
+      int64_t  I;
+      uint64_t U;
+   } data;
+   size_t sz; ///< Size in bytes of the variable retrieved variable
+} TBaIpcRegVarOut;
 
 /// Argument type union. It is used to cast return values and single arguments.
 typedef union TBaIpcArg {
@@ -136,6 +152,42 @@ TBaBoolRC BaIpcRegistryLocalCallFun(
  *  @return True if success, otherwise, false
  */
 TBaBoolRC BaIpcRegistryLocalClearFunRegistry();
+
+/******************************************************************************/
+/** Register a variable in the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalRegisterVar(
+      const char* name, ///< [in] Variable name
+      TBaIpcRegVar var ///< [in] Variable descriptor
+      );
+
+/******************************************************************************/
+/** Remove a variable from the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalUnregisterVar(
+      const char* name ///< [in] Variable name
+      );
+
+/******************************************************************************/
+/** Gets the value of a variable in the registry by copying the value to the
+ *  @c *pVar buffer.
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalCallVar(
+      const char* name, ///< [in] Variable name
+      TBaIpcRegVarOut *pVar  ///< [out] Variable descriptor
+      );
+
+/******************************************************************************/
+/** Sets the values of a variable from the registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalSetVar(
+      const char* name, ///< [in] Variable name
+      TBaIpcRegVar var ///< [in] Variable descriptor
+      );
 //@}
 
 
@@ -178,10 +230,12 @@ TBaBoolRC BaIpcRegistryUnregisterFun(
       );
 
 /******************************************************************************/
-/** Clear the registry
+/** Clear the functions registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryClearFunRegistry();
+TBaBoolRC BaIpcRegistryClearFunReg(
+      TBaIpcRegistryHdl hdl ///< [in] Handle
+      );
 
 /******************************************************************************/
 /** Call a function from the registry
@@ -195,6 +249,59 @@ TBaBoolRC BaIpcRegistryCallFun(
       );
 //@}
 
+/// @name Variables registry
+//@{
+// TODO: Finish the interface. Many functions  not implemented
+/******************************************************************************/
+/** Register a variable in the registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryRegisterVar(
+      TBaIpcRegistryHdl hdl, ///< [in] Handle
+      const char* name, ///< [in] Function name
+      const TBaIpcRegVar *pVar ///< [in] Variable to register
+      );
+
+/******************************************************************************/
+/** Register a variable in the registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcUnregistryRegisterVar(
+      TBaIpcRegistryHdl hdl, ///< [in] Handle
+      const char* name ///< [in] Function name
+      );
+
+/******************************************************************************/
+/** Clear the variables registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryClearVarReg(
+      TBaIpcRegistryHdl hdl ///< [in] Handle
+      );
+
+/******************************************************************************/
+/** Gets the value of a variable in the registry by copying the value to the
+ *  @c *pVar buffer.
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryCallVar(
+      TBaIpcRegistryHdl hdl, ///< [in] Handle
+      const char* name, ///< [in] Variable name
+      TBaIpcRegVarOut *pVar  ///< [out] Variable descriptor
+      );
+
+/******************************************************************************/
+/** Set a variable from the registry to a new value if allowed
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistrySetVar(
+      TBaIpcRegistryHdl hdl, ///< [in] Handle
+      const char* name, ///< [in] Function name
+      const TBaIpcRegVar *pVar ///< [in] Variable descriptor
+      );
+
+
+//@}
 #ifdef __cplusplus
 } // extern c
 
@@ -249,29 +356,44 @@ public:
    /// @name Variables registry
    //@{
    /***************************************************************************/
-   /** Register a function to the IPC registry
+   /** Register a variable to the registry
     *  @return true if success
     */
    virtual bool RegisterVar(
-         std::string name, TBaIpcRegVar var
-         ) = 0;
-
-   virtual bool UnregisterVar(
-         std::string name
+         std::string name, ///< [in] Variable name
+         const TBaIpcRegVar &rVar ///< [in] Variable descriptor
          ) = 0;
 
    /***************************************************************************/
-   /** Register a function to the IPC registry
+   /** Unregister a variable from the registry
+    *  @return true if success
+    */
+   virtual bool UnregisterVar(
+         std::string name ///< [in] Variable name
+         ) = 0;
+
+   /***************************************************************************/
+   /** Unregister all variables from the registry
+    *  @return true if success
+    */
+   virtual void ClearVarRegistry() = 0;
+
+   /***************************************************************************/
+   /** Retrieve the value of a registry variable
     *  @return true if success
     */
    virtual bool CallVar(
-         std::string name,
-         TBaIpcRegVar *pVar
+         std::string name, ///< [in] Variable name
+         TBaIpcRegVarOut &rVar ///< [out] Variable descriptor
          ) = 0;
 
+   /***************************************************************************/
+   /** Set a variable from the registry to a new value if allowed
+    *  @return true if success
+    */
    virtual bool SetVar(
          std::string name,
-         TBaIpcRegVar *pVar
+         const TBaIpcRegVar &rVar
          ) = 0;
    //@}
 

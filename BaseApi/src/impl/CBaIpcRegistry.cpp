@@ -149,6 +149,7 @@ bool CBaIpcRegistry::SRegisterFun(std::string name, TBaIpcRegFun fun) {
    if (!spReg) {
       return false;
    }
+
    return spReg->RegisterFun(name, fun);
 }
 
@@ -157,6 +158,7 @@ bool CBaIpcRegistry::SUnregisterFun(std::string name) {
    if (!spReg) {
       return false;
    }
+
    return spReg->UnregisterFun(name);
 }
 
@@ -165,13 +167,63 @@ bool CBaIpcRegistry::SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet)
    if (!spReg) {
       return false;
    }
+
    return spReg->CallFun(name, a, pRet);
 }
 
 //
-void CBaIpcRegistry::SClearFunRegistry() {
+bool CBaIpcRegistry::SClearFunRegistry() {
+   if (!spReg) {
+      return false;
+   }
+
    spReg->ClearFunRegistry();
-   return;
+   return true;
+}
+
+//
+bool CBaIpcRegistry::SRegisterVar(std::string name, const TBaIpcRegVar &rVar) {
+   if (!spReg) {
+      return false;
+   }
+
+   return spReg->RegisterVar(name, rVar);
+}
+
+//
+bool CBaIpcRegistry::SUnregisterVar(std::string name) {
+   if (!spReg) {
+      return false;
+   }
+
+   return spReg->UnregisterVar(name);
+}
+
+//
+bool CBaIpcRegistry::SCallVar(std::string name, TBaIpcRegVarOut &rVar) {
+   if (!spReg) {
+      return false;
+   }
+
+   return spReg->CallVar(name, rVar);
+}
+
+//
+bool CBaIpcRegistry::SCallVarInternal(std::string name, TBaIpcRegVar &rVar) {
+   if (!spReg) {
+      return false;
+   }
+
+   return spReg->CallVarInternal(name, rVar);
+}
+
+//
+bool CBaIpcRegistry::SSetVar(std::string name, const TBaIpcRegVar &rVar) {
+   if (!spReg) {
+      return false;
+   }
+
+   return spReg->SetVar(name, rVar);
 }
 
 //
@@ -218,9 +270,28 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
    return false;
 };
 
+
 //
-bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVar *pVar) {
-   if (!pVar || name == "") {
+bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVarOut &rVar) {
+   TBaIpcRegVar var = {0};
+
+
+   if (!CallVarInternal(name, var) || !var.pVar || var.sz > BAIPCMAXVARSZ) {
+      return false;
+   }
+
+   // Set the output memory to null to avoid trouble
+   memset(&rVar, 0, sizeof(rVar));
+
+   // Copy the data from the registry pointer to the output data
+   memcpy(rVar.data.data, var.pVar, var.sz);
+   rVar.sz = var.sz;
+   return true;
+}
+
+//
+bool CBaIpcRegistry::CallVarInternal(std::string name, TBaIpcRegVar &rVar) {
+   if (name == "") {
       return false;
    }
 
@@ -230,13 +301,13 @@ bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVar *pVar) {
    }
 
 
-   *pVar = (it->second);
+   rVar = (it->second);
    return true;
 }
 
 //
-bool CBaIpcRegistry::SetVar(std::string name, TBaIpcRegVar *pVar) {
-   if (!pVar || name == "" || pVar->wr != eBaBool_true || !varIsValid(*pVar)) {
+bool CBaIpcRegistry::SetVar(std::string name, const TBaIpcRegVar &rVar) {
+   if (name == "" || rVar.wr != eBaBool_true || !varIsValid(rVar)) {
       return false;
    }
 
@@ -246,11 +317,11 @@ bool CBaIpcRegistry::SetVar(std::string name, TBaIpcRegVar *pVar) {
    }
 
    // Do not allow to write more than the original size
-   if (it->second.sz < pVar->sz) {
+   if (it->second.sz < rVar.sz) {
       return false;
    }
 
-   memcpy(it->second.pVar, pVar->pVar, pVar->sz);
+   memcpy(it->second.pVar, rVar.pVar, rVar.sz);
    return true;
 }
 
