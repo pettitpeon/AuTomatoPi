@@ -12,6 +12,8 @@
  *  create registries at the user's discretion, or use the embedded "local"
  *  registry. The IPC API uses the local registry to call functions and
  *  variables remotely.
+ *
+ *  // TODO: The variables registry is not concurrency-safe
  */
 /*------------------------------------------------------------------------------
  */
@@ -79,7 +81,7 @@ typedef struct TBaIpcRegVarOut {
       uint32_t u;
       int64_t  I;
       uint64_t U;
-   } data;
+   } dat;
    size_t sz; ///< Size in bytes of the variable retrieved variable
 } TBaIpcRegVarOut;
 
@@ -151,7 +153,7 @@ TBaBoolRC BaIpcRegistryLocalCallFun(
 /** Clear the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalClearFunRegistry();
+TBaBoolRC BaIpcRegistryLocalClearFunReg();
 
 /******************************************************************************/
 /** Register a variable in the local registry
@@ -251,7 +253,6 @@ TBaBoolRC BaIpcRegistryCallFun(
 
 /// @name Variables registry
 //@{
-// TODO: Finish the interface. Many functions  not implemented
 /******************************************************************************/
 /** Register a variable in the registry
  *  @return True if success, otherwise, false
@@ -266,7 +267,7 @@ TBaBoolRC BaIpcRegistryRegisterVar(
 /** Register a variable in the registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcUnregistryRegisterVar(
+TBaBoolRC BaIpcRegistryUnregisterVar(
       TBaIpcRegistryHdl hdl, ///< [in] Handle
       const char* name ///< [in] Function name
       );

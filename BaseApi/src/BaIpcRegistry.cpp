@@ -65,7 +65,7 @@ TBaBoolRC BaIpcRegistryLocalCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg 
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalClearFunRegistry() {
+TBaBoolRC BaIpcRegistryLocalClearFunReg() {
    return CBaIpcRegistry::SClearFunRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
@@ -155,6 +155,34 @@ TBaBoolRC BaIpcRegistryCallFun(TBaIpcRegistryHdl hdl, const char* name,
 }
 
 //
+TBaBoolRC BaIpcRegistryRegisterVar(TBaIpcRegistryHdl hdl, const char* name,
+      const TBaIpcRegVar *pVar) {
+   if (!hdl || !name) {
+      return eBaBoolRC_Error;
+   }
+
+   return C_HDL_->RegisterVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryUnregisterVar(TBaIpcRegistryHdl hdl, const char* name) {
+   if (!hdl || !name) {
+      return eBaBoolRC_Error;
+   }
+
+   return C_HDL_->UnregisterVar(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcRegistryClearVarReg(TBaIpcRegistryHdl hdl) {
+   if (!hdl) {
+      return eBaBoolRC_Error;
+   }
+
+   C_HDL_->ClearVarRegistry();
+   return eBaBoolRC_Success;
+}
+
 //
 TBaBoolRC BaIpcRegistryCallVar(TBaIpcRegistryHdl hdl, const char* name, TBaIpcRegVarOut *pVar) {
    if (!hdl || !name || !pVar) {
@@ -163,6 +191,20 @@ TBaBoolRC BaIpcRegistryCallVar(TBaIpcRegistryHdl hdl, const char* name, TBaIpcRe
 
    return C_HDL_->CallVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
+
+//
+TBaBoolRC BaIpcRegistrySetVar(TBaIpcRegistryHdl hdl, const char* name,
+      const TBaIpcRegVar *pVar
+      ) {
+   if (!hdl || !name || !pVar) {
+      return eBaBoolRC_Error;
+   }
+
+   return C_HDL_->SetVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
+
+}
+
+
 /*------------------------------------------------------------------------------
     C++ Factories
  -----------------------------------------------------------------------------*/

@@ -28,6 +28,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CBaIpcTest );
 
 #define LOGFILE "testDef"
 #define LOGDIR "/var/log/"
+#define SET_FUN(regFun, fun, TYPE) regFun.pFun = (void*) fun; \
+      regFun.type = TYPE;
 
 LOCAL void funvv();
 LOCAL void funvi(int32_t i);
@@ -52,9 +54,6 @@ void CBaIpcTest::setUp() {
  */
 void CBaIpcTest::tearDown() {
 }
-
-#define SET_FUN(regFun, fun, TYPE) regFun.pFun = (void*) fun; \
-      regFun.type = TYPE;
 
 
 LOCAL int32_t testRegFun(int32_t i) {

@@ -284,7 +284,7 @@ bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVarOut &rVar) {
    memset(&rVar, 0, sizeof(rVar));
 
    // Copy the data from the registry pointer to the output data
-   memcpy(rVar.data.data, var.pVar, var.sz);
+   memcpy(rVar.dat.data, var.pVar, var.sz);
    rVar.sz = var.sz;
    return true;
 }

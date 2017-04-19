@@ -33,6 +33,7 @@
 #include "BaSwOsciTest.h"
 #include "BaRPiTest.h"
 #include "BaIpcTest.h"
+#include "BaIpcRegistryTest.h"
 
 #include "CtrlPT1Test.h"
 
@@ -130,6 +131,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaSwOsciTest::suite());
 //   pSuite->addTest(CBaRPiTest::suite());
    pSuite->addTest(CBaIpcTest::suite());
+   pSuite->addTest(CBaIpcRegistryTest::suite());
    return pSuite;
 }
 
