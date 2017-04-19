@@ -1,0 +1,8 @@
+title: AuTomatoPi
+description: Automation for Raspberry Pi
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-slate
+
+gems:
+  - jekyll-mentions
