@@ -28,14 +28,15 @@
 # include <string>
 #endif
 #include "BaBool.h"
+#include "BaIpcDef.h"
 
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 /// MAximum number of arguments in registry function
-#define BAIPCMAXARG 4
-#define BAIPCMAXVARSZ 1020
+#define BAIPC_MAXARG 4
+#define BAIPC_MAXVARSZ (BAIPC_MSGDATASZ - sizeof(size_t))
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -73,7 +74,7 @@ typedef struct TBaIpcRegFun {
 /// without getting access to the underlying memory.
 typedef struct TBaIpcRegVarOut {
    union {
-      char data[BAIPCMAXVARSZ];
+      char data[BAIPC_MAXVARSZ];
       void    *p;
       float    f;
       double   d;
@@ -98,7 +99,7 @@ typedef union TBaIpcArg {
 
 /// Structure to hold the arguments of a function to be called
 typedef struct TBaIpcFunArg {
-   TBaIpcArg a[BAIPCMAXARG]; ///< Array of arguments
+   TBaIpcArg a[BAIPC_MAXARG]; ///< Array of arguments
 } TBaIpcFunArg;
 
 /*------------------------------------------------------------------------------

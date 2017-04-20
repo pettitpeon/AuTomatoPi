@@ -46,10 +46,12 @@ typedef enum EBaIpcCmd {
                                initialized */
    eBaIpcCmdCall, ///< Function call request
    eBaIpcCmdGetVar, ///< Variable request
+   eBaIpcCmdSetVar, ///< Variable set request
    eBaIpcReplySvrRuns, ///< Server is running reply
    eBaIpcReplyCmdCall, ///< Function call reply
-   eBaIpcReplyCmdGetVar, ///< Variable request command
-   eBaIpcCmdMax = eBaIpcReplyCmdGetVar
+   eBaIpcReplyCmdGetVar, ///< Variable request reply
+   eBaIpcReplyCmdSetVar, ///< Variable request reply
+   eBaIpcCmdMax = eBaIpcReplyCmdSetVar
 } EBaIpcCmd;
 
 typedef int32_t TBaIpcCmd;
@@ -57,8 +59,8 @@ typedef int32_t TBaIpcCmd;
 typedef struct TBaIpcMsg {
    TBaIpcCmd cmd;
    union Data {
-      char data[BAIPCMSGSZ];
-   } data;
+      char data[BAIPC_MSGDATASZ];
+   } dat;
 } TBaIpcMsg;
 
 /*------------------------------------------------------------------------------

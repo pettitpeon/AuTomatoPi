@@ -36,7 +36,7 @@ public:
    CPPUNIT_TEST(FunRegNiceWeather);
    CPPUNIT_TEST(FunRegErrors);
    CPPUNIT_TEST(IPCServer);
-   CPPUNIT_TEST(IPCRealClientServer);
+   CPPUNIT_TEST(IPCRealFunClientServer);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
@@ -47,7 +47,8 @@ public:
    void FunRegNiceWeather();
    void FunRegErrors();
    void IPCServer();
-   void IPCRealClientServer();
+   void IPCRealFunClientServer();
+   void IPCRealVarClientServer();
    void Exit();
 };
 

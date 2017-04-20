@@ -19,30 +19,19 @@
     Includes
  -----------------------------------------------------------------------------*/
 #include "BaBool.h"
+#include "BaIpcDef.h"
 #include "BaIpcRegistry.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-#define BAIPCMSGSZ     (BAIPCMAXVARSZ)
+
 
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
 /// C message handle
 typedef void* TBaIpcHdl;
-
-
-// IPC message
-//typedef struct TBaIpcVarReq {
-//   int32_t type;
-//   union {
-//      uint64_t i;
-//      char str[1000];
-//      char dat[1000];
-//   } data;
-//} TBaIpcVarReq;
-
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -101,6 +90,15 @@ TBaBoolRC BaIpcCallFun(
       const char* name, ///< [in] Function name
       TBaIpcFunArg a, ///< [in] Function arguments
       TBaIpcArg *pRet ///< [out] Function return value
+      );
+
+/******************************************************************************/
+/** Remotely get the value of a registered variable from the control task
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcCallVar(
+      const char* name, ///< [in] Variable name
+      TBaIpcRegVarOut *pVar  ///< [out] Variable descriptor
       );
 //@}
 
