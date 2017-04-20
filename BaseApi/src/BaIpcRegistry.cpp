@@ -70,12 +70,12 @@ TBaBoolRC BaIpcRegistryLocalClearFunReg() {
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalRegisterVar(const char* name, TBaIpcRegVar var) {
-   if (!name) {
+TBaBoolRC BaIpcRegistryLocalRegisterVar(const char* name, const TBaIpcRegVar *pVar) {
+   if (!name || !pVar) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SRegisterVar(name, var) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return CBaIpcRegistry::SRegisterVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
@@ -88,6 +88,11 @@ TBaBoolRC BaIpcRegistryLocalUnregisterVar(const char* name) {
 }
 
 //
+TBaBoolRC BaIpcRegistryLocalClearVarReg() {
+   return CBaIpcRegistry::SClearVarRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
 TBaBoolRC BaIpcRegistryLocalCallVar(const char* name, TBaIpcRegVarOut *pVar) {
    if (!name || !pVar) {
       return eBaBoolRC_Error;
@@ -97,12 +102,12 @@ TBaBoolRC BaIpcRegistryLocalCallVar(const char* name, TBaIpcRegVarOut *pVar) {
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalSetVar(const char* name, TBaIpcRegVar var) {
-   if (!name) {
+TBaBoolRC BaIpcRegistryLocalSetVar(const char* name, const TBaIpcRegVar *pVar) {
+   if (!name || !pVar) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SSetVar(name, var) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return CBaIpcRegistry::SSetVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //

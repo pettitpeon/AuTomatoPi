@@ -17,8 +17,6 @@
 
 #include <map>
 #include <string>
-#include <functional>
-#include <tuple>
 #include "BaIpcRegistry.h"
 
 /*------------------------------------------------------------------------------
@@ -59,13 +57,14 @@ public:
 
    static bool SUnregisterVar(std::string name);
 
+   static bool SClearVarRegistry();
+
    static bool SCallVar(std::string name, TBaIpcRegVarOut &rVar);
 
    // todo: necessary?
    static bool SCallVarInternal(std::string name, TBaIpcRegVar &rVar);
 
    static bool SSetVar(std::string name, const TBaIpcRegVar &rVar);
-
 
    virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) {
       std::string sType = fun.type;

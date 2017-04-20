@@ -200,6 +200,16 @@ bool CBaIpcRegistry::SUnregisterVar(std::string name) {
 }
 
 //
+bool CBaIpcRegistry::SClearVarRegistry() {
+   if (!spReg) {
+      return false;
+   }
+
+   spReg->ClearVarRegistry();
+   return true;
+}
+
+//
 bool CBaIpcRegistry::SCallVar(std::string name, TBaIpcRegVarOut &rVar) {
    if (!spReg) {
       return false;

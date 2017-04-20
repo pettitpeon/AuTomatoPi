@@ -35,6 +35,7 @@ public:
    CPPUNIT_TEST(CppInterfaceFunRegistry);
    CPPUNIT_TEST(CInterfaceFunRegistry);
    CPPUNIT_TEST(LocalFunRegistry);
+
    CPPUNIT_TEST(CppInterfaceVarRegistry);
    CPPUNIT_TEST(CInterfaceVarRegistry);
    CPPUNIT_TEST(LocalVarRegistry);

@@ -161,7 +161,7 @@ TBaBoolRC BaIpcRegistryLocalClearFunReg();
  */
 TBaBoolRC BaIpcRegistryLocalRegisterVar(
       const char* name, ///< [in] Variable name
-      TBaIpcRegVar var ///< [in] Variable descriptor
+      const TBaIpcRegVar *pVar ///< [in] Variable descriptor
       );
 
 /******************************************************************************/
@@ -171,6 +171,12 @@ TBaBoolRC BaIpcRegistryLocalRegisterVar(
 TBaBoolRC BaIpcRegistryLocalUnregisterVar(
       const char* name ///< [in] Variable name
       );
+
+/******************************************************************************/
+/** Clear the local registry
+ *  @return True if success, otherwise, false
+ */
+TBaBoolRC BaIpcRegistryLocalClearVarReg();
 
 /******************************************************************************/
 /** Gets the value of a variable in the registry by copying the value to the
@@ -188,7 +194,7 @@ TBaBoolRC BaIpcRegistryLocalCallVar(
  */
 TBaBoolRC BaIpcRegistryLocalSetVar(
       const char* name, ///< [in] Variable name
-      TBaIpcRegVar var ///< [in] Variable descriptor
+      const TBaIpcRegVar *pVar ///< [in] Variable descriptor
       );
 //@}
 

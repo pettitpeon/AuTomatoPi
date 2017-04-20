@@ -390,7 +390,65 @@ void CBaIpcRegistryTest::CInterfaceVarRegistry() {
 /*  ...
  */
 void CBaIpcRegistryTest::LocalVarRegistry() {
+   // Creation and normal use
+   ASS(BaIpcRegistryLocalInit());
+   TBaIpcRegVar var;
+   TBaIpcRegVarOut varOut;
+   std::string s = "init";
+   TBaBool b = eBaBool_false;
 
+   // Set variable structure
+   var.pVar = (void*)sStr;
+   var.sz = sizeof(strlen(sStr));
+   var.wr = eBaBool_true;
+
+   ASS(BaIpcRegistryLocalRegisterVar("TestString", &var));
+
+   // Test the return value of the registered var
+   ASS(BaIpcRegistryLocalCallVar("TestString", &varOut));
+   ASS(s == (const char*)varOut.dat.data);
+
+   // Change the var directly and test again
+   s = "ini";
+   strncpy(sStr, "ini", s.length() + 1);
+   ASS(BaIpcRegistryLocalCallVar("TestString", &varOut));
+   ASS(s == varOut.dat.data);
+
+   // Change through the registered var and check against the direct var
+   var.pVar = (void*)"new";
+   var.sz = sizeof(strlen("new"));
+   ASS(BaIpcRegistryLocalSetVar("TestString", &var));
+   s = "new";
+   ASS(s == sStr);
+
+   // Finally check against the registered var
+   var = {0};
+   ASS(BaIpcRegistryLocalCallVar("TestString", &varOut));
+   ASS(s == varOut.dat.data);
+
+   // Test another variable (TBaBool)
+   var.pVar = (void*)&b;
+   var.sz = sizeof(b);
+   var.wr = eBaBool_true;
+   ASS(BaIpcRegistryLocalRegisterVar("TestBool", &var));
+   ASS(BaIpcRegistryLocalCallVar("TestBool", &varOut));
+   ASS_EQ(b, (TBaBool)varOut.dat.i);
+   b = eBaBool_true;
+   ASS(BaIpcRegistryLocalSetVar("TestBool", &var));
+   memcpy(varOut.dat.data, "GARBAGE", sizeof("GARBAGE"));
+   ASS(BaIpcRegistryLocalCallVar("TestBool", &varOut));
+   ASS_EQ(b, (TBaBool)varOut.dat.i);
+
+   // Unregister
+   ASS(BaIpcRegistryLocalUnregisterVar("TestString"));
+   ASS(!BaIpcRegistryLocalCallVar("TestString", &varOut));
+
+   // Clear registry
+   BaIpcRegistryLocalClearVarReg();
+   ASS(!BaIpcRegistryLocalCallVar("TestBool", &varOut));
+
+   ASS(BaIpcRegistryLocalExit());
+   strncpy(sStr, "init", 5);
 }
 
 /* ****************************************************************************/
