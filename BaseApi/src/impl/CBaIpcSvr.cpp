@@ -266,6 +266,7 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
       if (nfds < 0) {
          p->pPollMsg->SetDefLogF(eBaLogPrio_Error, TAG,
                "Error in epoll_wait: %s", strerror(errno));
+         TRACE_("Error in epoll_wait: %s", strerror(errno));
          continue;
       }
 
@@ -340,20 +341,20 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
    // Function call
    case eBaIpcCmdCall: {
       mMsg.cmd = eBaIpcReplyCmdCall;
-      TBaIpcFunCall *pFc = (TBaIpcFunCall*) mMsg.data.data;
+      TBaIpcFunCall *pFc = (TBaIpcFunCall*) mMsg.dat.data;
       TBaIpcArg ret = {0};
       CBaIpcRegistry::SCallFun(pFc->name, pFc->a, &ret);
-      memcpy(mMsg.data.data, &ret, sizeof(ret));
+      memcpy(mMsg.dat.data, &ret, sizeof(ret));
    }
       break;
 
    // Variable request
    case eBaIpcCmdGetVar:
       mMsg.cmd = eBaIpcReplyCmdGetVar;
-      memset(mMsg.data.data, 0, sizeof(mMsg.data.data));
+      memset(mMsg.dat.data, 0, sizeof(mMsg.dat.data));
 
       // dummy answer
-      strcpy(mMsg.data.data, "GetVar");
+      strcpy(mMsg.dat.data, "GetVar");
 
       break;
 

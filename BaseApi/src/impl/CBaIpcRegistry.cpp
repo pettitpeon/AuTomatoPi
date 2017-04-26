@@ -250,7 +250,7 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
 
    TBaIpcRegFun fun = it->second;
 
-   if (!fun.type || strlen(fun.type) < 3 || fun.type[1] != ':' || strlen(fun.type) > BAIPCMAXARG + 2) {
+   if (!fun.type || strlen(fun.type) < 3 || fun.type[1] != ':' || strlen(fun.type) > BAIPC_MAXARG + 2) {
       return false;
    }
 
@@ -286,7 +286,7 @@ bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVarOut &rVar) {
    TBaIpcRegVar var = {0};
 
 
-   if (!CallVarInternal(name, var) || !var.pVar || var.sz > BAIPCMAXVARSZ) {
+   if (!CallVarInternal(name, var) || !var.pVar || var.sz > BAIPC_MAXVARSZ) {
       return false;
    }
 

@@ -23,6 +23,7 @@
 #include "BaseApi.h"
 #include "CppU.h"
 #include "BaUtils.hpp"
+#include "BaLogMacros.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaIpcTest );
 
@@ -30,6 +31,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CBaIpcTest );
 #define LOGDIR "/var/log/"
 #define SET_FUN(regFun, fun, TYPE) regFun.pFun = (void*) fun; \
       regFun.type = TYPE;
+#define TAG "IPCTST"
 
 LOCAL void funvv();
 LOCAL void funvi(int32_t i);
@@ -58,6 +60,7 @@ void CBaIpcTest::tearDown() {
 
 LOCAL int32_t testRegFun(int32_t i) {
    sInt = i;
+   TRACE_("i = %i", sInt);
    return sInt;
 }
 
@@ -226,9 +229,16 @@ void CBaIpcTest::IPCServer() {
    ASS(true);
    ASS(BaIpcInitSvr());
    int i;
-   for (i = 0; i < 500 && !BaIpcSvrRunning(); ++i) {
+
+   bool svrRun = false;
+   for (i = 0; i < 500; ++i) {
+      if (BaIpcSvrRunning()) {
+         svrRun = true;
+         break;
+      }
       BaCoreMSleep(10);
    }
+   ASS(svrRun);
 
    ASS(BaIpcInitClnt());
    ASS(BaIpcInitClnt());
@@ -261,7 +271,7 @@ void CBaIpcTest::IPCServer() {
 }
 
 //
-void CBaIpcTest::IPCRealClientServer() {
+void CBaIpcTest::IPCRealFunClientServer() {
    CPPUNIT_ASSERT(true);
    bool rc = false;
 

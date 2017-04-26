@@ -171,24 +171,76 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
       return eBaBoolRC_Error;
    }
    TBaIpcMsg msg = {0};
+   size_t sz = strlen(name) + 1;
+   if (sz > BAIPC_FUNNAMESZ) {
+      return eBaBoolRC_Error;
+   }
 
+   // TODO: error: the name should not be copied like that
    msg.cmd = eBaIpcCmdCall;
-   TBaIpcFunCall fc;
-   fc.name = name;
-   fc.a = a;
-   memcpy(msg.data.data, &fc, sizeof(fc));
+   TBaIpcFunCallData *pFc = (TBaIpcFunCallData *)msg.dat.data;
+   // TODO: copy correctly
+
+   memcpy(pFc->name, name, sz);
+   pFc->a = a;
 
    // send mesg
    if (!writeClntPipe((char*) &msg, sizeof(TBaIpcMsg))) {
       return eBaBoolRC_Error;
    }
 
-   memset(msg.data.data, 0, sizeof(msg.data.data));
+   memset(msg.dat.data, 0, sizeof(msg.dat.data));
 
    // todo: wait for reply??
    for (int i = 0; i < 100; ++i) {
       if (readClntPipe((char*)&msg, sizeof(TBaIpcMsg)) && msg.cmd == eBaIpcReplyCmdCall) {
-         *pRet = *((TBaIpcArg*)msg.data.data);
+
+         // Copy data to return value
+         *pRet = *((TBaIpcArg*)msg.dat.data);
+         // todo: delete
+         TRACE_("Call delay %i ms", i*10);
+         return eBaBoolRC_Success;
+      }
+
+      BaCoreMSleep(10);
+   }
+
+   return eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaIpcCallVar(const char* name, TBaIpcRegVarOut *pVar) {
+   if (!pVar || sClntRdFifo == -1 || sClntWrFifo == -1) {
+      return eBaBoolRC_Error;
+   }
+   TBaIpcMsg msg = {0};
+   size_t sz = strlen(name) + 1;
+
+   if (sz > BAIPC_MSGDATASZ) {
+      return eBaBoolRC_Error;
+   }
+
+   msg.cmd = eBaIpcCmdGetVar;
+   memcpy(msg.dat.data, name, sz);
+
+   // send mesg
+   if (!writeClntPipe((char*) &msg, sizeof(TBaIpcMsg))) {
+      return eBaBoolRC_Error;
+   }
+
+   memset(msg.dat.data, 0, sizeof(msg.dat.data));
+
+   for (int i = 0; i < 100; ++i) {
+      if (readClntPipe((char*)&msg, sizeof(TBaIpcMsg)) && msg.cmd == eBaIpcReplyCmdGetVar) {
+
+         // capture reply
+         TBaIpcRegVarOut *p = (TBaIpcRegVarOut *)msg.dat.data;
+         if (p->sz > BAIPC_MAXVARSZ) {
+            return eBaBoolRC_Error;
+         }
+
+         memcpy(pVar, msg.dat.data, sizeof(TBaIpcRegVarOut));
+
          // todo: delete
          TRACE_("Call delay %i ms", i*10);
          return eBaBoolRC_Success;

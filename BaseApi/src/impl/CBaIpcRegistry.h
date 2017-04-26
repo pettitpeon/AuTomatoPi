@@ -19,6 +19,8 @@
 #include <string>
 #include "BaIpcRegistry.h"
 
+#define BAIPC_FUNNAMESZ (BAIPC_MSGDATASZ - sizeof(TBaIpcFunArg))
+
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
@@ -27,6 +29,11 @@ typedef struct TBaIpcFunCall {
    const char* name;
    TBaIpcFunArg a;
 } TBaIpcFunCall;
+
+typedef struct TBaIpcFunCallData {
+   char name[BAIPC_FUNNAMESZ];
+   TBaIpcFunArg a;
+} TBaIpcFunCallData;
 
 
 /*------------------------------------------------------------------------------
@@ -69,7 +76,7 @@ public:
    virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) {
       std::string sType = fun.type;
 
-      if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':' || sType.length() > BAIPCMAXARG + 2) {
+      if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':' || sType.length() > BAIPC_MAXARG + 2) {
          return false;
       }
       return mFunReg.emplace(name, fun).second;
@@ -108,7 +115,7 @@ private:
    virtual ~CBaIpcRegistry() {};
 
    bool varIsValid(const TBaIpcRegVar &rVar) {
-      return (rVar.pVar && rVar.sz > 0 && rVar.sz < BAIPCMAXVARSZ);
+      return (rVar.pVar && rVar.sz > 0 && rVar.sz < BAIPC_MAXVARSZ);
    }
 
    std::map<std::string, TBaIpcRegFun> mFunReg;
