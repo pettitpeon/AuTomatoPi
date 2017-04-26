@@ -14,14 +14,12 @@
  */
 #ifndef CBAIPCSVR_H_
 #define CBAIPCSVR_H_
-
+#ifdef __linux
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
 #include <string>
-#ifdef __linux
-# include <sys/epoll.h>
-#endif
+#include <sys/epoll.h>
 #include "BaBool.h"
 #include "BaCore.h"
 #include "BaMsg.h"
@@ -165,5 +163,5 @@ private:
 
 };
 
-
+#endif // __linux
 #endif // CBAIPCSVR_H_

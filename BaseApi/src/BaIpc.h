@@ -33,17 +33,6 @@
 typedef void* TBaIpcHdl;
 
 
-// IPC message
-//typedef struct TBaIpcVarReq {
-//   int32_t type;
-//   union {
-//      uint64_t i;
-//      char str[1000];
-//      char dat[1000];
-//   } data;
-//} TBaIpcVarReq;
-
-
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
