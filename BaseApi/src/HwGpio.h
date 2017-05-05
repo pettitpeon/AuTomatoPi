@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaGpio.h
+ *   Module   : HwGpio.h
  *   Date     : 23/06/2015
  *------------------------------------------------------------------------------
  *   Module description:
@@ -11,8 +11,8 @@
  *  GPIOs APIs.
  *  C API:@n
  *  - The C API is thread-safe unless explicitly specified otherwise.
- *  - The C API has an initializations counter. Do not call the #BaGpioExit()
- *     function without having called #BaGpioInit() first.
+ *  - The C API has an initializations counter. Do not call the #HwGpioExit()
+ *     function without having called #HwGpioInit() first.
  *  - The C API is not multi-process safe. Processes can overwrite each other
  *
  *  C++ API@n
@@ -22,8 +22,8 @@
 /*------------------------------------------------------------------------------
  */
 
-#ifndef BAGPIO_H_
-#define BAGPIO_H_
+#ifndef HWGPIO_H_
+#define HWGPIO_H_
 
 /*------------------------------------------------------------------------------
  *  Includes
@@ -34,19 +34,19 @@
  *  Type definitions
  */
 /// GPIOs range from 1 to 27
-typedef uint8_t TBaGpio;
+typedef uint8_t THwGpio;
 
 /// Software PWM handle
-typedef void* TBaGpioSWPWMHdl;
+typedef void* THwGpioSWPWMHdl;
 
 /// Forward declaration
-class IBaGpio;
+class IHwGpio;
 
 /// HW PWM mode flag
-typedef enum EBaGpioHWPWMMode {
-   EBaGpioHWPWMMode_MarkedSpace = 0, ///< Traditional PWM mode
-   EBaGpioHWPWMMode_Balanced         ///< Default mode
-} EBaGpioHWPWMMode;
+typedef enum EHwGpioHWPWMMode {
+   EHwGpioHWPWMMode_MarkedSpace = 0, ///< Traditional PWM mode
+   EHwGpioHWPWMMode_Balanced         ///< Default mode
+} EHwGpioHWPWMMode;
 
 /*------------------------------------------------------------------------------
  *  C interface
@@ -61,8 +61,8 @@ extern "C" {
 /** Initializes and frees resources
  *  @return Error or success
  */
-TBaBoolRC BaGpioInit();
-TBaBoolRC BaGpioExit();
+TBaBoolRC HwGpioInit();
+TBaBoolRC HwGpioExit();
 //@} Init/Exit Functions
 
 /// @name Hardware PWM setup functions
@@ -73,13 +73,13 @@ TBaBoolRC BaGpioExit();
  *  WARNING:   The RPI uses the PWM subsystem to produce audio. As such please
  *             refrain from playing audio on the RPI while this code is running
  */
-TBaBoolRC BaGpioInitHWPWM();
+TBaBoolRC HwGpioInitHWPWM();
 
 /******************************************************************************/
 /** Exit and release resources of the hardware PWM functionality
  *  @return Error or success
  */
-TBaBoolRC BaGpioExitHWPWM();
+TBaBoolRC HwGpioExitHWPWM();
 
 /******************************************************************************/
 /** Set the frequency and resolution of the hardware PWM.
@@ -97,10 +97,10 @@ TBaBoolRC BaGpioExitHWPWM();
  *  resolution <= 4095
  *  @return Error or success
  */
-TBaBoolRC BaGpioSetClkHWPWM(
+TBaBoolRC HwGpioSetClkHWPWM(
       double   frequency, ///< [in] desired frequency in Hz
       uint32_t resolution, ///< [in] desired resolution in steps
-      EBaGpioHWPWMMode mode ///< [in] PWM mode
+      EHwGpioHWPWMMode mode ///< [in] PWM mode
       );
 
 //@} Hardware PWM setup functions
@@ -112,32 +112,32 @@ TBaBoolRC BaGpioSetClkHWPWM(
 /** Cleans up the GPIO and leaves it on default state
  *  @return Error or success
  */
-TBaBoolRC BaGpioCleanUp(
-      TBaGpio gpio ///< [in] GPIO number
+TBaBoolRC HwGpioCleanUp(
+      THwGpio gpio ///< [in] GPIO number
       );
 
 /******************************************************************************/
 /** Sets GPIO as input
  *  @return Error or success
  */
-TBaBoolRC BaGpioSetInp(
-      TBaGpio gpio ///< [in] GPIO number
+TBaBoolRC HwGpioSetInp(
+      THwGpio gpio ///< [in] GPIO number
       );
 
 /******************************************************************************/
 /** Sets GPIO as output
  *  @return Error or success
  */
-TBaBoolRC BaGpioSetOut(
-      TBaGpio gpio ///< [in] GPIO number
+TBaBoolRC HwGpioSetOut(
+      THwGpio gpio ///< [in] GPIO number
       );
 
 /******************************************************************************/
 /** Sets GPIO as alternative function
  *  @return Error or success
  */
-TBaBoolRC BaGpioSetAlt(
-      TBaGpio gpio, ///< [in] GPIO number
+TBaBoolRC HwGpioSetAlt(
+      THwGpio gpio, ///< [in] GPIO number
       int alt       ///< [in] Alternative function of GPIO
       );
 
@@ -145,24 +145,24 @@ TBaBoolRC BaGpioSetAlt(
 /** Sets GPIO high. Not thread safe for performance reasons
  *  @return Error or success
  */
-TBaBoolRC BaGpioSet(
-      TBaGpio gpio ///< [in] GPIO number
+TBaBoolRC HwGpioSet(
+      THwGpio gpio ///< [in] GPIO number
       );
 
 /******************************************************************************/
 /** Sets GPIO low. Not thread safe for performance reasons
  *  @return Error or success
  */
-TBaBoolRC BaGpioReset(
-      TBaGpio gpio ///< [in] GPIO number
+TBaBoolRC HwGpioReset(
+      THwGpio gpio ///< [in] GPIO number
       );
 
 /******************************************************************************/
 /** Gets the GPIO state high/low.
  *  @return high true, or low false
  */
-TBaBool BaGpioGet(
-      TBaGpio gpio ///< [in] GPIO number
+TBaBool HwGpioGet(
+      THwGpio gpio ///< [in] GPIO number
       );
 //@} Basic GPIO operations
 
@@ -170,23 +170,23 @@ TBaBool BaGpioGet(
 //@{
 
 /******************************************************************************/
-/** Start the hardware PWM. The #BaGpioInitHWPWM() function must be called
+/** Start the hardware PWM. The #HwGpioInitHWPWM() function must be called
  *  before starting the HW PWM. Only GPIOs 12, 13, 18, and 19 can be rerouted to
  *   the PWM.
  *  @return Error or success
  */
-TBaBoolRC BaGpioStartHWPWM(
-      TBaGpio gpio,     ///< [in] GPIO number
+TBaBoolRC HwGpioStartHWPWM(
+      THwGpio gpio,     ///< [in] GPIO number
       float   dutyCycle ///< [in] Desired duty cycle [0..1]
       );
 
 /******************************************************************************/
-/** Reset the duty cycle of the hardware PWM. #BaGpioStartHWPWM() must be called
+/** Reset the duty cycle of the hardware PWM. #HwGpioStartHWPWM() must be called
  *  before reseting the duty cycle. Not thread safe for performance reasons.
  *  @return Error or success
  */
-TBaBoolRC BaGpioResetHWPWMDuCy(
-      TBaGpio gpio,     ///< [in] GPIO number
+TBaBoolRC HwGpioResetHWPWMDuCy(
+      THwGpio gpio,     ///< [in] GPIO number
       float   dutyCycle ///< [in] Desired duty cycle [0..1]
       );
 
@@ -194,8 +194,8 @@ TBaBoolRC BaGpioResetHWPWMDuCy(
 /** Stop the hardware PWM
  *  @return Error or success
  */
-TBaBoolRC BaGpioStopHWPWM(
-      TBaGpio gpio ///< [in] GPIO number
+TBaBoolRC HwGpioStopHWPWM(
+      THwGpio gpio ///< [in] GPIO number
       );
 
 /******************************************************************************/
@@ -204,8 +204,8 @@ TBaBoolRC BaGpioStopHWPWM(
  *  limited. The faster the period, the more CPU usage.
  *  @return The software PWM handle if success, otherwise, null
  */
-TBaGpioSWPWMHdl BaGpioStartSWPWM(
-      TBaGpio gpio,     ///< [in] Desired GPIO
+THwGpioSWPWMHdl HwGpioStartSWPWM(
+      THwGpio gpio,     ///< [in] Desired GPIO
       float dutyC,      ///< [in] Initial duty cycle [0..1]
       uint16_t periodMs ///< [in] PWM period in ms [10..10000]
       );
@@ -214,8 +214,8 @@ TBaGpioSWPWMHdl BaGpioStartSWPWM(
 /** Reset the duty cycle of the software PWM.
  *  @return Error or success
  */
-TBaBoolRC BaGpioResetSWPWMDuCy(
-      TBaGpioSWPWMHdl hdl, ///< [in] Software PWM handle
+TBaBoolRC HwGpioResetSWPWMDuCy(
+      THwGpioSWPWMHdl hdl, ///< [in] Software PWM handle
       float dutyC          ///< [in] Desired duty cycle [0..1]
       );
 
@@ -223,8 +223,8 @@ TBaBoolRC BaGpioResetSWPWMDuCy(
 /** Stop the software PWM
  *  @return Error or success
  */
-TBaBoolRC BaGpioStopSWPWM(
-      TBaGpioSWPWMHdl hdl ///< [in] Software PWM handle
+TBaBoolRC HwGpioStopSWPWM(
+      THwGpioSWPWMHdl hdl ///< [in] Software PWM handle
       );
 //@} PWM Functions
 
@@ -234,16 +234,16 @@ TBaBoolRC BaGpioStopSWPWM(
 /** C++ interface object oriented factory
  *  @return Pointer to C++ interface if success, otherwise, error
  */
-IBaGpio* IBaGpioCreate(
-      TBaGpio gpio ///< [in] GPIO number
+IHwGpio* IHwGpioCreate(
+      THwGpio gpio ///< [in] GPIO number
       );
 
 /******************************************************************************/
 /** C++ interface object oriented destructor
  *  @return Error or success
  */
-TBaBoolRC IBaGpioDelete(
-      IBaGpio* pHdl ///< [in] Interface handle
+TBaBoolRC IHwGpioDelete(
+      IHwGpio* pHdl ///< [in] Interface handle
       );
 //@} C-Linkage OO factory
 
@@ -264,7 +264,7 @@ TBaBoolRC IBaGpioDelete(
  *  process uses the C interface or accesses the device memory directly it will
  *  conflict with the process using this API.
  */
-class IBaGpio {
+class IHwGpio {
 public:
    /// @name Hardware PWM setup functions
    //@{
@@ -302,7 +302,7 @@ public:
    virtual bool SetClkHWPWM(
          double   frequency, ///< [in] desired frequency in Hz
          uint32_t resolution, ///< [in] desired resolution in steps
-         EBaGpioHWPWMMode mode ///< [in] PWM mode
+         EHwGpioHWPWMMode mode ///< [in] PWM mode
          ) = 0;
    //@} Hardware PWM setup functions
 
@@ -432,9 +432,9 @@ public:
 
    // In interfaces and abstract classes, ALWAYS declare a virtual destructor,
    // and implement / inline it
-   virtual ~IBaGpio() {};
+   virtual ~IHwGpio() {};
 
 };
 
 #endif // __cplusplus
-#endif /* BAGPIO_H_ */
+#endif /* HWGPIO_H_ */

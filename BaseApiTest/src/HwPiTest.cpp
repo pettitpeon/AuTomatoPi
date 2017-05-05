@@ -13,37 +13,37 @@
 /*------------------------------------------------------------------------------
  */
 #include <iostream>
-#include "BaRPiTest.h"
 #include "BaGenMacros.h"
 #include "CppU.h"
-#include "BaRPi.h"
+#include "HwPi.h"
+#include "HwPiTest.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION( CBaRPiTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( CHwPiTest );
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaRPiTest::setUp() {
+void CHwPiTest::setUp() {
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaRPiTest::tearDown() {
+void CHwPiTest::tearDown() {
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaRPiTest::Test() {
-   TBaPiBoard bi;
+void CHwPiTest::Test() {
+   THwPiBoard bi;
 
 #ifdef __arm__
-   ASS(BaPiGetBoardInfo(&bi));
-   ASS(bi.boardModel != eBaPiModelUnknown);
-   ASS(BaPiGetBoardModel() != eBaPiModelUnknown);
+   ASS(HwPiGetBoardInfo(&bi));
+   ASS(bi.boardModel != eHwPiModelUnknown);
+   ASS(HwPiGetBoardModel() != eHwPiModelUnknown);
 #else
-   ASS(!BaPiGetBoardInfo(&bi));
-   ASS(BaPiGetBoardModel() == eBaPiModelUnknown);
+   ASS(!HwPiGetBoardInfo(&bi));
+   ASS(HwPiGetBoardModel() == eHwPiModelUnknown);
 #endif
 }

@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAGPIOPINOUT_H_
-#define BAGPIOPINOUT_H_
+#ifndef HWGPIOPINOUT_H_
+#define HWGPIOPINOUT_H_
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
@@ -40,4 +40,4 @@
 #define PWM1     19 // Not sure
 #define PWM1_ALT  5
 
-#endif // BAGPIOPINOUT_H_
+#endif // HWGPIOPINOUT_H_

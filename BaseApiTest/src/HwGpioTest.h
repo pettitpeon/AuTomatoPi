@@ -14,18 +14,18 @@
  */
 
 
-#ifndef BAGPIOTEST_H_
-#define BAGPIOTEST_H_
+#ifndef HWGPIOTEST_H_
+#define HWGPIOTEST_H_
 
 #include "cppunit/extensions/HelperMacros.h"
 #include "cppunit/TestCase.h"
 
-class CBaGpioTest : public CppUnit::TestCase {
+class CHwGpioTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
 
-   CPPUNIT_TEST_SUITE(CBaGpioTest);
+   CPPUNIT_TEST_SUITE(CHwGpioTest);
 
    CPPUNIT_TEST(HardwarePWM);
    CPPUNIT_TEST(SoftwarePWM);
@@ -39,4 +39,4 @@ protected:
    void NormalOperations();
 };
 
-#endif /* BAGPIOTEST_H_ */
+#endif /* HWGPIOTEST_H_ */

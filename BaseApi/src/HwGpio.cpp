@@ -1,3 +1,4 @@
+
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
@@ -19,7 +20,7 @@
 #include <iostream>    // For debugging traces
 
 // Local includes
-#include "BaGpio.h"
+#include "HwGpio.h"
 #include "BaCore.h"
 #include "BaGenMacros.h"
 
@@ -106,7 +107,7 @@
 typedef struct TSWPWM {
    TBaCoreThreadArg threadArg;
    TBaCoreThreadHdl threadHdl;
-   TBaGpio          gpio;
+   THwGpio          gpio;
    float            dutyC;
    int64_t          periodUs;
    TSWPWM() : threadArg(), threadHdl(0), gpio(), dutyC(0), periodUs(0) {}
@@ -131,18 +132,18 @@ static uint16_t   sResolution = 0;
     Local functions
  -----------------------------------------------------------------------------*/
 LOCAL void pwmRoutine(TBaCoreThreadArg *pArg);
-LOCAL void setUsed(TBaGpio gpioNo, TBaBool used);
+LOCAL void setUsed(THwGpio gpioNo, TBaBool used);
 LOCAL VUINT *mapAddr(unsigned long baseAddr);
 LOCAL bool unmapAddr(VUINT * addr);
 LOCAL uint32_t freq2Divisor(float freq);
-LOCAL inline void cleanUp(TBaGpio gpio);
-LOCAL inline void setAlt(TBaGpio gpio, int alt);
+LOCAL inline void cleanUp(THwGpio gpio);
+LOCAL inline void setAlt(THwGpio gpio, int alt);
 
 /*------------------------------------------------------------------------------
     C interface
  -----------------------------------------------------------------------------*/
 //
-TBaBoolRC BaGpioInit() {
+TBaBoolRC HwGpioInit() {
 
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
@@ -181,7 +182,7 @@ TBaBoolRC BaGpioInit() {
 }
 
 //
-TBaBoolRC BaGpioExit() {
+TBaBoolRC HwGpioExit() {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -204,12 +205,12 @@ TBaBoolRC BaGpioExit() {
 }
 
 //
-TBaBoolRC BaGpioInitHWPWM() {
-   return BaGpioSetClkHWPWM(1000.0, 256, EBaGpioHWPWMMode_Balanced);
+TBaBoolRC HwGpioInitHWPWM() {
+   return HwGpioSetClkHWPWM(1000.0, 256, EHwGpioHWPWMMode_Balanced);
 }
 
 //
-TBaBoolRC BaGpioExitHWPWM() {
+TBaBoolRC HwGpioExitHWPWM() {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -227,7 +228,7 @@ TBaBoolRC BaGpioExitHWPWM() {
 }
 
 //
-TBaBoolRC BaGpioSetClkHWPWM(double frequency, uint32_t resolution, EBaGpioHWPWMMode mode) {
+TBaBoolRC HwGpioSetClkHWPWM(double frequency, uint32_t resolution, EHwGpioHWPWMMode mode) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -287,7 +288,7 @@ TBaBoolRC BaGpioSetClkHWPWM(double frequency, uint32_t resolution, EBaGpioHWPWMM
    spPWM_map[PWM1_DAT] = 0;
 
    // enable and set mode
-   if (mode == EBaGpioHWPWMMode_Balanced) {
+   if (mode == EHwGpioHWPWMMode_Balanced) {
       spPWM_map[PWM_CTL] |=  PWM0_ENABLE | PWM1_ENABLE;
    } else {
       spPWM_map[PWM_CTL] |=  PWM0_ENABLE | PWM1_ENABLE | PWM0_MS_MODE | PWM1_MS_MODE;
@@ -297,7 +298,7 @@ TBaBoolRC BaGpioSetClkHWPWM(double frequency, uint32_t resolution, EBaGpioHWPWMM
 }
 
 //
-TBaBoolRC BaGpioCleanUp(TBaGpio gpio) {
+TBaBoolRC HwGpioCleanUp(THwGpio gpio) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -309,7 +310,7 @@ TBaBoolRC BaGpioCleanUp(TBaGpio gpio) {
 }
 
 //
-TBaBoolRC BaGpioSetInp(TBaGpio gpio) {
+TBaBoolRC HwGpioSetInp(THwGpio gpio) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -323,7 +324,7 @@ TBaBoolRC BaGpioSetInp(TBaGpio gpio) {
 }
 
 //
-TBaBoolRC BaGpioSetOut(TBaGpio gpio) {
+TBaBoolRC HwGpioSetOut(THwGpio gpio) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -339,7 +340,7 @@ TBaBoolRC BaGpioSetOut(TBaGpio gpio) {
 }
 
 //
-TBaBoolRC BaGpioSetAlt(TBaGpio gpio, int alt) {
+TBaBoolRC HwGpioSetAlt(THwGpio gpio, int alt) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -352,7 +353,7 @@ TBaBoolRC BaGpioSetAlt(TBaGpio gpio, int alt) {
 }
 
 //
-TBaBoolRC BaGpioSet(TBaGpio gpio) {
+TBaBoolRC HwGpioSet(THwGpio gpio) {
    if (!INIT_ || !USEDGPIO_ || GPIOLIMIT) {
       return eBaBoolRC_Error;
    }
@@ -362,7 +363,7 @@ TBaBoolRC BaGpioSet(TBaGpio gpio) {
 }
 
 //
-TBaBoolRC BaGpioReset(TBaGpio gpio) {
+TBaBoolRC HwGpioReset(THwGpio gpio) {
    if (!INIT_ || !USEDGPIO_ || GPIOLIMIT) {
       return eBaBoolRC_Error;
    }
@@ -372,7 +373,7 @@ TBaBoolRC BaGpioReset(TBaGpio gpio) {
 }
 
 //
-TBaBool BaGpioGet(TBaGpio gpio) {
+TBaBool HwGpioGet(THwGpio gpio) {
    if (!INIT_ || !USEDGPIO_ || GPIOLIMIT) {
       return eBaBool_false;
    }
@@ -381,7 +382,7 @@ TBaBool BaGpioGet(TBaGpio gpio) {
 }
 
 //
-TBaBoolRC BaGpioStartHWPWM(TBaGpio gpio, float dutyCycle) {
+TBaBoolRC HwGpioStartHWPWM(THwGpio gpio, float dutyCycle) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -420,7 +421,7 @@ TBaBoolRC BaGpioStartHWPWM(TBaGpio gpio, float dutyCycle) {
 }
 
 //
-TBaBoolRC BaGpioResetHWPWMDuCy(TBaGpio gpio, float dutyCycle) {
+TBaBoolRC HwGpioResetHWPWMDuCy(THwGpio gpio, float dutyCycle) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -448,7 +449,7 @@ TBaBoolRC BaGpioResetHWPWMDuCy(TBaGpio gpio, float dutyCycle) {
 }
 
 //
-TBaBoolRC BaGpioStopHWPWM(TBaGpio gpio) {
+TBaBoolRC HwGpioStopHWPWM(THwGpio gpio) {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
@@ -480,8 +481,8 @@ TBaBoolRC BaGpioStopHWPWM(TBaGpio gpio) {
 }
 
 // Max 100 Hz with 1% resolution
-TBaGpioSWPWMHdl BaGpioStartSWPWM(TBaGpio gpio, float dutyC, uint16_t periodMs) {
-   if (!BaGpioSetOut(gpio)) {
+THwGpioSWPWMHdl HwGpioStartSWPWM(THwGpio gpio, float dutyC, uint16_t periodMs) {
+   if (!HwGpioSetOut(gpio)) {
       return 0;
    }
 
@@ -501,7 +502,7 @@ TBaGpioSWPWMHdl BaGpioStartSWPWM(TBaGpio gpio, float dutyC, uint16_t periodMs) {
 }
 
 //
-TBaBoolRC BaGpioResetSWPWMDuCy(TBaGpioSWPWMHdl hdl, float dutyC) {
+TBaBoolRC HwGpioResetSWPWMDuCy(THwGpioSWPWMHdl hdl, float dutyC) {
    if (!INIT_ || !hdl || dutyC < 0) {
       return eBaBoolRC_Error;
    }
@@ -512,7 +513,7 @@ TBaBoolRC BaGpioResetSWPWMDuCy(TBaGpioSWPWMHdl hdl, float dutyC) {
 }
 
 //
-TBaBoolRC BaGpioStopSWPWM(TBaGpioSWPWMHdl hdl) {
+TBaBoolRC HwGpioStopSWPWM(THwGpioSWPWMHdl hdl) {
 
    // No need to check for the init flag because even if the API was exit,
    // the thread could be running
@@ -550,17 +551,17 @@ LOCAL void pwmRoutine(TBaCoreThreadArg *pArg) {
    TSWPWM *pwm = (TSWPWM*) pArg->pArg;
    while (!pArg->exitTh) {
       // Off
-      BaGpioReset(pwm->gpio);
+      HwGpioReset(pwm->gpio);
       BaCoreUSleep((int64_t) (pwm->periodUs * (1 - pwm->dutyC)));
 
       // On
-      BaGpioSet(pwm->gpio);
+      HwGpioSet(pwm->gpio);
       BaCoreUSleep((int64_t) (pwm->periodUs * pwm->dutyC));
    }
 }
 
 //
-LOCAL void setUsed(TBaGpio gpio, TBaBool used){
+LOCAL void setUsed(THwGpio gpio, TBaBool used){
    sUsedIos[gpio] = used;
 }
 
@@ -614,13 +615,13 @@ LOCAL uint32_t freq2Divisor(float freq) {
 }
 
 // Mutex-less
-LOCAL inline void cleanUp(TBaGpio gpio) {
+LOCAL inline void cleanUp(THwGpio gpio) {
    spGpio_map[gpio/10] &= ~(7 << ((gpio % 10) * 3));
    setUsed(gpio, eBaBool_false);
 }
 
 // Mutex-less
-LOCAL inline void setAlt(TBaGpio gpio, int alt) {
+LOCAL inline void setAlt(THwGpio gpio, int alt) {
    setUsed(gpio, eBaBool_true);
    spGpio_map[gpio/10] |= (alt <= 3 ? alt + 4 : alt == 4 ? 3 : 2) << ((gpio % 10) * 3);
 }
@@ -629,12 +630,12 @@ LOCAL inline void setAlt(TBaGpio gpio, int alt) {
 /*------------------------------------------------------------------------------
     C++ interface implementation
  -----------------------------------------------------------------------------*/
-class CBaGpio : public IBaGpio {
+class CHwGpio : public IHwGpio {
 public:
 
    // Sleeping LED auxiliary struct
    typedef struct TSleepLED {
-      CBaGpio *pGpio;
+      CHwGpio *pGpio;
       float    sCycleS;
    } TSleepLED;
 
@@ -642,9 +643,9 @@ public:
    /*  Factory
     */
    //
-   static IBaGpio* Create(uint8_t gpioNo) {
-      BaGpioInit();
-      CBaGpio* p = new CBaGpio(gpioNo);
+   static IHwGpio* Create(uint8_t gpioNo) {
+      HwGpioInit();
+      CHwGpio* p = new CHwGpio(gpioNo);
 
       if (p) {
          std::string name = "/GPIO_" + std::to_string(gpioNo);
@@ -658,7 +659,7 @@ public:
          p->mpLock = (sem_t*)1;
          {
 #endif
-            BaGpioCleanUp(p->mGpioNo);
+            HwGpioCleanUp(p->mGpioNo);
             return p;
          }
       }
@@ -668,14 +669,14 @@ public:
    }
 
    //
-   static bool Delete(IBaGpio *pHdl) {
-      CBaGpio *p = dynamic_cast<CBaGpio*>(pHdl);
+   static bool Delete(IHwGpio *pHdl) {
+      CHwGpio *p = dynamic_cast<CHwGpio*>(pHdl);
       if (!p ) {
          return false;
       }
 
-      BaGpioCleanUp(p->mGpioNo);
-      BaGpioExit();
+      HwGpioCleanUp(p->mGpioNo);
+      HwGpioExit();
       if (p->mpLock != SEM_FAILED) {
 #ifdef __linux
          sem_unlink( ("/GPIO_" + std::to_string(p->mGpioNo)).c_str() );
@@ -689,7 +690,7 @@ public:
 
    // Worker thread routine
    LOCAL void SleepLEDRoutine(TBaCoreThreadArg *pArg) {
-      CBaGpio *pGpio = ((TSleepLED*)pArg->pArg)->pGpio;
+      CHwGpio *pGpio = ((TSleepLED*)pArg->pArg)->pGpio;
       float &rCylcleS = ((TSleepLED*)pArg->pArg)->sCycleS;
       for (int i = 0; !pArg->exitTh; ++i) {
          if(i == MAX1000S) {
@@ -705,17 +706,17 @@ public:
     */
    //
    virtual bool InitHWPWM() {
-      return BaGpioInitHWPWM();
+      return HwGpioInitHWPWM();
    }
 
    //
    virtual bool ExitHWPWM() {
-      return BaGpioExitHWPWM();
+      return HwGpioExitHWPWM();
    }
 
    //
-   virtual bool SetClkHWPWM(double frequency, uint32_t resolution, EBaGpioHWPWMMode mode) {
-      return BaGpioSetClkHWPWM(frequency, resolution, mode);
+   virtual bool SetClkHWPWM(double frequency, uint32_t resolution, EHwGpioHWPWMMode mode) {
+      return HwGpioSetClkHWPWM(frequency, resolution, mode);
    }
 
 /* ****************************************************************************/
@@ -723,40 +724,40 @@ public:
  */
    //
    virtual void CleanUp() {
-      BaGpioCleanUp(mGpioNo);
+      HwGpioCleanUp(mGpioNo);
    }
 
    //
    virtual bool SetInp() {
-      BaGpioCleanUp(mGpioNo);
-      return BaGpioSetInp(mGpioNo);
+      HwGpioCleanUp(mGpioNo);
+      return HwGpioSetInp(mGpioNo);
    }
 
    //
    virtual bool SetOut() {
-      BaGpioCleanUp(mGpioNo);
-      return BaGpioSetOut(mGpioNo);
+      HwGpioCleanUp(mGpioNo);
+      return HwGpioSetOut(mGpioNo);
    }
 
    //
    virtual bool SetAlt(int alt) {
-      BaGpioCleanUp(mGpioNo);
-      return BaGpioSetAlt(mGpioNo, alt);
+      HwGpioCleanUp(mGpioNo);
+      return HwGpioSetAlt(mGpioNo, alt);
    }
 
    //
    virtual bool Set() {
-      return BaGpioSet(mGpioNo);
+      return HwGpioSet(mGpioNo);
    }
 
    //
    virtual bool Reset() {
-      return BaGpioReset(mGpioNo);
+      return HwGpioReset(mGpioNo);
    }
 
    //
    virtual bool Get() {
-      return BaGpioGet(mGpioNo);
+      return HwGpioGet(mGpioNo);
    }
 
    /* *************************************************************************/
@@ -764,17 +765,17 @@ public:
     */
    //
    virtual bool StartHWPWM(float dutyCycle) {
-     return BaGpioStartHWPWM(mGpioNo, dutyCycle);
+     return HwGpioStartHWPWM(mGpioNo, dutyCycle);
    }
 
    //
    virtual bool ResetHWPWMDuCy(float dc) {
-      return BaGpioResetHWPWMDuCy(mGpioNo, dc);
+      return HwGpioResetHWPWMDuCy(mGpioNo, dc);
    }
 
    //
    virtual bool StopHWPWM() {
-      return BaGpioStopHWPWM(mGpioNo);
+      return HwGpioStopHWPWM(mGpioNo);
    }
 
    //
@@ -782,19 +783,19 @@ public:
       if (mPWM) {
          return false;
       }
-      BaGpioCleanUp(mGpioNo);
-      mPWM = BaGpioStartSWPWM(mGpioNo, dutyC, cycleMs);
+      HwGpioCleanUp(mGpioNo);
+      mPWM = HwGpioStartSWPWM(mGpioNo, dutyC, cycleMs);
       return mPWM ? true : false;
    }
 
    //
    virtual bool ResetSWPWMDuCy(float dutyC) {
-      return BaGpioResetSWPWMDuCy(mPWM, dutyC);
+      return HwGpioResetSWPWMDuCy(mPWM, dutyC);
    }
 
    //
    virtual bool StopSWPWM() {
-      bool ret = BaGpioStopSWPWM(mPWM);
+      bool ret = HwGpioStopSWPWM(mPWM);
       mPWM = 0;
       return ret;
    }
@@ -842,20 +843,20 @@ public:
    }
 
    // Constructor
-   CBaGpio(uint8_t gpioNo) : mGpioNo(gpioNo), mPWM(0), mSleepLED(0),
+   CHwGpio(uint8_t gpioNo) : mGpioNo(gpioNo), mPWM(0), mSleepLED(0),
          mpSleepLEDArg(0), mpLock(0) {};
 
    // Typical object oriented destructor must be virtual!
-   virtual ~CBaGpio() {};
+   virtual ~CHwGpio() {};
 
    // Make this object non-copyable.
    // This is important because the implementation is in a dynamic pointer and
    // a deep copy of the implementation is explicitly required
-   CBaGpio(const CBaGpio&);
-   CBaGpio& operator=(const CBaGpio&);
+   CHwGpio(const CHwGpio&);
+   CHwGpio& operator=(const CHwGpio&);
 
    const uint8_t    mGpioNo;        // GPIO No.
-   TBaGpioSWPWMHdl  mPWM;           // PWM thread handle
+   THwGpioSWPWMHdl  mPWM;           // PWM thread handle
    TBaCoreThreadHdl mSleepLED;      // Sleeping LED thread handle
    TBaCoreThreadArg *mpSleepLEDArg; // Sleeping LED thread arg
    sem_t            *mpLock;        // GPIO semaphore linked to the GPIO No.
@@ -865,13 +866,13 @@ public:
     C++ factory
  -----------------------------------------------------------------------------*/
 //
-IBaGpio* IBaGpioCreate(TBaGpio gpio) {
-   return CBaGpio::Create(gpio);
+IHwGpio* IHwGpioCreate(THwGpio gpio) {
+   return CHwGpio::Create(gpio);
 }
 
 //
-TBaBoolRC IBaGpioDelete(IBaGpio* pHdl) {
-   return CBaGpio::Delete(pHdl);
+TBaBoolRC IHwGpioDelete(IHwGpio* pHdl) {
+   return CHwGpio::Delete(pHdl);
 }
 
 

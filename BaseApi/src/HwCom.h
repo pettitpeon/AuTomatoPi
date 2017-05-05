@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaCom.h
+ *   Module   : HwCom.h
  *   Date     : Nov 30, 2015
  *------------------------------------------------------------------------------
  *   Module description:
@@ -16,53 +16,53 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef SRC_BACOM_H_
-#define SRC_BACOM_H_
+#ifndef HWCOM_H_
+#define HWCOM_H_
 
 /*------------------------------------------------------------------------------
  *  Includes
  */
-#include <BaRPi.h>
+#include "HwPi.h"
 #include "BaBool.h"
 #include "BaCore.h"
 
 /// Serial device path
-#define BACOM_SERIALDEV "/dev/ttyAMA0"
+#define HWCOM_SERIALDEV "/dev/ttyAMA0"
 
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-typedef int32_t TBaComHdl; ///< BaCom Handle
-typedef void* TBaComSerHdl; ///< Serial interface handle
+typedef int32_t THwComHdl; ///< HwCom Handle
+typedef void* THwComSerHdl; ///< Serial interface handle
 
 /// Callback function to parse the string returned by the driver from
 /// /sys/bus/w1/devices/<SerialNo>/w1_slave
-typedef void* (*TBaCom1wReadFun)(
+typedef void* (*THwCom1wReadFun)(
       const char* str, /**< [in] Contents of driver file. Note: it gets
       destroyed after leaving the function, so do not use it outside this cb */
       size_t n ///< [in] String length
       );
 
 /// Baud enumeration
-typedef enum EBaComBaud {
-   eBaComBaud_50 = 0,
-   eBaComBaud_75,
-   eBaComBaud_110,
-   eBaComBaud_134,
-   eBaComBaud_150,
-   eBaComBaud_200,
-   eBaComBaud_300,
-   eBaComBaud_600,
-   eBaComBaud_1200,
-   eBaComBaud_1800,
-   eBaComBaud_2400,
-   eBaComBaud_9600,
-   eBaComBaud_19200,
-   eBaComBaud_38400,
-   eBaComBaud_57600,
-   eBaComBaud_115200,
-   eBaComBaud_230400
-} EBaComBaud;
+typedef enum EHwComBaud {
+   eHwComBaud_50 = 0,
+   eHwComBaud_75,
+   eHwComBaud_110,
+   eHwComBaud_134,
+   eHwComBaud_150,
+   eHwComBaud_200,
+   eHwComBaud_300,
+   eHwComBaud_600,
+   eHwComBaud_1200,
+   eHwComBaud_1800,
+   eHwComBaud_2400,
+   eHwComBaud_9600,
+   eHwComBaud_19200,
+   eHwComBaud_38400,
+   eHwComBaud_57600,
+   eHwComBaud_115200,
+   eHwComBaud_230400
+} EHwComBaud;
 
 /*------------------------------------------------------------------------------
  *  C interface
@@ -78,19 +78,19 @@ extern "C" {
 /** Initializes the resources, reserves GPIOs SDA (2), SCL (3). todo: ID_SC, ID_SD
  *  @return Error of success
  */
-TBaBoolRC BaComI2CInit();
+TBaBoolRC HwComI2CInit();
 
 /******************************************************************************/
 /** Releases the resources
  *  @return Error or success
  */
-TBaBoolRC BaComI2CExit();
+TBaBoolRC HwComI2CExit();
 
 /******************************************************************************/
 /** Select a device to work with and initializes the bus if not initialized
  *  @return Error of success
  */
-TBaBoolRC BaComI2CSelectDev(
+TBaBoolRC HwComI2CSelectDev(
       uint16_t devAddr ///< [in] Device address. see todo
       );
 
@@ -98,7 +98,7 @@ TBaBoolRC BaComI2CSelectDev(
 /** Gets the functionality of the device as described in linux/i2c.h
  *  @return Mask of functions
  */
-uint64_t BaComI2CFuncs();
+uint64_t HwComI2CFuncs();
 //@} i2c bus management
 
 /// @name I2C bus Read
@@ -107,7 +107,7 @@ uint64_t BaComI2CFuncs();
 /** Simple 8-bit read
  *  @return Data
  */
-uint8_t BaComI2CRead8(
+uint8_t HwComI2CRead8(
       TBaBool *pError ///< [out] Optional error flag
       );
 
@@ -115,7 +115,7 @@ uint8_t BaComI2CRead8(
 /** Read 8-bit register
  *  @return Data
  */
-uint8_t BaComI2CReadReg8(
+uint8_t HwComI2CReadReg8(
       uint32_t reg, ///< [in] Register number
       TBaBool *pError ///< [out] Optional error flag
       );
@@ -124,7 +124,7 @@ uint8_t BaComI2CReadReg8(
 /** Read 16-bit register
  *  @return Data
  */
-uint16_t BaComI2CReadReg16(
+uint16_t HwComI2CReadReg16(
       uint32_t reg, ///< [in] Register number
       TBaBool *pError ///< [out] Optional error flag
       );
@@ -136,7 +136,7 @@ uint16_t BaComI2CReadReg16(
 /** Simple 8-bit Write
  *  @return Error or success
  */
-TBaBoolRC BaComI2CWrite8(
+TBaBoolRC HwComI2CWrite8(
       uint8_t val ///< [in] value to write
       );
 
@@ -144,7 +144,7 @@ TBaBoolRC BaComI2CWrite8(
 /** Write 8-bit register
  *  @return Error or success
  */
-TBaBoolRC BaComI2CWriteReg8(
+TBaBoolRC HwComI2CWriteReg8(
       uint32_t reg, ///< [in] Register number
       uint8_t val ///< [in] value to write
       );
@@ -153,36 +153,36 @@ TBaBoolRC BaComI2CWriteReg8(
 /** Write 16-bit register
  *  @return Error or success
  */
-TBaBoolRC BaComI2CWriteReg16(
+TBaBoolRC HwComI2CWriteReg16(
       uint32_t reg, ///< [in] Register number
       uint16_t val ///< [in] value to write
       );
 //@} i2c bus write
 
-TBaComHdl BaComSPIInit();
-TBaBoolRC BaComSPIExit(TBaComHdl hdl);
+THwComHdl HwComSPIInit();
+TBaBoolRC HwComSPIExit(THwComHdl hdl);
 
 
 /// @name One Wire bus
 //@{
 /******************************************************************************/
-/** Initializes the resources, reserves GPIO 4 and calls #BaCom1WGetDevices()
+/** Initializes the resources, reserves GPIO 4 and calls #HwCom1WGetDevices()
  *  @return Error of success
  */
-TBaBoolRC BaCom1WInit();
+TBaBoolRC HwCom1WInit();
 
 /******************************************************************************/
 /** Releases the resources
  *  @return Error or success
  */
-TBaBoolRC BaCom1WExit();
+TBaBoolRC HwCom1WExit();
 
 /******************************************************************************/
 /** Scans for devices and saves them internally. This is automatically called
- *  by #BaCom1WInit()
+ *  by #HwCom1WInit()
  *  @return The number of devices found
  */
-uint16_t BaCom1WGetDevices();
+uint16_t HwCom1WGetDevices();
 
 /******************************************************************************/
 /** Read the value of the 1W sensor asynchronously. This works with an internal
@@ -190,7 +190,7 @@ uint16_t BaCom1WGetDevices();
  *  XX-XXXXXXXXXXXX [devFam]-[devID]
  *  @return On success, the contents of the sensor file, otherwise 0
  */
-const char* BaCom1WRdAsync(
+const char* HwCom1WRdAsync(
       const char* serNo, /**< [in] Optional serial number of the sensor eg:
        "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used*/
       TBaCoreMonTStampUs *pTs ///< [out] optional timestamp of the reading
@@ -203,7 +203,7 @@ const char* BaCom1WRdAsync(
  *  XX-XXXXXXXXXXXX [devFam]-[devID]
  *  @return Temperature in �C on success, otherwise -300
  */
-float BaCom1WGetTemp(
+float HwCom1WGetTemp(
       const char* serNo, /**< [in] Optional serial number of the sensor eg:
        "28-0215c2c4bcff". If null, the first sensor with family ID 28 is used*/
       TBaBool *pError ///< [out] Optional error flag. Only modified if error
@@ -215,10 +215,10 @@ float BaCom1WGetTemp(
  *  XX-XXXXXXXXXXXX [devFam]-[devID]
  *  @return Null if error, or the data returned by @c cb
  */
-void* BaCom1WGetValue(
+void* HwCom1WGetValue(
       const char* serNo, /**< [in] Optional serial number of the sensor eg:
          "28-0215c2c4bcff".*/
-      TBaCom1wReadFun cb, /**< [in] Callback function that parses the string
+      THwCom1wReadFun cb, /**< [in] Callback function that parses the string
          returned by the driver*/
       TBaBool *pError ///< [out] Optional error flag. Only modified if error
       );
@@ -230,30 +230,30 @@ void* BaCom1WGetValue(
 /** Initializes the resources and reserves GPIOs 14 and 15 for
  *  @return Handle on success, otherwise error
  */
-TBaComSerHdl BaComSerInit(
-      const char *device, ///< Device path, e.g. BACOM_SERIALDEV
-      EBaComBaud baud     ///< Baud rate
+THwComSerHdl HwComSerInit(
+      const char *device, ///< Device path, e.g. HWCOM_SERIALDEV
+      EHwComBaud baud     ///< Baud rate
       );
 
 /******************************************************************************/
 /** Frees resources
  *  @return Error or success
  */
-TBaBoolRC BaComSerExit(
-      TBaComSerHdl hdl  ///< Serial communication handle
+TBaBoolRC HwComSerExit(
+      THwComSerHdl hdl  ///< Serial communication handle
       );
 
 
-TBaBoolRC BaComSerPutC(
-      TBaComSerHdl hdl, uint8_t c
+TBaBoolRC HwComSerPutC(
+      THwComSerHdl hdl, uint8_t c
       );
 
-int BaComSerPend(
-      TBaComSerHdl hdl
+int HwComSerPend(
+      THwComSerHdl hdl
       );
 
-uint8_t BaComSerGetC(
-      TBaComSerHdl hdl
+uint8_t HwComSerGetC(
+      THwComSerHdl hdl
       );
 //@} Serial Interface
 
@@ -261,4 +261,4 @@ uint8_t BaComSerGetC(
 } // extern c
 
 #endif // __cplusplus
-#endif /* SRC_BACOM_H_ */
+#endif /* HWCOM_H_ */

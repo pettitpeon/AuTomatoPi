@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BARPITEST_H_
-#define BARPITEST_H_
+#ifndef HWPITEST_H_
+#define HWPITEST_H_
 
 /*------------------------------------------------------------------------------
  *  Includes
@@ -24,12 +24,12 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-class CBaRPiTest : public CppUnit::TestCase {
+class CHwPiTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
 
-   CPPUNIT_TEST_SUITE(CBaRPiTest);
+   CPPUNIT_TEST_SUITE(CHwPiTest);
 
    CPPUNIT_TEST(Test);
 
@@ -39,4 +39,4 @@ public:
    void Test();
 };
 
-#endif // BARPITEST_H_
+#endif // HWPITEST_H_

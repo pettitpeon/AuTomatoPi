@@ -23,21 +23,21 @@
 #include "TestTemplate.h"
 
 #include "BaCoreTest.h"
-#include "BaGpioTest.h"
-#include "BaComTest.h"
 #include "BaLogTest.h"
 #include "BaIniParseTest.h"
 #include "BaMsgTest.h"
 #include "BaseApiTest.h"
 #include "BaProcTest.h"
 #include "BaSwOsciTest.h"
-#include "BaRPiTest.h"
 #include "BaIpcTest.h"
 #include "BaIpcRegistryTest.h"
 
 #include "CtrlPT1Test.h"
 
 #include "BaProc.h"
+#include "HwComTest.h"
+#include "HwGpioTest.h"
+#include "HwPiTest.h"
 
 //
 enum TTestSelection {

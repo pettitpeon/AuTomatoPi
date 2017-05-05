@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaPi.h
+ *   Module   : HwPi.h
  *   Date     : Oct 11, 2016
  *------------------------------------------------------------------------------
  *   Module description:
@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BARPI_H_
-#define BARPI_H_
+#ifndef HWPI_H_
+#define HWPI_H_
 
 /*------------------------------------------------------------------------------
     Includes
@@ -29,23 +29,23 @@
  -----------------------------------------------------------------------------*/
 
 /// Model
-typedef enum EBaPiModel {
-   eBaPiModelUnknown = 0,
-   eBaPiModelA,
-   eBaPiModelAp,
-   eBaPiModelB,
-   eBaPiModelBp,
-   eBaPiModel2,
-   eBaPiModel3
-} EBaPiModel;
+typedef enum EHwPiModel {
+   eHwPiModelUnknown = 0,
+   eHwPiModelA,
+   eHwPiModelAp,
+   eHwPiModelB,
+   eHwPiModelBp,
+   eHwPiModel2,
+   eHwPiModel3
+} EHwPiModel;
 
 /// Board Descriptor
-typedef struct TBaPiBoard {
+typedef struct THwPiBoard {
    const char* hardware;
    const char* revision;
    const char* serial;
-   EBaPiModel boardModel;
-} TBaPiBoard;
+   EHwPiModel boardModel;
+} THwPiBoard;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -59,13 +59,13 @@ extern "C" {
 /** Get the board information from the RPi
  *  @return True if success, otherwise, false
  */
-TBaBool BaPiGetBoardInfo(TBaPiBoard *pBoardInf);
+TBaBool HwPiGetBoardInfo(THwPiBoard *pBoardInf);
 
 /******************************************************************************/
 /** Get the board model from the RPi
  *  @return The board model
  */
-EBaPiModel BaPiGetBoardModel();
+EHwPiModel HwPiGetBoardModel();
 
 //@}
 
@@ -74,4 +74,4 @@ EBaPiModel BaPiGetBoardModel();
 #ifdef __cplusplus
 }
 #endif
-#endif // BARPI_H_
+#endif // HWPI_H_

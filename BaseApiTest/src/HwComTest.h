@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaComTest.h
+ *   Module   : HwComTest.h
  *   Date     : Dec 7, 2015
  *------------------------------------------------------------------------------
  *   Module description:
@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BACOMTEST_H_
-#define BACOMTEST_H_
+#ifndef HWCOMTEST_H_
+#define HWCOMTEST_H_
 
 #ifndef __WIN32
 
@@ -26,12 +26,12 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-class CBaComTest : public CppUnit::TestCase {
+class CHwComTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
 
-   CPPUNIT_TEST_SUITE(CBaComTest);
+   CPPUNIT_TEST_SUITE(CHwComTest);
    CPPUNIT_TEST(init);
    CPPUNIT_TEST(I2c);
    CPPUNIT_TEST(I2cError);
@@ -53,4 +53,4 @@ public:
 };
 
 #endif // __WIN32
-#endif // BACOMTEST_H_
+#endif // HWCOMTEST_H_

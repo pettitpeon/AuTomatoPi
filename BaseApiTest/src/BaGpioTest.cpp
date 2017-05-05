@@ -16,56 +16,56 @@
 
 //#ifdef __linux // Semaphores return ENOSYS (not implemented)on windows
 
+#include <HwGpio.h>
 #include <iostream>
 #include <stdio.h>
 #include <math.h>
-#include "BaGpioTest.h"
 #include "BaGenMacros.h"
 #include "BaCore.h"
-#include "BaGpio.h"
+#include "HwGpioTest.h"
 
 #define GPIO 18
 
-CPPUNIT_TEST_SUITE_REGISTRATION( CBaGpioTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( CHwGpioTest );
 
-static IBaGpio *spGpio = 0;
+static IHwGpio *spGpio = 0;
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaGpioTest::setUp() {
-   spGpio = IBaGpioCreate(GPIO);
+void CHwGpioTest::setUp() {
+   spGpio = IHwGpioCreate(GPIO);
    CPPUNIT_ASSERT(spGpio);
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaGpioTest::tearDown() {
-   CPPUNIT_ASSERT(IBaGpioDelete(spGpio));
+void CHwGpioTest::tearDown() {
+   CPPUNIT_ASSERT(IHwGpioDelete(spGpio));
    spGpio = 0;
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaGpioTest::HardwarePWM() {
+void CHwGpioTest::HardwarePWM() {
    std::cout << "Hello HW PWM\n";
-   CPPUNIT_ASSERT(IBaGpioDelete(spGpio));
+   CPPUNIT_ASSERT(IHwGpioDelete(spGpio));
    spGpio = 0;
 
-   CPPUNIT_ASSERT(BaGpioInit());
-   CPPUNIT_ASSERT(BaGpioInitHWPWM());
-   CPPUNIT_ASSERT(BaGpioStartHWPWM(GPIO, 0.10));
-   CPPUNIT_ASSERT(BaGpioResetHWPWMDuCy(GPIO, 0.40));
-   CPPUNIT_ASSERT(BaGpioResetHWPWMDuCy(GPIO, 0.60));
-   CPPUNIT_ASSERT(BaGpioResetHWPWMDuCy(GPIO, 0.80));
-   CPPUNIT_ASSERT(BaGpioResetHWPWMDuCy(GPIO, 1));
-   CPPUNIT_ASSERT(BaGpioStopHWPWM(GPIO));
-   CPPUNIT_ASSERT(BaGpioExitHWPWM());
-   CPPUNIT_ASSERT(BaGpioExit());
+   CPPUNIT_ASSERT(HwGpioInit());
+   CPPUNIT_ASSERT(HwGpioInitHWPWM());
+   CPPUNIT_ASSERT(HwGpioStartHWPWM(GPIO, 0.10));
+   CPPUNIT_ASSERT(HwGpioResetHWPWMDuCy(GPIO, 0.40));
+   CPPUNIT_ASSERT(HwGpioResetHWPWMDuCy(GPIO, 0.60));
+   CPPUNIT_ASSERT(HwGpioResetHWPWMDuCy(GPIO, 0.80));
+   CPPUNIT_ASSERT(HwGpioResetHWPWMDuCy(GPIO, 1));
+   CPPUNIT_ASSERT(HwGpioStopHWPWM(GPIO));
+   CPPUNIT_ASSERT(HwGpioExitHWPWM());
+   CPPUNIT_ASSERT(HwGpioExit());
 
-   spGpio = IBaGpioCreate(GPIO);
+   spGpio = IHwGpioCreate(GPIO);
    CPPUNIT_ASSERT(spGpio);
 
    CPPUNIT_ASSERT(spGpio->InitHWPWM());
@@ -86,25 +86,25 @@ void CBaGpioTest::HardwarePWM() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaGpioTest::SoftwarePWM() {
+void CHwGpioTest::SoftwarePWM() {
    std::cout << "Hello SW PWM\n";
-   CPPUNIT_ASSERT(IBaGpioDelete(spGpio));
+   CPPUNIT_ASSERT(IHwGpioDelete(spGpio));
    spGpio = 0;
 
    // C API
-   CPPUNIT_ASSERT(BaGpioInit());
-   TBaGpioSWPWMHdl hdl = BaGpioStartSWPWM(GPIO, 0.10, 20);
+   CPPUNIT_ASSERT(HwGpioInit());
+   THwGpioSWPWMHdl hdl = HwGpioStartSWPWM(GPIO, 0.10, 20);
    CPPUNIT_ASSERT(hdl);
-   CPPUNIT_ASSERT(BaGpioResetSWPWMDuCy(hdl, 0.40));
+   CPPUNIT_ASSERT(HwGpioResetSWPWMDuCy(hdl, 0.40));
    BaCoreMSleep(1);
-   CPPUNIT_ASSERT(BaGpioResetSWPWMDuCy(hdl, 0.60));
-   CPPUNIT_ASSERT(BaGpioResetSWPWMDuCy(hdl, 0.80));
-   CPPUNIT_ASSERT(BaGpioResetSWPWMDuCy(hdl, 1));
-   CPPUNIT_ASSERT(BaGpioStopSWPWM(hdl));
-   CPPUNIT_ASSERT(BaGpioExit());
+   CPPUNIT_ASSERT(HwGpioResetSWPWMDuCy(hdl, 0.60));
+   CPPUNIT_ASSERT(HwGpioResetSWPWMDuCy(hdl, 0.80));
+   CPPUNIT_ASSERT(HwGpioResetSWPWMDuCy(hdl, 1));
+   CPPUNIT_ASSERT(HwGpioStopSWPWM(hdl));
+   CPPUNIT_ASSERT(HwGpioExit());
 
    // C++ API
-   spGpio = IBaGpioCreate(GPIO);
+   spGpio = IHwGpioCreate(GPIO);
    CPPUNIT_ASSERT(spGpio);
    CPPUNIT_ASSERT(spGpio->StartSWPWM(0.1, 10));
    BaCoreSleep(1);
@@ -134,7 +134,7 @@ void CBaGpioTest::SoftwarePWM() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaGpioTest::NormalOperations() {
+void CHwGpioTest::NormalOperations() {
    std::cout << "Hello GPIO test\n";
    CPPUNIT_ASSERT(spGpio->SetOut());
    spGpio->Reset(); // TODO: Check, It was added extra on Windows

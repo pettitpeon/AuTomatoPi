@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaPi.cpp
+ *   Module   : HwPi.cpp
  *   Date     : Oct 11, 2016
  *------------------------------------------------------------------------------
  */
@@ -10,7 +10,7 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
-#include <BaRPi.h>
+#include <HwPi.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -40,19 +40,19 @@ typedef struct TBoard_ {
 } TBoard_;
 
 static TBoard_ sPiBrdInt;
-static TBaPiBoard sPiBoard = {0};
+static THwPiBoard sPiBoard = {0};
 
 /*------------------------------------------------------------------------------
     Local functions
  -----------------------------------------------------------------------------*/
-LOCAL EBaPiModel getBoardModel();
+LOCAL EHwPiModel getBoardModel();
 
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
 
 // http://elinux.org/RPi_HardwareHistory
-TBaBoolRC BaPiGetBoardInfo(TBaPiBoard *pBoardInf) {
+TBaBoolRC HwPiGetBoardInfo(THwPiBoard *pBoardInf) {
    std::ifstream iS;
    std::string line;
    std::size_t pos = 0;
@@ -106,11 +106,11 @@ TBaBoolRC BaPiGetBoardInfo(TBaPiBoard *pBoardInf) {
 }
 
 //
-EBaPiModel BaPiGetBoardModel() {
-   TBaPiBoard bi;
-   bi.boardModel = eBaPiModelUnknown;
+EHwPiModel HwPiGetBoardModel() {
+   THwPiBoard bi;
+   bi.boardModel = eHwPiModelUnknown;
 
-   BaPiGetBoardInfo(&bi);
+   HwPiGetBoardInfo(&bi);
    return bi.boardModel;
 }
 
@@ -126,38 +126,38 @@ EBaPiModel BaPiGetBoardModel() {
 // Raspberry Pi Model B+: 0010, 0013
 // Raspberry Pi 2 Model B: 1041
 // Raspberry Pi 3 Model B: 2082
-LOCAL EBaPiModel getBoardModel() {
+LOCAL EHwPiModel getBoardModel() {
    std::string rev = sPiBrdInt.revision.length() > 6 ?
          sPiBrdInt.revision.substr(4) : sPiBrdInt.revision;
    rev = "0x" + rev;
 
    switch (BaToNumber(rev, 0u)) {
-      case 0x0002  : return eBaPiModelB;
-      case 0x0003  : return eBaPiModelB;
-      case 0x0004  : return eBaPiModelB;
-      case 0x0005  : return eBaPiModelB;
-      case 0x0006  : return eBaPiModelB;
-      case 0x0007  : return eBaPiModelA;
-      case 0x0008  : return eBaPiModelA;
-      case 0x0009  : return eBaPiModelA;
-      case 0x000d  : return eBaPiModelB;
-      case 0x000e  : return eBaPiModelB;
-      case 0x000f  : return eBaPiModelB;
-      case 0x0010  : return eBaPiModelBp;
-      case 0x0011  : return eBaPiModelUnknown;
-      case 0x0012  : return eBaPiModelAp;
-      case 0x0013  : return eBaPiModelBp;
-      case 0x0014  : return eBaPiModelUnknown;
-      case 0x0015  : return eBaPiModelAp;
-      case 0xa01040: return eBaPiModel2;
-      case 0xa01041: return eBaPiModel2;
-      case 0xa21041: return eBaPiModel2;
-      case 0xa22042: return eBaPiModel2;
-      case 0x900092: return eBaPiModelUnknown;
-      case 0x900093: return eBaPiModelUnknown;
-      case 0xa02082: return eBaPiModel3;
-      case 0xa22082: return eBaPiModel3;
-      default: return eBaPiModelUnknown;
+      case 0x0002  : return eHwPiModelB;
+      case 0x0003  : return eHwPiModelB;
+      case 0x0004  : return eHwPiModelB;
+      case 0x0005  : return eHwPiModelB;
+      case 0x0006  : return eHwPiModelB;
+      case 0x0007  : return eHwPiModelA;
+      case 0x0008  : return eHwPiModelA;
+      case 0x0009  : return eHwPiModelA;
+      case 0x000d  : return eHwPiModelB;
+      case 0x000e  : return eHwPiModelB;
+      case 0x000f  : return eHwPiModelB;
+      case 0x0010  : return eHwPiModelBp;
+      case 0x0011  : return eHwPiModelUnknown;
+      case 0x0012  : return eHwPiModelAp;
+      case 0x0013  : return eHwPiModelBp;
+      case 0x0014  : return eHwPiModelUnknown;
+      case 0x0015  : return eHwPiModelAp;
+      case 0xa01040: return eHwPiModel2;
+      case 0xa01041: return eHwPiModel2;
+      case 0xa21041: return eHwPiModel2;
+      case 0xa22042: return eHwPiModel2;
+      case 0x900092: return eHwPiModelUnknown;
+      case 0x900093: return eHwPiModelUnknown;
+      case 0xa02082: return eHwPiModel3;
+      case 0xa22082: return eHwPiModel3;
+      default: return eHwPiModelUnknown;
    }
 
 }

@@ -1,8 +1,9 @@
+
 /*------------------------------------------------------------------------------
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaCom.cpp
+ *   Module   : HwCom.cpp
  *   Date     : Nov 30, 2015
  *------------------------------------------------------------------------------
  *   Module description:
@@ -32,17 +33,17 @@
  typedef uint32_t speed_t;
 #endif
 
-#include "BaCom.h"
+#include "HwCom.h"
 #include "BaCore.h"
-#include "BaGpio.h"
+#include <HwGpio.h>
 #include "BaGenMacros.h"
 #include "BaLogMacros.h"
 #include "BaUtils.hpp"
-#include "BaGpioPinout.h"
+#include "HwGpioPinout.h"
 
 #define ERRTEMP -300
 #define FOREVER  500
-#define TAG "BaCom"
+#define TAG "HwCom"
 
 #ifdef __WIN32
 # define DEVPATH  "C:\\tmp\\devices\\"
@@ -54,16 +55,16 @@
 // Serial descriptor
 typedef struct TSerialDesc {
    int fd;
-   IBaGpio *pTXD0;
-   IBaGpio *pRXD0;
+   IHwGpio *pTXD0;
+   IHwGpio *pRXD0;
 
    TSerialDesc() : fd(0), pTXD0(0), pRXD0(0) {
-      pTXD0 = IBaGpioCreate(SERTXD0);
-      pRXD0 = IBaGpioCreate(SERRXD0);
+      pTXD0 = IHwGpioCreate(SERTXD0);
+      pRXD0 = IHwGpioCreate(SERRXD0);
    }
    ~TSerialDesc() {
-      IBaGpioDelete(pTXD0);
-      IBaGpioDelete(pRXD0);
+      IHwGpioDelete(pTXD0);
+      IHwGpioDelete(pRXD0);
    }
 } TSerialDesc;
 
@@ -103,12 +104,12 @@ typedef union i2c_smbus_data UI2cData;
 typedef struct TI2cDesc {
    int fd;
    std::mutex mtx;
-   IBaGpio *pSDA = 0;
-   IBaGpio *pSCL = 0;
+   IHwGpio *pSDA = 0;
+   IHwGpio *pSCL = 0;
    TI2cDesc() : fd(0), pSDA(0), pSCL(0) {}
 } TI2cDesc;
 
-LOCAL inline speed_t srBaud2Speed(EBaComBaud baud);
+LOCAL inline speed_t srBaud2Speed(EHwComBaud baud);
 
 // One wire bus local functions
 LOCAL inline float   w1ReadTemp(const char *dvrStr, TBaBool *pError);
@@ -120,7 +121,7 @@ LOCAL inline T1wDev* w1GetDev(const char* serNo);
 LOCAL inline int i2cAccess(int fd, uint8_t rw, uint8_t cmd, int size, i2c_smbus_data *data);
 
 // GPIO for the 1w bus. default GPIO 4, pin 7
-static IBaGpio *sp1w = 0;
+static IHwGpio *sp1w = 0;
 
 // Map of family IDs and devices vector
 static T1WDevs s1WDevs;
@@ -139,24 +140,24 @@ static int         spiFds [2] ;
 static TI2cDesc sI2cHdl;
 
 //
-TBaBoolRC BaComI2CInit() {
+TBaBoolRC HwComI2CInit() {
    if (sI2cHdl.fd) {
       return eBaBoolRC_Success;
    }
 
    std::lock_guard<std::mutex> lck(sI2cHdl.mtx);
 
-   EBaPiModel mod = BaPiGetBoardModel();
-   const char* dev = mod < eBaPiModel2 ? "/dev/i2c-0" : "/dev/i2c-1";
+   EHwPiModel mod = HwPiGetBoardModel();
+   const char* dev = mod < eHwPiModel2 ? "/dev/i2c-0" : "/dev/i2c-1";
 
-   sI2cHdl.pSDA = IBaGpioCreate(I2CSDA1);
+   sI2cHdl.pSDA = IHwGpioCreate(I2CSDA1);
    if(!sI2cHdl.pSDA) {
       return eBaBoolRC_Error;
    }
 
-   sI2cHdl.pSCL = IBaGpioCreate(I2CSCL1);
+   sI2cHdl.pSCL = IHwGpioCreate(I2CSCL1);
    if(!sI2cHdl.pSCL) {
-      IBaGpioDelete(sI2cHdl.pSDA);
+      IHwGpioDelete(sI2cHdl.pSDA);
       sI2cHdl.pSDA = 0;
       return eBaBoolRC_Error;
    }
@@ -167,9 +168,9 @@ TBaBoolRC BaComI2CInit() {
    if ((sI2cHdl.fd = open(dev, O_RDWR)) < 0) {
       WARN_("Unable to open I2C device: %s", strerror(errno));
       sI2cHdl.fd = 0;
-      IBaGpioDelete(sI2cHdl.pSDA);
+      IHwGpioDelete(sI2cHdl.pSDA);
       sI2cHdl.pSDA = 0;
-      IBaGpioDelete(sI2cHdl.pSCL);
+      IHwGpioDelete(sI2cHdl.pSCL);
       sI2cHdl.pSCL = 0;
       return eBaBoolRC_Error;
    }
@@ -178,7 +179,7 @@ TBaBoolRC BaComI2CInit() {
 }
 
 //
-TBaBoolRC BaComI2CExit() {
+TBaBoolRC HwComI2CExit() {
    if (!sI2cHdl.fd) {
       return eBaBoolRC_Success;
    }
@@ -191,16 +192,16 @@ TBaBoolRC BaComI2CExit() {
    }
 
    sI2cHdl.fd = 0;
-   IBaGpioDelete(sI2cHdl.pSDA);
+   IHwGpioDelete(sI2cHdl.pSDA);
    sI2cHdl.pSDA = 0;
-   IBaGpioDelete(sI2cHdl.pSCL);
+   IHwGpioDelete(sI2cHdl.pSCL);
    sI2cHdl.pSCL = 0;
    return eBaBoolRC_Success;
 }
 
-TBaBoolRC BaComI2CSelectDev(uint16_t devAddr) {
+TBaBoolRC HwComI2CSelectDev(uint16_t devAddr) {
    if (!sI2cHdl.fd) {
-      if (!BaComI2CInit()) {
+      if (!HwComI2CInit()) {
          return eBaBoolRC_Error;
       }
    }
@@ -237,9 +238,9 @@ TBaBoolRC BaComI2CSelectDev(uint16_t devAddr) {
 // 25: I2C_FUNC_PROTOCOL_MANGLING
 // 26: I2C_FUNC_10BIT_ADDR
 // 27: I2C_FUNC_I2C
-uint64_t BaComI2CFuncs() {
+uint64_t HwComI2CFuncs() {
    if (!sI2cHdl.fd) {
-      return BaComI2CInit();
+      return HwComI2CInit();
    }
 
    uint64_t funcs = 0;
@@ -252,7 +253,7 @@ uint64_t BaComI2CFuncs() {
 }
 
 //
-uint8_t BaComI2CRead8(TBaBool *pError) {
+uint8_t HwComI2CRead8(TBaBool *pError) {
    if (!sI2cHdl.fd) {
       if (pError) {
          *pError = eBaBool_true;
@@ -274,7 +275,7 @@ uint8_t BaComI2CRead8(TBaBool *pError) {
 }
 
 //
-uint8_t BaComI2CReadReg8(uint32_t reg, TBaBool *pError) {
+uint8_t HwComI2CReadReg8(uint32_t reg, TBaBool *pError) {
    if (!sI2cHdl.fd) {
       if (pError) {
          *pError = eBaBool_true;
@@ -294,7 +295,7 @@ uint8_t BaComI2CReadReg8(uint32_t reg, TBaBool *pError) {
 }
 
 //
-uint16_t BaComI2CReadReg16(uint32_t reg, TBaBool *pError) {
+uint16_t HwComI2CReadReg16(uint32_t reg, TBaBool *pError) {
    if (!sI2cHdl.fd) {
       if (pError) {
          *pError = eBaBool_true;
@@ -314,7 +315,7 @@ uint16_t BaComI2CReadReg16(uint32_t reg, TBaBool *pError) {
 }
 
 //
-TBaBoolRC BaComI2CWrite8(uint8_t val) {
+TBaBoolRC HwComI2CWrite8(uint8_t val) {
    if (!sI2cHdl.fd) {
       return eBaBoolRC_Error;
    }
@@ -330,7 +331,7 @@ TBaBoolRC BaComI2CWrite8(uint8_t val) {
 }
 
 //
-TBaBoolRC BaComI2CWriteReg8(uint32_t reg, uint8_t val) {
+TBaBoolRC HwComI2CWriteReg8(uint32_t reg, uint8_t val) {
    if (!sI2cHdl.fd) {
       return eBaBoolRC_Error;
    }
@@ -346,7 +347,7 @@ TBaBoolRC BaComI2CWriteReg8(uint32_t reg, uint8_t val) {
 }
 
 //
-TBaBoolRC BaComI2CWriteReg16(uint32_t reg, uint16_t val) {
+TBaBoolRC HwComI2CWriteReg16(uint32_t reg, uint16_t val) {
    if (!sI2cHdl.fd) {
       return eBaBoolRC_Error;
    }
@@ -362,7 +363,7 @@ TBaBoolRC BaComI2CWriteReg16(uint32_t reg, uint16_t val) {
 }
 
 //
-TBaBoolRC BaComI2CWriteRegBlock(uint32_t reg, uint8_t *pBuf, uint32_t size) {
+TBaBoolRC HwComI2CWriteRegBlock(uint32_t reg, uint8_t *pBuf, uint32_t size) {
    if (!sI2cHdl.fd) {
       return eBaBoolRC_Error;
    }
@@ -379,7 +380,7 @@ TBaBoolRC BaComI2CWriteRegBlock(uint32_t reg, uint8_t *pBuf, uint32_t size) {
 
 #ifdef __linux
 //
-TBaComHdl BaComSPIInit() {
+THwComHdl HwComSPIInit() {
    int fd ;
    int channel;
    int speed;
@@ -411,31 +412,31 @@ TBaComHdl BaComSPIInit() {
 #endif
 
 //
-TBaBoolRC BaComSPIExit(TBaComHdl hdl) {
+TBaBoolRC HwComSPIExit(THwComHdl hdl) {
    return 0;
 }
 
 //
-TBaBoolRC BaCom1WInit() {
+TBaBoolRC HwCom1WInit() {
    if (sp1w) {
       return eBaBoolRC_Success;
    }
 
    // This reserves the GPIO in the c++ interface
-   sp1w = IBaGpioCreate(BUS1W);
+   sp1w = IHwGpioCreate(BUS1W);
    if (!sp1w) {
       return eBaBoolRC_Error;
    }
 
    // This reserves the GPIO in the C interface
    sp1w->SetAlt(0);
-   BaCom1WGetDevices();
+   HwCom1WGetDevices();
 
    return eBaBoolRC_Success;
 }
 
 //
-TBaBoolRC BaCom1WExit() {
+TBaBoolRC HwCom1WExit() {
    if (!sp1w) {
       return eBaBoolRC_Success;
    }
@@ -487,15 +488,15 @@ TBaBoolRC BaCom1WExit() {
    s1WDevs.clear();
 
    // Delete the GPIO. Zero it first so nobody can access it "in between"
-   IBaGpio *tmp = sp1w;
+   IHwGpio *tmp = sp1w;
    sp1w = 0;
 
    // Bitwise & desired!
-   return rc & IBaGpioDelete(tmp);
+   return rc & IHwGpioDelete(tmp);
 }
 
 //
-uint16_t BaCom1WGetDevices(){
+uint16_t HwCom1WGetDevices(){
    if (!BaFS::Exists(DEVPATH)) {
       return eBaBoolRC_Error;
    }
@@ -556,7 +557,7 @@ uint16_t BaCom1WGetDevices(){
 }
 
 //
-const char* BaCom1WRdAsync(const char *serNo, TBaCoreMonTStampUs *pTs) {
+const char* HwCom1WRdAsync(const char *serNo, TBaCoreMonTStampUs *pTs) {
    if(!sp1w || s1WDevs.empty()) {
       return 0;
    }
@@ -579,7 +580,7 @@ const char* BaCom1WRdAsync(const char *serNo, TBaCoreMonTStampUs *pTs) {
 }
 
 //
-TBaBoolRC BaCom1WPauseAsyncThread(const char *serNo) {
+TBaBoolRC HwCom1WPauseAsyncThread(const char *serNo) {
    if(!sp1w || s1WDevs.empty()) {
       return eBaBoolRC_Error;
    }
@@ -595,7 +596,7 @@ TBaBoolRC BaCom1WPauseAsyncThread(const char *serNo) {
 }
 
 //
-float BaCom1WGetTemp(const char* serNo, TBaBool *pError) {
+float HwCom1WGetTemp(const char* serNo, TBaBool *pError) {
    TBaBool terror;
    pError = pError ? pError : &terror;
    std::string contents;
@@ -616,7 +617,7 @@ float BaCom1WGetTemp(const char* serNo, TBaBool *pError) {
 }
 
 //
-void *BaCom1WGetValue(const char* serNo, TBaCom1wReadFun cb, TBaBool *pError) {
+void *HwCom1WGetValue(const char* serNo, THwCom1wReadFun cb, TBaBool *pError) {
    TBaBool tError;
    pError = pError ? pError : &tError;
    std::string contents;
@@ -644,7 +645,7 @@ void *BaCom1WGetValue(const char* serNo, TBaCom1wReadFun cb, TBaBool *pError) {
 }
 
 //
-TBaComSerHdl BaComSerInit(const char *dev, EBaComBaud baud) {
+THwComSerHdl HwComSerInit(const char *dev, EHwComBaud baud) {
    TSerialDesc *p = new TSerialDesc();
 
    termios options;
@@ -692,11 +693,11 @@ TBaComSerHdl BaComSerInit(const char *dev, EBaComBaud baud) {
    ioctl(p->fd, TIOCMSET, &status);
 
    BaCoreMSleep(10);   // 10mS
-   return (TBaComSerHdl)p;
+   return (THwComSerHdl)p;
 }
 
 //
-TBaBoolRC BaComSerExit(TBaComSerHdl p) {
+TBaBoolRC HwComSerExit(THwComSerHdl p) {
    if (!p) {
       return eBaBoolRC_Error;
    }
@@ -707,7 +708,7 @@ TBaBoolRC BaComSerExit(TBaComSerHdl p) {
 }
 
 //
-TBaBoolRC BaComSerPutC(TBaComSerHdl p, uint8_t c) {
+TBaBoolRC HwComSerPutC(THwComSerHdl p, uint8_t c) {
    if (!p) {
       return eBaBoolRC_Error;
    }
@@ -717,7 +718,7 @@ TBaBoolRC BaComSerPutC(TBaComSerHdl p, uint8_t c) {
 }
 
 //
-int BaComSerPend(TBaComSerHdl p) {
+int HwComSerPend(THwComSerHdl p) {
    int result = 0;
    if (!p || ioctl(((TSerialDesc*)p)->fd, FIONREAD, &result) == -1) {
       return 0;
@@ -727,7 +728,7 @@ int BaComSerPend(TBaComSerHdl p) {
 }
 
 //
-uint8_t BaComSerGetC(TBaComSerHdl p) {
+uint8_t HwComSerGetC(THwComSerHdl p) {
    uint8_t x;
 
    if (!p || read(((TSerialDesc*)p)->fd, &x, 1) != 1)
@@ -737,25 +738,25 @@ uint8_t BaComSerGetC(TBaComSerHdl p) {
 }
 
 //
-LOCAL inline speed_t srBaud2Speed(EBaComBaud baud) {
+LOCAL inline speed_t srBaud2Speed(EHwComBaud baud) {
    switch (baud) {
-   case eBaComBaud_50    : return     B50;
-   case eBaComBaud_75    : return     B75;
-   case eBaComBaud_110   : return    B110;
-   case eBaComBaud_134   : return    B134;
-   case eBaComBaud_150   : return    B150;
-   case eBaComBaud_200   : return    B200;
-   case eBaComBaud_300   : return    B300;
-   case eBaComBaud_600   : return    B600;
-   case eBaComBaud_1200  : return   B1200;
-   case eBaComBaud_1800  : return   B1800;
-   case eBaComBaud_2400  : return   B2400;
-   case eBaComBaud_9600  : return   B9600;
-   case eBaComBaud_19200 : return  B19200;
-   case eBaComBaud_38400 : return  B38400;
-   case eBaComBaud_57600 : return  B57600;
-   case eBaComBaud_115200: return B115200;
-   case eBaComBaud_230400: return B230400;
+   case eHwComBaud_50    : return     B50;
+   case eHwComBaud_75    : return     B75;
+   case eHwComBaud_110   : return    B110;
+   case eHwComBaud_134   : return    B134;
+   case eHwComBaud_150   : return    B150;
+   case eHwComBaud_200   : return    B200;
+   case eHwComBaud_300   : return    B300;
+   case eHwComBaud_600   : return    B600;
+   case eHwComBaud_1200  : return   B1200;
+   case eHwComBaud_1800  : return   B1800;
+   case eHwComBaud_2400  : return   B2400;
+   case eHwComBaud_9600  : return   B9600;
+   case eHwComBaud_19200 : return  B19200;
+   case eHwComBaud_38400 : return  B38400;
+   case eHwComBaud_57600 : return  B57600;
+   case eHwComBaud_115200: return B115200;
+   case eHwComBaud_230400: return B230400;
    default:
       return 0;
    }

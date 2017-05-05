@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaComTest.cpp
+ *   Module   : HwComTest.cpp
  *   Date     : Dec 7, 2015
  *------------------------------------------------------------------------------
  *   Module description:
@@ -22,9 +22,9 @@
 #include <byteswap.h>
 #include <linux/i2c.h>
 
-#include "BaComTest.h"
-#include "BaCom.h"
-#include "BaGpio.h"
+#include "HwComTest.h"
+#include <HwCom.h>
+#include <HwGpio.h>
 #include "BaCore.h"
 #include "BaGenMacros.h"
 #include "dbg/BaDbgMacros.h"
@@ -52,26 +52,26 @@
 
 LOCAL void* rdDvr(const char* str, size_t n);
 
-CPPUNIT_TEST_SUITE_REGISTRATION( CBaComTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( CHwComTest );
 
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::setUp() {
+void CHwComTest::setUp() {
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::tearDown() {
-   BaCom1WExit();
+void CHwComTest::tearDown() {
+   HwCom1WExit();
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::init() {
+void CHwComTest::init() {
 #ifndef __arm__
    BaFS::MkDir("C:\\tmp\\");
    BaFS::MkDir(DEVDIR);
@@ -93,16 +93,16 @@ void CBaComTest::init() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::I2c() {
+void CHwComTest::I2c() {
    TBaBool err = 0;
    uint16_t readReg = 0;
    uint16_t confReg = 0;
 
-   ASS(BaComI2CInit());
-   ASS(BaComI2CSelectDev(ADDRADS1115));
+   ASS(HwComI2CInit());
+   ASS(HwComI2CSelectDev(ADDRADS1115));
 
    // Test functions
-   uint64_t funcs = BaComI2CFuncs();
+   uint64_t funcs = HwComI2CFuncs();
    ASS(funcs & I2C_FUNC_SMBUS_WRITE_I2C_BLOCK);
    ASS(funcs & I2C_FUNC_SMBUS_READ_I2C_BLOCK  );
    ASS(funcs & I2C_FUNC_SMBUS_WRITE_BLOCK_DATA);
@@ -141,133 +141,133 @@ void CBaComTest::I2c() {
 
    // Continuous Mode
    confReg = 0b1000001111000000;
-   ASS(BaComI2CWriteReg16(CONFREG, confReg));
-   readReg = BaComI2CReadReg16(CONFREG, &err);
+   ASS(HwComI2CWriteReg16(CONFREG, confReg));
+   readReg = HwComI2CReadReg16(CONFREG, &err);
    ASS_EQ(readReg, (uint16_t)0x8340);
    ASS(!err);
    printf("0x%04X, e:%i\n", readReg, err);
 
    // Voltage read
    BaCoreMSleep(5);
-   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   readReg = bswap_16(HwComI2CReadReg16(CONVREG, &err));
    // Same as original register, but without status flag
    ASS(!err);
    printf("%f V\n", 6.144*readReg/32767.0);
    BaCoreMSleep(5);
    // Byte order must be swapped to get the right int
-   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   readReg = bswap_16(HwComI2CReadReg16(CONVREG, &err));
    printf("%f V\n", 6.144*readReg/32767.0);
    ASS(!err);
 
    // One Shot Mode
    confReg = 0b1000001111000001;
-   ASS(BaComI2CWriteReg16(CONFREG, confReg));
-   readReg = BaComI2CReadReg16(CONFREG, &err);
+   ASS(HwComI2CWriteReg16(CONFREG, confReg));
+   readReg = HwComI2CReadReg16(CONFREG, &err);
    ASS(!err);
    printf("0x%04X, e:%i\n", readReg, err);
 
    // voltage read
    BaCoreMSleep(5);
    // Byte order must be swapped to get the right int
-   readReg = bswap_16(BaComI2CReadReg16(CONVREG, &err));
+   readReg = bswap_16(HwComI2CReadReg16(CONVREG, &err));
    ASS(!err);
    printf("%f V, 0x%04x\n", 6.144*readReg/32767.0, readReg);
-   ASS_EQ(uint8_t(readReg >> 8), BaComI2CRead8(&err));
+   ASS_EQ(uint8_t(readReg >> 8), HwComI2CRead8(&err));
    ASS(!err);
-   ASS_EQ(uint8_t(readReg >> 8), BaComI2CReadReg8(CONVREG, &err));
+   ASS_EQ(uint8_t(readReg >> 8), HwComI2CReadReg8(CONVREG, &err));
    ASS(!err);
 
-   ASS(BaComI2CExit());
+   ASS(HwComI2CExit());
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::I2cError() {
+void CHwComTest::I2cError() {
    TBaBool err = eBaBool_false;
-   BaComI2CRead8(&err);
+   HwComI2CRead8(&err);
    ASS(err);
    err = eBaBool_false;
-   BaComI2CReadReg8(0, &err);
+   HwComI2CReadReg8(0, &err);
    ASS(err);
    err = eBaBool_false;
-   BaComI2CReadReg16(0, &err);
+   HwComI2CReadReg16(0, &err);
    ASS(err);
    err = eBaBool_false;
 
-   ASS(!BaComI2CWrite8(0));
-   ASS(!BaComI2CWriteReg8(0, 0));
-   ASS(!BaComI2CWriteReg16(0, 0));
+   ASS(!HwComI2CWrite8(0));
+   ASS(!HwComI2CWriteReg8(0, 0));
+   ASS(!HwComI2CWriteReg16(0, 0));
 
-   ASS(BaComI2CSelectDev(ADDRADS1115));
-   BaComI2CRead8(&err);
+   ASS(HwComI2CSelectDev(ADDRADS1115));
+   HwComI2CRead8(&err);
    ASS(!err);
-   ASS(BaComI2CExit());
+   ASS(HwComI2CExit());
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::Bus1W() {
+void CHwComTest::Bus1W() {
    TBaBool error1 = eBaBool_false;
    TBaBool error2 = eBaBool_false;
    TBaCoreMonTStampUs ts = 0;
    const char *pAsyncVal = 0;
    const char* out = 0;
    float temp = 0;
-   ASS(BaCom1WInit());
-   ASS(BaCom1WExit());
+   ASS(HwCom1WInit());
+   ASS(HwCom1WExit());
 
    // Uninitialized
-   ASS(!BaCom1WRdAsync("28-0215c2c4bcff", &ts));
-   ASS(!BaCom1WGetValue("28-0215c2c4bcff", rdDvr, 0));
-   ASS_D_EQ(-300.0, BaCom1WGetTemp("28-0215c2c4bcff", 0), 0.001);
+   ASS(!HwCom1WRdAsync("28-0215c2c4bcff", &ts));
+   ASS(!HwCom1WGetValue("28-0215c2c4bcff", rdDvr, 0));
+   ASS_D_EQ(-300.0, HwCom1WGetTemp("28-0215c2c4bcff", 0), 0.001);
 
 
-   ASS(BaCom1WInit());
+   ASS(HwCom1WInit());
 
    // Threads not ready
-   ASS(!BaCom1WRdAsync("28-0215c2c4bcff", &ts));
-   ASS(!BaCom1WRdAsync("28-0315c2c4bcff", 0));
-   ASS(!BaCom1WRdAsync("28-0415c2c4bcff", &ts));
+   ASS(!HwCom1WRdAsync("28-0215c2c4bcff", &ts));
+   ASS(!HwCom1WRdAsync("28-0315c2c4bcff", 0));
+   ASS(!HwCom1WRdAsync("28-0415c2c4bcff", &ts));
 
    // After sleeping threads are ready
    BaCoreMSleep(900);
 
 // Meant for RPI
 #ifdef __arm__
-   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff", &ts);
-   temp      = BaCom1WGetTemp("28-0215c2c4bcff", &error1);
-   temp      = BaCom1WGetTemp(0, &error1);
-   temp      = BaCom1WGetTemp("28-xxx", &error2);
-   ASS(!BaCom1WGetValue("28-xxx", rdDvr, 0));
-   ASS(!BaCom1WGetValue("28-xxx", 0, 0));
-   out = (const char*) BaCom1WGetValue("28-0215c2c4bcff", rdDvr, &error1);
+   pAsyncVal = HwCom1WRdAsync("28-0215c2c4bcff", &ts);
+   temp      = HwCom1WGetTemp("28-0215c2c4bcff", &error1);
+   temp      = HwCom1WGetTemp(0, &error1);
+   temp      = HwCom1WGetTemp("28-xxx", &error2);
+   ASS(!HwCom1WGetValue("28-xxx", rdDvr, 0));
+   ASS(!HwCom1WGetValue("28-xxx", 0, 0));
+   out = (const char*) HwCom1WGetValue("28-0215c2c4bcff", rdDvr, &error1);
 
 // Meant for PC (Lin, Win)
 #else
    // Test async reading
    // Only overwrite if no error
-   pAsyncVal = BaCom1WRdAsync("28-0215c2c4bcff", &ts);
-   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0315c2c4bcff", &ts) : 0;
-   pAsyncVal = pAsyncVal ? BaCom1WRdAsync("28-0415c2c4bcff", &ts) : 0;
+   pAsyncVal = HwCom1WRdAsync("28-0215c2c4bcff", &ts);
+   pAsyncVal = pAsyncVal ? HwCom1WRdAsync("28-0315c2c4bcff", &ts) : 0;
+   pAsyncVal = pAsyncVal ? HwCom1WRdAsync("28-0415c2c4bcff", &ts) : 0;
 
    // Test sync reading
    // No error
-   temp = BaCom1WGetTemp("28-0215c2c4bcff", &error1);
+   temp = HwCom1WGetTemp("28-0215c2c4bcff", &error1);
    std::cout << temp << ": "<< (error1 ? "T" : "F") << std::endl;
-   temp = BaCom1WGetTemp(0, &error1);
+   temp = HwCom1WGetTemp(0, &error1);
    std::cout << temp << ": "<< (error1 ? "T" : "F") << std::endl;
-   out = (const char*) BaCom1WGetValue(0, rdDvr,  &error1);
+   out = (const char*) HwCom1WGetValue(0, rdDvr,  &error1);
    std::cout << out << ": "<< (error1 ? "T" : "F") << std::endl;
    free((void*)out);
 
    // Error
-   temp = BaCom1WGetTemp("28-xxx", &error2);
+   temp = HwCom1WGetTemp("28-xxx", &error2);
    std::cout << temp << ": "<< (error2 ? "T" : "F") << std::endl;
 #endif
 
-   ASS(BaCom1WExit());
+   ASS(HwCom1WExit());
 
    // Test at the end so all functions are always called
    if (TEST1W) {
@@ -280,8 +280,8 @@ void CBaComTest::Bus1W() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::Serial() {
-   TBaComSerHdl hdl = BaComSerInit(BACOM_SERIALDEV, eBaComBaud_115200);
+void CHwComTest::Serial() {
+   THwComSerHdl hdl = HwComSerInit(HWCOM_SERIALDEV, eHwComBaud_115200);
    CPPUNIT_ASSERT(hdl);
 
    int delay = 11;
@@ -289,27 +289,27 @@ void CBaComTest::Serial() {
       if (delay > 10) {
          printf ("\nOut: %3d: ", count) ;
          fflush (stdout) ;
-         BaComSerPutC(hdl, count) ;
+         HwComSerPutC(hdl, count) ;
          ++count;
          delay = 0;
       }
 
       BaCoreMSleep(3) ;
 
-      while (BaComSerPend(hdl)) {
-         printf (" -> %3d", BaComSerGetC(hdl));
+      while (HwComSerPend(hdl)) {
+         printf (" -> %3d", HwComSerGetC(hdl));
          fflush (stdout) ;
       }
    }
 
    printf ("\n") ;
-   CPPUNIT_ASSERT(BaComSerExit(hdl));
+   CPPUNIT_ASSERT(HwComSerExit(hdl));
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::Config() {
+void CHwComTest::Config() {
    CPPUNIT_ASSERT(true);
 }
 
@@ -318,7 +318,7 @@ void CBaComTest::Config() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaComTest::exit() {
+void CHwComTest::exit() {
 #ifndef __arm__
    remove(SENSOR1W(DEV1W3));
    remove(SENSOR1W(DEV1W2));
