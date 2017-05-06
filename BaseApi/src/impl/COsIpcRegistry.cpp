@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : CBaIpcRegistry.cpp
+ *   Module   : COsIpcRegistry.cpp
  *   Date     : Nov 24, 2016
  *------------------------------------------------------------------------------
  *   Module description:
@@ -17,8 +17,8 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
+#include <COsIpcRegistry.h>
 #include <string.h>
-#include "CBaIpcRegistry.h"
 #include "BaLogMacros.h"
 #include "BaGenMacros.h"
 
@@ -65,48 +65,48 @@
  -----------------------------------------------------------------------------*/
 
 
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i);
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i);
 
 template <typename TA1>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1);
 
 template <typename TA1, typename TA2>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2);
 
 template <typename TA1, typename TA2, typename TA3>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3);
 
 template <typename TA1, typename TA2, typename TA3, typename TA4>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3, TA4 a4);
 
 template <typename TR>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       bool &rRet);
 
 template <typename TR, typename TA1>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, bool &rRet);
 
 template <typename TR, typename TA1, typename TA2>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, bool &rRet);
 
 template <typename TR, typename TA1, typename TA2, typename TA3>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3, bool &rRet);
 
 template <typename TR, typename TA1, typename TA2, typename TA3, typename TA4>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3, TA4 a4, bool &rRet);
 
 /*------------------------------------------------------------------------------
     Local variables
  -----------------------------------------------------------------------------*/
-static CBaIpcRegistry* spReg = CBaIpcRegistry::Create();
+static COsIpcRegistry* spReg = COsIpcRegistry::Create();
 
 
 /*------------------------------------------------------------------------------
@@ -114,38 +114,38 @@ static CBaIpcRegistry* spReg = CBaIpcRegistry::Create();
  -----------------------------------------------------------------------------*/
 
 //
-CBaIpcRegistry* CBaIpcRegistry::Create() {
-   return new CBaIpcRegistry();
+COsIpcRegistry* COsIpcRegistry::Create() {
+   return new COsIpcRegistry();
 }
 
 //
-bool CBaIpcRegistry::Destroy(CBaIpcRegistry* pHdl) {
+bool COsIpcRegistry::Destroy(COsIpcRegistry* pHdl) {
    delete pHdl;
    return true;
 }
 
 //
-bool CBaIpcRegistry::SInitRegistry() {
+bool COsIpcRegistry::SInitRegistry() {
    if (spReg) {
       return true;
    }
 
-   spReg = CBaIpcRegistry::Create();
+   spReg = COsIpcRegistry::Create();
    return spReg ? true : false;
 }
 
 //
-bool CBaIpcRegistry::SExitRegistry() {
+bool COsIpcRegistry::SExitRegistry() {
    if (!spReg) {
       return true;
    }
-   CBaIpcRegistry* p = spReg;
+   COsIpcRegistry* p = spReg;
    spReg = 0;
-   return CBaIpcRegistry::Destroy(p);
+   return COsIpcRegistry::Destroy(p);
 }
 
 //
-bool CBaIpcRegistry::SRegisterFun(std::string name, TBaIpcRegFun fun) {
+bool COsIpcRegistry::SRegisterFun(std::string name, TOsIpcRegFun fun) {
    if (!spReg) {
       return false;
    }
@@ -154,7 +154,7 @@ bool CBaIpcRegistry::SRegisterFun(std::string name, TBaIpcRegFun fun) {
 }
 
 //
-bool CBaIpcRegistry::SUnregisterFun(std::string name) {
+bool COsIpcRegistry::SUnregisterFun(std::string name) {
    if (!spReg) {
       return false;
    }
@@ -163,7 +163,7 @@ bool CBaIpcRegistry::SUnregisterFun(std::string name) {
 }
 
 //
-bool CBaIpcRegistry::SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) {
+bool COsIpcRegistry::SCallFun(std::string name, TOsIpcFunArg a, TOsIpcArg *pRet) {
    if (!spReg) {
       return false;
    }
@@ -172,7 +172,7 @@ bool CBaIpcRegistry::SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet)
 }
 
 //
-bool CBaIpcRegistry::SClearFunRegistry() {
+bool COsIpcRegistry::SClearFunRegistry() {
    if (!spReg) {
       return false;
    }
@@ -182,7 +182,7 @@ bool CBaIpcRegistry::SClearFunRegistry() {
 }
 
 //
-bool CBaIpcRegistry::SRegisterVar(std::string name, const TBaIpcRegVar &rVar) {
+bool COsIpcRegistry::SRegisterVar(std::string name, const TOsIpcRegVar &rVar) {
    if (!spReg) {
       return false;
    }
@@ -191,7 +191,7 @@ bool CBaIpcRegistry::SRegisterVar(std::string name, const TBaIpcRegVar &rVar) {
 }
 
 //
-bool CBaIpcRegistry::SUnregisterVar(std::string name) {
+bool COsIpcRegistry::SUnregisterVar(std::string name) {
    if (!spReg) {
       return false;
    }
@@ -200,7 +200,7 @@ bool CBaIpcRegistry::SUnregisterVar(std::string name) {
 }
 
 //
-bool CBaIpcRegistry::SClearVarRegistry() {
+bool COsIpcRegistry::SClearVarRegistry() {
    if (!spReg) {
       return false;
    }
@@ -210,7 +210,7 @@ bool CBaIpcRegistry::SClearVarRegistry() {
 }
 
 //
-bool CBaIpcRegistry::SCallVar(std::string name, TBaIpcRegVarOut &rVar) {
+bool COsIpcRegistry::SCallVar(std::string name, TOsIpcRegVarOut &rVar) {
    if (!spReg) {
       return false;
    }
@@ -219,7 +219,7 @@ bool CBaIpcRegistry::SCallVar(std::string name, TBaIpcRegVarOut &rVar) {
 }
 
 //
-bool CBaIpcRegistry::SCallVarInternal(std::string name, TBaIpcRegVar &rVar) {
+bool COsIpcRegistry::SCallVarInternal(std::string name, TOsIpcRegVar &rVar) {
    if (!spReg) {
       return false;
    }
@@ -228,7 +228,7 @@ bool CBaIpcRegistry::SCallVarInternal(std::string name, TBaIpcRegVar &rVar) {
 }
 
 //
-bool CBaIpcRegistry::SSetVar(std::string name, const TBaIpcRegVar &rVar) {
+bool COsIpcRegistry::SSetVar(std::string name, const TOsIpcRegVar &rVar) {
    if (!spReg) {
       return false;
    }
@@ -237,7 +237,7 @@ bool CBaIpcRegistry::SSetVar(std::string name, const TBaIpcRegVar &rVar) {
 }
 
 //
-bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) {
+bool COsIpcRegistry::CallFun(std::string name, TOsIpcFunArg a, TOsIpcArg *pRet) {
    auto it = mFunReg.find(name);
    if (it == mFunReg.end()) {
       return false;
@@ -245,12 +245,12 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
 
    // Output
    bool rc = false;
-   TBaIpcArg tRet = {0};
+   TOsIpcArg tRet = {0};
    pRet = pRet ? pRet : &tRet;
 
-   TBaIpcRegFun fun = it->second;
+   TOsIpcRegFun fun = it->second;
 
-   if (!fun.type || strlen(fun.type) < 3 || fun.type[1] != ':' || strlen(fun.type) > BAIPC_MAXARG + 2) {
+   if (!fun.type || strlen(fun.type) < 3 || fun.type[1] != ':' || strlen(fun.type) > OSIPC_MAXARG + 2) {
       return false;
    }
 
@@ -282,11 +282,11 @@ bool CBaIpcRegistry::CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet) 
 
 
 //
-bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVarOut &rVar) {
-   TBaIpcRegVar var = {0};
+bool COsIpcRegistry::CallVar(std::string name, TOsIpcRegVarOut &rVar) {
+   TOsIpcRegVar var = {0};
 
 
-   if (!CallVarInternal(name, var) || !var.pVar || var.sz > BAIPC_MAXVARSZ) {
+   if (!CallVarInternal(name, var) || !var.pVar || var.sz > OSIPC_MAXVARSZ) {
       return false;
    }
 
@@ -300,7 +300,7 @@ bool CBaIpcRegistry::CallVar(std::string name, TBaIpcRegVarOut &rVar) {
 }
 
 //
-bool CBaIpcRegistry::CallVarInternal(std::string name, TBaIpcRegVar &rVar) {
+bool COsIpcRegistry::CallVarInternal(std::string name, TOsIpcRegVar &rVar) {
    if (name == "") {
       return false;
    }
@@ -316,7 +316,7 @@ bool CBaIpcRegistry::CallVarInternal(std::string name, TBaIpcRegVar &rVar) {
 }
 
 //
-bool CBaIpcRegistry::SetVar(std::string name, const TBaIpcRegVar &rVar) {
+bool COsIpcRegistry::SetVar(std::string name, const TOsIpcRegVar &rVar) {
    if (name == "" || rVar.wr != eBaBool_true || !varIsValid(rVar)) {
       return false;
    }
@@ -337,7 +337,7 @@ bool CBaIpcRegistry::SetVar(std::string name, const TBaIpcRegVar &rVar) {
 
 //
 template <typename TR, typename TA1, typename TA2, typename TA3, typename TA4>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3, TA4 a4, bool &rRet) {
    if (i+2 >= strlen(rFun.type)) {
       rRet = true;
@@ -348,7 +348,7 @@ LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
 
 //
 template <typename TR, typename TA1, typename TA2, typename TA3>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3, bool &rRet) {
 
    if (i+2 >= strlen(rFun.type)) {
@@ -362,7 +362,7 @@ LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
 
 //
 template <typename TR, typename TA1, typename TA2>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, bool &rRet) {
    if (i+2 >= strlen(rFun.type)) {
       rRet = true;
@@ -375,7 +375,7 @@ LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
 
 //
 template <typename TR, typename TA1>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, bool &rRet) {
    if (i+2 >= strlen(rFun.type)) {
       rRet = true;
@@ -388,7 +388,7 @@ LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
 
 //
 template <typename TR>
-LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL TR callAny(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       bool &rRet) {
    if (i+2 >= strlen(rFun.type)) {
       rRet = true;
@@ -415,7 +415,7 @@ LOCAL TR callAny(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
 
 //
 template <typename TA1, typename TA2, typename TA3, typename TA4>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3, TA4 a4) {
    if (i+2 >= strlen(rFun.type)) {
       ((void (*)(TA1, TA2, TA3, TA4))rFun.pFun)(a1, a2, a3, a4);
@@ -427,7 +427,7 @@ LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i
 
 //
 template <typename TA1, typename TA2, typename TA3>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2, TA3 a3) {
    if (i+2 >= strlen(rFun.type)) {
       ((void (*)(TA1, TA2, TA3))rFun.pFun)(a1, a2, a3);
@@ -440,7 +440,7 @@ LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i
 
 //
 template <typename TA1, typename TA2>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1, TA2 a2) {
    if (i+2 >= strlen(rFun.type)) {
       ((void (*)(TA1, TA2))rFun.pFun)(a1, a2);
@@ -453,7 +453,7 @@ LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i
 
 //
 template <typename TA1>
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i,
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i,
       TA1 a1) {
    if (i+2 >= strlen(rFun.type)) {
       ((void (*)(TA1))rFun.pFun)(a1);
@@ -465,7 +465,7 @@ LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i
 }
 
 //
-LOCAL bool callVoid(const TBaIpcRegFun &rFun, const TBaIpcFunArg &as, uint32_t i) {
+LOCAL bool callVoid(const TOsIpcRegFun &rFun, const TOsIpcFunArg &as, uint32_t i) {
    if (i+2 >= strlen(rFun.type)) {
       ((void (*)())rFun.pFun)();
       return true;

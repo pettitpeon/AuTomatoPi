@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : CBaIpc.h
+ *   Module   : COsIpc.h
  *   Date     : Nov 14, 2016
  *------------------------------------------------------------------------------
  *   Module description:
@@ -12,8 +12,9 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef CBAIPCSVR_H_
-#define CBAIPCSVR_H_
+#ifndef COSIPCSVR_H_
+#define COSIPCSVR_H_
+
 #ifdef __linux
 /*------------------------------------------------------------------------------
     Includes
@@ -23,43 +24,42 @@
 #include "BaBool.h"
 #include "BaCore.h"
 #include "BaMsg.h"
-#include "BaIpc.h"
+#include <OsIpc.h>
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-#define CBAIPCPIPEDIR "/run/user/0/"
-#define CBAIPCSERVER_RD "BaIpcSvrRd.fifo"
-#define CBAIPCSERVER_WR "BaIpcSvrWr.fifo"
-//#define CBAIPCMSGSZ     1020
+#define COSIPCPIPEDIR "/run/user/0/"
+#define COSIPCSERVER_RD "OsIpcSvrRd.fifo"
+#define COSIPCSERVER_WR "OsIpcSvrWr.fifo"
 
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
 
 /// IPC protocol requests and replies
-typedef enum EBaIpcCmd {
-   eBaIpcCmdError = 0, ///< Error
-   eBaIpcCmdGetSvrStatus, /**< Sever status request. It is used when client is
+typedef enum EOsIpcCmd {
+   eOsIpcCmdError = 0, ///< Error
+   eOsIpcCmdGetSvrStatus, /**< Sever status request. It is used when client is
                                initialized */
-   eBaIpcCmdCall, ///< Function call request
-   eBaIpcCmdGetVar, ///< Variable request
-   eBaIpcCmdSetVar, ///< Variable set request
-   eBaIpcReplySvrRuns, ///< Server is running reply
-   eBaIpcReplyCmdCall, ///< Function call reply
-   eBaIpcReplyCmdGetVar, ///< Variable request reply
-   eBaIpcReplyCmdSetVar, ///< Variable request reply
-   eBaIpcCmdMax = eBaIpcReplyCmdSetVar
-} EBaIpcCmd;
+   eOsIpcCmdCall, ///< Function call request
+   eOsIpcCmdGetVar, ///< Variable request
+   eOsIpcCmdSetVar, ///< Variable set request
+   eOsIpcReplySvrRuns, ///< Server is running reply
+   eOsIpcReplyCmdCall, ///< Function call reply
+   eOsIpcReplyCmdGetVar, ///< Variable request reply
+   eOsIpcReplyCmdSetVar, ///< Variable request reply
+   eOsIpcCmdMax = eOsIpcReplyCmdSetVar
+} EOsIpcCmd;
 
-typedef int32_t TBaIpcCmd;
+typedef int32_t TOsIpcCmd;
 
-typedef struct TBaIpcMsg {
-   TBaIpcCmd cmd;
+typedef struct TOsIpcMsg {
+   TOsIpcCmd cmd;
    union Data {
-      char data[BAIPC_MSGDATASZ];
+      char data[OSIPC_MSGDATASZ];
    } dat;
-} TBaIpcMsg;
+} TOsIpcMsg;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -156,7 +156,7 @@ private:
    TBaCoreThreadHdl mTh;
    TBaCoreThreadArg mThArg;
    struct epoll_event mEv; // epoll event
-   TBaIpcMsg mMsg; // Msg used for reading and writing
+   TOsIpcMsg mMsg; // Msg used for reading and writing
 
    volatile TBaBool mSvrRunning;
 
@@ -166,4 +166,4 @@ private:
 };
 
 #endif // __linux
-#endif // CBAIPCSVR_H_
+#endif // COSIPCSVR_H_

@@ -8,6 +8,7 @@
  *   Module description:
  */
 
+#include <OsProc.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <iostream>
@@ -27,17 +28,15 @@
 #include "BaIniParseTest.h"
 #include "BaMsgTest.h"
 #include "BaseApiTest.h"
-#include "BaProcTest.h"
 #include "BaSwOsciTest.h"
-#include "BaIpcTest.h"
-#include "BaIpcRegistryTest.h"
-
 #include "CtrlPT1Test.h"
 
-#include "BaProc.h"
 #include "HwComTest.h"
 #include "HwGpioTest.h"
 #include "HwPiTest.h"
+#include "OsIpcRegistryTest.h"
+#include "OsIpcTest.h"
+#include "OsProcTest.h"
 
 //
 enum TTestSelection {
@@ -51,8 +50,8 @@ char gCWD[1024];
 
 static TTestSelection sSelection =
 //      eSingleTests;
-//      eSingleSuites;
-      eFullRegistry;
+      eSingleSuites;
+//      eFullRegistry;
 
 
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite);
@@ -75,7 +74,7 @@ int main(int argc, char* argv[]) {
    // Print arguments
    for(int i = 0; i < argc; i++) {
       std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
-      std::cout << "Full Name: " << BaProcGetOwnFullName() << std::endl;
+      std::cout << "Full Name: " << OsProcGetOwnFullName() << std::endl;
    }
 
    // Get the working directory
@@ -119,18 +118,18 @@ int main(int argc, char* argv[]) {
 **/
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CTestTemplate::suite());
-//   pSuite->addTest(CBaComTest::suite());
 //   pSuite->addTest(CBaLogTest::suite());
-//   pSuite->addTest(CBaGpioTest::suite());
 //   pSuite->addTest(CBaCoreTest::suite());
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());
-//   pSuite->addTest(CBaProcTest::suite());
+//   pSuite->addTest(COsProcTest::suite());
 //   pSuite->addTest(CCtrlPT1Test::suite());
 //   pSuite->addTest(CBaSwOsciTest::suite());
-//   pSuite->addTest(CBaRPiTest::suite());
-   pSuite->addTest(CBaIpcTest::suite());
+//   pSuite->addTest(CHwComTest::suite());
+//   pSuite->addTest(CHwGpioTest::suite());
+//   pSuite->addTest(CHwPiTest::suite());
+   pSuite->addTest(COsIpcTest::suite());
 //   pSuite->addTest(CBaIpcRegistryTest::suite());
    return pSuite;
 }

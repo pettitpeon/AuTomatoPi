@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaIpcRegistry.cpp
+ *   Module   : OsIpcRegistry.cpp
  *   Date     : 17.03.2017
  *------------------------------------------------------------------------------
  */
@@ -10,14 +10,14 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
+#include <COsIpcRegistry.h>
+#include <OsIpcRegistry.h>
 #include <string.h>
-#include "BaIpcRegistry.h"
-#include "CBaIpcRegistry.h"
 #include "BaBool.h"
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-#define C_HDL_ ((IBaIpcRegistry*) hdl)
+#define C_HDL_ ((IOsIpcRegistry*) hdl)
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -28,101 +28,101 @@
  -----------------------------------------------------------------------------*/
 
 //
-TBaBoolRC BaIpcRegistryLocalInit() {
-   return CBaIpcRegistry::SInitRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+TBaBoolRC OsIpcRegistryLocalInit() {
+   return COsIpcRegistry::SInitRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalExit() {
-   return CBaIpcRegistry::SExitRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+TBaBoolRC OsIpcRegistryLocalExit() {
+   return COsIpcRegistry::SExitRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalRegisterFun(const char* name, TBaIpcRegFun fun) {
+TBaBoolRC OsIpcRegistryLocalRegisterFun(const char* name, TOsIpcRegFun fun) {
    if (!name) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SRegisterFun(name, fun) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return COsIpcRegistry::SRegisterFun(name, fun) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalUnregisterFun(const char* name) {
+TBaBoolRC OsIpcRegistryLocalUnregisterFun(const char* name) {
    if (!name) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SUnregisterFun(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return COsIpcRegistry::SUnregisterFun(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
+TBaBoolRC OsIpcRegistryLocalCallFun(const char* name, TOsIpcFunArg a, TOsIpcArg *pRet) {
    if (!name) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SCallFun(name, a , pRet) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return COsIpcRegistry::SCallFun(name, a , pRet) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalClearFunReg() {
-   return CBaIpcRegistry::SClearFunRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+TBaBoolRC OsIpcRegistryLocalClearFunReg() {
+   return COsIpcRegistry::SClearFunRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalRegisterVar(const char* name, const TBaIpcRegVar *pVar) {
+TBaBoolRC OsIpcRegistryLocalRegisterVar(const char* name, const TOsIpcRegVar *pVar) {
    if (!name || !pVar) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SRegisterVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return COsIpcRegistry::SRegisterVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalUnregisterVar(const char* name) {
+TBaBoolRC OsIpcRegistryLocalUnregisterVar(const char* name) {
    if (!name) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SUnregisterVar(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return COsIpcRegistry::SUnregisterVar(name) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalClearVarReg() {
-   return CBaIpcRegistry::SClearVarRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
+TBaBoolRC OsIpcRegistryLocalClearVarReg() {
+   return COsIpcRegistry::SClearVarRegistry() ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalCallVar(const char* name, TBaIpcRegVarOut *pVar) {
+TBaBoolRC OsIpcRegistryLocalCallVar(const char* name, TOsIpcRegVarOut *pVar) {
    if (!name || !pVar) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SCallVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return COsIpcRegistry::SCallVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaBoolRC BaIpcRegistryLocalSetVar(const char* name, const TBaIpcRegVar *pVar) {
+TBaBoolRC OsIpcRegistryLocalSetVar(const char* name, const TOsIpcRegVar *pVar) {
    if (!name || !pVar) {
       return eBaBoolRC_Error;
    }
 
-   return CBaIpcRegistry::SSetVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   return COsIpcRegistry::SSetVar(name, *pVar) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-TBaIpcRegistryHdl BaIpcRegistryCreate() {
-   return CBaIpcRegistry::Create();
+TOsIpcRegistryHdl OsIpcRegistryCreate() {
+   return COsIpcRegistry::Create();
 }
 
 //
-TBaBoolRC BaIpcRegistryDestroy(TBaIpcRegistryHdl hdl) {
-   return IBaIpcRegistryDestroy(C_HDL_);
+TBaBoolRC OsIpcRegistryDestroy(TOsIpcRegistryHdl hdl) {
+   return IOsIpcRegistryDestroy(C_HDL_);
 }
 
 //
-TBaBoolRC BaIpcRegistryRegisterFun(TBaIpcRegistryHdl hdl, const char* name,
-      TBaIpcRegFun fun) {
+TBaBoolRC OsIpcRegistryRegisterFun(TOsIpcRegistryHdl hdl, const char* name,
+      TOsIpcRegFun fun) {
    if (!hdl || !name) {
       return eBaBoolRC_Error;
    }
@@ -131,7 +131,7 @@ TBaBoolRC BaIpcRegistryRegisterFun(TBaIpcRegistryHdl hdl, const char* name,
 }
 
 //
-TBaBoolRC BaIpcRegistryUnregisterFun(TBaIpcRegistryHdl hdl, const char* name) {
+TBaBoolRC OsIpcRegistryUnregisterFun(TOsIpcRegistryHdl hdl, const char* name) {
    if (!hdl || !name) {
       return eBaBoolRC_Error;
    }
@@ -140,7 +140,7 @@ TBaBoolRC BaIpcRegistryUnregisterFun(TBaIpcRegistryHdl hdl, const char* name) {
 }
 
 //
-TBaBoolRC BaIpcRegistryClearFunReg(TBaIpcRegistryHdl hdl) {
+TBaBoolRC OsIpcRegistryClearFunReg(TOsIpcRegistryHdl hdl) {
    if (!hdl) {
       return eBaBoolRC_Error;
    }
@@ -150,8 +150,8 @@ TBaBoolRC BaIpcRegistryClearFunReg(TBaIpcRegistryHdl hdl) {
 }
 
 //
-TBaBoolRC BaIpcRegistryCallFun(TBaIpcRegistryHdl hdl, const char* name,
-      TBaIpcFunArg a, TBaIpcArg *pRet) {
+TBaBoolRC OsIpcRegistryCallFun(TOsIpcRegistryHdl hdl, const char* name,
+      TOsIpcFunArg a, TOsIpcArg *pRet) {
    if (!hdl || !name) {
       return eBaBoolRC_Error;
    }
@@ -160,8 +160,8 @@ TBaBoolRC BaIpcRegistryCallFun(TBaIpcRegistryHdl hdl, const char* name,
 }
 
 //
-TBaBoolRC BaIpcRegistryRegisterVar(TBaIpcRegistryHdl hdl, const char* name,
-      const TBaIpcRegVar *pVar) {
+TBaBoolRC OsIpcRegistryRegisterVar(TOsIpcRegistryHdl hdl, const char* name,
+      const TOsIpcRegVar *pVar) {
    if (!hdl || !name) {
       return eBaBoolRC_Error;
    }
@@ -170,7 +170,7 @@ TBaBoolRC BaIpcRegistryRegisterVar(TBaIpcRegistryHdl hdl, const char* name,
 }
 
 //
-TBaBoolRC BaIpcRegistryUnregisterVar(TBaIpcRegistryHdl hdl, const char* name) {
+TBaBoolRC OsIpcRegistryUnregisterVar(TOsIpcRegistryHdl hdl, const char* name) {
    if (!hdl || !name) {
       return eBaBoolRC_Error;
    }
@@ -179,7 +179,7 @@ TBaBoolRC BaIpcRegistryUnregisterVar(TBaIpcRegistryHdl hdl, const char* name) {
 }
 
 //
-TBaBoolRC BaIpcRegistryClearVarReg(TBaIpcRegistryHdl hdl) {
+TBaBoolRC OsIpcRegistryClearVarReg(TOsIpcRegistryHdl hdl) {
    if (!hdl) {
       return eBaBoolRC_Error;
    }
@@ -189,7 +189,7 @@ TBaBoolRC BaIpcRegistryClearVarReg(TBaIpcRegistryHdl hdl) {
 }
 
 //
-TBaBoolRC BaIpcRegistryCallVar(TBaIpcRegistryHdl hdl, const char* name, TBaIpcRegVarOut *pVar) {
+TBaBoolRC OsIpcRegistryCallVar(TOsIpcRegistryHdl hdl, const char* name, TOsIpcRegVarOut *pVar) {
    if (!hdl || !name || !pVar) {
       return eBaBoolRC_Error;
    }
@@ -198,8 +198,8 @@ TBaBoolRC BaIpcRegistryCallVar(TBaIpcRegistryHdl hdl, const char* name, TBaIpcRe
 }
 
 //
-TBaBoolRC BaIpcRegistrySetVar(TBaIpcRegistryHdl hdl, const char* name,
-      const TBaIpcRegVar *pVar
+TBaBoolRC OsIpcRegistrySetVar(TOsIpcRegistryHdl hdl, const char* name,
+      const TOsIpcRegVar *pVar
       ) {
    if (!hdl || !name || !pVar) {
       return eBaBoolRC_Error;
@@ -214,15 +214,15 @@ TBaBoolRC BaIpcRegistrySetVar(TBaIpcRegistryHdl hdl, const char* name,
     C++ Factories
  -----------------------------------------------------------------------------*/
 //
-IBaIpcRegistry * IBaIpcRegistryCreate() {
-   return CBaIpcRegistry::Create();
+IOsIpcRegistry * IOsIpcRegistryCreate() {
+   return COsIpcRegistry::Create();
 }
 
 //
-TBaBoolRC IBaIpcRegistryDestroy(IBaIpcRegistry *pHdl) {
-   CBaIpcRegistry *p = dynamic_cast<CBaIpcRegistry*>(pHdl);
+TBaBoolRC IOsIpcRegistryDestroy(IOsIpcRegistry *pHdl) {
+   COsIpcRegistry *p = dynamic_cast<COsIpcRegistry*>(pHdl);
    if (p) {
-      return CBaIpcRegistry::Destroy(p) ? eBaBoolRC_Success : eBaBoolRC_Error;
+      return COsIpcRegistry::Destroy(p) ? eBaBoolRC_Success : eBaBoolRC_Error;
    }
 
    return eBaBoolRC_Error;

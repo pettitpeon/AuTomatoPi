@@ -12,10 +12,9 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAIPCDEF_H_
-#define BAIPCDEF_H_
+#ifndef OSIPCDEF_H_
+#define OSIPCDEF_H_
 
-//#define BAIPC_MSGSZ (1024)
-#define BAIPC_MSGDATASZ (1020) // 1024 - 4 bytes
+#define OSIPC_MSGDATASZ (1020) // 1024 - 4 bytes
 
-#endif // BAIPCDEF_H_
+#endif // OSIPCDEF_H_

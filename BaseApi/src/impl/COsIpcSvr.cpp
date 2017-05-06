@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : CBaIpc.cpp
+ *   Module   : COsIpc.cpp
  *   Date     : Nov 14, 2016
  *------------------------------------------------------------------------------
  */
@@ -12,7 +12,7 @@
  -----------------------------------------------------------------------------*/
 #ifdef __linux
 
-#include <CBaIpcSvr.h>
+#include <COsIpcSvr.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -24,17 +24,17 @@
 #include "BaUtils.hpp"
 #include "BaLogMacros.h"
 #include "BaGenMacros.h"
-#include "CBaIpcRegistry.h"
+#include <COsIpcRegistry.h>
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 #define TAG     "CIPC"
-#define PIPENAME "BaIpc"
+#define PIPENAME "OsIpc"
 #define MAXPIPES 256
 #define MAXEVENTS 64
 #define EPOLLTIMEOUTMS 50
-#define PIPESVRNAME "BaIpcFifoSvr"
+#define PIPESVRNAME "OsIpcFifoSvr"
 #define FOREVER 500
 /*------------------------------------------------------------------------------
     Type definitions
@@ -107,12 +107,12 @@ CBaPipe* CBaPipe::Create(EType type, std::string path, bool overwrite) {
 
 //
 CBaPipe* CBaPipe::CreateSvrRd() {
-   return Create(eTypeRd, CBAIPCPIPEDIR CBAIPCSERVER_RD, true);
+   return Create(eTypeRd, COSIPCPIPEDIR COSIPCSERVER_RD, true);
 }
 
 //
 CBaPipe* CBaPipe::CreateSvrWr() {
-   return Create(eTypeWr, CBAIPCPIPEDIR CBAIPCSERVER_WR, true);
+   return Create(eTypeWr, COSIPCPIPEDIR COSIPCSERVER_WR, true);
 }
 
 //
@@ -308,7 +308,7 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
       return false;
    }
 
-   size_t sz = sizeof(TBaIpcMsg);
+   size_t sz = sizeof(TOsIpcMsg);
    mMsg = {0};
 
    // Read the actual message from the pipe
@@ -334,23 +334,23 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
    switch (mMsg.cmd) {
 
    // Server status
-   case eBaIpcCmdGetSvrStatus:
-      mMsg.cmd = eBaIpcReplySvrRuns;
+   case eOsIpcCmdGetSvrStatus:
+      mMsg.cmd = eOsIpcReplySvrRuns;
       break;
 
    // Function call
-   case eBaIpcCmdCall: {
-      mMsg.cmd = eBaIpcReplyCmdCall;
-      TBaIpcFunCall *pFc = (TBaIpcFunCall*) mMsg.dat.data;
-      TBaIpcArg ret = {0};
-      CBaIpcRegistry::SCallFun(pFc->name, pFc->a, &ret);
+   case eOsIpcCmdCall: {
+      mMsg.cmd = eOsIpcReplyCmdCall;
+      TOsIpcFunCallData *pFc = (TOsIpcFunCallData*) mMsg.dat.data;
+      TOsIpcArg ret = {0};
+      COsIpcRegistry::SCallFun(pFc->name, pFc->a, &ret);
       memcpy(mMsg.dat.data, &ret, sizeof(ret));
    }
       break;
 
    // Variable request
-   case eBaIpcCmdGetVar:
-      mMsg.cmd = eBaIpcReplyCmdGetVar;
+   case eOsIpcCmdGetVar:
+      mMsg.cmd = eOsIpcReplyCmdGetVar;
       memset(mMsg.dat.data, 0, sizeof(mMsg.dat.data));
 
       // dummy answer
@@ -360,7 +360,7 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
 
    // Error
    default:
-      mMsg.cmd = eBaIpcCmdError;
+      mMsg.cmd = eOsIpcCmdError;
       rc = false;
       pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
             "Unrecognizable IPC message(%i)", fdRd);
@@ -368,7 +368,7 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
 
    // Write the answer on the pipe
    pIPCHandlerMsg->Reset();
-   rc |= mpWr->Write((char*)&mMsg, sizeof(TBaIpcMsg));
+   rc |= mpWr->Write((char*)&mMsg, sizeof(TOsIpcMsg));
    return rc;
 }
 

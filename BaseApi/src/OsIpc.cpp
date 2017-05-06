@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaIpc.cpp
+ *   Module   : OsIpc.cpp
  *   Date     : Nov 7, 2016
  *------------------------------------------------------------------------------
  */
@@ -19,20 +19,19 @@
 #include <string.h>
 #include <mutex>
 
-#include "BaIpc.h"
-#include "CBaIpcSvr.h"
+#include <OsIpc.h>
+#include <COsIpcSvr.h>
 #include "BaLogMacros.h"
-#include "CBaIpcRegistry.h"
+#include <COsIpcRegistry.h>
 #include "BaGenMacros.h"
 #include "BaMsg.h"
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
-#define C_HDL_ ((IBaIpc*) hdl)
-#define TAG "BaIpc"
-#define WRPIPE CBAIPCPIPEDIR CBAIPCSERVER_RD // RD svr is WR clnt
-#define RDPIPE CBAIPCPIPEDIR CBAIPCSERVER_WR // WR svr is RD clnt
+#define TAG "OsIpc"
+#define WRPIPE COSIPCPIPEDIR COSIPCSERVER_RD // RD svr is WR clnt
+#define RDPIPE COSIPCPIPEDIR COSIPCSERVER_WR // WR svr is RD clnt
 
 
 /*------------------------------------------------------------------------------
@@ -64,7 +63,7 @@ static TPipeSvr sPipeSvr;
  -----------------------------------------------------------------------------*/
 
 //
-TBaBoolRC BaIpcInitSvr() {
+TBaBoolRC OsIpcInitSvr() {
    std::lock_guard<std::mutex> lck(sPipeSvr.mtx);
    if (sPipeSvr.pPipes != 0) {
       return eBaBoolRC_Success;
@@ -76,12 +75,12 @@ TBaBoolRC BaIpcInitSvr() {
 }
 
 //
-TBaBoolRC BaIpcSvrRunning() {
+TBaBoolRC OsIpcSvrRunning() {
    return sPipeSvr.pPipes ? sPipeSvr.pPipes->SvrRunning() : eBaBool_false;
 }
 
 //
-TBaBoolRC BaIpcExitSvr() {
+TBaBoolRC OsIpcExitSvr() {
    std::lock_guard<std::mutex> lck(sPipeSvr.mtx);
    if (sPipeSvr.pPipes == 0) {
       return eBaBoolRC_Success;
@@ -95,7 +94,7 @@ TBaBoolRC BaIpcExitSvr() {
 /* ****************************************************************************
  *  CLIENT side
  ******************************************************************************/
-TBaBoolRC BaIpcInitClnt() {
+TBaBoolRC OsIpcInitClnt() {
    if (sClntRdFifo != -1 && sClntWrFifo != -1 && spClntRdMsg && spClntWrMsg) {
       return eBaBoolRC_Success;
    }
@@ -122,16 +121,16 @@ TBaBoolRC BaIpcInitClnt() {
 
    sClntWrFifo = fdWr;
    sClntRdFifo = fdRd;
-   TBaIpcMsg msg = {0};
-   msg.cmd = eBaIpcCmdGetSvrStatus;
+   TOsIpcMsg msg = {0};
+   msg.cmd = eOsIpcCmdGetSvrStatus;
 
    // Check if the server is running
-   writeClntPipe((const char*)&msg, sizeof(TBaIpcMsg));
+   writeClntPipe((const char*)&msg, sizeof(TOsIpcMsg));
 
    for (int i = 1; i < 50; ++i) {
       BaCoreMSleep(20);
-      readClntPipe((char*)&msg, sizeof(TBaIpcMsg));
-      if (msg.cmd == eBaIpcReplySvrRuns) {
+      readClntPipe((char*)&msg, sizeof(TOsIpcMsg));
+      if (msg.cmd == eOsIpcReplySvrRuns) {
          TRACE_("Server is running");
          return eBaBoolRC_Success;
       }
@@ -142,7 +141,7 @@ TBaBoolRC BaIpcInitClnt() {
 }
 
 //
-TBaBoolRC BaIpcExitClnt() {
+TBaBoolRC OsIpcExitClnt() {
    int rc = 0;
    rc = close(sClntWrFifo);
    if (rc == -1) {
@@ -166,26 +165,26 @@ TBaBoolRC BaIpcExitClnt() {
 }
 
 //
-TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
+TBaBoolRC OsIpcCallFun(const char* name, TOsIpcFunArg a, TOsIpcArg *pRet) {
    if (sClntRdFifo == -1 || sClntWrFifo == -1) {
       return eBaBoolRC_Error;
    }
-   TBaIpcMsg msg = {0};
+   TOsIpcMsg msg = {0};
    size_t sz = strlen(name) + 1;
-   if (sz > BAIPC_FUNNAMESZ) {
+   if (sz > OSIPC_FUNNAMESZ) {
       return eBaBoolRC_Error;
    }
 
    // TODO: error: the name should not be copied like that
-   msg.cmd = eBaIpcCmdCall;
-   TBaIpcFunCallData *pFc = (TBaIpcFunCallData *)msg.dat.data;
+   msg.cmd = eOsIpcCmdCall;
+   TOsIpcFunCallData *pFc = (TOsIpcFunCallData *)msg.dat.data;
    // TODO: copy correctly
 
    memcpy(pFc->name, name, sz);
    pFc->a = a;
 
    // send mesg
-   if (!writeClntPipe((char*) &msg, sizeof(TBaIpcMsg))) {
+   if (!writeClntPipe((char*) &msg, sizeof(TOsIpcMsg))) {
       return eBaBoolRC_Error;
    }
 
@@ -193,10 +192,10 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
 
    // todo: wait for reply??
    for (int i = 0; i < 100; ++i) {
-      if (readClntPipe((char*)&msg, sizeof(TBaIpcMsg)) && msg.cmd == eBaIpcReplyCmdCall) {
+      if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdCall) {
 
          // Copy data to return value
-         *pRet = *((TBaIpcArg*)msg.dat.data);
+         *pRet = *((TOsIpcArg*)msg.dat.data);
          // todo: delete
          TRACE_("Call delay %i ms", i*10);
          return eBaBoolRC_Success;
@@ -209,37 +208,37 @@ TBaBoolRC BaIpcCallFun(const char* name, TBaIpcFunArg a, TBaIpcArg *pRet) {
 }
 
 //
-TBaBoolRC BaIpcCallVar(const char* name, TBaIpcRegVarOut *pVar) {
+TBaBoolRC OsIpcCallVar(const char* name, TOsIpcRegVarOut *pVar) {
    if (!pVar || sClntRdFifo == -1 || sClntWrFifo == -1) {
       return eBaBoolRC_Error;
    }
-   TBaIpcMsg msg = {0};
+   TOsIpcMsg msg = {0};
    size_t sz = strlen(name) + 1;
 
-   if (sz > BAIPC_MSGDATASZ) {
+   if (sz > OSIPC_MSGDATASZ) {
       return eBaBoolRC_Error;
    }
 
-   msg.cmd = eBaIpcCmdGetVar;
+   msg.cmd = eOsIpcCmdGetVar;
    memcpy(msg.dat.data, name, sz);
 
    // send mesg
-   if (!writeClntPipe((char*) &msg, sizeof(TBaIpcMsg))) {
+   if (!writeClntPipe((char*) &msg, sizeof(TOsIpcMsg))) {
       return eBaBoolRC_Error;
    }
 
    memset(msg.dat.data, 0, sizeof(msg.dat.data));
 
    for (int i = 0; i < 100; ++i) {
-      if (readClntPipe((char*)&msg, sizeof(TBaIpcMsg)) && msg.cmd == eBaIpcReplyCmdGetVar) {
+      if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdGetVar) {
 
          // capture reply
-         TBaIpcRegVarOut *p = (TBaIpcRegVarOut *)msg.dat.data;
-         if (p->sz > BAIPC_MAXVARSZ) {
+         TOsIpcRegVarOut *p = (TOsIpcRegVarOut *)msg.dat.data;
+         if (p->sz > OSIPC_MAXVARSZ) {
             return eBaBoolRC_Error;
          }
 
-         memcpy(pVar, msg.dat.data, sizeof(TBaIpcRegVarOut));
+         memcpy(pVar, msg.dat.data, sizeof(TOsIpcRegVarOut));
 
          // todo: delete
          TRACE_("Call delay %i ms", i*10);

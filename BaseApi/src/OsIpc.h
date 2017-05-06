@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaIpc.h
+ *   Module   : OsIpc.h
  *   Date     : Nov 7, 2016
  *------------------------------------------------------------------------------
  *   Module description:
@@ -12,15 +12,15 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAIPC_H_
-#define BAIPC_H_
+#ifndef OSIPC_H_
+#define OSIPC_H_
 
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
+#include <OsIpcDef.h>
+#include <OsIpcRegistry.h>
 #include "BaBool.h"
-#include "BaIpcDef.h"
-#include "BaIpcRegistry.h"
 
 /*------------------------------------------------------------------------------
     Defines
@@ -30,8 +30,6 @@
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
-/// C message handle
-typedef void* TBaIpcHdl;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -47,14 +45,14 @@ extern "C" {
  *  started successfully
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcInitSvr();
+TBaBoolRC OsIpcInitSvr();
 
 /******************************************************************************/
 /** Get the server status. Returns only if the server started or stopped
  *  successfully, and no heart beat of any kind.
  *  @return True if the server thread started running, false if stopped.
  */
-TBaBoolRC BaIpcSvrRunning();
+TBaBoolRC OsIpcSvrRunning();
 
 /******************************************************************************/
 /** Sends exit signal to the IPC server and waits with a timeout for it to stop.
@@ -62,7 +60,7 @@ TBaBoolRC BaIpcSvrRunning();
  *  frees itself.
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcExitSvr();
+TBaBoolRC OsIpcExitSvr();
 //@}
 
 /// @name Client Interface
@@ -72,7 +70,7 @@ TBaBoolRC BaIpcExitSvr();
  *  which wishes to communicate with the control task.
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcInitClnt();
+TBaBoolRC OsIpcInitClnt();
 
 /******************************************************************************/
 /** Exit the IPC client releasing the resources. This should be called in an
@@ -80,25 +78,25 @@ TBaBoolRC BaIpcInitClnt();
  *  task.
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcExitClnt();
+TBaBoolRC OsIpcExitClnt();
 
 /******************************************************************************/
 /** Remotely call (RPC) a registered function from the control task
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcCallFun(
+TBaBoolRC OsIpcCallFun(
       const char* name, ///< [in] Function name
-      TBaIpcFunArg a, ///< [in] Function arguments
-      TBaIpcArg *pRet ///< [out] Function return value
+      TOsIpcFunArg a, ///< [in] Function arguments
+      TOsIpcArg *pRet ///< [out] Function return value
       );
 
 /******************************************************************************/
 /** Remotely get the value of a registered variable from the control task
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcCallVar(
+TBaBoolRC OsIpcCallVar(
       const char* name, ///< [in] Variable name
-      TBaIpcRegVarOut *pVar  ///< [out] Variable descriptor
+      TOsIpcRegVarOut *pVar  ///< [out] Variable descriptor
       );
 //@}
 
@@ -108,4 +106,4 @@ TBaBoolRC BaIpcCallVar(
 } // extern c
 
 #endif // __cplusplus
-#endif // BAIPC_H_
+#endif // OSIPC_H_

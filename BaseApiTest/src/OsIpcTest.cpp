@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaIpcTest.cpp
+ *   Module   : OsIpcTest.cpp
  *   Date     : 12.03.2017
  *------------------------------------------------------------------------------
  *   Module description:
@@ -12,20 +12,21 @@
  */
 /*------------------------------------------------------------------------------
  */
+#include "OsIpcTest.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <chrono>
-#include "BaIpcTest.h"
+#include <impl/COsIpcRegistry.h>
+#include <impl/COsIpcSvr.h>
+#include <OsIpc.h>
 #include "BaGenMacros.h"
-#include "BaIpc.h"
-#include "impl/CBaIpcRegistry.h"
-#include "impl/CBaIpcSvr.h"
 #include "BaseApi.h"
 #include "CppU.h"
 #include "BaUtils.hpp"
 #include "BaLogMacros.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION( CBaIpcTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( COsIpcTest );
 
 #define LOGFILE "testDef"
 #define LOGDIR "/var/log/"
@@ -48,13 +49,13 @@ static char sStr[] = "init";
 /* ****************************************************************************/
 /*  ...
  */
-void CBaIpcTest::setUp() {
+void COsIpcTest::setUp() {
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaIpcTest::tearDown() {
+void COsIpcTest::tearDown() {
 }
 
 
@@ -64,19 +65,19 @@ LOCAL int32_t testRegFun(int32_t i) {
    return sInt;
 }
 
-void CBaIpcTest::Init() {
+void COsIpcTest::Init() {
    ASS(BaApiInitLoggerDef(LOGFILE));
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaIpcTest::VarRegNiceWeather() {
+void COsIpcTest::VarRegNiceWeather() {
    ASS(true);
 
    // Creation and normal use
-   CBaIpcRegistry* pReg = CBaIpcRegistry::Create();
-   TBaIpcRegVar var;
+   COsIpcRegistry* pReg = COsIpcRegistry::Create();
+   TOsIpcRegVar var;
    std::string s = "init";
 
    // Set variable structure
@@ -113,15 +114,15 @@ void CBaIpcTest::VarRegNiceWeather() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaIpcTest::FunRegNiceWeather() {
+void COsIpcTest::FunRegNiceWeather() {
    ASS(true);
    bool ret = false;
 
    // Creation and normal use
-   CBaIpcRegistry* pReg = CBaIpcRegistry::Create();
-   TBaIpcRegFun fun;
-   TBaIpcFunArg a = {0};
-   TBaIpcArg tOut = {0};
+   COsIpcRegistry* pReg = COsIpcRegistry::Create();
+   TOsIpcRegFun fun;
+   TOsIpcFunArg a = {0};
+   TOsIpcArg tOut = {0};
    sInt = 0;
 
    SET_FUN(fun, funvv, "v:v");
@@ -181,21 +182,21 @@ void CBaIpcTest::FunRegNiceWeather() {
    ASS(pReg->UnregisterFun(fun.type));
    pReg->ClearFunRegistry();
 
-   CBaIpcRegistry::Destroy(pReg);
+   COsIpcRegistry::Destroy(pReg);
 }
 
 /* ****************************************************************************/
 /*  ...
  */
-void CBaIpcTest::FunRegErrors() {
+void COsIpcTest::FunRegErrors() {
    ASS(true);
    bool ret = false;
 
    // Creation
-   CBaIpcRegistry* pReg = CBaIpcRegistry::Create();
-   TBaIpcRegFun fun;
-   TBaIpcFunArg a = {0};
-   TBaIpcArg tOut = {0};
+   COsIpcRegistry* pReg = COsIpcRegistry::Create();
+   TOsIpcRegFun fun;
+   TOsIpcFunArg a = {0};
+   TOsIpcArg tOut = {0};
    sInt = 0;
 
    SET_FUN(fun, funvv, "q:v");
@@ -225,14 +226,14 @@ void CBaIpcTest::FunRegErrors() {
 }
 
 //
-void CBaIpcTest::IPCServer() {
+void COsIpcTest::IPCServer() {
    ASS(true);
-   ASS(BaIpcInitSvr());
+   ASS(OsIpcInitSvr());
    int i;
 
    bool svrRun = false;
    for (i = 0; i < 500; ++i) {
-      if (BaIpcSvrRunning()) {
+      if (OsIpcSvrRunning()) {
          svrRun = true;
          break;
       }
@@ -240,38 +241,38 @@ void CBaIpcTest::IPCServer() {
    }
    ASS(svrRun);
 
-   ASS(BaIpcInitClnt());
-   ASS(BaIpcInitClnt());
+   ASS(OsIpcInitClnt());
+   ASS(OsIpcInitClnt());
 
-   TBaIpcRegFun fun;
+   TOsIpcRegFun fun;
    fun.pFun = (void*) testRegFun;
    fun.type = "i:i";
 
-   ASS(CBaIpcRegistry::SRegisterFun("testRegFun", fun));
+   ASS(COsIpcRegistry::SRegisterFun("testRegFun", fun));
    std::string name;
    for (int i = 0; i < 5000; ++i) {
-      ASS(CBaIpcRegistry::SRegisterFun(BaFString("testRegFun_%i", i), fun));
+      ASS(COsIpcRegistry::SRegisterFun(BaFString("testRegFun_%i", i), fun));
    }
 
    sInt = 1;
-   TBaIpcFunArg a = {0};
+   TOsIpcFunArg a = {0};
    a.a[0].i = 7;
-   TBaIpcArg r;
+   TOsIpcArg r;
    r.I = 0;
 
    TBaCoreMonTStampUs us = BaCoreGetMonTStamp();
-   ASS(BaIpcCallFun("testRegFun", a, &r));
+   ASS(OsIpcCallFun("testRegFun", a, &r));
    us = BaCoreGetMonTStamp() - us;
    std::cout << "Call duration: " << us/1000.0 << "ms" << std::endl;
    ASS_EQ(r.i, sInt);
 
-   CBaIpcRegistry::SClearFunRegistry();
-   ASS(BaIpcExitClnt());
-   ASS(BaIpcExitSvr());
+   COsIpcRegistry::SClearFunRegistry();
+   ASS(OsIpcExitClnt());
+   ASS(OsIpcExitSvr());
 }
 
 //
-void CBaIpcTest::IPCRealFunClientServer() {
+void COsIpcTest::IPCRealFunClientServer() {
    CPPUNIT_ASSERT(true);
    bool rc = false;
 
@@ -283,13 +284,13 @@ void CBaIpcTest::IPCRealFunClientServer() {
       // Child is client
       std::cout << "Child - Client" << std::endl;
       BaCoreMSleep(10);
-      rc = BaIpcInitClnt();
+      rc = OsIpcInitClnt();
       std::cout << "Client init: " << rc << std::endl;
-      TBaIpcFunArg a = {0};
+      TOsIpcFunArg a = {0};
       a.a[0].i = 7;
-      TBaIpcArg r;
+      TOsIpcArg r;
       r.I = 0;
-      rc = BaIpcCallFun("dummy", a, &r);
+      rc = OsIpcCallFun("dummy", a, &r);
 
       std::cout << "Exit Child" << std::endl;
       exit(0);
@@ -297,13 +298,13 @@ void CBaIpcTest::IPCRealFunClientServer() {
 
    // parent is server
    std::cout << "Parent - Server:" << pid << std::endl;
-   TBaIpcRegFun fun;
+   TOsIpcRegFun fun;
    fun.pFun = (void*) testRegFun;
    fun.type = "i:i";
-   CBaIpcRegistry::SRegisterFun("dummy", fun);
+   COsIpcRegistry::SRegisterFun("dummy", fun);
    sInt = 0;
 
-   ASS(BaIpcInitSvr());
+   ASS(OsIpcInitSvr());
    rc = false;
    int i = 0;
    for (i = 0; i < 20; ++i) {
@@ -315,13 +316,13 @@ void CBaIpcTest::IPCRealFunClientServer() {
    }
    ASS(rc);
 
-   ASS(BaIpcExitSvr());
+   ASS(OsIpcExitSvr());
 
    std::cout << "Exit Parent:" << pid << std::endl;
 }
 
 //
-void CBaIpcTest::Exit() {
+void COsIpcTest::Exit() {
    ASS(BaApiExitLogger());
    remove(LOGDIR LOGFILE ".log");
 }

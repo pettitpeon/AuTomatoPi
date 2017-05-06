@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : CBaIpcRegistry.h
+ *   Module   : COsIpcRegistry.h
  *   Date     : Nov 24, 2016
  *------------------------------------------------------------------------------
  *   Module description:
@@ -12,71 +12,66 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef CBAIPCREGISTRY_H_
-#define CBAIPCREGISTRY_H_
+#ifndef COSIPCREGISTRY_H_
+#define COSIPCREGISTRY_H_
 
+#include <OsIpcRegistry.h>
 #include <map>
 #include <string>
-#include "BaIpcRegistry.h"
 
-#define BAIPC_FUNNAMESZ (BAIPC_MSGDATASZ - sizeof(TBaIpcFunArg))
+#define OSIPC_FUNNAMESZ (OSIPC_MSGDATASZ - sizeof(TOsIpcFunArg))
 
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
-///
-typedef struct TBaIpcFunCall {
-   const char* name;
-   TBaIpcFunArg a;
-} TBaIpcFunCall;
-
-typedef struct TBaIpcFunCallData {
-   char name[BAIPC_FUNNAMESZ];
-   TBaIpcFunArg a;
-} TBaIpcFunCallData;
+//
+typedef struct TOsIpcFunCallData {
+   char name[OSIPC_FUNNAMESZ];
+   TOsIpcFunArg a;
+} TOsIpcFunCallData;
 
 
 /*------------------------------------------------------------------------------
     C++ Interface
  -----------------------------------------------------------------------------*/
 
-class CBaIpcRegistry : public IBaIpcRegistry {
+class COsIpcRegistry : public IOsIpcRegistry {
 public:
-   static CBaIpcRegistry* Create();
+   static COsIpcRegistry* Create();
 
    static bool Destroy(
-         CBaIpcRegistry *pHdl
+         COsIpcRegistry *pHdl
          );
 
    static bool SInitRegistry();
 
    static bool SExitRegistry();
 
-   static bool SRegisterFun(std::string name, TBaIpcRegFun fun);
+   static bool SRegisterFun(std::string name, TOsIpcRegFun fun);
 
    static bool SUnregisterFun(std::string name);
 
-   static bool SCallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet);
+   static bool SCallFun(std::string name, TOsIpcFunArg a, TOsIpcArg *pRet);
 
    static bool SClearFunRegistry();
 
-   static bool SRegisterVar(std::string name, const TBaIpcRegVar &rVar);
+   static bool SRegisterVar(std::string name, const TOsIpcRegVar &rVar);
 
    static bool SUnregisterVar(std::string name);
 
    static bool SClearVarRegistry();
 
-   static bool SCallVar(std::string name, TBaIpcRegVarOut &rVar);
+   static bool SCallVar(std::string name, TOsIpcRegVarOut &rVar);
 
    // todo: necessary?
-   static bool SCallVarInternal(std::string name, TBaIpcRegVar &rVar);
+   static bool SCallVarInternal(std::string name, TOsIpcRegVar &rVar);
 
-   static bool SSetVar(std::string name, const TBaIpcRegVar &rVar);
+   static bool SSetVar(std::string name, const TOsIpcRegVar &rVar);
 
-   virtual bool RegisterFun(std::string name, TBaIpcRegFun fun) {
+   virtual bool RegisterFun(std::string name, TOsIpcRegFun fun) {
       std::string sType = fun.type;
 
-      if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':' || sType.length() > BAIPC_MAXARG + 2) {
+      if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':' || sType.length() > OSIPC_MAXARG + 2) {
          return false;
       }
       return mFunReg.emplace(name, fun).second;
@@ -88,9 +83,9 @@ public:
 
    virtual void ClearFunRegistry() { mFunReg.clear(); };
 
-   virtual bool CallFun(std::string name, TBaIpcFunArg a, TBaIpcArg *pRet);
+   virtual bool CallFun(std::string name, TOsIpcFunArg a, TOsIpcArg *pRet);
 
-   virtual bool RegisterVar(std::string name, const TBaIpcRegVar &rVar) {
+   virtual bool RegisterVar(std::string name, const TOsIpcRegVar &rVar) {
       if (varIsValid(rVar)) {
          return mVarReg.emplace(name, rVar).second;
       }
@@ -104,24 +99,24 @@ public:
 
    virtual void ClearVarRegistry() { mVarReg.clear(); };
 
-   virtual bool CallVar(std::string name, TBaIpcRegVarOut &rVar);
+   virtual bool CallVar(std::string name, TOsIpcRegVarOut &rVar);
 
-   bool CallVarInternal(std::string name, TBaIpcRegVar &rVar);
+   bool CallVarInternal(std::string name, TOsIpcRegVar &rVar);
 
-   virtual bool SetVar(std::string name, const TBaIpcRegVar &rVar);
+   virtual bool SetVar(std::string name, const TOsIpcRegVar &rVar);
 
 private:
-   CBaIpcRegistry() {};
-   virtual ~CBaIpcRegistry() {};
+   COsIpcRegistry() {};
+   virtual ~COsIpcRegistry() {};
 
-   bool varIsValid(const TBaIpcRegVar &rVar) {
-      return (rVar.pVar && rVar.sz > 0 && rVar.sz < BAIPC_MAXVARSZ);
+   bool varIsValid(const TOsIpcRegVar &rVar) {
+      return (rVar.pVar && rVar.sz > 0 && rVar.sz < OSIPC_MAXVARSZ);
    }
 
-   std::map<std::string, TBaIpcRegFun> mFunReg;
-   std::map<std::string, TBaIpcRegVar> mVarReg;
+   std::map<std::string, TOsIpcRegFun> mFunReg;
+   std::map<std::string, TOsIpcRegVar> mVarReg;
 };
 
 
-#endif /* CBAIPCREGISTRY_H_ */
+#endif /* COSIPCREGISTRY_H_ */
 

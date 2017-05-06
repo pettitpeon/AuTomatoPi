@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaIpcRegistry.h
+ *   Module   : OsIpcRegistry.h
  *   Date     : 17.03.2017
  *------------------------------------------------------------------------------
  *   Module description:
@@ -17,8 +17,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAIPCREGISTRY_H_
-#define BAIPCREGISTRY_H_
+#ifndef OSIPCREGISTRY_H_
+#define OSIPCREGISTRY_H_
 
 /*------------------------------------------------------------------------------
     Includes
@@ -28,28 +28,28 @@
 # include <string>
 #endif
 #include "BaBool.h"
-#include "BaIpcDef.h"
+#include <OsIpcDef.h>
 
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
 /// MAximum number of arguments in registry function
-#define BAIPC_MAXARG 4
-#define BAIPC_MAXVARSZ (BAIPC_MSGDATASZ - sizeof(size_t))
+#define OSIPC_MAXARG 4
+#define OSIPC_MAXVARSZ (OSIPC_MSGDATASZ - sizeof(size_t))
 
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
 /// C message handle
-typedef void* TBaIpcRegistryHdl;
+typedef void* TOsIpcRegistryHdl;
 
 /// Variable descriptor of the variables registry
-typedef struct TBaIpcRegVar {
+typedef struct TOsIpcRegVar {
    void *pVar; ///< Pointer to the variable to be registered
-   size_t sz; ///< Size in bytes of the variable to be registered. Must be <= BAIPCMAXVARSZ
+   size_t sz; ///< Size in bytes of the variable to be registered. Must be <= OSIPCMAXVARSZ
    TBaBool wr; ///< Flag to determine if the variable can be overwritten
-} TBaIpcRegVar;
+} TOsIpcRegVar;
 
 /** Function descriptor of the functions registry.
  *  The @c type string is defined as one character, a semicolon and a string,
@@ -65,16 +65,16 @@ typedef struct TBaIpcRegVar {
  *  semicolon, e.g., f:v
  *
  */
-typedef struct TBaIpcRegFun {
+typedef struct TOsIpcRegFun {
    void *pFun; ///< Pointer to the function casted to void
    const char *type; ///< Function type definition
-} TBaIpcRegFun;
+} TOsIpcRegFun;
 
 /// Variable descriptor buffer for retrieving values of the variables registry
 /// without getting access to the underlying memory.
-typedef struct TBaIpcRegVarOut {
+typedef struct TOsIpcRegVarOut {
    union {
-      char data[BAIPC_MAXVARSZ];
+      char data[OSIPC_MAXVARSZ];
       void    *p;
       float    f;
       double   d;
@@ -84,10 +84,10 @@ typedef struct TBaIpcRegVarOut {
       uint64_t U;
    } dat;
    size_t sz; ///< Size in bytes of the variable retrieved variable
-} TBaIpcRegVarOut;
+} TOsIpcRegVarOut;
 
 /// Argument type union. It is used to cast return values and single arguments.
-typedef union TBaIpcArg {
+typedef union TOsIpcArg {
       void    *p;
       float    f;
       double   d;
@@ -95,12 +95,12 @@ typedef union TBaIpcArg {
       uint32_t u;
       int64_t  I;
       uint64_t U;
-} TBaIpcArg;
+} TOsIpcArg;
 
 /// Structure to hold the arguments of a function to be called
-typedef struct TBaIpcFunArg {
-   TBaIpcArg a[BAIPC_MAXARG]; ///< Array of arguments
-} TBaIpcFunArg;
+typedef struct TOsIpcFunArg {
+   TOsIpcArg a[OSIPC_MAXARG]; ///< Array of arguments
+} TOsIpcFunArg;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -115,28 +115,28 @@ extern "C" {
 /** Initialize the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalInit();
+TBaBoolRC OsIpcRegistryLocalInit();
 
 /******************************************************************************/
 /** Exit the local registry and release resources
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalExit();
+TBaBoolRC OsIpcRegistryLocalExit();
 
 /******************************************************************************/
 /** Register a function in the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalRegisterFun(
+TBaBoolRC OsIpcRegistryLocalRegisterFun(
       const char* name, ///< [in] Function name
-      TBaIpcRegFun fun ///< [in] Function to register
+      TOsIpcRegFun fun ///< [in] Function to register
       );
 
 /******************************************************************************/
 /** Remove a function from the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalUnregisterFun(
+TBaBoolRC OsIpcRegistryLocalUnregisterFun(
       const char* name ///< [in] Function name
       );
 
@@ -144,32 +144,32 @@ TBaBoolRC BaIpcRegistryLocalUnregisterFun(
 /** Call a function from the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalCallFun(
+TBaBoolRC OsIpcRegistryLocalCallFun(
       const char* name, ///< [in] Function name
-      TBaIpcFunArg a, ///< [in] Function arguments
-      TBaIpcArg *pRet ///< [out] Function return value
+      TOsIpcFunArg a, ///< [in] Function arguments
+      TOsIpcArg *pRet ///< [out] Function return value
       );
 
 /******************************************************************************/
 /** Clear the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalClearFunReg();
+TBaBoolRC OsIpcRegistryLocalClearFunReg();
 
 /******************************************************************************/
 /** Register a variable in the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalRegisterVar(
+TBaBoolRC OsIpcRegistryLocalRegisterVar(
       const char* name, ///< [in] Variable name
-      const TBaIpcRegVar *pVar ///< [in] Variable descriptor
+      const TOsIpcRegVar *pVar ///< [in] Variable descriptor
       );
 
 /******************************************************************************/
 /** Remove a variable from the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalUnregisterVar(
+TBaBoolRC OsIpcRegistryLocalUnregisterVar(
       const char* name ///< [in] Variable name
       );
 
@@ -177,25 +177,25 @@ TBaBoolRC BaIpcRegistryLocalUnregisterVar(
 /** Clear the local registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalClearVarReg();
+TBaBoolRC OsIpcRegistryLocalClearVarReg();
 
 /******************************************************************************/
 /** Gets the value of a variable in the registry by copying the value to the
  *  @c *pVar buffer.
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalCallVar(
+TBaBoolRC OsIpcRegistryLocalCallVar(
       const char* name, ///< [in] Variable name
-      TBaIpcRegVarOut *pVar  ///< [out] Variable descriptor
+      TOsIpcRegVarOut *pVar  ///< [out] Variable descriptor
       );
 
 /******************************************************************************/
 /** Sets the values of a variable from the registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryLocalSetVar(
+TBaBoolRC OsIpcRegistryLocalSetVar(
       const char* name, ///< [in] Variable name
-      const TBaIpcRegVar *pVar ///< [in] Variable descriptor
+      const TOsIpcRegVar *pVar ///< [in] Variable descriptor
       );
 //@}
 
@@ -206,14 +206,14 @@ TBaBoolRC BaIpcRegistryLocalSetVar(
 /** Create factory for ...
  *  @return Handle if success, otherwise, null
  */
-TBaIpcRegistryHdl BaIpcRegistryCreate();
+TOsIpcRegistryHdl OsIpcRegistryCreate();
 
 /******************************************************************************/
 /** Destroy and release resources
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryDestroy(
-      TBaIpcRegistryHdl hdl ///< [in] handle to destroy
+TBaBoolRC OsIpcRegistryDestroy(
+      TOsIpcRegistryHdl hdl ///< [in] handle to destroy
       );
 //@}
 
@@ -223,18 +223,18 @@ TBaBoolRC BaIpcRegistryDestroy(
 /** Register a function in the registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryRegisterFun(
-      TBaIpcRegistryHdl hdl, ///< [in] Handle
+TBaBoolRC OsIpcRegistryRegisterFun(
+      TOsIpcRegistryHdl hdl, ///< [in] Handle
       const char* name, ///< [in] Function name
-      TBaIpcRegFun fun ///< [in] Function to register
+      TOsIpcRegFun fun ///< [in] Function to register
       );
 
 /******************************************************************************/
 /** Remove a function from the registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryUnregisterFun(
-      TBaIpcRegistryHdl hdl, ///< [in] Handle
+TBaBoolRC OsIpcRegistryUnregisterFun(
+      TOsIpcRegistryHdl hdl, ///< [in] Handle
       const char* name ///< [in] Function name
       );
 
@@ -242,19 +242,19 @@ TBaBoolRC BaIpcRegistryUnregisterFun(
 /** Clear the functions registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryClearFunReg(
-      TBaIpcRegistryHdl hdl ///< [in] Handle
+TBaBoolRC OsIpcRegistryClearFunReg(
+      TOsIpcRegistryHdl hdl ///< [in] Handle
       );
 
 /******************************************************************************/
 /** Call a function from the registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryCallFun(
-      TBaIpcRegistryHdl hdl, ///< [in] Handle
+TBaBoolRC OsIpcRegistryCallFun(
+      TOsIpcRegistryHdl hdl, ///< [in] Handle
       const char* name, ///< [in] Function name
-      TBaIpcFunArg a, ///< [in] Function arguments
-      TBaIpcArg *pRet ///< [out] Function return value
+      TOsIpcFunArg a, ///< [in] Function arguments
+      TOsIpcArg *pRet ///< [out] Function return value
       );
 //@}
 
@@ -264,18 +264,18 @@ TBaBoolRC BaIpcRegistryCallFun(
 /** Register a variable in the registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryRegisterVar(
-      TBaIpcRegistryHdl hdl, ///< [in] Handle
+TBaBoolRC OsIpcRegistryRegisterVar(
+      TOsIpcRegistryHdl hdl, ///< [in] Handle
       const char* name, ///< [in] Function name
-      const TBaIpcRegVar *pVar ///< [in] Variable to register
+      const TOsIpcRegVar *pVar ///< [in] Variable to register
       );
 
 /******************************************************************************/
 /** Register a variable in the registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryUnregisterVar(
-      TBaIpcRegistryHdl hdl, ///< [in] Handle
+TBaBoolRC OsIpcRegistryUnregisterVar(
+      TOsIpcRegistryHdl hdl, ///< [in] Handle
       const char* name ///< [in] Function name
       );
 
@@ -283,8 +283,8 @@ TBaBoolRC BaIpcRegistryUnregisterVar(
 /** Clear the variables registry
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryClearVarReg(
-      TBaIpcRegistryHdl hdl ///< [in] Handle
+TBaBoolRC OsIpcRegistryClearVarReg(
+      TOsIpcRegistryHdl hdl ///< [in] Handle
       );
 
 /******************************************************************************/
@@ -292,20 +292,20 @@ TBaBoolRC BaIpcRegistryClearVarReg(
  *  @c *pVar buffer.
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistryCallVar(
-      TBaIpcRegistryHdl hdl, ///< [in] Handle
+TBaBoolRC OsIpcRegistryCallVar(
+      TOsIpcRegistryHdl hdl, ///< [in] Handle
       const char* name, ///< [in] Variable name
-      TBaIpcRegVarOut *pVar  ///< [out] Variable descriptor
+      TOsIpcRegVarOut *pVar  ///< [out] Variable descriptor
       );
 
 /******************************************************************************/
 /** Set a variable from the registry to a new value if allowed
  *  @return True if success, otherwise, false
  */
-TBaBoolRC BaIpcRegistrySetVar(
-      TBaIpcRegistryHdl hdl, ///< [in] Handle
+TBaBoolRC OsIpcRegistrySetVar(
+      TOsIpcRegistryHdl hdl, ///< [in] Handle
       const char* name, ///< [in] Function name
-      const TBaIpcRegVar *pVar ///< [in] Variable descriptor
+      const TOsIpcRegVar *pVar ///< [in] Variable descriptor
       );
 
 
@@ -320,9 +320,9 @@ TBaBoolRC BaIpcRegistrySetVar(
 /******************************************************************************/
 /** Interface to use a registry object. This interface is used under the hood
  *  for the "local" registry. If you are interested in using the local registry
- *  for the IPC server, please use the @c BaIpcRegistryLocal C-interface.
+ *  for the IPC server, please use the @c OsIpcRegistryLocal C-interface.
  */
-class IBaIpcRegistry {
+class IOsIpcRegistry {
 public:
 
    /// @name Functions registry
@@ -333,7 +333,7 @@ public:
     */
    virtual bool RegisterFun(
          std::string name, ///< [in] Function name
-         TBaIpcRegFun fun ///< [in] Function descriptor
+         TOsIpcRegFun fun ///< [in] Function descriptor
          ) = 0;
 
    /***************************************************************************/
@@ -356,8 +356,8 @@ public:
     */
    virtual bool CallFun(
          std::string name, ///< [in] Function name
-         TBaIpcFunArg a, ///< [in] Function arguments
-         TBaIpcArg *pRet ///< [out] Function return value
+         TOsIpcFunArg a, ///< [in] Function arguments
+         TOsIpcArg *pRet ///< [out] Function return value
          ) = 0;
    //@}
 
@@ -369,7 +369,7 @@ public:
     */
    virtual bool RegisterVar(
          std::string name, ///< [in] Variable name
-         const TBaIpcRegVar &rVar ///< [in] Variable descriptor
+         const TOsIpcRegVar &rVar ///< [in] Variable descriptor
          ) = 0;
 
    /***************************************************************************/
@@ -392,7 +392,7 @@ public:
     */
    virtual bool CallVar(
          std::string name, ///< [in] Variable name
-         TBaIpcRegVarOut &rVar ///< [out] Variable descriptor
+         TOsIpcRegVarOut &rVar ///< [out] Variable descriptor
          ) = 0;
 
    /***************************************************************************/
@@ -401,12 +401,12 @@ public:
     */
    virtual bool SetVar(
          std::string name,
-         const TBaIpcRegVar &rVar
+         const TOsIpcRegVar &rVar
          ) = 0;
    //@}
 
    // Typical object oriented destructor must be virtual!
-   virtual ~IBaIpcRegistry() {};
+   virtual ~IOsIpcRegistry() {};
 };
 
 /// @name C++ Factory
@@ -415,18 +415,18 @@ public:
 /** Create factory for a functions and variables registry
  *  @return Handle if success, otherwise, null
  */
-extern "C" IBaIpcRegistry * IBaIpcRegistryCreate();
+extern "C" IOsIpcRegistry * IOsIpcRegistryCreate();
 
 /******************************************************************************/
 /** Destroy and release resources
  *  @return True if success, otherwise, false
  */
-extern "C" TBaBoolRC IBaIpcRegistryDestroy(
-      IBaIpcRegistry *pHdl ///< [in] handle to destroy
+extern "C" TBaBoolRC IOsIpcRegistryDestroy(
+      IOsIpcRegistry *pHdl ///< [in] handle to destroy
       );
 //@}
 
 
 #endif // __cplusplus
-#endif // BAIPCREGISTRY_H_
+#endif // OSIPCREGISTRY_H_
 

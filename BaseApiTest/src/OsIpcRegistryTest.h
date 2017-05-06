@@ -2,8 +2,8 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaIpcTest.h
- *   Date     : 12.03.2017
+ *   Module   : BaIpcRegistryTest.h
+ *   Date     : 19.04.2017
  *------------------------------------------------------------------------------
  *   Module description:
  */
@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAIPCTEST_H_
-#define BAIPCTEST_H_
+#ifndef OSIPCREGISTRYTEST_H_
+#define OSIPCREGISTRYTEST_H_
 
 /*------------------------------------------------------------------------------
  *  Includes
@@ -24,32 +24,34 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-class CBaIpcTest : public CppUnit::TestCase {
+class COsIpcRegistryTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
 
-   CPPUNIT_TEST_SUITE(CBaIpcTest);
+   CPPUNIT_TEST_SUITE(COsIpcRegistryTest);
 
    CPPUNIT_TEST(Init);
-   CPPUNIT_TEST(VarRegNiceWeather);
-   CPPUNIT_TEST(FunRegNiceWeather);
-   CPPUNIT_TEST(FunRegErrors);
-   CPPUNIT_TEST(IPCServer);
-   CPPUNIT_TEST(IPCRealFunClientServer);
+   CPPUNIT_TEST(CppInterfaceFunRegistry);
+   CPPUNIT_TEST(CInterfaceFunRegistry);
+   CPPUNIT_TEST(LocalFunRegistry);
+
+   CPPUNIT_TEST(CppInterfaceVarRegistry);
+   CPPUNIT_TEST(CInterfaceVarRegistry);
+   CPPUNIT_TEST(LocalVarRegistry);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
    void Init();
-   void VarRegNiceWeather();
-   void FunRegNiceWeather();
-   void FunRegErrors();
-   void IPCServer();
-   void IPCRealFunClientServer();
-   void IPCRealVarClientServer();
+   void CppInterfaceFunRegistry();
+   void CInterfaceFunRegistry();
+   void LocalFunRegistry();
+   void CppInterfaceVarRegistry();
+   void CInterfaceVarRegistry();
+   void LocalVarRegistry();
    void Exit();
 };
 
-#endif // BAIPCTEST_H_
+#endif // OSIPCREGISTRYTEST_H_

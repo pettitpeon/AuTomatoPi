@@ -2,7 +2,7 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaProc.cpp
+ *   Module   : OsProc.cpp
  *   Date     : Jun 26, 2016
  *------------------------------------------------------------------------------
  */
@@ -10,7 +10,6 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
-#include <string.h>
 #include <signal.h>
 #include <unistd.h>
 
@@ -19,31 +18,43 @@
 # include <winbase.h>
 #endif
 
-#include <string>
-#include <fstream> // std::ifstream
+// TODo: delete?
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 
-#include "BaProc.h"
+#include <chrono>
+#include "OsProc.h"
 #include "BaUtils.hpp"
 #include "BaGenMacros.h"
+#include "BaLogMacros.h"
 
 
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
+#define TAG "OsProc"
 #if __WIN32
-# define PIDPATH "C:\\var\\run\\BaseApi\\"
+# define PIDPATH "C:\\var\\run\\OsProc\\"
 #else
-# define PIDPATH "/var/run/BaseApi/"
+# define PIDPATH "/var/run/OsProc/"
 #endif
 #define PIDEXT ".pid"
-#define CTRLTASK "BaseApiCtrlTask"
+#define CTRLTASK "OsProcCtrlTask"
 #define CTRLPIDFILE PIDPATH CTRLTASK PIDEXT
 #define SHLEN BAPROC_SHORTNAMELEN
 #define FULLLEN BAPROC_FULLNAMELEN
+#define DEFDIR "/"
+#define MINSLEEP_US 10000
+#define MAXSLEEP_US 50000
+#define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
+   (std::chrono::steady_clock::now() - start).count()
 
 /*------------------------------------------------------------------------------
     Type definitions
  -----------------------------------------------------------------------------*/
+typedef std::chrono::steady_clock::time_point TTimePoint;
+typedef std::chrono::duration<
+      std::chrono::steady_clock::rep, std::chrono::steady_clock::period> TDuration;
 
 /*------------------------------------------------------------------------------
     Local functions
@@ -52,16 +63,33 @@ LOCAL std::string getPIDName(pid_t pid);
 LOCAL int prio2Prio(EBaCorePrio prio);
 LOCAL EBaCorePrio prioFromPrio(int prio);
 
+//
+LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg);
+LOCAL void signalHdlr(int sig);
+LOCAL TBaBoolRC checkCtrlStart(const TOsProcCtrlTaskOpts* pOpts);
+LOCAL TBaBoolRC registerSignals();
+LOCAL TBaBoolRC unregisterSignals();
+LOCAL void resetStats(TOsProcCtrlTaskStats &rStats);
+
 /*------------------------------------------------------------------------------
     Local variables
  -----------------------------------------------------------------------------*/
+
+static TBaCoreThreadHdl sCtrlThread = 0;
+static TBaCoreThreadArg sCtrlThreadArg = {0};
+static TOsProcCtrlTaskStats sStats = {0};
+
+// Handler in progress flag
+static volatile sig_atomic_t sHandlerInProgress = 0;
+static volatile sig_atomic_t sExit = 0;
+
 
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
 
 //
-const char* BaProcGetOwnFullName() {
+const char* OsProcGetOwnFullName() {
 #ifdef __WIN32
    static std::string name = "";
    if (name == "") {
@@ -78,7 +106,7 @@ const char* BaProcGetOwnFullName() {
 }
 
 //
-const char* BaProcGetOwnShortName() {
+const char* OsProcGetOwnShortName() {
    static char sShortOwnName[SHLEN] = {0};
 
    // Only write the first time
@@ -86,14 +114,14 @@ const char* BaProcGetOwnShortName() {
 
       // strncpy() does not write the terminating null if size of from >= size
       // The string is initialized with 0s so we just do not write the last char
-      strncpy(sShortOwnName, BaProcGetOwnFullName(), SHLEN-1);
+      strncpy(sShortOwnName, OsProcGetOwnFullName(), SHLEN-1);
    }
 
    return sShortOwnName;
 }
 
 //
-TBaBoolRC BaProcWriteCtrlTaskPidFile() {
+TBaBoolRC OsProcWriteCtrlTaskPidFile() {
    if (!BaFS::Exists(PIDPATH)) {
       BaFS::MkDir(PIDPATH);
    }
@@ -105,13 +133,13 @@ TBaBoolRC BaProcWriteCtrlTaskPidFile() {
    }
 
    ofile << getpid() << std::endl;
-   ofile << BaProcGetOwnShortName() << std::endl;
+   ofile << OsProcGetOwnShortName() << std::endl;
    ofile.close();
    return ofile.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
 }
 
 //
-pid_t BaProcReadCtrlTaskPidFile(char buf[SHLEN]) {
+pid_t OsProcReadCtrlTaskPidFile(char buf[SHLEN]) {
    std::string taskName(SHLEN, 0);
    std::ifstream ifile(CTRLPIDFILE);
    pid_t pid = 0;
@@ -135,12 +163,12 @@ pid_t BaProcReadCtrlTaskPidFile(char buf[SHLEN]) {
 }
 
 //
-TBaBoolRC BaProcDelCtrlTaskPidFile() {
+TBaBoolRC OsProcDelCtrlTaskPidFile() {
    return remove(CTRLPIDFILE) == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
-const char* BaProcGetPIDName(pid_t pid, char buf[SHLEN]) {
+const char* OsProcGetPIDName(pid_t pid, char buf[SHLEN]) {
    if (!buf) {
       buf = (char*) malloc(SHLEN);
       if(!buf) {
@@ -158,13 +186,13 @@ const char* BaProcGetPIDName(pid_t pid, char buf[SHLEN]) {
 }
 
 //
-TBaBoolRC BaProcWriteOwnPidFile() {
+TBaBoolRC OsProcWriteOwnPidFile() {
    if (!BaFS::Exists(PIDPATH)) {
       BaFS::MkDir(PIDPATH);
    }
 
    std::string pidfile = PIDPATH +
-         BaPath::ChangeFileExtension(BaProcGetOwnShortName(), PIDEXT);
+         BaPath::ChangeFileExtension(OsProcGetOwnShortName(), PIDEXT);
    std::ofstream ofile(pidfile);
 
    if (!ofile.is_open()) {
@@ -178,7 +206,7 @@ TBaBoolRC BaProcWriteOwnPidFile() {
 }
 
 //
-pid_t BaProcReadPidFile(const char *progName, TBaBool internal) {
+pid_t OsProcReadPidFile(const char *progName, TBaBool internal) {
    if (!progName) {
       return 0;
    }
@@ -203,7 +231,7 @@ pid_t BaProcReadPidFile(const char *progName, TBaBool internal) {
 }
 
 //
-TBaBoolRC BaProcDelPidFile(const char *progName, TBaBool internal) {
+TBaBoolRC OsProcDelPidFile(const char *progName, TBaBool internal) {
    if (!progName) {
       return eBaBoolRC_Error;
    }
@@ -220,7 +248,7 @@ TBaBoolRC BaProcDelPidFile(const char *progName, TBaBool internal) {
 }
 
 //
-TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
+TBaBool OsProcPidFileIsRunning(const char *progName, TBaBool internal) {
    if (!progName) {
       return eBaBool_false;
    }
@@ -234,12 +262,12 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
    }
 
    if (binName == CTRLTASK) {
-      pid = BaProcReadCtrlTaskPidFile(buf);
+      pid = OsProcReadCtrlTaskPidFile(buf);
       if (pid) {
          binName = buf;
       }
    } else {
-      pid = BaProcReadPidFile(progName, internal);
+      pid = OsProcReadPidFile(progName, internal);
    }
 
    // Check if I am myself
@@ -273,7 +301,7 @@ TBaBool BaProcPidFileIsRunning(const char *progName, TBaBool internal) {
 }
 
 //
-TBaBoolRC BaProcSetOwnPrio(EBaCorePrio prio) {
+TBaBoolRC OsProcSetOwnPrio(EBaCorePrio prio) {
    if (prio < eBaCorePrio_Minimum || prio > eBaCorePrio_RT_Highest) {
       return eBaBoolRC_Error;
    }
@@ -294,7 +322,7 @@ TBaBoolRC BaProcSetOwnPrio(EBaCorePrio prio) {
 }
 
 //
-EBaCorePrio BaProcGetOwnPrio() {
+EBaCorePrio OsProcGetOwnPrio() {
    // In windows it is only a stub
 #ifdef __WIN32
    return eBaCorePrio_Normal;
@@ -305,6 +333,163 @@ EBaCorePrio BaProcGetOwnPrio() {
 #endif
 
 }
+
+
+// ===================================================
+//
+TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
+   if (!checkCtrlStart(pOpts)) {
+      return eBaBoolRC_Error;
+   }
+#ifdef __WIN32
+   return eBaBoolRC_Error;
+#else
+
+   if (OsProcPidFileIsRunning(CTRLTASK, eBaBool_true)) {
+      ERROR_("Process already running");
+      return eBaBoolRC_Error;
+   }
+
+   // Reset exit flag
+   sExit = 0;
+
+   // Set signals before forking to the child inherits the signals
+   if (!registerSignals()) {
+      resetStats(sStats);
+      return eBaBoolRC_Error;
+   }
+
+   // Lets replicate. Block future replications with the flag
+   pid_t pid = fork();
+
+   // An error occurred, return
+   if (pid < 0) {
+      unregisterSignals();
+      ERROR_("Fork failed");
+      BASYSLOG(TAG, "Fork failed");
+      resetStats(sStats);
+      return eBaBoolRC_Success;
+   }
+
+   // Success: Let the parent return
+   if (pid > 0) {
+      unregisterSignals();
+      TRACE_("Fork successful: Luke, I am you father");
+      sStats.imRunning = eBaBool_true;
+//      resetStats(sStats);
+      return eBaBoolRC_Success;
+   }
+
+   // Now Luke is in command ////////////////////////////////////////
+
+   // Write PID file
+   OsProcWriteCtrlTaskPidFile();
+
+   // Change directory to default
+   chdir(DEFDIR);
+
+   TRACE_("prio: %i", OsProcSetOwnPrio(pOpts->prio));
+   TRACE_("NOOOO!!");
+
+
+   TTimePoint start;
+   uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
+   void (*updFun)(void*) = pOpts->update;
+   void *pArg = pOpts->updateArg;
+
+   // This is the actual control loop ////////////////////////////////////
+   for ( ; !sExit; sStats.updCnt++, sStats.lastCycleUs = LASTCYCLE_US) {
+      start = std::chrono::steady_clock::now();
+
+      // todo: Is there a need to make short sleeps like in the control thread?
+      sStats.lastDurUs = BaCoreTimedUs(updFun, pArg);
+      if (sStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
+         BaCoreUSleep(MINSLEEP_US);
+      } else {
+         BaCoreUSleep(sampTimeUs - sStats.lastDurUs);
+      }
+   }
+   // ////////////////////////////////////////////////////////////////////
+
+   if (pOpts->exit) {
+      pOpts->exit(pOpts->exitArg);
+   }
+   TRACE_("Luke: I finished your quest father");
+   OsProcDelCtrlTaskPidFile();
+   resetStats(sStats);
+
+   // This is the child process, should not continue
+   exit(EXIT_SUCCESS);
+
+#endif
+}
+
+//
+TBaBoolRC OsApiStopCtrlTask() {
+   BaApiExitLogger();
+#ifdef __WIN32
+   resetStats(sStats);
+   return eBaBoolRC_Error;
+#else
+
+   pid_t pid = OsProcReadCtrlTaskPidFile(0);
+   if (pid) {
+      int killRc = kill(pid, SIGRTMIN);
+      if (killRc == 0) {
+         resetStats(sStats);
+         return eBaBool_true;
+      }
+      ERROR_("Kill failed (%i)", killRc);
+   } else {
+      WARN_("Failed to read the PID of CtrlTask");
+   }
+
+   resetStats(sStats);
+   return eBaBoolRC_Error;
+#endif
+}
+
+//
+TBaBoolRC OsApiStartCtrlThread(const TOsProcCtrlTaskOpts* pOpts) {
+   if (!checkCtrlStart(pOpts)) {
+      return eBaBoolRC_Error;
+   }
+
+   // Reset exit flag
+   sExit = 0;
+
+   sStats.imRunning = eBaBool_true;
+   sCtrlThreadArg.pArg = (void*)pOpts;
+   sCtrlThread = BaCoreCreateThread(pOpts->name, ctrlThreadRout, &sCtrlThreadArg, pOpts->prio);
+   if (!sCtrlThread) {
+      sStats.imRunning = eBaBool_false;
+   }
+   return sCtrlThread ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC OsApiStopCtrlThread() {
+   sExit = 1;
+   //todo
+   TBaBoolRC rc = BaCoreDestroyThread(sCtrlThread, 2*MAXSLEEP_US/1000);
+   sCtrlThread = 0;
+   resetStats(sStats);
+   // todo: exit function here instead? we do not have opts here with the callback
+   return rc;
+}
+
+//
+TBaBoolRC OsApiGetCtrlTaskStats(TOsProcCtrlTaskStats *pStats) {
+   if (!pStats) {
+      return eBaBoolRC_Error;
+   }
+
+   *pStats = sStats;
+   return eBaBoolRC_Success;
+}
+
+
+
 
 /*------------------------------------------------------------------------------
     Local functions
@@ -408,4 +593,132 @@ LOCAL EBaCorePrio prioFromPrio(int prio) {
    }
 #endif
 
+}
+
+
+
+
+// ======================== ==============================
+//
+LOCAL TBaBoolRC checkCtrlStart(const TOsProcCtrlTaskOpts* pOpts) {
+   // todo: copy options locally?
+
+   // Initialize the general logger. If the user already initialized it
+   // somewhere else, this will have no effect
+   if(pOpts->log.pLog) {
+      BaApiInitLogger(pOpts->log);
+   } else {
+      BaApiInitLoggerDef(CTRLTASK);
+   }
+
+   if (pOpts->init && !pOpts->init(pOpts->initArg)) {
+      if (pOpts->exit) {
+         pOpts->exit(pOpts->exitArg);
+      }
+      WARN_("User init failed");
+      return eBaBoolRC_Error;
+   }
+
+   sStats.imRunning = eBaBool_true;
+   return eBaBoolRC_Success;
+}
+
+//
+LOCAL TBaBoolRC registerSignals() {
+#ifdef __WIN32
+   return eBaBoolRC_Error;
+#else
+   int rc = 0;
+   struct sigaction act = {0};
+   act.sa_handler = signalHdlr;
+
+   // Termination signals from user
+   rc  = sigaction(SIGTERM,  &act, 0); // Polite termination signal
+   rc |= sigaction(SIGINT,   &act, 0); // Interrupt. 'Ctrl-C'
+   rc |= sigaction(SIGRTMIN, &act, 0); // User real-time signal
+   return rc == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+#endif
+}
+
+//
+LOCAL TBaBoolRC unregisterSignals() {
+#ifdef __WIN32
+   return eBaBoolRC_Error;
+#else
+   int rc = 0;
+   struct sigaction act = {0};
+   act.sa_handler = SIG_DFL;
+   rc  = sigaction(SIGTERM , &act, 0); // Polite termination signal
+   rc |= sigaction(SIGINT,   &act, 0); // Interrupt. 'Ctrl-C'
+   rc |= sigaction(SIGRTMIN, &act, 0); // User real-time signal
+   return rc == 0 ? eBaBoolRC_Success : eBaBoolRC_Error;
+#endif
+}
+
+// Signal handler to free/reset resources
+LOCAL void signalHdlr(int sig) {
+
+   // Queue the signal if the handler is busy
+   if (sHandlerInProgress) {
+      raise(sig);
+   }
+
+   sHandlerInProgress = 1;
+   sExit = 1;
+}
+
+//
+LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
+   TTimePoint start;
+   const TOsProcCtrlTaskOpts* pOpts = (const TOsProcCtrlTaskOpts*) pArg->pArg;
+   auto update  = pOpts->update;
+   void * updateArg = pOpts->updateArg;
+   uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
+   uint64_t cycleCumUs = MAXSLEEP_US;
+   TRACE_("Ctrl thread started");
+   uint64_t toSleep;
+
+   // This is the actual control loop ////////////////////////////////////
+   for ( ; !sExit; sStats.updCnt++, cycleCumUs += LASTCYCLE_US) {
+      start = std::chrono::steady_clock::now();
+
+      // The cycle time has elapsed. Call update
+      if (cycleCumUs >= sampTimeUs) {
+         sStats.lastCycleUs = cycleCumUs;
+         sStats.lastDurUs = BaCoreTimedUs(update, updateArg);
+
+         // The new cumulated cycle is
+         cycleCumUs = (cycleCumUs - sampTimeUs);
+
+         // If the update takes longer than the cycle time, log it.
+         if (sStats.lastDurUs > sampTimeUs) {
+            // todo Log with state
+            WARN_("Update() exceeded the sample time: %" PRIu64 ">%" PRIu64,
+                  sStats.lastDurUs, sampTimeUs);
+            BaCoreUSleep(MINSLEEP_US);
+            continue;
+         }
+      }
+
+      // Cycle + MaxSleep < sample time: sleep the maximum possible
+      if (cycleCumUs + MAXSLEEP_US <= sampTimeUs) {
+         BaCoreUSleep(MAXSLEEP_US);
+         continue;
+      }
+
+      // Sleep the  required time or the minimum minimum possible
+      toSleep = sampTimeUs - cycleCumUs;
+      BaCoreUSleep(toSleep < MINSLEEP_US ? MINSLEEP_US : toSleep);
+
+   }
+   // ////////////////////////////////////////////////////////////////////
+
+   if (pOpts->exit) {
+      pOpts->exit(pOpts->exitArg);
+   }
+}
+
+//
+LOCAL void resetStats(TOsProcCtrlTaskStats &rStats) {
+   memset(&rStats, 0, sizeof(rStats));
 }

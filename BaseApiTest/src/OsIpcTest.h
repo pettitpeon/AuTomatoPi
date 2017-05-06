@@ -2,8 +2,8 @@
  *                             (c) 2015 by Ivan Peon
  *                             All rights reserved
  *------------------------------------------------------------------------------
- *   Module   : BaProcTest.h
- *   Date     : Jun 28, 2016
+ *   Module   : BaIpcTest.h
+ *   Date     : 12.03.2017
  *------------------------------------------------------------------------------
  *   Module description:
  */
@@ -12,8 +12,8 @@
  */
 /*------------------------------------------------------------------------------
  */
-#ifndef BAPROCTEST_H_
-#define BAPROCTEST_H_
+#ifndef OSIPCTEST_H_
+#define OSIPCTEST_H_
 
 /*------------------------------------------------------------------------------
  *  Includes
@@ -24,32 +24,32 @@
 /*------------------------------------------------------------------------------
  *  Type definitions
  */
-class CBaProcTest : public CppUnit::TestCase {
+class COsIpcTest : public CppUnit::TestCase {
 public:
    void setUp();
    void tearDown();
 
-   CPPUNIT_TEST_SUITE(CBaProcTest);
+   CPPUNIT_TEST_SUITE(COsIpcTest);
 
    CPPUNIT_TEST(Init);
-   CPPUNIT_TEST(OwnNames);
-   CPPUNIT_TEST(CtrlTaskPID);
-   CPPUNIT_TEST(PIDFiles);
-   CPPUNIT_TEST(NameFromPID);
-   CPPUNIT_TEST(Prio);
+   CPPUNIT_TEST(VarRegNiceWeather);
+   CPPUNIT_TEST(FunRegNiceWeather);
+   CPPUNIT_TEST(FunRegErrors);
+   CPPUNIT_TEST(IPCServer);
+   CPPUNIT_TEST(IPCRealFunClientServer);
+   CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
    void Init();
-   void OwnNames();
-   void CtrlTaskPID();
-   void PIDFiles();
-   void NameFromPID();
-   void Prio();
+   void VarRegNiceWeather();
+   void FunRegNiceWeather();
+   void FunRegErrors();
+   void IPCServer();
+   void IPCRealFunClientServer();
+   void IPCRealVarClientServer();
+   void Exit();
 };
 
-#endif // BAPROCTEST_H_
-
-
-
+#endif // OSIPCTEST_H_

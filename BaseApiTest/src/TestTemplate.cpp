@@ -11,18 +11,16 @@
 #include <iostream>
 #include "TestTemplate.h"
 
-#include <BaIniParse.h>
-#include "BaRPi.h"
 #include "BaGenMacros.h"
 #include "CppU.h"
 #include "BaUtils.hpp"
-#include "impl/CBaIpcSvr.h"
 #include "BaLogMacros.h"
 
-#include "BaIpc.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <impl/COsIpcSvr.h>
+#include <OsIpc.h>
 
 #define TAG "tplTst"
 
@@ -58,10 +56,10 @@ void CTestTemplate::Test() {
 
    TRACE_("Hello test template");
 
-   TRACE_("svr(%i)", BaIpcInitSvr());
+   TRACE_("svr(%i)", OsIpcInitSvr());
 
    BaCoreMSleep(500);
-   TRACE_("clnt(%i)", BaIpcInitClnt());
+   TRACE_("clnt(%i)", OsIpcInitClnt());
 
 //   writeClntPipe(0,0,0);
 
