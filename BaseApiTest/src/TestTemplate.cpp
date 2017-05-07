@@ -56,10 +56,8 @@ void CTestTemplate::Test() {
 
    TRACE_("Hello test template");
 
-   TRACE_("svr(%i)", OsIpcInitSvr());
 
    BaCoreMSleep(500);
-   TRACE_("clnt(%i)", OsIpcInitClnt());
 
 //   writeClntPipe(0,0,0);
 

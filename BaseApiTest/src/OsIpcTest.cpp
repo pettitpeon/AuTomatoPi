@@ -12,6 +12,9 @@
  */
 /*------------------------------------------------------------------------------
  */
+
+#ifdef _linux
+
 #include "OsIpcTest.h"
 
 #include <unistd.h>
@@ -338,4 +341,5 @@ LOCAL void funvi(int32_t i) {
 }
 
 
+#endif // _linux
 

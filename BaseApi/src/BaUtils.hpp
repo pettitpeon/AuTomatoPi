@@ -99,7 +99,7 @@ static inline int Rename(
 /** Gets the file size in bytes
  *  @return file size in bytes
  */
-static inline uint32_t Size(
+static inline uint64_t Size(
       std::string path ///< [in] Path of file
       ) {
    struct stat desc;
