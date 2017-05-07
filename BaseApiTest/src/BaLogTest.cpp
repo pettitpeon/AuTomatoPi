@@ -157,7 +157,7 @@ void CBaLogTest::TracesF() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)178, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)178, BaFS::Size(fullPath));
 }
 
 /* ****************************************************************************/
@@ -184,7 +184,7 @@ void CBaLogTest::Tags() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)178, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)178, BaFS::Size(fullPath));
 }
 
 /* ****************************************************************************/
@@ -212,7 +212,7 @@ void CBaLogTest::Prios() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)214, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)214, BaFS::Size(fullPath));
 
    // Create again underflow
    pDef = CBaLog::Create("LogDef", RESPATH, (EBaLogPrio)(eBaLogPrio_Trace - 1));
@@ -227,7 +227,7 @@ void CBaLogTest::Prios() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)142, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)142, BaFS::Size(fullPath));
 
    // Create again
    pDef = CBaLog::Create("LogDef", RESPATH, eBaLogPrio_Warning);
@@ -242,7 +242,7 @@ void CBaLogTest::Prios() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)106, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)106, BaFS::Size(fullPath));
 
    // Create again
    pDef = CBaLog::Create("LogDef", RESPATH, eBaLogPrio_Error);
@@ -257,7 +257,7 @@ void CBaLogTest::Prios() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)70, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)70, BaFS::Size(fullPath));
 
    // Create again
    pDef = CBaLog::Create("LogDef", RESPATH, eBaLogPrio_UpsCrash);
@@ -272,7 +272,7 @@ void CBaLogTest::Prios() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)35, BaFS::Size(fullPath));
 
    // Create again overflow
    pDef = CBaLog::Create("LogDef", RESPATH, (EBaLogPrio)(eBaLogPrio_UpsCrash + 1));
@@ -287,7 +287,7 @@ void CBaLogTest::Prios() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)35, BaFS::Size(fullPath));
 }
 
 /* ****************************************************************************/
@@ -310,7 +310,7 @@ void CBaLogTest::LogVsPrint() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)35, BaFS::Size(fullPath));
 
    // Create again
    pDef = CBaLog::Create("LogDef", RESPATH, eBaLogPrio_Trace, eBaLogOut_Log);
@@ -322,7 +322,7 @@ void CBaLogTest::LogVsPrint() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)35, BaFS::Size(fullPath));
 
    // Create again
    pDef = CBaLog::Create("LogPrint", RESPATH, eBaLogPrio_Trace, eBaLogOut_Console);
@@ -336,7 +336,7 @@ void CBaLogTest::LogVsPrint() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pDef));
    pDef = 0;
-   ASS_EQ((uint32_t)0, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)0, BaFS::Size(fullPath));
 }
 
 /* ****************************************************************************/
@@ -375,7 +375,7 @@ void CBaLogTest::FilesAndSizesOpts() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pObj));
    pObj = 0;
-   ASS_EQ((uint32_t)37, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)37, BaFS::Size(fullPath));
    ASS(!BaFS::Exists(OPTSDIR "LogOpts_1.log"));
 
    // New options
@@ -393,7 +393,7 @@ void CBaLogTest::FilesAndSizesOpts() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pObj));
    pObj = 0;
-   ASS_EQ((uint32_t)35, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)35, BaFS::Size(fullPath));
 
    // New options
    opts.maxFileSizeB = 100; // Maximum 100 entries per file
@@ -425,10 +425,10 @@ void CBaLogTest::FilesAndSizesOpts() {
    // Destroy and test size
    ASS(CBaLog::Destroy(pObj));
    pObj = 0;
-   ASS_EQ((uint32_t)70, BaFS::Size(fullPath));
-   ASS_EQ((uint32_t)70, BaFS::Size(OPTSDIR "LogOpts_1.log"));
-   ASS_EQ((uint32_t)71, BaFS::Size(OPTSDIR "LogOpts_2.log"));
-   ASS_EQ((uint32_t)72, BaFS::Size(OPTSDIR "LogOpts_3.log"));
+   ASS_EQ((uint64_t)70, BaFS::Size(fullPath));
+   ASS_EQ((uint64_t)70, BaFS::Size(OPTSDIR "LogOpts_1.log"));
+   ASS_EQ((uint64_t)71, BaFS::Size(OPTSDIR "LogOpts_2.log"));
+   ASS_EQ((uint64_t)72, BaFS::Size(OPTSDIR "LogOpts_3.log"));
    ASS(!BaFS::Exists(OPTSDIR "LogOpts_4.log"));
 }
 
@@ -552,9 +552,9 @@ void CBaLogTest::TestIface() {
    // Check that the file was overwritten
    pDef->GetLogInfo(&info);
    std::string fullPath(info.fullPath);
-   uint32_t sz = BaFS::Size(fullPath);
+   uint64_t sz = BaFS::Size(fullPath);
    ASS_EQ((uint32_t)0, info.fileSizeB);
-   ASS_EQ((uint32_t)0, sz);
+   ASS_EQ((uint64_t)0, sz);
 
    // Log some messages
    ASS(pDef->Trace("DefTag", "35"));
@@ -585,7 +585,7 @@ void CBaLogTest::TestIface() {
    fullPath = info.fullPath;
    sz = BaFS::Size(fullPath);
    ASS_EQ((uint32_t)0, info.fileSizeB);
-   ASS_EQ((uint32_t)0, sz);
+   ASS_EQ((uint64_t)0, sz);
 
    // Log some
    ASS(BaLogError(hdl, "tag", "35"));

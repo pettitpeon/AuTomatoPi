@@ -56,7 +56,13 @@ void CBaUtilsTest::BaFS() {
    // MkDir
    ASS_MSG(strerror(errno), !BaFS::MkDir(RESPATH "testDir"));
    ASS(BaFS::Exists(RESPATH "testDir"));
-   ASS_MSG(strerror(errno), !remove(RESPATH "testDir"));
+   ASS_MSG(strerror(errno), !rmdir(RESPATH "testDir"));
+
+#ifdef __WIN32
+   auto sz = (uint64_t)4200;
+#else
+   auto sz = (uint64_t)4100;
+#endif
 
    // Create a file
    std::ofstream os(RESPATH "testfile");
@@ -71,17 +77,17 @@ void CBaUtilsTest::BaFS() {
    os.close();
 
    // Size
-   ASS_EQ(BaFS::Size(RESPATH "testfile"), (uint64_t)4100);
+   ASS_EQ(BaFS::Size(RESPATH "testfile"), sz);
 
    // Copy and rename
    BaFS::CpFile(RESPATH "testfile", RESPATH "testfileCp");
    ASS(BaFS::Exists(RESPATH "testfileCp"));
-   ASS_EQ(BaFS::Size(RESPATH "testfileCp"), (uint64_t)4100);
+   ASS_EQ(BaFS::Size(RESPATH "testfileCp"), sz);
    ASS_MSG(strerror(errno), !BaFS::Rename(RESPATH "testfileCp", RESPATH "testfileRn"));
-   ASS_EQ(BaFS::Size(RESPATH "testfileRn"), (uint64_t)4100);
+   ASS_EQ(BaFS::Size(RESPATH "testfileRn"), sz);
 
    // Dir size, todo recursive
-   ASS_EQ_MSG(strerror(errno), (uint64_t)8200, BaFS::DirSize(RESPATH));
+   ASS_EQ_MSG(strerror(errno), 2*sz, BaFS::DirSize(RESPATH));
 
    // Remove creations
    ASS_MSG(strerror(errno), !remove(RESPATH "testfile"));

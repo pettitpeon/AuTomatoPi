@@ -85,7 +85,7 @@ void CBaMsgTest::TestImpl() {
    ASS(!msg.Get());
 
    ASS(IBaLogDestroy(pLog, eBaBool_false));
-   ASS_EQ((uint32_t)44, BaFS::Size(RESPATH "msglog.log"));
+   ASS_EQ((uint64_t)44, BaFS::Size(RESPATH "msglog.log"));
 }
 
 /* ****************************************************************************/
@@ -127,7 +127,7 @@ void CBaMsgTest::TestIface() {
 
    ASS(BaMsgDestroy(msg));
    ASS(IBaLogDestroy(pLog, eBaBool_false));
-   ASS_EQ((uint32_t)44, BaFS::Size(RESPATH "msglog.log"));
+   ASS_EQ((uint64_t)44, BaFS::Size(RESPATH "msglog.log"));
 
    pMsg = IBaMsgCreate();
    ASS(pMsg);

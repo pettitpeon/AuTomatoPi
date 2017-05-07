@@ -62,7 +62,7 @@ static inline int MkDir(
 /** Portable file copy. Always rewrites
  *  @return true if success
  */
-static inline TBaBoolRC CpFile(
+static inline TBaBoolRC CpFile2(
       std::string src, ///< [in] Path of source file
       std::string dst  ///< [in] Path of destination
       ) {
@@ -78,6 +78,21 @@ static inline TBaBoolRC CpFile(
    std::copy(begSrc, endSrc, begDst);
 
    return fDst.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
+}
+
+/** Portable file copy. Always rewrites
+ *  @return true if success
+ */
+static inline TBaBoolRC CpFile(
+      std::string src, ///< [in] Path of source file
+      std::string dst  ///< [in] Path of destination
+      ) {
+
+	std::ifstream srcS(src, std::ios::binary);
+	std::ofstream dstS(dst, std::ios::binary);
+	dstS << srcS.rdbuf();
+
+	return dstS.fail() ? eBaBoolRC_Error : eBaBoolRC_Success;
 }
 
 /******************************************************************************/
