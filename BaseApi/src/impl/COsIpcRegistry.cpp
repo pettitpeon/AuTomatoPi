@@ -17,8 +17,8 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
-#include <COsIpcRegistry.h>
 #include <string.h>
+#include "COsIpcRegistry.h"
 #include "BaLogMacros.h"
 #include "BaGenMacros.h"
 

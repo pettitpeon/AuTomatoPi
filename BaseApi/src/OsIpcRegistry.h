@@ -28,7 +28,7 @@
 # include <string>
 #endif
 #include "BaBool.h"
-#include <OsIpcDef.h>
+#include <OsDef.h>
 
 
 /*------------------------------------------------------------------------------

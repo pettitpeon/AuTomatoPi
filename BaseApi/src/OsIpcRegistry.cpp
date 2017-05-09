@@ -10,9 +10,9 @@
 /*------------------------------------------------------------------------------
     Includes
  -----------------------------------------------------------------------------*/
-#include <COsIpcRegistry.h>
-#include <OsIpcRegistry.h>
 #include <string.h>
+#include "OsIpcRegistry.h"
+#include "COsIpcRegistry.h"
 #include "BaBool.h"
 /*------------------------------------------------------------------------------
     Defines

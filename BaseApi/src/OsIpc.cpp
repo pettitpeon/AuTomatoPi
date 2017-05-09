@@ -19,10 +19,10 @@
 #include <string.h>
 #include <mutex>
 
-#include <OsIpc.h>
-#include <COsIpcSvr.h>
+#include "OsIpc.h"
+#include "COsIpcSvr.h"
 #include "BaLogMacros.h"
-#include <COsIpcRegistry.h>
+#include "COsIpcRegistry.h"
 #include "BaGenMacros.h"
 #include "BaMsg.h"
 

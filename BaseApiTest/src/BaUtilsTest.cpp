@@ -50,7 +50,7 @@ void CBaUtilsTest::Init() {
 /* ****************************************************************************/
 /*  ...
  */
-void CBaUtilsTest::BaFS() {
+void CBaUtilsTest::FS() {
    ASS(true);
 
    // MkDir
@@ -66,6 +66,7 @@ void CBaUtilsTest::BaFS() {
 
    // Create a file
    std::ofstream os(RESPATH "testfile");
+
 
    // Exists
    ASS(BaFS::Exists(RESPATH "testfile"));
@@ -92,6 +93,29 @@ void CBaUtilsTest::BaFS() {
    // Remove creations
    ASS_MSG(strerror(errno), !remove(RESPATH "testfile"));
    ASS_MSG(strerror(errno), !remove(RESPATH "testfileRn"));
+}
+
+
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaUtilsTest::ToNumber() {
+   bool err = false;
+
+   // Sunshine
+   ASS_EQ(0, BaToNumber("0", -1, &err));
+   ASS_EQ(0.0, BaToNumber("0.0", -1.0, &err));
+   ASS(!err);
+
+   // Other bases
+   ASS_EQ(50, BaToNumber("0x32", -1, &err));
+   ASS_EQ(37, BaToNumber("045", -1, &err));
+   ASS(!err);
+
+   // Errors
+   ASS_EQ(-1, BaToNumber("a", -1, &err));
+   ASS_EQ(-1.0, BaToNumber("a", -1.0, &err));
+   ASS(err);
 }
 
 /* ****************************************************************************/

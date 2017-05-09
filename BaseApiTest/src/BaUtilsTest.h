@@ -32,14 +32,16 @@ public:
    CPPUNIT_TEST_SUITE(CBaUtilsTest);
 
    CPPUNIT_TEST(Init);
-   CPPUNIT_TEST(BaFS);
+   CPPUNIT_TEST(FS);
+   CPPUNIT_TEST(ToNumber);
    CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
    void Init();
-   void BaFS();
+   void FS();
+   void ToNumber();
    void Exit();
 };
 
