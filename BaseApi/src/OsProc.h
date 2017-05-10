@@ -162,7 +162,7 @@ TBaBool OsProcPidFileIsRunning(
 /// @name Process Priority
 //@{
 /******************************************************************************/
-/** Set the priority of the calling process. TODO: unit test
+/** Set the priority of the calling process.
  *  @return Error or success
  */
 TBaBoolRC OsProcSetOwnPrio(
@@ -170,7 +170,7 @@ TBaBoolRC OsProcSetOwnPrio(
       );
 
 /******************************************************************************/
-/** Get the priority of the calling process. TODO: unit test
+/** Get the priority of the calling process.
  *  @return the priority
  */
 EBaCorePrio OsProcGetOwnPrio();

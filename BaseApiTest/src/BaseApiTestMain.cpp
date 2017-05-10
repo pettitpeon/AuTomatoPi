@@ -125,7 +125,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());
-   pSuite->addTest(CBaUtilsTest::suite());
+//   pSuite->addTest(CBaUtilsTest::suite());
 //   pSuite->addTest(COsProcTest::suite());
 //   pSuite->addTest(CCtrlPT1Test::suite());
 //   pSuite->addTest(CBaSwOsciTest::suite());
@@ -133,6 +133,7 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CHwGpioTest::suite());
 //   pSuite->addTest(CHwPiTest::suite());
 //   pSuite->addTest(COsIpcTest::suite());
+   pSuite->addTest(COsProcTest::suite());
 //   pSuite->addTest(CBaIpcRegistryTest::suite());
    return pSuite;
 }

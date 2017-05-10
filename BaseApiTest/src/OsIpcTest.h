@@ -15,7 +15,7 @@
 #ifndef OSIPCTEST_H_
 #define OSIPCTEST_H_
 
-#ifdef _linux
+#ifdef __linux
 
 /*------------------------------------------------------------------------------
  *  Includes

@@ -184,9 +184,8 @@ void COsProcTest::Prio() {
    ASS(!OsProcSetOwnPrio((EBaCorePrio) (eBaCorePrio_Minimum - 1)));
    ASS(!OsProcSetOwnPrio((EBaCorePrio) (eBaCorePrio_RT_Highest + 1)));
 
+   // If not windows test deeper
 #ifndef __WIN32
-   ASS(OsProcSetOwnPrio(eBaCorePrio_RT_Highest));
-   ASS_EQ(eBaCorePrio_RT_Highest, OsProcGetOwnPrio());
    ASS(OsProcSetOwnPrio(eBaCorePrio_Normal));
    ASS_EQ(eBaCorePrio_Normal, OsProcGetOwnPrio());
 #endif
