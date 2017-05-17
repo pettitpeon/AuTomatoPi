@@ -37,7 +37,7 @@
 // Local functions
 LOCAL TBaBoolRC initExit(void* arg);
 LOCAL void update(void *arg);
-LOCAL void loongUpdate(void *arg);
+LOCAL void slowUpdate(void *arg);
 
 static TOsProcCtrlTaskOpts sOpts = {0};
 
@@ -265,7 +265,7 @@ void COsProcTest::ControlTask() {
 /* ****************************************************************************/
 /*  Test the control task
  */
-void COsProcTest::LongControlTask() {
+void COsProcTest::ControlTaskOvertime() {
    TOsProcCtrlTaskStats stats;
 
    // Logger should not be set before starting
@@ -275,7 +275,8 @@ void COsProcTest::LongControlTask() {
    CPPUNIT_ASSERT(BaApiExitLogger());
 
    uint64_t slpMs = 500;
-   sOpts.update = loongUpdate;
+   sOpts.update = slowUpdate;
+   sOpts.cyleTimeMs = 100;
 
    CPPUNIT_ASSERT(OsApiStartCtrlThread(&sOpts));
    BaCoreMSleep(slpMs);
@@ -345,7 +346,7 @@ LOCAL void update(void *arg) {
 }
 
 //
-LOCAL void loongUpdate(void *arg) {
+LOCAL void slowUpdate(void *arg) {
    TOsProcCtrlTaskStats stats;
    OsApiGetCtrlTaskStats(&stats);
    TRACE_("update(%s): cnt=%llu, dur=%llu us, cycle=%llu us",

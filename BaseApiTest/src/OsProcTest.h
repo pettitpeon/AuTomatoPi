@@ -39,7 +39,7 @@ public:
    CPPUNIT_TEST(Prio);
 
    CPPUNIT_TEST(ControlTask);
-   CPPUNIT_TEST(LongControlTask);
+   CPPUNIT_TEST(ControlTaskOvertime);
 
    CPPUNIT_TEST(Exit);
 
@@ -54,7 +54,7 @@ public:
    void Prio();
 
    void ControlTask();
-   void LongControlTask();
+   void ControlTaskOvertime();
    void Exit();
 };
 
