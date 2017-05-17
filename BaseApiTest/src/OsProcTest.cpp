@@ -97,6 +97,30 @@ void COsProcTest::OwnNames() {
 /* ****************************************************************************/
 /*  ...
  */
+void COsProcTest::NameFromPID() {
+   std::string binName = BINNAME;
+   char buf[BAPROC_FULLNAMELEN];
+   const char *name = OsProcGetPIDName(getpid(), buf);
+   ASS(buf == name);
+   name = OsProcGetPIDName(getpid(), buf);
+   ASS(buf == name);
+
+#ifndef __WIN32
+   name = OsProcGetPIDName(getpid(), buf);
+   ASS_MSG(name, name == binName);
+   name = OsProcGetPIDName(getpid(), 0);
+   ASS_MSG(name, name == binName);
+
+   // Test that freeing the mallocated string does not crash
+   free((void*) name);
+   ASS(!OsProcGetPIDName(0, 0));
+   ASS(!OsProcGetPIDName(0, buf));
+#endif
+}
+
+/* ****************************************************************************/
+/*  ...
+ */
 void COsProcTest::CtrlTaskPID() {
 
    char buf[BAPROC_SHORTNAMELEN];
@@ -154,30 +178,6 @@ void COsProcTest::PIDFiles() {
 /* ****************************************************************************/
 /*  ...
  */
-void COsProcTest::NameFromPID() {
-   std::string binName = BINNAME;
-   char buf[BAPROC_FULLNAMELEN];
-   const char *name = OsProcGetPIDName(getpid(), buf);
-   ASS(buf == name);
-   name = OsProcGetPIDName(getpid(), buf);
-   ASS(buf == name);
-
-#ifndef __WIN32
-   name = OsProcGetPIDName(getpid(), buf);
-   ASS_MSG(name, name == binName);
-   name = OsProcGetPIDName(getpid(), 0);
-   ASS_MSG(name, name == binName);
-
-   // Test that freeing the mallocated string does not crash
-   free((void*) name);
-   ASS(!OsProcGetPIDName(0, 0));
-   ASS(!OsProcGetPIDName(0, buf));
-#endif
-}
-
-/* ****************************************************************************/
-/*  ...
- */
 void COsProcTest::Prio() {
    ASS(OsProcSetOwnPrio(eBaCorePrio_RT_Highest));
    // if out of range
@@ -207,11 +207,12 @@ void COsProcTest::ControlTask() {
    uint64_t slpMs = 500;
    CPPUNIT_ASSERT(OsApiStartCtrlThread(&sOpts));
    BaCoreMSleep(slpMs);
-   CPPUNIT_ASSERT(!OsApiGetCtrlTaskStats(0));
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(!OsApiGetCtrlThreadStats(0));
+   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
+
    CPPUNIT_ASSERT(OsApiStopCtrlThread());
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 
 #ifdef __WIN32
@@ -223,13 +224,24 @@ void COsProcTest::ControlTask() {
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 #else
+   CPPUNIT_ASSERT(!OsProcPidFileIsRunning("OsProcCtrlTask", eBaBool_true));
+   CPPUNIT_ASSERT(!OsProcPidFileIsRunning("BaseApiTest", eBaBool_true));
 
    CPPUNIT_ASSERT(OsApiStartCtrlTask(&sOpts));
    BaCoreMSleep(slpMs);
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
 
-   // This is the parent. therefore in the
+
+   // This is the parent, but it knows the child is running
    CPPUNIT_ASSERT(stats.imRunning);
+
+   // Check that PID file is correct
+   CPPUNIT_ASSERT(OsProcCtrlTaskPidIsRunning());
+   char buf[BAPROC_SHORTNAMELEN] = {0};
+   pid_t pid = OsProcReadCtrlTaskPidFile(buf);
+   std::string tskName = "BaseApiTest";
+   ASS(pid);
+   ASS_EQ(tskName, std::string(buf));
 
    // should not start
    CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
@@ -237,6 +249,9 @@ void COsProcTest::ControlTask() {
    CPPUNIT_ASSERT(OsApiStopCtrlTask());
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
+   BaCoreMSleep(slpMs);
+   ASS(!OsProcCtrlTaskPidIsRunning());
+   ASS(!OsProcReadCtrlTaskPidFile(0));
 
 #endif
 
@@ -264,13 +279,13 @@ void COsProcTest::LongControlTask() {
 
    CPPUNIT_ASSERT(OsApiStartCtrlThread(&sOpts));
    BaCoreMSleep(slpMs);
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
 
    // It will not be able to destroy the thread without timeout because the
    // update function takes too long, so do not test it
    OsApiStopCtrlThread();
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 
 #ifdef __WIN32

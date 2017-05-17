@@ -33,9 +33,9 @@ public:
 
    CPPUNIT_TEST(Init);
    CPPUNIT_TEST(OwnNames);
+   CPPUNIT_TEST(NameFromPID);
    CPPUNIT_TEST(CtrlTaskPID);
    CPPUNIT_TEST(PIDFiles);
-   CPPUNIT_TEST(NameFromPID);
    CPPUNIT_TEST(Prio);
 
    CPPUNIT_TEST(ControlTask);
@@ -48,9 +48,9 @@ public:
 public:
    void Init();
    void OwnNames();
+   void NameFromPID();
    void CtrlTaskPID();
    void PIDFiles();
-   void NameFromPID();
    void Prio();
 
    void ControlTask();

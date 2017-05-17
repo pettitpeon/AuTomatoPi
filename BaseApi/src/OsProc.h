@@ -157,6 +157,12 @@ TBaBool OsProcPidFileIsRunning(
       TBaBool internal /**< [in] Flag to signal that the program was created
       with this API */
       );
+
+/******************************************************************************/
+/** Test if a CtrlTask with the PID inside the CtrlTask PID file is running.
+ *  @return true or false
+ */
+TBaBool OsProcCtrlTaskPidIsRunning();
 //@} PID Files
 
 /// @name Process Priority
@@ -219,6 +225,15 @@ TBaBoolRC OsApiStopCtrlThread();
  *  @return Error or success
  */
 TBaBoolRC OsApiGetCtrlTaskStats(
+      TOsProcCtrlTaskStats *pStats  ///< [out] Statistics
+      );
+
+/******************************************************************************/
+/** Gets the control thread statistics. This is mainly for debugging and
+ *  development. For proper releases use @c CtrlTask functions.
+ *  @return Error or success
+ */
+TBaBoolRC OsApiGetCtrlThreadStats(
       TOsProcCtrlTaskStats *pStats  ///< [out] Statistics
       );
 //@}
