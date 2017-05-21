@@ -19,6 +19,10 @@
 #include <map>
 #include <string>
 
+// todo: Delete
+#include "BaLogMacros.h"
+#define TAG "CIPCReg"
+
 #define OSIPC_FUNNAMESZ (OSIPC_MSGDATASZ - sizeof(TOsIpcFunArg))
 
 /*------------------------------------------------------------------------------
@@ -72,6 +76,8 @@ public:
       std::string sType = fun.type;
 
       if (!fun.pFun || sType.length() < 3 || fun.type[1] != ':' || sType.length() > OSIPC_MAXARG + 2) {
+         // todo: Delete
+         TRACE_("%p, %i, %i, %i", fun.pFun, sType.length() < 3, fun.type[1] != ':', sType.length() > OSIPC_MAXARG + 2);
          return false;
       }
       return mFunReg.emplace(name, fun).second;

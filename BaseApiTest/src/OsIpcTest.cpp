@@ -251,6 +251,7 @@ void COsIpcTest::IPCServer() {
    fun.pFun = (void*) testRegFun;
    fun.type = "i:i";
 
+   ASS(COsIpcRegistry::SInitRegistry());
    ASS(COsIpcRegistry::SRegisterFun("testRegFun", fun));
    std::string name;
    for (int i = 0; i < 5000; ++i) {

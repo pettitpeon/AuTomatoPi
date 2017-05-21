@@ -139,6 +139,7 @@ bool COsIpcRegistry::SExitRegistry() {
    if (!spReg) {
       return true;
    }
+
    COsIpcRegistry* p = spReg;
    spReg = 0;
    return COsIpcRegistry::Destroy(p);
