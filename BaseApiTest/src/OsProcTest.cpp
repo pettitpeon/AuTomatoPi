@@ -27,7 +27,7 @@
 #define TAG "OsTst"
 #if __WIN32
 # define PIDPATH "C:\\var\\run\\OsProc\\"
-# define BINNAME "OsProcTest.exe"
+# define BINNAME "BaseApiTest.exe"
 #else
 # define PIDPATH "/var/run/OsProc/"
 # define BINNAME "BaseApiTest"
@@ -73,7 +73,7 @@ void COsProcTest::Init() {
    sOpts.init = initExit;
    sOpts.update = update;
    sOpts.exit = initExit;
-   sOpts.cyleTimeMs = 100;
+   sOpts.cyleTimeUs = 100000;
    sOpts.prio = eBaCorePrio_RT_Normal;
    sOpts.log.pLog = IBaLogCreateDef("COsProcTest");
 }
@@ -193,9 +193,9 @@ void COsProcTest::Prio() {
 }
 
 /* ****************************************************************************/
-/*  Test the control task
+/*  Test the control thread
  */
-void COsProcTest::ControlTask() {
+void COsProcTest::ControlThread() {
    TOsProcCtrlTaskStats stats;
 
    // Logger should not be set before starting
@@ -215,6 +215,27 @@ void COsProcTest::ControlTask() {
    CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 
+   // Logger should not be set after stop
+   CPPUNIT_ASSERT(!TRACE_("test"));
+   CPPUNIT_ASSERT(BaApiInitLogger(sOpts.log));
+   CPPUNIT_ASSERT(TRACE_("test2"));
+   CPPUNIT_ASSERT(BaApiExitLogger());
+}
+
+/* ****************************************************************************/
+/*  Test the control task
+ */
+void COsProcTest::ControlTask() {
+   TOsProcCtrlTaskStats stats;
+   uint64_t slpMs = 100;
+
+   // Logger should not be set before starting
+   CPPUNIT_ASSERT(!TRACE_("test"));
+   CPPUNIT_ASSERT(BaApiInitLogger(sOpts.log));
+   CPPUNIT_ASSERT(TRACE_("test2"));
+   CPPUNIT_ASSERT(BaApiExitLogger());
+
+
 #ifdef __WIN32
    CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
    BaCoreMSleep(slpMs);
@@ -224,15 +245,16 @@ void COsProcTest::ControlTask() {
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 #else
-   CPPUNIT_ASSERT(!OsProcPidFileIsRunning("OsProcCtrlTask", eBaBool_true));
-   CPPUNIT_ASSERT(!OsProcPidFileIsRunning("BaseApiTest", eBaBool_true));
 
+   // Check that the process is not running via the PID file
+   CPPUNIT_ASSERT(!OsProcCtrlTaskPidIsRunning());
+
+   // Start the control task
    CPPUNIT_ASSERT(OsApiStartCtrlTask(&sOpts));
    BaCoreMSleep(slpMs);
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
-
 
    // This is the parent, but it knows the child is running
+   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
 
    // Check that PID file is correct
@@ -243,17 +265,53 @@ void COsProcTest::ControlTask() {
    ASS(pid);
    ASS_EQ(tskName, std::string(buf));
 
-   // should not start
+   // Should not start because the control task is running
    CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
 
    CPPUNIT_ASSERT(OsApiStopCtrlTask());
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
-   BaCoreMSleep(slpMs);
+   BaCoreMSleep(slpMs * 5);
    ASS(!OsProcCtrlTaskPidIsRunning());
    ASS(!OsProcReadCtrlTaskPidFile(0));
-
 #endif
+
+   // Logger should not be set after stop
+   CPPUNIT_ASSERT(!TRACE_("test"));
+   CPPUNIT_ASSERT(BaApiInitLogger(sOpts.log));
+   CPPUNIT_ASSERT(TRACE_("test2"));
+   CPPUNIT_ASSERT(BaApiExitLogger());
+}
+
+/* ****************************************************************************/
+/*  Test the control task
+ */
+void COsProcTest::ControlThreadOvertime() {
+   TOsProcCtrlTaskStats stats;
+
+   // Logger should not be set before starting
+   CPPUNIT_ASSERT(!TRACE_("test"));
+   CPPUNIT_ASSERT(BaApiInitLogger(sOpts.log));
+   CPPUNIT_ASSERT(TRACE_("test2"));
+   CPPUNIT_ASSERT(BaApiExitLogger());
+
+   // Set the control thread options
+   sOpts.update = slowUpdate;
+   sOpts.cyleTimeUs = 40000;
+   uint64_t slpUs = sOpts.cyleTimeUs * 2; // 80ms
+
+   // Start the control thread
+   CPPUNIT_ASSERT(OsApiStartCtrlThread(&sOpts));
+   BaCoreUSleep(slpUs);
+
+   // The parent process knows that the thread is running
+   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
+   CPPUNIT_ASSERT(stats.imRunning);
+
+   // Stop the thread
+   ASS(OsApiStopCtrlThread());
+   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
+   CPPUNIT_ASSERT(!stats.imRunning);
 
    // Logger should not be set after stop
    CPPUNIT_ASSERT(!TRACE_("test"));
@@ -274,24 +332,13 @@ void COsProcTest::ControlTaskOvertime() {
    CPPUNIT_ASSERT(TRACE_("test2"));
    CPPUNIT_ASSERT(BaApiExitLogger());
 
-   uint64_t slpMs = 500;
    sOpts.update = slowUpdate;
-   sOpts.cyleTimeMs = 100;
-
-   CPPUNIT_ASSERT(OsApiStartCtrlThread(&sOpts));
-   BaCoreMSleep(slpMs);
-   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
-   CPPUNIT_ASSERT(stats.imRunning);
-
-   // It will not be able to destroy the thread without timeout because the
-   // update function takes too long, so do not test it
-   OsApiStopCtrlThread();
-   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
-   CPPUNIT_ASSERT(!stats.imRunning);
+   sOpts.cyleTimeUs = 40000;
+   uint64_t slpUs = sOpts.cyleTimeUs * 2; // 80
 
 #ifdef __WIN32
    CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
-   BaCoreMSleep(slpMs);
+   BaCoreUSleep(slpUs);
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
    CPPUNIT_ASSERT(!OsApiStopCtrlTask());
@@ -300,14 +347,17 @@ void COsProcTest::ControlTaskOvertime() {
 #else
 
    CPPUNIT_ASSERT(OsApiStartCtrlTask(&sOpts));
-   BaCoreMSleep(slpMs);
+   BaCoreUSleep(slpUs);
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
 
-   // This is the parent. therefore in the
+   // This is the parent. But knows that the child process is running
    CPPUNIT_ASSERT(stats.imRunning);
 
-   // should not start
+   // Should not start
    CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
+
+   // Let the task run for a bit
+   BaCoreUSleep(slpUs*3);
 
    CPPUNIT_ASSERT(OsApiStopCtrlTask());
    CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
@@ -351,6 +401,6 @@ LOCAL void slowUpdate(void *arg) {
    OsApiGetCtrlTaskStats(&stats);
    TRACE_("update(%s): cnt=%llu, dur=%llu us, cycle=%llu us",
          stats.imRunning ? "T" : "F", stats.updCnt, stats.lastDurUs, stats.lastCycleUs);
-   BaCoreMSleep(150);
+   BaCoreMSleep(50);
    return;
 }

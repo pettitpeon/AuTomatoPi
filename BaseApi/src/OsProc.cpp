@@ -45,10 +45,12 @@
 #define SHLEN BAPROC_SHORTNAMELEN
 #define FULLLEN BAPROC_FULLNAMELEN
 #define DEFDIR "/"
-#define MINSLEEP_US 10000
+#define MINSLEEP_US  1000 // 1ms
 #define MAXSLEEP_US 50000
+#define MINCYCLET_US 2000 // 2ms
 #define LASTCYCLE_US std::chrono::duration_cast<std::chrono::microseconds> \
    (std::chrono::steady_clock::now() - start).count()
+#define MINCYCLET_US 2000
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -399,7 +401,7 @@ TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
 
 
    TTimePoint start;
-   uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
+   uint64_t sampTimeUs = MAX(pOpts->cyleTimeUs, MINCYCLET_US);
    void (*updFun)(void*) = pOpts->update;
    void *pArg = pOpts->updateArg;
    IBaMsg *pTaskCycleMsg = IBaMsgCreate();
@@ -408,12 +410,15 @@ TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
    for ( ; !sExit; sTaskStats.updCnt++, sTaskStats.lastCycleUs = LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
 
+      // ==== Update function call and duration ====
+      sTaskStats.lastDurUs = BaCoreTimedUs(updFun, pArg);
+      // ==== ====End call =======
+
       // There is no need to make short sleeps like in the control thread
       // because nobody waits for the task to end.
       // TODO: Eventually this could be necessary if persistent variables are
       // implemented. In this case, the task has to end relatively quickly and
       // save the persistent state before power goes out.
-      sTaskStats.lastDurUs = BaCoreTimedUs(updFun, pArg);
       if (sTaskStats.lastDurUs + MINSLEEP_US > sampTimeUs) {
          // Log error
          if (pTaskCycleMsg) {
@@ -693,7 +698,7 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    const TOsProcCtrlTaskOpts* pOpts = (const TOsProcCtrlTaskOpts*) pArg->pArg;
    auto update  = pOpts->update;
    void * updateArg = pOpts->updateArg;
-   uint64_t sampTimeUs = MAX(pOpts->cyleTimeMs, 10) * 1000;
+   uint64_t sampTimeUs = MAX(pOpts->cyleTimeUs, MINCYCLET_US);
    uint64_t cycleCumUs = MAXSLEEP_US;
    TRACE_("Ctrl thread started");
    uint64_t toSleep;
@@ -754,6 +759,8 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    if (pOpts->exit) {
       pOpts->exit(pOpts->exitArg);
    }
+
+   BaApiExitLogger();
 }
 
 //

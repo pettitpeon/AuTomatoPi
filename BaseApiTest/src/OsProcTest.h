@@ -38,8 +38,10 @@ public:
    CPPUNIT_TEST(PIDFiles);
    CPPUNIT_TEST(Prio);
 
+   CPPUNIT_TEST(ControlThread);
    CPPUNIT_TEST(ControlTask);
    CPPUNIT_TEST(ControlTaskOvertime);
+   CPPUNIT_TEST(ControlThreadOvertime);
 
    CPPUNIT_TEST(Exit);
 
@@ -53,8 +55,10 @@ public:
    void PIDFiles();
    void Prio();
 
+   void ControlThread();
    void ControlTask();
    void ControlTaskOvertime();
+   void ControlThreadOvertime();
    void Exit();
 };
 

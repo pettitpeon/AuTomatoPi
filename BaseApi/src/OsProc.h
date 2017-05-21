@@ -39,7 +39,7 @@
 typedef struct TOsProcCtrlTaskOpts {
    const char* name; ///< Task name
    EBaCorePrio prio; ///< Task priority
-   uint32_t cyleTimeMs; ///< Desired cycle time in ms
+   uint32_t cyleTimeUs; ///< Desired cycle time in ms
    TBaLogDesc log; ///< The logger descriptor union
 
    // Control task callbacks
@@ -191,7 +191,7 @@ EBaCorePrio OsProcGetOwnPrio();
 /** Starts the one and only control task as a new process. This also
  *  automatically initializes the default logger if it not previously
  *  initialized via #BaApiInitLogger(). If a specialized logger is required, one
- *  could initialize it in the init() callback
+ *  could initialize it in the init() callback. The minimum cycle time is 2ms
  *  @return Error or success
  */
 TBaBoolRC OsApiStartCtrlTask(
