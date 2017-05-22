@@ -1,6 +1,0 @@
-<map id="BaLogMacros.h" name="BaLogMacros.h">
-<area shape="rect" id="node2" href="$BaseApi_8h.html" title="Includes the following: " alt="" coords="21,80,103,107"/>
-<area shape="rect" id="node3" href="$BaBool_8h.html" title="General purpose pure C boolean type. " alt="" coords="25,229,99,256"/>
-<area shape="rect" id="node5" href="$BaLog_8h.html" title="Logger API. " alt="" coords="27,155,97,181"/>
-<area shape="rect" id="node6" href="$BaCore_8h.html" title="OS level API. " alt="" coords="121,155,197,181"/>
-</map>
