@@ -1,0 +1,6 @@
+<map id="BaLog.h" name="BaLog.h">
+<area shape="rect" id="node2" href="$BaseApi_8h.html" title="Includes the following: " alt="" coords="21,80,103,107"/>
+<area shape="rect" id="node4" href="$BaMsg_8h.html" title="API for messages with state. " alt="" coords="127,80,202,107"/>
+<area shape="rect" id="node5" href="$OsProc_8h.html" title="Process functions. " alt="" coords="226,80,303,107"/>
+<area shape="rect" id="node3" href="$BaLogMacros_8h.html" title="This header defines macros for logging more easily. " alt="" coords="5,155,119,181"/>
+</map>

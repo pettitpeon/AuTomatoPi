@@ -1,0 +1,614 @@
+\hypertarget{OsIpcRegistry_8h}{}\section{Os\+Ipc\+Registry.\+h File Reference}
+\label{OsIpcRegistry_8h}\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+
+
+A\+PI for functions and variables registries.  
+
+
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$Os\+Def.\+h$>$}\newline
+Include dependency graph for Os\+Ipc\+Registry.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{OsIpcRegistry_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{OsIpcRegistry_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var}
+\begin{DoxyCompactList}\small\item\em Variable descriptor of the variables registry. \end{DoxyCompactList}\item 
+struct \hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun}
+\begin{DoxyCompactList}\small\item\em Function descriptor of the functions registry. \end{DoxyCompactList}\item 
+struct \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out}
+\begin{DoxyCompactList}\small\item\em Variable descriptor buffer for retrieving values of the variables registry without getting access to the underlying memory. \end{DoxyCompactList}\item 
+union \hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg}
+\begin{DoxyCompactList}\small\item\em Argument type union. It is used to cast return values and single arguments. \end{DoxyCompactList}\item 
+struct \hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg}
+\begin{DoxyCompactList}\small\item\em Structure to hold the arguments of a function to be called. \end{DoxyCompactList}\item 
+class \hyperlink{classIOsIpcRegistry}{I\+Os\+Ipc\+Registry}
+\begin{DoxyCompactList}\small\item\em Interface to use a registry object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{OsIpcRegistry_8h_a0c51094eb9214b8ed7d1af23581342e1}\label{OsIpcRegistry_8h_a0c51094eb9214b8ed7d1af23581342e1}} 
+\#define \hyperlink{OsIpcRegistry_8h_a0c51094eb9214b8ed7d1af23581342e1}{O\+S\+I\+P\+C\+\_\+\+M\+A\+X\+A\+RG}~4
+\begin{DoxyCompactList}\small\item\em M\+Aximum number of arguments in registry function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}\label{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}} 
+typedef void $\ast$ \hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}
+\begin{DoxyCompactList}\small\item\em C message handle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{OsIpcRegistry_8h_ac92b4110339600517d1ae6d07b13f210}\label{OsIpcRegistry_8h_ac92b4110339600517d1ae6d07b13f210}} 
+typedef struct \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} \hyperlink{OsIpcRegistry_8h_ac92b4110339600517d1ae6d07b13f210}{T\+Os\+Ipc\+Reg\+Var}
+\begin{DoxyCompactList}\small\item\em Variable descriptor of the variables registry. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun} \hyperlink{OsIpcRegistry_8h_a77c4f25a214ca9182c1787228d68085b}{T\+Os\+Ipc\+Reg\+Fun}
+\begin{DoxyCompactList}\small\item\em Function descriptor of the functions registry. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} \hyperlink{OsIpcRegistry_8h_a64434e930a85b2b4894f2de836445635}{T\+Os\+Ipc\+Reg\+Var\+Out}
+\begin{DoxyCompactList}\small\item\em Variable descriptor buffer for retrieving values of the variables registry without getting access to the underlying memory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{OsIpcRegistry_8h_a18ced6315ff086dd4c3a725c6b4369ad}\label{OsIpcRegistry_8h_a18ced6315ff086dd4c3a725c6b4369ad}} 
+typedef union \hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} \hyperlink{OsIpcRegistry_8h_a18ced6315ff086dd4c3a725c6b4369ad}{T\+Os\+Ipc\+Arg}
+\begin{DoxyCompactList}\small\item\em Argument type union. It is used to cast return values and single arguments. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{OsIpcRegistry_8h_a7a47893c9fe1388763b4791e39dbdb28}\label{OsIpcRegistry_8h_a7a47893c9fe1388763b4791e39dbdb28}} 
+typedef struct \hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg} \hyperlink{OsIpcRegistry_8h_a7a47893c9fe1388763b4791e39dbdb28}{T\+Os\+Ipc\+Fun\+Arg}
+\begin{DoxyCompactList}\small\item\em Structure to hold the arguments of a function to be called. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{Indent}\textbf{ Local Functions registry}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_ac34b841424dd4676b10af8d2e5c60e66}{Os\+Ipc\+Registry\+Local\+Init} ()
+\begin{DoxyCompactList}\small\item\em Initialize the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_ab3de3a12a3bdda511b979ea88094399b}{Os\+Ipc\+Registry\+Local\+Exit} ()
+\begin{DoxyCompactList}\small\item\em Exit the local registry and release resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_ad303ba019dd1ad67d61b20a6556fbdac}{Os\+Ipc\+Registry\+Local\+Register\+Fun} (const char $\ast$name, \hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun} fun)
+\begin{DoxyCompactList}\small\item\em Register a function in the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a8ac4a6e5653cf658c689e5100c373469}{Os\+Ipc\+Registry\+Local\+Unregister\+Fun} (const char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Remove a function from the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a441f3dcd23f594852da3ff690e978703}{Os\+Ipc\+Registry\+Local\+Call\+Fun} (const char $\ast$name, \hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg} a, \hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$p\+Ret)
+\begin{DoxyCompactList}\small\item\em Call a function from the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_ae89f3cb33a24f78c5f7ad9ec6cb72625}{Os\+Ipc\+Registry\+Local\+Clear\+Fun\+Reg} ()
+\begin{DoxyCompactList}\small\item\em Clear the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a75ce7dfb37d6a57925d8e3e484882930}{Os\+Ipc\+Registry\+Local\+Register\+Var} (const char $\ast$name, const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$p\+Var)
+\begin{DoxyCompactList}\small\item\em Register a variable in the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a2cfdcf710ceb3855758468d4d63efd5e}{Os\+Ipc\+Registry\+Local\+Unregister\+Var} (const char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Remove a variable from the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_af8f81398a2211e8131cf3412ee26a372}{Os\+Ipc\+Registry\+Local\+Clear\+Var\+Reg} ()
+\begin{DoxyCompactList}\small\item\em Clear the local registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a93fabdc0b7ac4cda2badd83df748d83f}{Os\+Ipc\+Registry\+Local\+Call\+Var} (const char $\ast$name, \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} $\ast$p\+Var)
+\begin{DoxyCompactList}\small\item\em Gets the value of a variable in the registry by copying the value to the {\ttfamily $\ast$p\+Var} buffer. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a1dd8b62efad877dc46657297dab64729}{Os\+Ipc\+Registry\+Local\+Set\+Var} (const char $\ast$name, const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$p\+Var)
+\begin{DoxyCompactList}\small\item\em Sets the values of a variable from the registry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Registry Factory}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} \hyperlink{OsIpcRegistry_8h_a4dd6fc784a414be479d9e4293a6d7dfb}{Os\+Ipc\+Registry\+Create} ()
+\begin{DoxyCompactList}\small\item\em Create factory for ... \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a8dbb22e9c419074e256ff57fd16dd521}{Os\+Ipc\+Registry\+Destroy} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Functions registry}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_aaad20b88f417f90f4c90aa6a43c445fa}{Os\+Ipc\+Registry\+Register\+Fun} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl, const char $\ast$name, \hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun} fun)
+\begin{DoxyCompactList}\small\item\em Register a function in the registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a0451225ef9ed1ed1efc80f4a5836ad39}{Os\+Ipc\+Registry\+Unregister\+Fun} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl, const char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Remove a function from the registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a6c53d0c471be96ffa705e7642fad540a}{Os\+Ipc\+Registry\+Clear\+Fun\+Reg} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Clear the functions registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a43a7b0a2b844e33f2f26a7742dd800d2}{Os\+Ipc\+Registry\+Call\+Fun} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl, const char $\ast$name, \hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg} a, \hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$p\+Ret)
+\begin{DoxyCompactList}\small\item\em Call a function from the registry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Variables registry}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a4af481ea6ea987fca2f213cdb5685596}{Os\+Ipc\+Registry\+Register\+Var} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl, const char $\ast$name, const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$p\+Var)
+\begin{DoxyCompactList}\small\item\em Register a variable in the registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a1093a5ac25dcd073d4f2c1db44d5d82f}{Os\+Ipc\+Registry\+Unregister\+Var} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl, const char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Register a variable in the registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a481d0ee428275ab4b45528e4650cc19d}{Os\+Ipc\+Registry\+Clear\+Var\+Reg} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Clear the variables registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_aeff6010871511a5b07b80b212ac64727}{Os\+Ipc\+Registry\+Call\+Var} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl, const char $\ast$name, \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} $\ast$p\+Var)
+\begin{DoxyCompactList}\small\item\em Gets the value of a variable in the registry by copying the value to the {\ttfamily $\ast$p\+Var} buffer. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a53676e32b8de5d93de6368557b4aede5}{Os\+Ipc\+Registry\+Set\+Var} (\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} hdl, const char $\ast$name, const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$p\+Var)
+\begin{DoxyCompactList}\small\item\em Set a variable from the registry to a new value if allowed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ C++ Factory}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classIOsIpcRegistry}{I\+Os\+Ipc\+Registry} $\ast$ \hyperlink{OsIpcRegistry_8h_a53af1c8c32178e3952910e02a47dfc61}{I\+Os\+Ipc\+Registry\+Create} ()
+\begin{DoxyCompactList}\small\item\em Create factory for a functions and variables registry. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpcRegistry_8h_a97acd0c8e1c9d0200ead23de62667264}{I\+Os\+Ipc\+Registry\+Destroy} (\hyperlink{classIOsIpcRegistry}{I\+Os\+Ipc\+Registry} $\ast$p\+Hdl)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+A\+PI for functions and variables registries. 
+
+The A\+PI gives the freedom to create registries at the user\textquotesingle{}s discretion, or use the embedded \char`\"{}local\char`\"{} registry. The I\+PC A\+PI uses the local registry to call functions and variables remotely. 
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a77c4f25a214ca9182c1787228d68085b}\label{OsIpcRegistry_8h_a77c4f25a214ca9182c1787228d68085b}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!T\+Os\+Ipc\+Reg\+Fun@{T\+Os\+Ipc\+Reg\+Fun}}
+\index{T\+Os\+Ipc\+Reg\+Fun@{T\+Os\+Ipc\+Reg\+Fun}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{T\+Os\+Ipc\+Reg\+Fun}{TOsIpcRegFun}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun}  \hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun}}
+
+
+
+Function descriptor of the functions registry. 
+
+The {\ttfamily type} string is defined as one character, a semicolon and a string, eg.\+: i\+:I\+If. The first character is the return type of the function. The string of characters after the semicolon are the parameter types in order. The valid characters and types are
+\begin{DoxyItemize}
+\item v\+: void
+\item i\+: integer types of 4 bytes or less. It includes unsigned types and pointers
+\item I\+: 64 bit integer types including unsigned
+\item f\+: float
+\item d\+: double If there are no parameters, only a single \textquotesingle{}v\textquotesingle{} is allowed after the semicolon, e.\+g., f\+:v 
+\end{DoxyItemize}\mbox{\Hypertarget{OsIpcRegistry_8h_a64434e930a85b2b4894f2de836445635}\label{OsIpcRegistry_8h_a64434e930a85b2b4894f2de836445635}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!T\+Os\+Ipc\+Reg\+Var\+Out@{T\+Os\+Ipc\+Reg\+Var\+Out}}
+\index{T\+Os\+Ipc\+Reg\+Var\+Out@{T\+Os\+Ipc\+Reg\+Var\+Out}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{T\+Os\+Ipc\+Reg\+Var\+Out}{TOsIpcRegVarOut}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out}  \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out}}
+
+
+
+Variable descriptor buffer for retrieving values of the variables registry without getting access to the underlying memory. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{OsIpcRegistry_8h_ac34b841424dd4676b10af8d2e5c60e66}\label{OsIpcRegistry_8h_ac34b841424dd4676b10af8d2e5c60e66}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Init@{Os\+Ipc\+Registry\+Local\+Init}}
+\index{Os\+Ipc\+Registry\+Local\+Init@{Os\+Ipc\+Registry\+Local\+Init}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Init()}{OsIpcRegistryLocalInit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpcRegistry_8h_ab3de3a12a3bdda511b979ea88094399b}\label{OsIpcRegistry_8h_ab3de3a12a3bdda511b979ea88094399b}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Exit@{Os\+Ipc\+Registry\+Local\+Exit}}
+\index{Os\+Ipc\+Registry\+Local\+Exit@{Os\+Ipc\+Registry\+Local\+Exit}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Exit()}{OsIpcRegistryLocalExit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Exit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Exit the local registry and release resources. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpcRegistry_8h_ad303ba019dd1ad67d61b20a6556fbdac}\label{OsIpcRegistry_8h_ad303ba019dd1ad67d61b20a6556fbdac}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Register\+Fun@{Os\+Ipc\+Registry\+Local\+Register\+Fun}}
+\index{Os\+Ipc\+Registry\+Local\+Register\+Fun@{Os\+Ipc\+Registry\+Local\+Register\+Fun}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Register\+Fun()}{OsIpcRegistryLocalRegisterFun()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Register\+Fun (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun}}]{fun }\end{DoxyParamCaption})}
+
+
+
+Register a function in the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em fun} & Function to register \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a8ac4a6e5653cf658c689e5100c373469}\label{OsIpcRegistry_8h_a8ac4a6e5653cf658c689e5100c373469}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Unregister\+Fun@{Os\+Ipc\+Registry\+Local\+Unregister\+Fun}}
+\index{Os\+Ipc\+Registry\+Local\+Unregister\+Fun@{Os\+Ipc\+Registry\+Local\+Unregister\+Fun}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Unregister\+Fun()}{OsIpcRegistryLocalUnregisterFun()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Unregister\+Fun (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Remove a function from the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a441f3dcd23f594852da3ff690e978703}\label{OsIpcRegistry_8h_a441f3dcd23f594852da3ff690e978703}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Call\+Fun@{Os\+Ipc\+Registry\+Local\+Call\+Fun}}
+\index{Os\+Ipc\+Registry\+Local\+Call\+Fun@{Os\+Ipc\+Registry\+Local\+Call\+Fun}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Call\+Fun()}{OsIpcRegistryLocalCallFun()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Call\+Fun (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg}}]{a,  }\item[{\hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$}]{p\+Ret }\end{DoxyParamCaption})}
+
+
+
+Call a function from the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em a} & Function arguments \\
+\hline
+\mbox{\tt out}  & {\em p\+Ret} & Function return value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_ae89f3cb33a24f78c5f7ad9ec6cb72625}\label{OsIpcRegistry_8h_ae89f3cb33a24f78c5f7ad9ec6cb72625}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Clear\+Fun\+Reg@{Os\+Ipc\+Registry\+Local\+Clear\+Fun\+Reg}}
+\index{Os\+Ipc\+Registry\+Local\+Clear\+Fun\+Reg@{Os\+Ipc\+Registry\+Local\+Clear\+Fun\+Reg}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Clear\+Fun\+Reg()}{OsIpcRegistryLocalClearFunReg()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Clear\+Fun\+Reg (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clear the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a75ce7dfb37d6a57925d8e3e484882930}\label{OsIpcRegistry_8h_a75ce7dfb37d6a57925d8e3e484882930}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Register\+Var@{Os\+Ipc\+Registry\+Local\+Register\+Var}}
+\index{Os\+Ipc\+Registry\+Local\+Register\+Var@{Os\+Ipc\+Registry\+Local\+Register\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Register\+Var()}{OsIpcRegistryLocalRegisterVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Register\+Var (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$}]{p\+Var }\end{DoxyParamCaption})}
+
+
+
+Register a variable in the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\mbox{\tt in}  & {\em p\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a2cfdcf710ceb3855758468d4d63efd5e}\label{OsIpcRegistry_8h_a2cfdcf710ceb3855758468d4d63efd5e}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Unregister\+Var@{Os\+Ipc\+Registry\+Local\+Unregister\+Var}}
+\index{Os\+Ipc\+Registry\+Local\+Unregister\+Var@{Os\+Ipc\+Registry\+Local\+Unregister\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Unregister\+Var()}{OsIpcRegistryLocalUnregisterVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Unregister\+Var (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Remove a variable from the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_af8f81398a2211e8131cf3412ee26a372}\label{OsIpcRegistry_8h_af8f81398a2211e8131cf3412ee26a372}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Clear\+Var\+Reg@{Os\+Ipc\+Registry\+Local\+Clear\+Var\+Reg}}
+\index{Os\+Ipc\+Registry\+Local\+Clear\+Var\+Reg@{Os\+Ipc\+Registry\+Local\+Clear\+Var\+Reg}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Clear\+Var\+Reg()}{OsIpcRegistryLocalClearVarReg()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Clear\+Var\+Reg (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clear the local registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a93fabdc0b7ac4cda2badd83df748d83f}\label{OsIpcRegistry_8h_a93fabdc0b7ac4cda2badd83df748d83f}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Call\+Var@{Os\+Ipc\+Registry\+Local\+Call\+Var}}
+\index{Os\+Ipc\+Registry\+Local\+Call\+Var@{Os\+Ipc\+Registry\+Local\+Call\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Call\+Var()}{OsIpcRegistryLocalCallVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Call\+Var (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} $\ast$}]{p\+Var }\end{DoxyParamCaption})}
+
+
+
+Gets the value of a variable in the registry by copying the value to the {\ttfamily $\ast$p\+Var} buffer. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\mbox{\tt out}  & {\em p\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a1dd8b62efad877dc46657297dab64729}\label{OsIpcRegistry_8h_a1dd8b62efad877dc46657297dab64729}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Local\+Set\+Var@{Os\+Ipc\+Registry\+Local\+Set\+Var}}
+\index{Os\+Ipc\+Registry\+Local\+Set\+Var@{Os\+Ipc\+Registry\+Local\+Set\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Local\+Set\+Var()}{OsIpcRegistryLocalSetVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Local\+Set\+Var (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$}]{p\+Var }\end{DoxyParamCaption})}
+
+
+
+Sets the values of a variable from the registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\mbox{\tt in}  & {\em p\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a4dd6fc784a414be479d9e4293a6d7dfb}\label{OsIpcRegistry_8h_a4dd6fc784a414be479d9e4293a6d7dfb}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Create@{Os\+Ipc\+Registry\+Create}}
+\index{Os\+Ipc\+Registry\+Create@{Os\+Ipc\+Registry\+Create}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Create()}{OsIpcRegistryCreate()}}
+{\footnotesize\ttfamily \hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl} Os\+Ipc\+Registry\+Create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create factory for ... 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a8dbb22e9c419074e256ff57fd16dd521}\label{OsIpcRegistry_8h_a8dbb22e9c419074e256ff57fd16dd521}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Destroy@{Os\+Ipc\+Registry\+Destroy}}
+\index{Os\+Ipc\+Registry\+Destroy@{Os\+Ipc\+Registry\+Destroy}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Destroy()}{OsIpcRegistryDestroy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Destroy (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Destroy and release resources. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & handle to destroy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_aaad20b88f417f90f4c90aa6a43c445fa}\label{OsIpcRegistry_8h_aaad20b88f417f90f4c90aa6a43c445fa}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Register\+Fun@{Os\+Ipc\+Registry\+Register\+Fun}}
+\index{Os\+Ipc\+Registry\+Register\+Fun@{Os\+Ipc\+Registry\+Register\+Fun}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Register\+Fun()}{OsIpcRegistryRegisterFun()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Register\+Fun (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl,  }\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun}}]{fun }\end{DoxyParamCaption})}
+
+
+
+Register a function in the registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em fun} & Function to register \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a0451225ef9ed1ed1efc80f4a5836ad39}\label{OsIpcRegistry_8h_a0451225ef9ed1ed1efc80f4a5836ad39}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Unregister\+Fun@{Os\+Ipc\+Registry\+Unregister\+Fun}}
+\index{Os\+Ipc\+Registry\+Unregister\+Fun@{Os\+Ipc\+Registry\+Unregister\+Fun}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Unregister\+Fun()}{OsIpcRegistryUnregisterFun()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Unregister\+Fun (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl,  }\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Remove a function from the registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a6c53d0c471be96ffa705e7642fad540a}\label{OsIpcRegistry_8h_a6c53d0c471be96ffa705e7642fad540a}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Clear\+Fun\+Reg@{Os\+Ipc\+Registry\+Clear\+Fun\+Reg}}
+\index{Os\+Ipc\+Registry\+Clear\+Fun\+Reg@{Os\+Ipc\+Registry\+Clear\+Fun\+Reg}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Clear\+Fun\+Reg()}{OsIpcRegistryClearFunReg()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Clear\+Fun\+Reg (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Clear the functions registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a43a7b0a2b844e33f2f26a7742dd800d2}\label{OsIpcRegistry_8h_a43a7b0a2b844e33f2f26a7742dd800d2}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Call\+Fun@{Os\+Ipc\+Registry\+Call\+Fun}}
+\index{Os\+Ipc\+Registry\+Call\+Fun@{Os\+Ipc\+Registry\+Call\+Fun}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Call\+Fun()}{OsIpcRegistryCallFun()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Call\+Fun (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl,  }\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg}}]{a,  }\item[{\hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$}]{p\+Ret }\end{DoxyParamCaption})}
+
+
+
+Call a function from the registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em a} & Function arguments \\
+\hline
+\mbox{\tt out}  & {\em p\+Ret} & Function return value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a4af481ea6ea987fca2f213cdb5685596}\label{OsIpcRegistry_8h_a4af481ea6ea987fca2f213cdb5685596}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Register\+Var@{Os\+Ipc\+Registry\+Register\+Var}}
+\index{Os\+Ipc\+Registry\+Register\+Var@{Os\+Ipc\+Registry\+Register\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Register\+Var()}{OsIpcRegistryRegisterVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Register\+Var (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl,  }\item[{const char $\ast$}]{name,  }\item[{const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$}]{p\+Var }\end{DoxyParamCaption})}
+
+
+
+Register a variable in the registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em p\+Var} & Variable to register \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a1093a5ac25dcd073d4f2c1db44d5d82f}\label{OsIpcRegistry_8h_a1093a5ac25dcd073d4f2c1db44d5d82f}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Unregister\+Var@{Os\+Ipc\+Registry\+Unregister\+Var}}
+\index{Os\+Ipc\+Registry\+Unregister\+Var@{Os\+Ipc\+Registry\+Unregister\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Unregister\+Var()}{OsIpcRegistryUnregisterVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Unregister\+Var (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl,  }\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Register a variable in the registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a481d0ee428275ab4b45528e4650cc19d}\label{OsIpcRegistry_8h_a481d0ee428275ab4b45528e4650cc19d}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Clear\+Var\+Reg@{Os\+Ipc\+Registry\+Clear\+Var\+Reg}}
+\index{Os\+Ipc\+Registry\+Clear\+Var\+Reg@{Os\+Ipc\+Registry\+Clear\+Var\+Reg}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Clear\+Var\+Reg()}{OsIpcRegistryClearVarReg()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Clear\+Var\+Reg (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Clear the variables registry. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_aeff6010871511a5b07b80b212ac64727}\label{OsIpcRegistry_8h_aeff6010871511a5b07b80b212ac64727}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Call\+Var@{Os\+Ipc\+Registry\+Call\+Var}}
+\index{Os\+Ipc\+Registry\+Call\+Var@{Os\+Ipc\+Registry\+Call\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Call\+Var()}{OsIpcRegistryCallVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Call\+Var (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl,  }\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} $\ast$}]{p\+Var }\end{DoxyParamCaption})}
+
+
+
+Gets the value of a variable in the registry by copying the value to the {\ttfamily $\ast$p\+Var} buffer. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\mbox{\tt out}  & {\em p\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a53676e32b8de5d93de6368557b4aede5}\label{OsIpcRegistry_8h_a53676e32b8de5d93de6368557b4aede5}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!Os\+Ipc\+Registry\+Set\+Var@{Os\+Ipc\+Registry\+Set\+Var}}
+\index{Os\+Ipc\+Registry\+Set\+Var@{Os\+Ipc\+Registry\+Set\+Var}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Registry\+Set\+Var()}{OsIpcRegistrySetVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Registry\+Set\+Var (\begin{DoxyParamCaption}\item[{\hyperlink{OsIpcRegistry_8h_a1c94418df65da16c54f60acee256fde2}{T\+Os\+Ipc\+Registry\+Hdl}}]{hdl,  }\item[{const char $\ast$}]{name,  }\item[{const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} $\ast$}]{p\+Var }\end{DoxyParamCaption})}
+
+
+
+Set a variable from the registry to a new value if allowed. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em p\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a53af1c8c32178e3952910e02a47dfc61}\label{OsIpcRegistry_8h_a53af1c8c32178e3952910e02a47dfc61}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!I\+Os\+Ipc\+Registry\+Create@{I\+Os\+Ipc\+Registry\+Create}}
+\index{I\+Os\+Ipc\+Registry\+Create@{I\+Os\+Ipc\+Registry\+Create}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{I\+Os\+Ipc\+Registry\+Create()}{IOsIpcRegistryCreate()}}
+{\footnotesize\ttfamily \hyperlink{classIOsIpcRegistry}{I\+Os\+Ipc\+Registry}$\ast$ I\+Os\+Ipc\+Registry\+Create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create factory for a functions and variables registry. 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpcRegistry_8h_a97acd0c8e1c9d0200ead23de62667264}\label{OsIpcRegistry_8h_a97acd0c8e1c9d0200ead23de62667264}} 
+\index{Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}!I\+Os\+Ipc\+Registry\+Destroy@{I\+Os\+Ipc\+Registry\+Destroy}}
+\index{I\+Os\+Ipc\+Registry\+Destroy@{I\+Os\+Ipc\+Registry\+Destroy}!Os\+Ipc\+Registry.\+h@{Os\+Ipc\+Registry.\+h}}
+\subsubsection{\texorpdfstring{I\+Os\+Ipc\+Registry\+Destroy()}{IOsIpcRegistryDestroy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} I\+Os\+Ipc\+Registry\+Destroy (\begin{DoxyParamCaption}\item[{\hyperlink{classIOsIpcRegistry}{I\+Os\+Ipc\+Registry} $\ast$}]{p\+Hdl }\end{DoxyParamCaption})}
+
+
+
+Destroy and release resources. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Hdl} & handle to destroy \\
+\hline
+\end{DoxyParams}

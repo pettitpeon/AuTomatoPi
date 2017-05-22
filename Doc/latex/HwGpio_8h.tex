@@ -1,0 +1,494 @@
+\hypertarget{HwGpio_8h}{}\section{Hw\+Gpio.\+h File Reference}
+\label{HwGpio_8h}\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+
+
+G\+P\+I\+Os A\+P\+Is.  
+
+
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+Include dependency graph for Hw\+Gpio.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{HwGpio_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classIHwGpio}{I\+Hw\+Gpio}
+\begin{DoxyCompactList}\small\item\em C++ interface This is a C++ wrapper of the C A\+PI above adding multi process safety and a few extra functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}\label{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}} 
+typedef uint8\+\_\+t \hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}
+\begin{DoxyCompactList}\small\item\em G\+P\+I\+Os range from 1 to 27. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}\label{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}} 
+typedef void $\ast$ \hyperlink{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}{T\+Hw\+Gpio\+S\+W\+P\+W\+M\+Hdl}
+\begin{DoxyCompactList}\small\item\em Software P\+WM handle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{HwGpio_8h_a1ae4eb00a17c927fafd7616aba658fc9}\label{HwGpio_8h_a1ae4eb00a17c927fafd7616aba658fc9}} 
+typedef enum \hyperlink{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode} \hyperlink{HwGpio_8h_a1ae4eb00a17c927fafd7616aba658fc9}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode}
+\begin{DoxyCompactList}\small\item\em HW P\+WM mode flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode} \{ \hyperlink{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94ae33c11da943dd0769d7cd2b156b0a753}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Marked\+Space} = 0, 
+\hyperlink{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94aafcb08fd7ffe81a6e118ada3faba3747}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Balanced}
+ \}\begin{DoxyCompactList}\small\item\em HW P\+WM mode flag. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{Indent}\textbf{ Init/\+Exit Functions}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a1d968462f3edd712667b4f75ec44cfed}{Hw\+Gpio\+Init} ()
+\begin{DoxyCompactList}\small\item\em Initializes and frees resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_acfcd28b73eb0f2e265e3b24b293e6590}{Hw\+Gpio\+Exit} ()
+\begin{DoxyCompactList}\small\item\em Initializes and frees resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Hardware P\+WM setup functions}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a6d6615e21e0514b50da05923221e28db}{Hw\+Gpio\+Init\+H\+W\+P\+WM} ()
+\begin{DoxyCompactList}\small\item\em Initialize the hardware P\+WM functionality with default frequency 1000 Hz and resolution 256 steps. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a2c45dcfb516635d865b9bfbd88a53543}{Hw\+Gpio\+Exit\+H\+W\+P\+WM} ()
+\begin{DoxyCompactList}\small\item\em Exit and release resources of the hardware P\+WM functionality. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a252043f4a914351cb582fb93d0d74f5e}{Hw\+Gpio\+Set\+Clk\+H\+W\+P\+WM} (double frequency, uint32\+\_\+t resolution, \hyperlink{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode} mode)
+\begin{DoxyCompactList}\small\item\em Set the frequency and resolution of the hardware P\+WM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Basic G\+P\+IO operations}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a3f1c2c0601070abb5a593ad580c941aa}{Hw\+Gpio\+Clean\+Up} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em Cleans up the G\+P\+IO and leaves it on default state. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a5be4271de431da1d18256d7cd34115ef}{Hw\+Gpio\+Set\+Inp} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em Sets G\+P\+IO as input. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a6a24226f6f09aeb646c67dec3e574f2f}{Hw\+Gpio\+Set\+Out} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em Sets G\+P\+IO as output. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_acab9f0533e164e5478a04447fa054b75}{Hw\+Gpio\+Set\+Alt} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio, int alt)
+\begin{DoxyCompactList}\small\item\em Sets G\+P\+IO as alternative function. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_aceb592be77bc482f19c4262db9920805}{Hw\+Gpio\+Set} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em Sets G\+P\+IO high. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a3364842cffdcea651bbda71b58ea325c}{Hw\+Gpio\+Reset} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em Sets G\+P\+IO low. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} \hyperlink{HwGpio_8h_ac1c476b89905c6510dd502fe92af2925}{Hw\+Gpio\+Get} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em Gets the G\+P\+IO state high/low. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ P\+WM Functions}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a04f13981c2033becc1435724957eb55d}{Hw\+Gpio\+Start\+H\+W\+P\+WM} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio, float duty\+Cycle)
+\begin{DoxyCompactList}\small\item\em Start the hardware P\+WM. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a0028af6f42d0994bf0cfd88e5165c3cb}{Hw\+Gpio\+Reset\+H\+W\+P\+W\+M\+Du\+Cy} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio, float duty\+Cycle)
+\begin{DoxyCompactList}\small\item\em Reset the duty cycle of the hardware P\+WM. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a84766fbecb84246883ad037014379822}{Hw\+Gpio\+Stop\+H\+W\+P\+WM} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em Stop the hardware P\+WM. \end{DoxyCompactList}\item 
+\hyperlink{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}{T\+Hw\+Gpio\+S\+W\+P\+W\+M\+Hdl} \hyperlink{HwGpio_8h_a8dc38f04b47f9cca01d5b9e08920c1e6}{Hw\+Gpio\+Start\+S\+W\+P\+WM} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio, float dutyC, uint16\+\_\+t period\+Ms)
+\begin{DoxyCompactList}\small\item\em Start software P\+WM on the desired G\+P\+IO with normal soft real-\/time priority. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_aed43687c444e5dd77c4fe6d137ee24eb}{Hw\+Gpio\+Reset\+S\+W\+P\+W\+M\+Du\+Cy} (\hyperlink{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}{T\+Hw\+Gpio\+S\+W\+P\+W\+M\+Hdl} hdl, float dutyC)
+\begin{DoxyCompactList}\small\item\em Reset the duty cycle of the software P\+WM. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_adde7229553ee1dfc0470b247722266d6}{Hw\+Gpio\+Stop\+S\+W\+P\+WM} (\hyperlink{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}{T\+Hw\+Gpio\+S\+W\+P\+W\+M\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Stop the software P\+WM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ C-\/\+Linkage object oriented factory}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classIHwGpio}{I\+Hw\+Gpio} $\ast$ \hyperlink{HwGpio_8h_a3885c92d0b10ec67e5381eeea50c922f}{I\+Hw\+Gpio\+Create} (\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio} gpio)
+\begin{DoxyCompactList}\small\item\em C++ interface object oriented factory. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwGpio_8h_a7807c9116813f217fbff15c637faf538}{I\+Hw\+Gpio\+Delete} (\hyperlink{classIHwGpio}{I\+Hw\+Gpio} $\ast$p\+Hdl)
+\begin{DoxyCompactList}\small\item\em C++ interface object oriented destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+G\+P\+I\+Os A\+P\+Is. 
+
+C A\+PI\+:~\newline
+
+\begin{DoxyItemize}
+\item The C A\+PI is thread-\/safe unless explicitly specified otherwise.
+\item The C A\+PI has an initializations counter. Do not call the \hyperlink{HwGpio_8h_acfcd28b73eb0f2e265e3b24b293e6590}{Hw\+Gpio\+Exit()} function without having called \hyperlink{HwGpio_8h_a1d968462f3edd712667b4f75ec44cfed}{Hw\+Gpio\+Init()} first.
+\item The C A\+PI is not multi-\/process safe. Processes can overwrite each other
+\end{DoxyItemize}
+
+C++ A\+PI~\newline
+The object oriented C++ A\+PI is multiprocess safe between processes using this A\+PI 
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94}\label{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode@{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode}}
+\index{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode@{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode}{EHwGpioHWPWMMode}}
+{\footnotesize\ttfamily enum \hyperlink{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode}}
+
+
+
+HW P\+WM mode flag. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Marked\+Space@{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Marked\+Space}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Marked\+Space@{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Marked\+Space}}}\mbox{\Hypertarget{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94ae33c11da943dd0769d7cd2b156b0a753}\label{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94ae33c11da943dd0769d7cd2b156b0a753}} 
+E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Marked\+Space&Traditional P\+WM mode. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Balanced@{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Balanced}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Balanced@{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Balanced}}}\mbox{\Hypertarget{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94aafcb08fd7ffe81a6e118ada3faba3747}\label{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94aafcb08fd7ffe81a6e118ada3faba3747}} 
+E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode\+\_\+\+Balanced&Default mode. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{HwGpio_8h_a1d968462f3edd712667b4f75ec44cfed}\label{HwGpio_8h_a1d968462f3edd712667b4f75ec44cfed}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Init@{Hw\+Gpio\+Init}}
+\index{Hw\+Gpio\+Init@{Hw\+Gpio\+Init}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Init()}{HwGpioInit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes and frees resources. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwGpio_8h_acfcd28b73eb0f2e265e3b24b293e6590}\label{HwGpio_8h_acfcd28b73eb0f2e265e3b24b293e6590}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Exit@{Hw\+Gpio\+Exit}}
+\index{Hw\+Gpio\+Exit@{Hw\+Gpio\+Exit}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Exit()}{HwGpioExit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Exit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes and frees resources. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwGpio_8h_a6d6615e21e0514b50da05923221e28db}\label{HwGpio_8h_a6d6615e21e0514b50da05923221e28db}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Init\+H\+W\+P\+WM@{Hw\+Gpio\+Init\+H\+W\+P\+WM}}
+\index{Hw\+Gpio\+Init\+H\+W\+P\+WM@{Hw\+Gpio\+Init\+H\+W\+P\+WM}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Init\+H\+W\+P\+W\+M()}{HwGpioInitHWPWM()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Init\+H\+W\+P\+WM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the hardware P\+WM functionality with default frequency 1000 Hz and resolution 256 steps. 
+
+W\+A\+R\+N\+I\+NG\+: The R\+PI uses the P\+WM subsystem to produce audio. As such please refrain from playing audio on the R\+PI while this code is running \mbox{\Hypertarget{HwGpio_8h_a2c45dcfb516635d865b9bfbd88a53543}\label{HwGpio_8h_a2c45dcfb516635d865b9bfbd88a53543}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Exit\+H\+W\+P\+WM@{Hw\+Gpio\+Exit\+H\+W\+P\+WM}}
+\index{Hw\+Gpio\+Exit\+H\+W\+P\+WM@{Hw\+Gpio\+Exit\+H\+W\+P\+WM}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Exit\+H\+W\+P\+W\+M()}{HwGpioExitHWPWM()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Exit\+H\+W\+P\+WM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Exit and release resources of the hardware P\+WM functionality. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwGpio_8h_a252043f4a914351cb582fb93d0d74f5e}\label{HwGpio_8h_a252043f4a914351cb582fb93d0d74f5e}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Set\+Clk\+H\+W\+P\+WM@{Hw\+Gpio\+Set\+Clk\+H\+W\+P\+WM}}
+\index{Hw\+Gpio\+Set\+Clk\+H\+W\+P\+WM@{Hw\+Gpio\+Set\+Clk\+H\+W\+P\+WM}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Set\+Clk\+H\+W\+P\+W\+M()}{HwGpioSetClkHWPWM()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Set\+Clk\+H\+W\+P\+WM (\begin{DoxyParamCaption}\item[{double}]{frequency,  }\item[{uint32\+\_\+t}]{resolution,  }\item[{\hyperlink{HwGpio_8h_a4f85e40afc7a7a55f67f869d4f304c94}{E\+Hw\+Gpio\+H\+W\+P\+W\+M\+Mode}}]{mode }\end{DoxyParamCaption})}
+
+
+
+Set the frequency and resolution of the hardware P\+WM. 
+
+The clock frequency is 19.\+2 M\+Hz The maximum resolution is 4095 steps (12-\/bit) Please choose these wisely and bare in mind that the actual frequency is an estimate because only positive clock frequency divisors can be used. freq\+\_\+max @ min resolution (1-\/step) is 9.\+6 M\+Hz freq\+\_\+max @ max resolution (12-\/bit) is 2.\+34 k\+Hz Examples\+: freq\+\_\+max @ 1024-\/steps (10-\/bit) is 9.\+375 k\+Hz freq\+\_\+max @ 256-\/steps (8-\/bit) is 37.\+5 k\+Hz Conditions\+: frequency $\ast$ resolution $\ast$ 2 $<$ 19.\+2 M\+Hz resolution $<$= 4095 \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em frequency} & desired frequency in Hz \\
+\hline
+\mbox{\tt in}  & {\em resolution} & desired resolution in steps \\
+\hline
+\mbox{\tt in}  & {\em mode} & P\+WM mode \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a3f1c2c0601070abb5a593ad580c941aa}\label{HwGpio_8h_a3f1c2c0601070abb5a593ad580c941aa}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Clean\+Up@{Hw\+Gpio\+Clean\+Up}}
+\index{Hw\+Gpio\+Clean\+Up@{Hw\+Gpio\+Clean\+Up}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Clean\+Up()}{HwGpioCleanUp()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Clean\+Up (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+Cleans up the G\+P\+IO and leaves it on default state. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a5be4271de431da1d18256d7cd34115ef}\label{HwGpio_8h_a5be4271de431da1d18256d7cd34115ef}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Set\+Inp@{Hw\+Gpio\+Set\+Inp}}
+\index{Hw\+Gpio\+Set\+Inp@{Hw\+Gpio\+Set\+Inp}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Set\+Inp()}{HwGpioSetInp()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Set\+Inp (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+Sets G\+P\+IO as input. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a6a24226f6f09aeb646c67dec3e574f2f}\label{HwGpio_8h_a6a24226f6f09aeb646c67dec3e574f2f}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Set\+Out@{Hw\+Gpio\+Set\+Out}}
+\index{Hw\+Gpio\+Set\+Out@{Hw\+Gpio\+Set\+Out}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Set\+Out()}{HwGpioSetOut()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Set\+Out (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+Sets G\+P\+IO as output. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_acab9f0533e164e5478a04447fa054b75}\label{HwGpio_8h_acab9f0533e164e5478a04447fa054b75}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Set\+Alt@{Hw\+Gpio\+Set\+Alt}}
+\index{Hw\+Gpio\+Set\+Alt@{Hw\+Gpio\+Set\+Alt}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Set\+Alt()}{HwGpioSetAlt()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Set\+Alt (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio,  }\item[{int}]{alt }\end{DoxyParamCaption})}
+
+
+
+Sets G\+P\+IO as alternative function. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\mbox{\tt in}  & {\em alt} & Alternative function of G\+P\+IO \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_aceb592be77bc482f19c4262db9920805}\label{HwGpio_8h_aceb592be77bc482f19c4262db9920805}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Set@{Hw\+Gpio\+Set}}
+\index{Hw\+Gpio\+Set@{Hw\+Gpio\+Set}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Set()}{HwGpioSet()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Set (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+Sets G\+P\+IO high. 
+
+Not thread safe for performance reasons \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a3364842cffdcea651bbda71b58ea325c}\label{HwGpio_8h_a3364842cffdcea651bbda71b58ea325c}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Reset@{Hw\+Gpio\+Reset}}
+\index{Hw\+Gpio\+Reset@{Hw\+Gpio\+Reset}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Reset()}{HwGpioReset()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Reset (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+Sets G\+P\+IO low. 
+
+Not thread safe for performance reasons \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_ac1c476b89905c6510dd502fe92af2925}\label{HwGpio_8h_ac1c476b89905c6510dd502fe92af2925}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Get@{Hw\+Gpio\+Get}}
+\index{Hw\+Gpio\+Get@{Hw\+Gpio\+Get}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Get()}{HwGpioGet()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} Hw\+Gpio\+Get (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+Gets the G\+P\+IO state high/low. 
+
+\begin{DoxyReturn}{Returns}
+high true, or low false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a04f13981c2033becc1435724957eb55d}\label{HwGpio_8h_a04f13981c2033becc1435724957eb55d}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Start\+H\+W\+P\+WM@{Hw\+Gpio\+Start\+H\+W\+P\+WM}}
+\index{Hw\+Gpio\+Start\+H\+W\+P\+WM@{Hw\+Gpio\+Start\+H\+W\+P\+WM}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Start\+H\+W\+P\+W\+M()}{HwGpioStartHWPWM()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Start\+H\+W\+P\+WM (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio,  }\item[{float}]{duty\+Cycle }\end{DoxyParamCaption})}
+
+
+
+Start the hardware P\+WM. 
+
+The \hyperlink{HwGpio_8h_a6d6615e21e0514b50da05923221e28db}{Hw\+Gpio\+Init\+H\+W\+P\+W\+M()} function must be called before starting the HW P\+WM. Only G\+P\+I\+Os 12, 13, 18, and 19 can be rerouted to the P\+WM. \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\mbox{\tt in}  & {\em duty\+Cycle} & Desired duty cycle \mbox{[}0..1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a0028af6f42d0994bf0cfd88e5165c3cb}\label{HwGpio_8h_a0028af6f42d0994bf0cfd88e5165c3cb}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Reset\+H\+W\+P\+W\+M\+Du\+Cy@{Hw\+Gpio\+Reset\+H\+W\+P\+W\+M\+Du\+Cy}}
+\index{Hw\+Gpio\+Reset\+H\+W\+P\+W\+M\+Du\+Cy@{Hw\+Gpio\+Reset\+H\+W\+P\+W\+M\+Du\+Cy}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Reset\+H\+W\+P\+W\+M\+Du\+Cy()}{HwGpioResetHWPWMDuCy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Reset\+H\+W\+P\+W\+M\+Du\+Cy (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio,  }\item[{float}]{duty\+Cycle }\end{DoxyParamCaption})}
+
+
+
+Reset the duty cycle of the hardware P\+WM. 
+
+\hyperlink{HwGpio_8h_a04f13981c2033becc1435724957eb55d}{Hw\+Gpio\+Start\+H\+W\+P\+W\+M()} must be called before reseting the duty cycle. Not thread safe for performance reasons. \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\mbox{\tt in}  & {\em duty\+Cycle} & Desired duty cycle \mbox{[}0..1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a84766fbecb84246883ad037014379822}\label{HwGpio_8h_a84766fbecb84246883ad037014379822}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Stop\+H\+W\+P\+WM@{Hw\+Gpio\+Stop\+H\+W\+P\+WM}}
+\index{Hw\+Gpio\+Stop\+H\+W\+P\+WM@{Hw\+Gpio\+Stop\+H\+W\+P\+WM}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Stop\+H\+W\+P\+W\+M()}{HwGpioStopHWPWM()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Stop\+H\+W\+P\+WM (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+Stop the hardware P\+WM. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a8dc38f04b47f9cca01d5b9e08920c1e6}\label{HwGpio_8h_a8dc38f04b47f9cca01d5b9e08920c1e6}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Start\+S\+W\+P\+WM@{Hw\+Gpio\+Start\+S\+W\+P\+WM}}
+\index{Hw\+Gpio\+Start\+S\+W\+P\+WM@{Hw\+Gpio\+Start\+S\+W\+P\+WM}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Start\+S\+W\+P\+W\+M()}{HwGpioStartSWPWM()}}
+{\footnotesize\ttfamily \hyperlink{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}{T\+Hw\+Gpio\+S\+W\+P\+W\+M\+Hdl} Hw\+Gpio\+Start\+S\+W\+P\+WM (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio,  }\item[{float}]{dutyC,  }\item[{uint16\+\_\+t}]{period\+Ms }\end{DoxyParamCaption})}
+
+
+
+Start software P\+WM on the desired G\+P\+IO with normal soft real-\/time priority. 
+
+The period must between 10 and 10000 ms. Input outside range will be limited. The faster the period, the more C\+PU usage. \begin{DoxyReturn}{Returns}
+The software P\+WM handle if success, otherwise, null 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & Desired G\+P\+IO \\
+\hline
+\mbox{\tt in}  & {\em dutyC} & Initial duty cycle \mbox{[}0..1\mbox{]} \\
+\hline
+\mbox{\tt in}  & {\em period\+Ms} & P\+WM period in ms \mbox{[}10..10000\mbox{]} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_aed43687c444e5dd77c4fe6d137ee24eb}\label{HwGpio_8h_aed43687c444e5dd77c4fe6d137ee24eb}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Reset\+S\+W\+P\+W\+M\+Du\+Cy@{Hw\+Gpio\+Reset\+S\+W\+P\+W\+M\+Du\+Cy}}
+\index{Hw\+Gpio\+Reset\+S\+W\+P\+W\+M\+Du\+Cy@{Hw\+Gpio\+Reset\+S\+W\+P\+W\+M\+Du\+Cy}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Reset\+S\+W\+P\+W\+M\+Du\+Cy()}{HwGpioResetSWPWMDuCy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Reset\+S\+W\+P\+W\+M\+Du\+Cy (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}{T\+Hw\+Gpio\+S\+W\+P\+W\+M\+Hdl}}]{hdl,  }\item[{float}]{dutyC }\end{DoxyParamCaption})}
+
+
+
+Reset the duty cycle of the software P\+WM. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Software P\+WM handle \\
+\hline
+\mbox{\tt in}  & {\em dutyC} & Desired duty cycle \mbox{[}0..1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_adde7229553ee1dfc0470b247722266d6}\label{HwGpio_8h_adde7229553ee1dfc0470b247722266d6}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!Hw\+Gpio\+Stop\+S\+W\+P\+WM@{Hw\+Gpio\+Stop\+S\+W\+P\+WM}}
+\index{Hw\+Gpio\+Stop\+S\+W\+P\+WM@{Hw\+Gpio\+Stop\+S\+W\+P\+WM}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Gpio\+Stop\+S\+W\+P\+W\+M()}{HwGpioStopSWPWM()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Gpio\+Stop\+S\+W\+P\+WM (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a9e3ff52e6a3d5fbc88e19f35aa80a3eb}{T\+Hw\+Gpio\+S\+W\+P\+W\+M\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Stop the software P\+WM. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Software P\+WM handle \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a3885c92d0b10ec67e5381eeea50c922f}\label{HwGpio_8h_a3885c92d0b10ec67e5381eeea50c922f}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!I\+Hw\+Gpio\+Create@{I\+Hw\+Gpio\+Create}}
+\index{I\+Hw\+Gpio\+Create@{I\+Hw\+Gpio\+Create}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{I\+Hw\+Gpio\+Create()}{IHwGpioCreate()}}
+{\footnotesize\ttfamily \hyperlink{classIHwGpio}{I\+Hw\+Gpio}$\ast$ I\+Hw\+Gpio\+Create (\begin{DoxyParamCaption}\item[{\hyperlink{HwGpio_8h_a79342b3f5f1b3529b13823fe63a3deb5}{T\+Hw\+Gpio}}]{gpio }\end{DoxyParamCaption})}
+
+
+
+C++ interface object oriented factory. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to C++ interface if success, otherwise, error 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gpio} & G\+P\+IO number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwGpio_8h_a7807c9116813f217fbff15c637faf538}\label{HwGpio_8h_a7807c9116813f217fbff15c637faf538}} 
+\index{Hw\+Gpio.\+h@{Hw\+Gpio.\+h}!I\+Hw\+Gpio\+Delete@{I\+Hw\+Gpio\+Delete}}
+\index{I\+Hw\+Gpio\+Delete@{I\+Hw\+Gpio\+Delete}!Hw\+Gpio.\+h@{Hw\+Gpio.\+h}}
+\subsubsection{\texorpdfstring{I\+Hw\+Gpio\+Delete()}{IHwGpioDelete()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} I\+Hw\+Gpio\+Delete (\begin{DoxyParamCaption}\item[{\hyperlink{classIHwGpio}{I\+Hw\+Gpio} $\ast$}]{p\+Hdl }\end{DoxyParamCaption})}
+
+
+
+C++ interface object oriented destructor. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Hdl} & Interface handle \\
+\hline
+\end{DoxyParams}

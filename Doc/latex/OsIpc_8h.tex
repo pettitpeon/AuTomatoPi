@@ -1,0 +1,156 @@
+\hypertarget{OsIpc_8h}{}\section{Os\+Ipc.\+h File Reference}
+\label{OsIpc_8h}\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+
+
+Inter-\/process communication module.  
+
+
+{\ttfamily \#include $<$Os\+Def.\+h$>$}\newline
+{\ttfamily \#include $<$Os\+Ipc\+Registry.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+Include dependency graph for Os\+Ipc.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{OsIpc_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{Indent}\textbf{ Server Interface}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpc_8h_a5f0cfa22531ad906fb141596fa982d72}{Os\+Ipc\+Init\+Svr} ()
+\begin{DoxyCompactList}\small\item\em Initializes and starts the server thread. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpc_8h_a4a45dd21f342330504fadbc1b0edcc6f}{Os\+Ipc\+Svr\+Running} ()
+\begin{DoxyCompactList}\small\item\em Get the server status. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpc_8h_a5c2d92e6e6d3b88a04f51c1b783c71b5}{Os\+Ipc\+Exit\+Svr} ()
+\begin{DoxyCompactList}\small\item\em Sends exit signal to the I\+PC server and waits with a timeout for it to stop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Client Interface}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpc_8h_a7467462b65c133e2ef1b92057706ce20}{Os\+Ipc\+Init\+Clnt} ()
+\begin{DoxyCompactList}\small\item\em Initialize the I\+PC client. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpc_8h_a1325288fa31ffe343e5f0b3813d29a55}{Os\+Ipc\+Exit\+Clnt} ()
+\begin{DoxyCompactList}\small\item\em Exit the I\+PC client releasing the resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpc_8h_ac531972cde5cb18ae90a859e12b9cc09}{Os\+Ipc\+Call\+Fun} (const char $\ast$name, \hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg} a, \hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$p\+Ret)
+\begin{DoxyCompactList}\small\item\em Remotely call (R\+PC) a registered function from the control task. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsIpc_8h_adadc3247830475fb8bebb7ec5f39d565}{Os\+Ipc\+Call\+Var} (const char $\ast$name, \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} $\ast$p\+Var)
+\begin{DoxyCompactList}\small\item\em Remotely get the value of a registered variable from the control task. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Inter-\/process communication module. 
+
+It implements an I\+PC server-\/client solution with remote procedure calls (R\+P\+Cs) and remote variable calls 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{OsIpc_8h_a5f0cfa22531ad906fb141596fa982d72}\label{OsIpc_8h_a5f0cfa22531ad906fb141596fa982d72}} 
+\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}!Os\+Ipc\+Init\+Svr@{Os\+Ipc\+Init\+Svr}}
+\index{Os\+Ipc\+Init\+Svr@{Os\+Ipc\+Init\+Svr}!Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Init\+Svr()}{OsIpcInitSvr()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Init\+Svr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes and starts the server thread. 
+
+It does not wait to check if it started successfully \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpc_8h_a4a45dd21f342330504fadbc1b0edcc6f}\label{OsIpc_8h_a4a45dd21f342330504fadbc1b0edcc6f}} 
+\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}!Os\+Ipc\+Svr\+Running@{Os\+Ipc\+Svr\+Running}}
+\index{Os\+Ipc\+Svr\+Running@{Os\+Ipc\+Svr\+Running}!Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Svr\+Running()}{OsIpcSvrRunning()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Svr\+Running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the server status. 
+
+Returns only if the server started or stopped successfully, and no heart beat of any kind. \begin{DoxyReturn}{Returns}
+True if the server thread started running, false if stopped. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpc_8h_a5c2d92e6e6d3b88a04f51c1b783c71b5}\label{OsIpc_8h_a5c2d92e6e6d3b88a04f51c1b783c71b5}} 
+\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}!Os\+Ipc\+Exit\+Svr@{Os\+Ipc\+Exit\+Svr}}
+\index{Os\+Ipc\+Exit\+Svr@{Os\+Ipc\+Exit\+Svr}!Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Exit\+Svr()}{OsIpcExitSvr()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Exit\+Svr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sends exit signal to the I\+PC server and waits with a timeout for it to stop. 
+
+If it timeouts, there is a small memory leak, but the thread exits when it frees itself. \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpc_8h_a7467462b65c133e2ef1b92057706ce20}\label{OsIpc_8h_a7467462b65c133e2ef1b92057706ce20}} 
+\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}!Os\+Ipc\+Init\+Clnt@{Os\+Ipc\+Init\+Clnt}}
+\index{Os\+Ipc\+Init\+Clnt@{Os\+Ipc\+Init\+Clnt}!Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Init\+Clnt()}{OsIpcInitClnt()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Init\+Clnt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the I\+PC client. 
+
+This should be called in an external program which wishes to communicate with the control task. \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpc_8h_a1325288fa31ffe343e5f0b3813d29a55}\label{OsIpc_8h_a1325288fa31ffe343e5f0b3813d29a55}} 
+\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}!Os\+Ipc\+Exit\+Clnt@{Os\+Ipc\+Exit\+Clnt}}
+\index{Os\+Ipc\+Exit\+Clnt@{Os\+Ipc\+Exit\+Clnt}!Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Exit\+Clnt()}{OsIpcExitClnt()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Exit\+Clnt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Exit the I\+PC client releasing the resources. 
+
+This should be called in an external program which wishes to close the communication with the control task. \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsIpc_8h_ac531972cde5cb18ae90a859e12b9cc09}\label{OsIpc_8h_ac531972cde5cb18ae90a859e12b9cc09}} 
+\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}!Os\+Ipc\+Call\+Fun@{Os\+Ipc\+Call\+Fun}}
+\index{Os\+Ipc\+Call\+Fun@{Os\+Ipc\+Call\+Fun}!Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Call\+Fun()}{OsIpcCallFun()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Call\+Fun (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg}}]{a,  }\item[{\hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$}]{p\+Ret }\end{DoxyParamCaption})}
+
+
+
+Remotely call (R\+PC) a registered function from the control task. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em a} & Function arguments \\
+\hline
+\mbox{\tt out}  & {\em p\+Ret} & Function return value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsIpc_8h_adadc3247830475fb8bebb7ec5f39d565}\label{OsIpc_8h_adadc3247830475fb8bebb7ec5f39d565}} 
+\index{Os\+Ipc.\+h@{Os\+Ipc.\+h}!Os\+Ipc\+Call\+Var@{Os\+Ipc\+Call\+Var}}
+\index{Os\+Ipc\+Call\+Var@{Os\+Ipc\+Call\+Var}!Os\+Ipc.\+h@{Os\+Ipc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Ipc\+Call\+Var()}{OsIpcCallVar()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Ipc\+Call\+Var (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{\hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} $\ast$}]{p\+Var }\end{DoxyParamCaption})}
+
+
+
+Remotely get the value of a registered variable from the control task. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\mbox{\tt out}  & {\em p\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}

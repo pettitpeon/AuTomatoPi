@@ -1,0 +1,208 @@
+\hypertarget{classIOsIpcRegistry}{}\section{I\+Os\+Ipc\+Registry Class Reference}
+\label{classIOsIpcRegistry}\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+
+
+Interface to use a registry object.  
+
+
+
+
+{\ttfamily \#include $<$Os\+Ipc\+Registry.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{Indent}\textbf{ Functions registry}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classIOsIpcRegistry_aa0a7789bc4b73ba3fd9ffc95c36b211d}{Register\+Fun} (std\+::string name, \hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun} fun)=0
+\begin{DoxyCompactList}\small\item\em Register a function to the I\+PC registry. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIOsIpcRegistry_a8edb89cab48ee05564504402c9e18481}{Unregister\+Fun} (std\+::string name)=0
+\begin{DoxyCompactList}\small\item\em Unregister a function from the I\+PC registry. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classIOsIpcRegistry_a6b4ffa30ef275d63227dbd5c5d586802}{Clear\+Fun\+Registry} ()=0
+\begin{DoxyCompactList}\small\item\em Unregister all functions from the registry. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIOsIpcRegistry_af123e37a919ea2d2026976857bdb3199}{Call\+Fun} (std\+::string name, \hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg} a, \hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$p\+Ret)=0
+\begin{DoxyCompactList}\small\item\em Call a function from the functions registry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Variables registry}\par
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classIOsIpcRegistry_a754f5c04c6b8980d072517ef22a85613}{Register\+Var} (std\+::string name, const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} \&r\+Var)=0
+\begin{DoxyCompactList}\small\item\em Register a variable to the registry. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIOsIpcRegistry_ac34e3769178b6f9c05e57334045ffe18}{Unregister\+Var} (std\+::string name)=0
+\begin{DoxyCompactList}\small\item\em Unregister a variable from the registry. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classIOsIpcRegistry_ac84f55f0f6f5469e6333270c17a8450c}{Clear\+Var\+Registry} ()=0
+\begin{DoxyCompactList}\small\item\em Unregister all variables from the registry. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIOsIpcRegistry_a9e912067bedaecd35cf5ca8dbea54f12}{Call\+Var} (std\+::string name, \hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} \&r\+Var)=0
+\begin{DoxyCompactList}\small\item\em Retrieve the value of a registry variable. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classIOsIpcRegistry_a5588474e7ba19e8cc8c29a0c6f295d42}{Set\+Var} (std\+::string name, const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} \&r\+Var)=0
+\begin{DoxyCompactList}\small\item\em Set a variable from the registry to a new value if allowed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Interface to use a registry object. 
+
+This interface is used under the hood for the \char`\"{}local\char`\"{} registry. If you are interested in using the local registry for the I\+PC server, please use the {\ttfamily Os\+Ipc\+Registry\+Local} C-\/interface. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classIOsIpcRegistry_aa0a7789bc4b73ba3fd9ffc95c36b211d}\label{classIOsIpcRegistry_aa0a7789bc4b73ba3fd9ffc95c36b211d}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Register\+Fun@{Register\+Fun}}
+\index{Register\+Fun@{Register\+Fun}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Register\+Fun()}{RegisterFun()}}
+{\footnotesize\ttfamily virtual bool I\+Os\+Ipc\+Registry\+::\+Register\+Fun (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{\hyperlink{structTOsIpcRegFun}{T\+Os\+Ipc\+Reg\+Fun}}]{fun }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Register a function to the I\+PC registry. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em fun} & Function descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classIOsIpcRegistry_a8edb89cab48ee05564504402c9e18481}\label{classIOsIpcRegistry_a8edb89cab48ee05564504402c9e18481}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Unregister\+Fun@{Unregister\+Fun}}
+\index{Unregister\+Fun@{Unregister\+Fun}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Unregister\+Fun()}{UnregisterFun()}}
+{\footnotesize\ttfamily virtual bool I\+Os\+Ipc\+Registry\+::\+Unregister\+Fun (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Unregister a function from the I\+PC registry. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classIOsIpcRegistry_a6b4ffa30ef275d63227dbd5c5d586802}\label{classIOsIpcRegistry_a6b4ffa30ef275d63227dbd5c5d586802}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Clear\+Fun\+Registry@{Clear\+Fun\+Registry}}
+\index{Clear\+Fun\+Registry@{Clear\+Fun\+Registry}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Clear\+Fun\+Registry()}{ClearFunRegistry()}}
+{\footnotesize\ttfamily virtual void I\+Os\+Ipc\+Registry\+::\+Clear\+Fun\+Registry (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Unregister all functions from the registry. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classIOsIpcRegistry_af123e37a919ea2d2026976857bdb3199}\label{classIOsIpcRegistry_af123e37a919ea2d2026976857bdb3199}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Call\+Fun@{Call\+Fun}}
+\index{Call\+Fun@{Call\+Fun}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Call\+Fun()}{CallFun()}}
+{\footnotesize\ttfamily virtual bool I\+Os\+Ipc\+Registry\+::\+Call\+Fun (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{\hyperlink{structTOsIpcFunArg}{T\+Os\+Ipc\+Fun\+Arg}}]{a,  }\item[{\hyperlink{unionTOsIpcArg}{T\+Os\+Ipc\+Arg} $\ast$}]{p\+Ret }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Call a function from the functions registry. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Function name \\
+\hline
+\mbox{\tt in}  & {\em a} & Function arguments \\
+\hline
+\mbox{\tt out}  & {\em p\+Ret} & Function return value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classIOsIpcRegistry_a754f5c04c6b8980d072517ef22a85613}\label{classIOsIpcRegistry_a754f5c04c6b8980d072517ef22a85613}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Register\+Var@{Register\+Var}}
+\index{Register\+Var@{Register\+Var}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Register\+Var()}{RegisterVar()}}
+{\footnotesize\ttfamily virtual bool I\+Os\+Ipc\+Registry\+::\+Register\+Var (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} \&}]{r\+Var }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Register a variable to the registry. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\mbox{\tt in}  & {\em r\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classIOsIpcRegistry_ac34e3769178b6f9c05e57334045ffe18}\label{classIOsIpcRegistry_ac34e3769178b6f9c05e57334045ffe18}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Unregister\+Var@{Unregister\+Var}}
+\index{Unregister\+Var@{Unregister\+Var}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Unregister\+Var()}{UnregisterVar()}}
+{\footnotesize\ttfamily virtual bool I\+Os\+Ipc\+Registry\+::\+Unregister\+Var (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Unregister a variable from the registry. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classIOsIpcRegistry_ac84f55f0f6f5469e6333270c17a8450c}\label{classIOsIpcRegistry_ac84f55f0f6f5469e6333270c17a8450c}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Clear\+Var\+Registry@{Clear\+Var\+Registry}}
+\index{Clear\+Var\+Registry@{Clear\+Var\+Registry}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Clear\+Var\+Registry()}{ClearVarRegistry()}}
+{\footnotesize\ttfamily virtual void I\+Os\+Ipc\+Registry\+::\+Clear\+Var\+Registry (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Unregister all variables from the registry. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classIOsIpcRegistry_a9e912067bedaecd35cf5ca8dbea54f12}\label{classIOsIpcRegistry_a9e912067bedaecd35cf5ca8dbea54f12}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Call\+Var@{Call\+Var}}
+\index{Call\+Var@{Call\+Var}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Call\+Var()}{CallVar()}}
+{\footnotesize\ttfamily virtual bool I\+Os\+Ipc\+Registry\+::\+Call\+Var (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{\hyperlink{structTOsIpcRegVarOut}{T\+Os\+Ipc\+Reg\+Var\+Out} \&}]{r\+Var }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Retrieve the value of a registry variable. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Variable name \\
+\hline
+\mbox{\tt out}  & {\em r\+Var} & Variable descriptor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classIOsIpcRegistry_a5588474e7ba19e8cc8c29a0c6f295d42}\label{classIOsIpcRegistry_a5588474e7ba19e8cc8c29a0c6f295d42}} 
+\index{I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}!Set\+Var@{Set\+Var}}
+\index{Set\+Var@{Set\+Var}!I\+Os\+Ipc\+Registry@{I\+Os\+Ipc\+Registry}}
+\subsubsection{\texorpdfstring{Set\+Var()}{SetVar()}}
+{\footnotesize\ttfamily virtual bool I\+Os\+Ipc\+Registry\+::\+Set\+Var (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{const \hyperlink{structTOsIpcRegVar}{T\+Os\+Ipc\+Reg\+Var} \&}]{r\+Var }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Set a variable from the registry to a new value if allowed. 
+
+\begin{DoxyReturn}{Returns}
+true if success 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{OsIpcRegistry_8h}{Os\+Ipc\+Registry.\+h}\end{DoxyCompactItemize}

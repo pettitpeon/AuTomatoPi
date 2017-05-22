@@ -1,0 +1,37 @@
+\hypertarget{structTOsIpcRegFun}{}\section{T\+Os\+Ipc\+Reg\+Fun Struct Reference}
+\label{structTOsIpcRegFun}\index{T\+Os\+Ipc\+Reg\+Fun@{T\+Os\+Ipc\+Reg\+Fun}}
+
+
+Function descriptor of the functions registry.  
+
+
+
+
+{\ttfamily \#include $<$Os\+Ipc\+Registry.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structTOsIpcRegFun_a5f832c2518de98fa144f23d5cc56b82b}\label{structTOsIpcRegFun_a5f832c2518de98fa144f23d5cc56b82b}} 
+void $\ast$ \hyperlink{structTOsIpcRegFun_a5f832c2518de98fa144f23d5cc56b82b}{p\+Fun}
+\begin{DoxyCompactList}\small\item\em Pointer to the function casted to void. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structTOsIpcRegFun_a90cf4b78efb7a0be08c9abd8c3c9a02c}\label{structTOsIpcRegFun_a90cf4b78efb7a0be08c9abd8c3c9a02c}} 
+const char $\ast$ \hyperlink{structTOsIpcRegFun_a90cf4b78efb7a0be08c9abd8c3c9a02c}{type}
+\begin{DoxyCompactList}\small\item\em Function type definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Function descriptor of the functions registry. 
+
+The {\ttfamily type} string is defined as one character, a semicolon and a string, eg.\+: i\+:I\+If. The first character is the return type of the function. The string of characters after the semicolon are the parameter types in order. The valid characters and types are
+\begin{DoxyItemize}
+\item v\+: void
+\item i\+: integer types of 4 bytes or less. It includes unsigned types and pointers
+\item I\+: 64 bit integer types including unsigned
+\item f\+: float
+\item d\+: double If there are no parameters, only a single \textquotesingle{}v\textquotesingle{} is allowed after the semicolon, e.\+g., f\+:v 
+\end{DoxyItemize}
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{OsIpcRegistry_8h}{Os\+Ipc\+Registry.\+h}\end{DoxyCompactItemize}

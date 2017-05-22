@@ -1,0 +1,310 @@
+\hypertarget{BaSwOsci_8h}{}\section{Ba\+Sw\+Osci.\+h File Reference}
+\label{BaSwOsci_8h}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+
+
+Software oscilloscope.  
+
+
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+Include dependency graph for Ba\+Sw\+Osci.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=151pt]{BaSwOsci_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classIBaSwOsci}{I\+Ba\+Sw\+Osci}
+\begin{DoxyCompactList}\small\item\em Software oscilloscope C++ interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}\label{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}} 
+typedef void $\ast$ \hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl}
+\begin{DoxyCompactList}\small\item\em C message handle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaSwOsci_8h_aaa116713035de1573d012e05e622ce75}\label{BaSwOsci_8h_aaa116713035de1573d012e05e622ce75}} 
+typedef enum \hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}{E\+Ba\+Sw\+Osci\+Type} \hyperlink{BaSwOsci_8h_aaa116713035de1573d012e05e622ce75}{E\+Ba\+Sw\+Osci\+Type}
+\begin{DoxyCompactList}\small\item\em Data types of the variables logger. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}{E\+Ba\+Sw\+Osci\+Type} \{ \newline
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca1e91bc71d18833c3f599172321e9036f}{e\+Ba\+Sw\+Osci\+\_\+undef} = -\/1, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca6b5fda3c720b5fb1dcd7395293a7fa34}{e\+Ba\+Sw\+Osci\+\_\+int8} = 0, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca23aa59fbda2969bd6002b485ce7bd33a}{e\+Ba\+Sw\+Osci\+\_\+uint8}, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca698d26d38e4cb7c63a4f4a5244243874}{e\+Ba\+Sw\+Osci\+\_\+int16}, 
+\newline
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfcadbf0438187a6c7cd20b0634250102eca}{e\+Ba\+Sw\+Osci\+\_\+uint16}, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca48a514c7c2f9e244fb89fe689347a7f3}{e\+Ba\+Sw\+Osci\+\_\+int32}, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca6d7535da78cc052056c7288fafc90d3c}{e\+Ba\+Sw\+Osci\+\_\+uint32}, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfcae8dbf9e9c01818651082626bcc0c5807}{e\+Ba\+Sw\+Osci\+\_\+int64}, 
+\newline
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca4236a48f6db01ca4d9f5de9839581ae7}{e\+Ba\+Sw\+Osci\+\_\+uint64}, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca680cedeebbacfab9abd2f028f848bc43}{e\+Ba\+Sw\+Osci\+\_\+float}, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca79554f300be6b346e135c34516e34462}{e\+Ba\+Sw\+Osci\+\_\+double}, 
+\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca60ed63b9ea293759828c1c692b4d2c59}{e\+Ba\+Sw\+Osci\+\_\+max} = e\+Ba\+Sw\+Osci\+\_\+double
+ \}\begin{DoxyCompactList}\small\item\em Data types of the variables logger. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{Indent}\textbf{ Factory}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl} \hyperlink{BaSwOsci_8h_ab53564e0bd8f806741b0b6aeb5438597}{Ba\+Sw\+Osci\+Create} (const char $\ast$name, const char $\ast$path, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} to\+Cnsole)
+\begin{DoxyCompactList}\small\item\em Create factory. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaSwOsci_8h_ad7213062e1c1b67a99f82b0d3081541b}{Ba\+Sw\+Osci\+Destroy} (\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaSwOsci_8h_a9bf2579619f0c62688398a13637a86d6}{Ba\+Sw\+Osci\+Destroy\+Async} (\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Sends signal to destroy and release resources asynchronously. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Interface}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaSwOsci_8h_abd7e61c0845b98b1047b58ef2937ab99}{Ba\+Sw\+Osci\+Register} (\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl} hdl, void $\ast$p\+Var, \hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}{E\+Ba\+Sw\+Osci\+Type} type, const char $\ast$name, const char $\ast$desc)
+\begin{DoxyCompactList}\small\item\em Registers a variable to the logger so it can be sampled. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaSwOsci_8h_a9c724839887c8b982a98677d8195c053}{Ba\+Sw\+Osci\+Sample} (\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Samples the registered variables to be written to a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ C++ Factory}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classIBaSwOsci}{I\+Ba\+Sw\+Osci} $\ast$ \hyperlink{BaSwOsci_8h_aeb3006dd3d6086a5582430cd6ae58d82}{I\+Ba\+Sw\+Osci\+Create} (const char $\ast$name, const char $\ast$path, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} to\+Cnsole)
+\begin{DoxyCompactList}\small\item\em Create factory. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaSwOsci_8h_a6401e20f44b30c444d00321428019933}{I\+Ba\+Sw\+Osci\+Destroy} (\hyperlink{classIBaSwOsci}{I\+Ba\+Sw\+Osci} $\ast$p\+Hdl)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaSwOsci_8h_a345351ce1b24806fd10dd0e790a26db1}{I\+Ba\+Sw\+Osci\+Destroy\+Async} (\hyperlink{classIBaSwOsci}{I\+Ba\+Sw\+Osci} $\ast$p\+Hdl)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Software oscilloscope. 
+
+Logs samples of registered variables to a file 
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!E\+Ba\+Sw\+Osci\+Type@{E\+Ba\+Sw\+Osci\+Type}}
+\index{E\+Ba\+Sw\+Osci\+Type@{E\+Ba\+Sw\+Osci\+Type}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{E\+Ba\+Sw\+Osci\+Type}{EBaSwOsciType}}
+{\footnotesize\ttfamily enum \hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}{E\+Ba\+Sw\+Osci\+Type}}
+
+
+
+Data types of the variables logger. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+undef@{e\+Ba\+Sw\+Osci\+\_\+undef}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+undef@{e\+Ba\+Sw\+Osci\+\_\+undef}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca1e91bc71d18833c3f599172321e9036f}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca1e91bc71d18833c3f599172321e9036f}} 
+e\+Ba\+Sw\+Osci\+\_\+undef&-\/1 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+int8@{e\+Ba\+Sw\+Osci\+\_\+int8}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+int8@{e\+Ba\+Sw\+Osci\+\_\+int8}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca6b5fda3c720b5fb1dcd7395293a7fa34}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca6b5fda3c720b5fb1dcd7395293a7fa34}} 
+e\+Ba\+Sw\+Osci\+\_\+int8&0 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+uint8@{e\+Ba\+Sw\+Osci\+\_\+uint8}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+uint8@{e\+Ba\+Sw\+Osci\+\_\+uint8}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca23aa59fbda2969bd6002b485ce7bd33a}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca23aa59fbda2969bd6002b485ce7bd33a}} 
+e\+Ba\+Sw\+Osci\+\_\+uint8&1 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+int16@{e\+Ba\+Sw\+Osci\+\_\+int16}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+int16@{e\+Ba\+Sw\+Osci\+\_\+int16}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca698d26d38e4cb7c63a4f4a5244243874}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca698d26d38e4cb7c63a4f4a5244243874}} 
+e\+Ba\+Sw\+Osci\+\_\+int16&2 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+uint16@{e\+Ba\+Sw\+Osci\+\_\+uint16}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+uint16@{e\+Ba\+Sw\+Osci\+\_\+uint16}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfcadbf0438187a6c7cd20b0634250102eca}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfcadbf0438187a6c7cd20b0634250102eca}} 
+e\+Ba\+Sw\+Osci\+\_\+uint16&3 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+int32@{e\+Ba\+Sw\+Osci\+\_\+int32}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+int32@{e\+Ba\+Sw\+Osci\+\_\+int32}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca48a514c7c2f9e244fb89fe689347a7f3}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca48a514c7c2f9e244fb89fe689347a7f3}} 
+e\+Ba\+Sw\+Osci\+\_\+int32&5 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+uint32@{e\+Ba\+Sw\+Osci\+\_\+uint32}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+uint32@{e\+Ba\+Sw\+Osci\+\_\+uint32}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca6d7535da78cc052056c7288fafc90d3c}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca6d7535da78cc052056c7288fafc90d3c}} 
+e\+Ba\+Sw\+Osci\+\_\+uint32&6 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+int64@{e\+Ba\+Sw\+Osci\+\_\+int64}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+int64@{e\+Ba\+Sw\+Osci\+\_\+int64}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfcae8dbf9e9c01818651082626bcc0c5807}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfcae8dbf9e9c01818651082626bcc0c5807}} 
+e\+Ba\+Sw\+Osci\+\_\+int64&7 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+uint64@{e\+Ba\+Sw\+Osci\+\_\+uint64}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+uint64@{e\+Ba\+Sw\+Osci\+\_\+uint64}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca4236a48f6db01ca4d9f5de9839581ae7}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca4236a48f6db01ca4d9f5de9839581ae7}} 
+e\+Ba\+Sw\+Osci\+\_\+uint64&8 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+float@{e\+Ba\+Sw\+Osci\+\_\+float}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+float@{e\+Ba\+Sw\+Osci\+\_\+float}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca680cedeebbacfab9abd2f028f848bc43}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca680cedeebbacfab9abd2f028f848bc43}} 
+e\+Ba\+Sw\+Osci\+\_\+float&9 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+double@{e\+Ba\+Sw\+Osci\+\_\+double}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+double@{e\+Ba\+Sw\+Osci\+\_\+double}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca79554f300be6b346e135c34516e34462}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca79554f300be6b346e135c34516e34462}} 
+e\+Ba\+Sw\+Osci\+\_\+double&10 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Sw\+Osci\+\_\+max@{e\+Ba\+Sw\+Osci\+\_\+max}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!e\+Ba\+Sw\+Osci\+\_\+max@{e\+Ba\+Sw\+Osci\+\_\+max}}}\mbox{\Hypertarget{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca60ed63b9ea293759828c1c692b4d2c59}\label{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfca60ed63b9ea293759828c1c692b4d2c59}} 
+e\+Ba\+Sw\+Osci\+\_\+max&10 \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{BaSwOsci_8h_ab53564e0bd8f806741b0b6aeb5438597}\label{BaSwOsci_8h_ab53564e0bd8f806741b0b6aeb5438597}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!Ba\+Sw\+Osci\+Create@{Ba\+Sw\+Osci\+Create}}
+\index{Ba\+Sw\+Osci\+Create@{Ba\+Sw\+Osci\+Create}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{Ba\+Sw\+Osci\+Create()}{BaSwOsciCreate()}}
+{\footnotesize\ttfamily \hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl} Ba\+Sw\+Osci\+Create (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{const char $\ast$}]{path,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool}}]{to\+Cnsole }\end{DoxyParamCaption})}
+
+
+
+Create factory. 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Name \\
+\hline
+\mbox{\tt in}  & {\em path} & Directory where to save the file \\
+\hline
+\mbox{\tt in}  & {\em to\+Cnsole} & Flag to print to console too \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{BaSwOsci_8h_ad7213062e1c1b67a99f82b0d3081541b}\label{BaSwOsci_8h_ad7213062e1c1b67a99f82b0d3081541b}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!Ba\+Sw\+Osci\+Destroy@{Ba\+Sw\+Osci\+Destroy}}
+\index{Ba\+Sw\+Osci\+Destroy@{Ba\+Sw\+Osci\+Destroy}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{Ba\+Sw\+Osci\+Destroy()}{BaSwOsciDestroy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Sw\+Osci\+Destroy (\begin{DoxyParamCaption}\item[{\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Destroy and release resources. 
+
+Should not take more than 100ms to complete. returns with error after 2s \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle to destroy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{BaSwOsci_8h_a9bf2579619f0c62688398a13637a86d6}\label{BaSwOsci_8h_a9bf2579619f0c62688398a13637a86d6}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!Ba\+Sw\+Osci\+Destroy\+Async@{Ba\+Sw\+Osci\+Destroy\+Async}}
+\index{Ba\+Sw\+Osci\+Destroy\+Async@{Ba\+Sw\+Osci\+Destroy\+Async}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{Ba\+Sw\+Osci\+Destroy\+Async()}{BaSwOsciDestroyAsync()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Sw\+Osci\+Destroy\+Async (\begin{DoxyParamCaption}\item[{\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Sends signal to destroy and release resources asynchronously. 
+
+Use this if the task is time critical such as a real-\/time application. \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle to destroy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{BaSwOsci_8h_abd7e61c0845b98b1047b58ef2937ab99}\label{BaSwOsci_8h_abd7e61c0845b98b1047b58ef2937ab99}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!Ba\+Sw\+Osci\+Register@{Ba\+Sw\+Osci\+Register}}
+\index{Ba\+Sw\+Osci\+Register@{Ba\+Sw\+Osci\+Register}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{Ba\+Sw\+Osci\+Register()}{BaSwOsciRegister()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Sw\+Osci\+Register (\begin{DoxyParamCaption}\item[{\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl}}]{hdl,  }\item[{void $\ast$}]{p\+Var,  }\item[{\hyperlink{BaSwOsci_8h_abf69cee9886990d98598cd2abcf3ebfc}{E\+Ba\+Sw\+Osci\+Type}}]{type,  }\item[{const char $\ast$}]{name,  }\item[{const char $\ast$}]{desc }\end{DoxyParamCaption})}
+
+
+
+Registers a variable to the logger so it can be sampled. 
+
+After the first {\ttfamily Sample()} is called, registering is no longer possible \begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\mbox{\tt in}  & {\em p\+Var} & Pointer to the variable \\
+\hline
+\mbox{\tt in}  & {\em type} & Type of the variable pointer \\
+\hline
+\mbox{\tt in}  & {\em name} & Variable name. Any commas in the name will be replaced \\
+\hline
+\mbox{\tt in}  & {\em desc} & Variable description \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{BaSwOsci_8h_a9c724839887c8b982a98677d8195c053}\label{BaSwOsci_8h_a9c724839887c8b982a98677d8195c053}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!Ba\+Sw\+Osci\+Sample@{Ba\+Sw\+Osci\+Sample}}
+\index{Ba\+Sw\+Osci\+Sample@{Ba\+Sw\+Osci\+Sample}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{Ba\+Sw\+Osci\+Sample()}{BaSwOsciSample()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Sw\+Osci\+Sample (\begin{DoxyParamCaption}\item[{\hyperlink{BaSwOsci_8h_a774305b4d0c37d4c9e726aeb0d3629f6}{T\+Ba\+Sw\+Osci\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Samples the registered variables to be written to a file. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & Handle \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{BaSwOsci_8h_aeb3006dd3d6086a5582430cd6ae58d82}\label{BaSwOsci_8h_aeb3006dd3d6086a5582430cd6ae58d82}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!I\+Ba\+Sw\+Osci\+Create@{I\+Ba\+Sw\+Osci\+Create}}
+\index{I\+Ba\+Sw\+Osci\+Create@{I\+Ba\+Sw\+Osci\+Create}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{I\+Ba\+Sw\+Osci\+Create()}{IBaSwOsciCreate()}}
+{\footnotesize\ttfamily \hyperlink{classIBaSwOsci}{I\+Ba\+Sw\+Osci}$\ast$ I\+Ba\+Sw\+Osci\+Create (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{const char $\ast$}]{path,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool}}]{to\+Cnsole }\end{DoxyParamCaption})}
+
+
+
+Create factory. 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Name \\
+\hline
+\mbox{\tt in}  & {\em path} & Directory where to save the file \\
+\hline
+\mbox{\tt in}  & {\em to\+Cnsole} & Flag to print to console too \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{BaSwOsci_8h_a6401e20f44b30c444d00321428019933}\label{BaSwOsci_8h_a6401e20f44b30c444d00321428019933}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!I\+Ba\+Sw\+Osci\+Destroy@{I\+Ba\+Sw\+Osci\+Destroy}}
+\index{I\+Ba\+Sw\+Osci\+Destroy@{I\+Ba\+Sw\+Osci\+Destroy}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{I\+Ba\+Sw\+Osci\+Destroy()}{IBaSwOsciDestroy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} I\+Ba\+Sw\+Osci\+Destroy (\begin{DoxyParamCaption}\item[{\hyperlink{classIBaSwOsci}{I\+Ba\+Sw\+Osci} $\ast$}]{p\+Hdl }\end{DoxyParamCaption})}
+
+
+
+Destroy and release resources. 
+
+Should not take more than 100ms to complete. returns with error after 2s \begin{DoxyReturn}{Returns}
+false if error or timeout and {\ttfamily timeout\+Ms} != 0, otherwise, true 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Hdl} & handle to destroy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{BaSwOsci_8h_a345351ce1b24806fd10dd0e790a26db1}\label{BaSwOsci_8h_a345351ce1b24806fd10dd0e790a26db1}} 
+\index{Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}!I\+Ba\+Sw\+Osci\+Destroy\+Async@{I\+Ba\+Sw\+Osci\+Destroy\+Async}}
+\index{I\+Ba\+Sw\+Osci\+Destroy\+Async@{I\+Ba\+Sw\+Osci\+Destroy\+Async}!Ba\+Sw\+Osci.\+h@{Ba\+Sw\+Osci.\+h}}
+\subsubsection{\texorpdfstring{I\+Ba\+Sw\+Osci\+Destroy\+Async()}{IBaSwOsciDestroyAsync()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} I\+Ba\+Sw\+Osci\+Destroy\+Async (\begin{DoxyParamCaption}\item[{\hyperlink{classIBaSwOsci}{I\+Ba\+Sw\+Osci} $\ast$}]{p\+Hdl }\end{DoxyParamCaption})}
+
+
+
+Destroy and release resources. 
+
+If {\ttfamily timeout\+Ms} = 0, it behaves like an asynchronous call. \begin{DoxyReturn}{Returns}
+false if error or timeout and {\ttfamily timeout\+Ms} != 0, otherwise, true 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Hdl} & handle to destroy \\
+\hline
+\end{DoxyParams}

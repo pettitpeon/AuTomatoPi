@@ -1,0 +1,90 @@
+\hypertarget{HwPi_8h}{}\section{Hw\+Pi.\+h File Reference}
+\label{HwPi_8h}\index{Hw\+Pi.\+h@{Hw\+Pi.\+h}}
+
+
+Raspberry Pi model information.  
+
+
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+Include dependency graph for Hw\+Pi.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=136pt]{HwPi_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{HwPi_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structTHwPiBoard}{T\+Hw\+Pi\+Board}
+\begin{DoxyCompactList}\small\item\em Board Descriptor. Do not modify the strings of this structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{HwPi_8h_a207a0326fb9f00babc835066e39eae43}\label{HwPi_8h_a207a0326fb9f00babc835066e39eae43}} 
+typedef enum \hyperlink{HwPi_8h_ad9df2c155fa597e3d0df4a41c93db250}{E\+Hw\+Pi\+Model} \hyperlink{HwPi_8h_a207a0326fb9f00babc835066e39eae43}{E\+Hw\+Pi\+Model}
+\begin{DoxyCompactList}\small\item\em Model. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{HwPi_8h_a6b78ef743e539c6bc87f7bced82ee878}\label{HwPi_8h_a6b78ef743e539c6bc87f7bced82ee878}} 
+typedef struct \hyperlink{structTHwPiBoard}{T\+Hw\+Pi\+Board} \hyperlink{HwPi_8h_a6b78ef743e539c6bc87f7bced82ee878}{T\+Hw\+Pi\+Board}
+\begin{DoxyCompactList}\small\item\em Board Descriptor. Do not modify the strings of this structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{HwPi_8h_ad9df2c155fa597e3d0df4a41c93db250}\label{HwPi_8h_ad9df2c155fa597e3d0df4a41c93db250}} 
+enum \hyperlink{HwPi_8h_ad9df2c155fa597e3d0df4a41c93db250}{E\+Hw\+Pi\+Model} \begin{DoxyCompactList}\small\item\em Model. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} \hyperlink{HwPi_8h_af6873003c47fde98ababd741281ac18c}{Hw\+Pi\+Get\+Board\+Info} (\hyperlink{structTHwPiBoard}{T\+Hw\+Pi\+Board} $\ast$p\+Board\+Inf)
+\begin{DoxyCompactList}\small\item\em Get the board information from the R\+Pi. \end{DoxyCompactList}\item 
+\hyperlink{HwPi_8h_ad9df2c155fa597e3d0df4a41c93db250}{E\+Hw\+Pi\+Model} \hyperlink{HwPi_8h_ad0036bc3563dbeb059fce6e25425fea4}{Hw\+Pi\+Get\+Board\+Model} ()
+\begin{DoxyCompactList}\small\item\em Get the board model from the R\+Pi. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Raspberry Pi model information. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{HwPi_8h_af6873003c47fde98ababd741281ac18c}\label{HwPi_8h_af6873003c47fde98ababd741281ac18c}} 
+\index{Hw\+Pi.\+h@{Hw\+Pi.\+h}!Hw\+Pi\+Get\+Board\+Info@{Hw\+Pi\+Get\+Board\+Info}}
+\index{Hw\+Pi\+Get\+Board\+Info@{Hw\+Pi\+Get\+Board\+Info}!Hw\+Pi.\+h@{Hw\+Pi.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Pi\+Get\+Board\+Info()}{HwPiGetBoardInfo()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} Hw\+Pi\+Get\+Board\+Info (\begin{DoxyParamCaption}\item[{\hyperlink{structTHwPiBoard}{T\+Hw\+Pi\+Board} $\ast$}]{p\+Board\+Inf }\end{DoxyParamCaption})}
+
+
+
+Get the board information from the R\+Pi. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em p\+Board\+Inf} & Board information \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwPi_8h_ad0036bc3563dbeb059fce6e25425fea4}\label{HwPi_8h_ad0036bc3563dbeb059fce6e25425fea4}} 
+\index{Hw\+Pi.\+h@{Hw\+Pi.\+h}!Hw\+Pi\+Get\+Board\+Model@{Hw\+Pi\+Get\+Board\+Model}}
+\index{Hw\+Pi\+Get\+Board\+Model@{Hw\+Pi\+Get\+Board\+Model}!Hw\+Pi.\+h@{Hw\+Pi.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Pi\+Get\+Board\+Model()}{HwPiGetBoardModel()}}
+{\footnotesize\ttfamily \hyperlink{HwPi_8h_ad9df2c155fa597e3d0df4a41c93db250}{E\+Hw\+Pi\+Model} Hw\+Pi\+Get\+Board\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the board model from the R\+Pi. 
+
+\begin{DoxyReturn}{Returns}
+The board model 
+\end{DoxyReturn}

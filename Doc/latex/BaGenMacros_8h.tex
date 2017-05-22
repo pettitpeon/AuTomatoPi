@@ -1,0 +1,90 @@
+\hypertarget{BaGenMacros_8h}{}\section{Ba\+Gen\+Macros.\+h File Reference}
+\label{BaGenMacros_8h}\index{Ba\+Gen\+Macros.\+h@{Ba\+Gen\+Macros.\+h}}
+
+
+General Macros or generic templated functions.  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{BaGenMacros_8h_a3758dd5d300a594312c95bc393378df0}\label{BaGenMacros_8h_a3758dd5d300a594312c95bc393378df0}} 
+\#define \hyperlink{BaGenMacros_8h_a3758dd5d300a594312c95bc393378df0}{L\+O\+C\+AL}~static
+\begin{DoxyCompactList}\small\item\em Used to signalize a local function in the implementation file of a C-\/\+A\+PI. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_acae8431a4d7babf7652e7d3734af0e62}\label{BaGenMacros_8h_acae8431a4d7babf7652e7d3734af0e62}} 
+\#define \hyperlink{BaGenMacros_8h_acae8431a4d7babf7652e7d3734af0e62}{S\+I\+GN}(X,  Y)~(Y $<$ 0 ? (X $<$ 0 ? X \+: -\/X) \+: (X $<$ 0 ? -\/X \+: X))
+\begin{DoxyCompactList}\small\item\em Returns a value with the same value as x and the same sign as y. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_a2eb03319e5ccdc1a14b73a7d8b1724de}\label{BaGenMacros_8h_a2eb03319e5ccdc1a14b73a7d8b1724de}} 
+\#define \hyperlink{BaGenMacros_8h_a2eb03319e5ccdc1a14b73a7d8b1724de}{S\+QR}(X)~((X)$\ast$(X))
+\begin{DoxyCompactList}\small\item\em Generic square function. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_a178d25c580b4df2644472311a0756d86}\label{BaGenMacros_8h_a178d25c580b4df2644472311a0756d86}} 
+\#define \hyperlink{BaGenMacros_8h_a178d25c580b4df2644472311a0756d86}{S\+W\+A\+PT}(T,  X,  Y)~do \{T z; z = X; X=Y; Y=z;\} while (0)
+\begin{DoxyCompactList}\small\item\em Swap for typed variables. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_a919dba5d5cb6ad3ce4df87973d24bcf0}\label{BaGenMacros_8h_a919dba5d5cb6ad3ce4df87973d24bcf0}} 
+\#define \hyperlink{BaGenMacros_8h_a919dba5d5cb6ad3ce4df87973d24bcf0}{F\+L\+T\+\_\+\+EQ}(F\+L\+T1,  F\+L\+T2,  D\+E\+L\+TA)~(fabs((F\+L\+T1) -\/ (F\+L\+T2)) $<$ (D\+E\+L\+TA))
+\begin{DoxyCompactList}\small\item\em Float equality with a delta. Requires math.\+h. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_aeccbc832685b82394b474605a03f9025}\label{BaGenMacros_8h_aeccbc832685b82394b474605a03f9025}} 
+\#define \hyperlink{BaGenMacros_8h_aeccbc832685b82394b474605a03f9025}{R\+O\+U\+N\+D\+\_\+\+H\+A\+LF}(X)
+\begin{DoxyCompactList}\small\item\em Roundto the nearest half. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_aa0746d479d8433b89404db6bd60f5449}\label{BaGenMacros_8h_aa0746d479d8433b89404db6bd60f5449}} 
+\#define \hyperlink{BaGenMacros_8h_aa0746d479d8433b89404db6bd60f5449}{I\+N\+R\+A\+N\+GE}(V\+AL,  \hyperlink{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}{M\+IN},  \hyperlink{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}{M\+AX})~((\hyperlink{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}{M\+IN}) $<$= (V\+AL) \&\& (V\+AL) $<$= (\hyperlink{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}{M\+AX}))
+\begin{DoxyCompactList}\small\item\em Returns if min $<$= val $<$= max. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_a65784f44e83fca19bb1dd56db5137cf2}\label{BaGenMacros_8h_a65784f44e83fca19bb1dd56db5137cf2}} 
+\#define \hyperlink{BaGenMacros_8h_a65784f44e83fca19bb1dd56db5137cf2}{A\+R\+R\+A\+Y\+S\+I\+ZE}(A\+RR)~(sizeof(A\+RR) / sizeof(A\+RR\mbox{[}0\mbox{]}))
+\begin{DoxyCompactList}\small\item\em Array size macro. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_ae302a31e4e1696bc276d54feb360607e}\label{BaGenMacros_8h_ae302a31e4e1696bc276d54feb360607e}} 
+\#define \hyperlink{BaGenMacros_8h_ae302a31e4e1696bc276d54feb360607e}{S\+E\+T\+A\+RR}(A\+RR,  N,  V\+AL)
+\begin{DoxyCompactList}\small\item\em Set all fields of an array A\+RR of size N to V\+AL. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_af61d20e17d227ebaa2bd697b92cf4a0e}\label{BaGenMacros_8h_af61d20e17d227ebaa2bd697b92cf4a0e}} 
+\#define \hyperlink{BaGenMacros_8h_af61d20e17d227ebaa2bd697b92cf4a0e}{Z\+E\+R\+O\+A\+RR}(A\+RR,  N)~\hyperlink{BaGenMacros_8h_ae302a31e4e1696bc276d54feb360607e}{S\+E\+T\+A\+RR}(A\+RR, N, 0)
+\begin{DoxyCompactList}\small\item\em Set all fields of an array A\+RR of size N to 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_a633384e5d5fa26e07db9e7d078b06117}\label{BaGenMacros_8h_a633384e5d5fa26e07db9e7d078b06117}} 
+\#define \hyperlink{BaGenMacros_8h_a633384e5d5fa26e07db9e7d078b06117}{F\+I\+L\+E\+\_\+\+N\+A\+M\+E\+\_\+}~(strrchr(\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+, \textquotesingle{}/\textquotesingle{}) ? strrchr(\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+, \textquotesingle{}/\textquotesingle{}) + 1 \+: \+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+)
+\begin{DoxyCompactList}\small\item\em Calculates the file name without the path. Eg\+: My\+File.\+cpp. Requires string.\+h. \end{DoxyCompactList}\item 
+\#define \hyperlink{BaGenMacros_8h_a8170837187d85e164f0c7c58c7ce5e89}{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}(fun)
+\begin{DoxyCompactList}\small\item\em Times a function or code part and prints the time in seconds to console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Min and max limit macros}\par
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}\label{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}} 
+\#define \hyperlink{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}{M\+IN}(X,  Y)~((X) $<$ (Y) ? (X) \+: (Y))
+\begin{DoxyCompactList}\small\item\em Min and max macros for C primitive types. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}\label{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}} 
+\#define \hyperlink{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}{M\+AX}(X,  Y)~((X) $>$ (Y) ? (X) \+: (Y))
+\begin{DoxyCompactList}\small\item\em Min and max macros for C primitive types. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaGenMacros_8h_ac62c5416118ba1652760cd62f822465c}\label{BaGenMacros_8h_ac62c5416118ba1652760cd62f822465c}} 
+\#define \hyperlink{BaGenMacros_8h_ac62c5416118ba1652760cd62f822465c}{M\+I\+N\+M\+AX}(V\+AR,  MI,  MA)~(\hyperlink{BaGenMacros_8h_ad2f3678bf5eae3684fc497130b946eae}{M\+IN}(\hyperlink{BaGenMacros_8h_aff9931d7524c88e07743af6535b20761}{M\+AX}(V\+AR, MI), MA))
+\begin{DoxyCompactList}\small\item\em Min and max macros for C primitive types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{BaGenMacros_8h_af94e4e21ed04253852b7d127965b5801}\label{BaGenMacros_8h_af94e4e21ed04253852b7d127965b5801}} 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{BaGenMacros_8h_af94e4e21ed04253852b7d127965b5801}{S\+W\+AP} (T \&x, T \&y)
+\begin{DoxyCompactList}\small\item\em Generic swap function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+General Macros or generic templated functions. 
+
+Do not include this header in another header file, only in implementation files, .c or .cpp. 
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{BaGenMacros_8h_a8170837187d85e164f0c7c58c7ce5e89}\label{BaGenMacros_8h_a8170837187d85e164f0c7c58c7ce5e89}} 
+\index{Ba\+Gen\+Macros.\+h@{Ba\+Gen\+Macros.\+h}!T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+@{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}}
+\index{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+@{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}!Ba\+Gen\+Macros.\+h@{Ba\+Gen\+Macros.\+h}}
+\subsubsection{\texorpdfstring{T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+}{TIME\_FUN\_}}
+{\footnotesize\ttfamily \#define T\+I\+M\+E\+\_\+\+F\+U\+N\+\_\+(\begin{DoxyParamCaption}\item[{}]{fun }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{auto} start = std::chrono::steady\_clock::now(); \(\backslash\)
+    fun; \(\backslash\)
+    std::chrono::duration<double> dur = (std::chrono::steady\_clock::now() - start); \(\backslash\)
+    std::cout << #fun << \textcolor{stringliteral}{": "} << dur.count() << \textcolor{stringliteral}{" s"} << std::endl;
+\end{DoxyCode}
+
+
+Times a function or code part and prints the time in seconds to console. 
+
+Requires $<$chrono$>$ 

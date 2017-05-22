@@ -1,0 +1,476 @@
+\hypertarget{HwCom_8h}{}\section{Hw\+Com.\+h File Reference}
+\label{HwCom_8h}\index{Hw\+Com.\+h@{Hw\+Com.\+h}}
+
+
+Communications A\+PI.  
+
+
+{\ttfamily \#include \char`\"{}Hw\+Pi.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Ba\+Core.\+h\char`\"{}}\newline
+Include dependency graph for Hw\+Com.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{HwCom_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{HwCom_8h_a7d70aa569d7bd83eda77b8f6afed7293}\label{HwCom_8h_a7d70aa569d7bd83eda77b8f6afed7293}} 
+\#define \hyperlink{HwCom_8h_a7d70aa569d7bd83eda77b8f6afed7293}{H\+W\+C\+O\+M\+\_\+\+S\+E\+R\+I\+A\+L\+D\+EV}~\char`\"{}/dev/tty\+A\+M\+A0\char`\"{}
+\begin{DoxyCompactList}\small\item\em Serial device path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{HwCom_8h_a1a20060734a5e952b508218cf1772f72}\label{HwCom_8h_a1a20060734a5e952b508218cf1772f72}} 
+typedef int32\+\_\+t \hyperlink{HwCom_8h_a1a20060734a5e952b508218cf1772f72}{T\+Hw\+Com\+Hdl}
+\begin{DoxyCompactList}\small\item\em Hw\+Com Handle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}\label{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}} 
+typedef void $\ast$ \hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl}
+\begin{DoxyCompactList}\small\item\em Serial interface handle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{HwCom_8h_a7105d497341071b22d7c500056001c02}\label{HwCom_8h_a7105d497341071b22d7c500056001c02}} 
+typedef void $\ast$($\ast$ \hyperlink{HwCom_8h_a7105d497341071b22d7c500056001c02}{T\+Hw\+Com1w\+Read\+Fun}) (const char $\ast$str, size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Callback function to parse the string returned by the driver from /sys/bus/w1/devices/$<$\+Serial\+No$>$/w1\+\_\+slave. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{HwCom_8h_a6cf0c653d0f7ed834aa742e8001bccfb}\label{HwCom_8h_a6cf0c653d0f7ed834aa742e8001bccfb}} 
+typedef enum \hyperlink{HwCom_8h_a2e7a52ac182e42cf2b259006fed97e65}{E\+Hw\+Com\+Baud} \hyperlink{HwCom_8h_a6cf0c653d0f7ed834aa742e8001bccfb}{E\+Hw\+Com\+Baud}
+\begin{DoxyCompactList}\small\item\em Baud enumeration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{HwCom_8h_a2e7a52ac182e42cf2b259006fed97e65}\label{HwCom_8h_a2e7a52ac182e42cf2b259006fed97e65}} 
+enum \hyperlink{HwCom_8h_a2e7a52ac182e42cf2b259006fed97e65}{E\+Hw\+Com\+Baud} \begin{DoxyCompactList}\small\item\em Baud enumeration. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{Indent}\textbf{ I2C bus Management}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_ac060a9e652b427458813273086549aea}{Hw\+Com\+I2\+C\+Init} ()
+\begin{DoxyCompactList}\small\item\em Initializes the resources, reserves G\+P\+I\+Os S\+DA (2), S\+CL (3). \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_ad7b784b3ad8721365f2f7a72bc14a397}{Hw\+Com\+I2\+C\+Exit} ()
+\begin{DoxyCompactList}\small\item\em Releases the resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_aecac8fa7372a133b5fc7ae4cec3abdc6}{Hw\+Com\+I2\+C\+Select\+Dev} (uint16\+\_\+t dev\+Addr)
+\begin{DoxyCompactList}\small\item\em Select a device to work with and initializes the bus if not initialized. \end{DoxyCompactList}\item 
+uint64\+\_\+t \hyperlink{HwCom_8h_a0c624b08aa8c2651109a8a8ac33f2728}{Hw\+Com\+I2\+C\+Funcs} ()
+\begin{DoxyCompactList}\small\item\em Gets the functionality of the device as described in linux/i2c.\+h. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ I2C bus Read}\par
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{HwCom_8h_a149ed3dae346ed9f946b7935085a6127}{Hw\+Com\+I2\+C\+Read8} (\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Simple 8-\/bit read. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{HwCom_8h_adda67755cbfa532769c143051a4d01de}{Hw\+Com\+I2\+C\+Read\+Reg8} (uint32\+\_\+t reg, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Read 8-\/bit register. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{HwCom_8h_adfb547c2f589e0e4d70e85dafbfaee03}{Hw\+Com\+I2\+C\+Read\+Reg16} (uint32\+\_\+t reg, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Read 16-\/bit register. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ I2C bus write}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_a570ddc70c8be8b4c20a186bf34cd92fc}{Hw\+Com\+I2\+C\+Write8} (uint8\+\_\+t val)
+\begin{DoxyCompactList}\small\item\em Simple 8-\/bit Write. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_abb0e8c24a41d28afed5db520db093e0b}{Hw\+Com\+I2\+C\+Write\+Reg8} (uint32\+\_\+t reg, uint8\+\_\+t val)
+\begin{DoxyCompactList}\small\item\em Write 8-\/bit register. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_a86244a8d6ad15bc182a41b8a5c671d81}{Hw\+Com\+I2\+C\+Write\+Reg16} (uint32\+\_\+t reg, uint16\+\_\+t val)
+\begin{DoxyCompactList}\small\item\em Write 16-\/bit register. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ One Wire bus}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_aa068ac85aee6a4bf0d32123c51db4203}{Hw\+Com1\+W\+Init} ()
+\begin{DoxyCompactList}\small\item\em Initializes the resources, reserves G\+P\+IO 4 and calls \hyperlink{HwCom_8h_a24c2d69c55e2fa0020f5af296d403752}{Hw\+Com1\+W\+Get\+Devices()} \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_a01bb7c79a1dd9e39aaa886252f9b33ff}{Hw\+Com1\+W\+Exit} ()
+\begin{DoxyCompactList}\small\item\em Releases the resources. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{HwCom_8h_a24c2d69c55e2fa0020f5af296d403752}{Hw\+Com1\+W\+Get\+Devices} ()
+\begin{DoxyCompactList}\small\item\em Scans for devices and saves them internally. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{HwCom_8h_aef0861437ad9961206cc044721c5db49}{Hw\+Com1\+W\+Rd\+Async} (const char $\ast$ser\+No, \hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us} $\ast$p\+Ts)
+\begin{DoxyCompactList}\small\item\em Read the value of the 1W sensor asynchronously. \end{DoxyCompactList}\item 
+float \hyperlink{HwCom_8h_a309f2fc27cad40ec1330d6ec32fa18a4}{Hw\+Com1\+W\+Get\+Temp} (const char $\ast$ser\+No, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Gets the temperature from the sensor with family \char`\"{}28\char`\"{}. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{HwCom_8h_a30cc625985198dbdf1a251e1391d1164}{Hw\+Com1\+W\+Get\+Value} (const char $\ast$ser\+No, \hyperlink{HwCom_8h_a7105d497341071b22d7c500056001c02}{T\+Hw\+Com1w\+Read\+Fun} cb, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$p\+Error)
+\begin{DoxyCompactList}\small\item\em Gets the data from a generic one wire device by calling user callback. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Serial Interface}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl} \hyperlink{HwCom_8h_a66f50d1e50f879c73a5b889faaabe8c8}{Hw\+Com\+Ser\+Init} (const char $\ast$device, \hyperlink{HwCom_8h_a2e7a52ac182e42cf2b259006fed97e65}{E\+Hw\+Com\+Baud} baud)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_aecc9fe0b506d4400c15738caad0e2f37}{Hw\+Com\+Ser\+Exit} (\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Frees resources. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{HwCom_8h_ad0682a9c99cc65e350e8122642ce1d85}{Hw\+Com\+Ser\+PutC} (\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl} hdl, uint8\+\_\+t c)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
+int \hyperlink{HwCom_8h_a59a4bf31bac72346514551c2cd84b039}{Hw\+Com\+Ser\+Pend} (\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{HwCom_8h_a73cad3b3d776b3491a329ae68a6f481e}{Hw\+Com\+Ser\+GetC} (\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Communications A\+PI. 
+
+
+\begin{DoxyItemize}
+\item I2C
+\item S\+PI
+\item Serial
+\item One Wire Bus 
+\end{DoxyItemize}
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{HwCom_8h_ac060a9e652b427458813273086549aea}\label{HwCom_8h_ac060a9e652b427458813273086549aea}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Init@{Hw\+Com\+I2\+C\+Init}}
+\index{Hw\+Com\+I2\+C\+Init@{Hw\+Com\+I2\+C\+Init}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Init()}{HwComI2CInit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+I2\+C\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the resources, reserves G\+P\+I\+Os S\+DA (2), S\+CL (3). 
+
+todo\+: I\+D\+\_\+\+SC, I\+D\+\_\+\+SD \begin{DoxyReturn}{Returns}
+Error of success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_ad7b784b3ad8721365f2f7a72bc14a397}\label{HwCom_8h_ad7b784b3ad8721365f2f7a72bc14a397}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Exit@{Hw\+Com\+I2\+C\+Exit}}
+\index{Hw\+Com\+I2\+C\+Exit@{Hw\+Com\+I2\+C\+Exit}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Exit()}{HwComI2CExit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+I2\+C\+Exit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Releases the resources. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_aecac8fa7372a133b5fc7ae4cec3abdc6}\label{HwCom_8h_aecac8fa7372a133b5fc7ae4cec3abdc6}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Select\+Dev@{Hw\+Com\+I2\+C\+Select\+Dev}}
+\index{Hw\+Com\+I2\+C\+Select\+Dev@{Hw\+Com\+I2\+C\+Select\+Dev}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Select\+Dev()}{HwComI2CSelectDev()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+I2\+C\+Select\+Dev (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{dev\+Addr }\end{DoxyParamCaption})}
+
+
+
+Select a device to work with and initializes the bus if not initialized. 
+
+\begin{DoxyReturn}{Returns}
+Error of success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em dev\+Addr} & Device address. see todo \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_a0c624b08aa8c2651109a8a8ac33f2728}\label{HwCom_8h_a0c624b08aa8c2651109a8a8ac33f2728}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Funcs@{Hw\+Com\+I2\+C\+Funcs}}
+\index{Hw\+Com\+I2\+C\+Funcs@{Hw\+Com\+I2\+C\+Funcs}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Funcs()}{HwComI2CFuncs()}}
+{\footnotesize\ttfamily uint64\+\_\+t Hw\+Com\+I2\+C\+Funcs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the functionality of the device as described in linux/i2c.\+h. 
+
+\begin{DoxyReturn}{Returns}
+Mask of functions 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_a149ed3dae346ed9f946b7935085a6127}\label{HwCom_8h_a149ed3dae346ed9f946b7935085a6127}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Read8@{Hw\+Com\+I2\+C\+Read8}}
+\index{Hw\+Com\+I2\+C\+Read8@{Hw\+Com\+I2\+C\+Read8}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Read8()}{HwComI2CRead8()}}
+{\footnotesize\ttfamily uint8\+\_\+t Hw\+Com\+I2\+C\+Read8 (\begin{DoxyParamCaption}\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$}]{p\+Error }\end{DoxyParamCaption})}
+
+
+
+Simple 8-\/bit read. 
+
+\begin{DoxyReturn}{Returns}
+Data 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_adda67755cbfa532769c143051a4d01de}\label{HwCom_8h_adda67755cbfa532769c143051a4d01de}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Read\+Reg8@{Hw\+Com\+I2\+C\+Read\+Reg8}}
+\index{Hw\+Com\+I2\+C\+Read\+Reg8@{Hw\+Com\+I2\+C\+Read\+Reg8}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Read\+Reg8()}{HwComI2CReadReg8()}}
+{\footnotesize\ttfamily uint8\+\_\+t Hw\+Com\+I2\+C\+Read\+Reg8 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{reg,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$}]{p\+Error }\end{DoxyParamCaption})}
+
+
+
+Read 8-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Data 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_adfb547c2f589e0e4d70e85dafbfaee03}\label{HwCom_8h_adfb547c2f589e0e4d70e85dafbfaee03}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Read\+Reg16@{Hw\+Com\+I2\+C\+Read\+Reg16}}
+\index{Hw\+Com\+I2\+C\+Read\+Reg16@{Hw\+Com\+I2\+C\+Read\+Reg16}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Read\+Reg16()}{HwComI2CReadReg16()}}
+{\footnotesize\ttfamily uint16\+\_\+t Hw\+Com\+I2\+C\+Read\+Reg16 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{reg,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$}]{p\+Error }\end{DoxyParamCaption})}
+
+
+
+Read 16-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Data 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_a570ddc70c8be8b4c20a186bf34cd92fc}\label{HwCom_8h_a570ddc70c8be8b4c20a186bf34cd92fc}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Write8@{Hw\+Com\+I2\+C\+Write8}}
+\index{Hw\+Com\+I2\+C\+Write8@{Hw\+Com\+I2\+C\+Write8}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Write8()}{HwComI2CWrite8()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+I2\+C\+Write8 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{val }\end{DoxyParamCaption})}
+
+
+
+Simple 8-\/bit Write. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em val} & value to write \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_abb0e8c24a41d28afed5db520db093e0b}\label{HwCom_8h_abb0e8c24a41d28afed5db520db093e0b}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Write\+Reg8@{Hw\+Com\+I2\+C\+Write\+Reg8}}
+\index{Hw\+Com\+I2\+C\+Write\+Reg8@{Hw\+Com\+I2\+C\+Write\+Reg8}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Write\+Reg8()}{HwComI2CWriteReg8()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+I2\+C\+Write\+Reg8 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{reg,  }\item[{uint8\+\_\+t}]{val }\end{DoxyParamCaption})}
+
+
+
+Write 8-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt in}  & {\em val} & value to write \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_a86244a8d6ad15bc182a41b8a5c671d81}\label{HwCom_8h_a86244a8d6ad15bc182a41b8a5c671d81}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+I2\+C\+Write\+Reg16@{Hw\+Com\+I2\+C\+Write\+Reg16}}
+\index{Hw\+Com\+I2\+C\+Write\+Reg16@{Hw\+Com\+I2\+C\+Write\+Reg16}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+I2\+C\+Write\+Reg16()}{HwComI2CWriteReg16()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+I2\+C\+Write\+Reg16 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{reg,  }\item[{uint16\+\_\+t}]{val }\end{DoxyParamCaption})}
+
+
+
+Write 16-\/bit register. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register number \\
+\hline
+\mbox{\tt in}  & {\em val} & value to write \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_aa068ac85aee6a4bf0d32123c51db4203}\label{HwCom_8h_aa068ac85aee6a4bf0d32123c51db4203}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com1\+W\+Init@{Hw\+Com1\+W\+Init}}
+\index{Hw\+Com1\+W\+Init@{Hw\+Com1\+W\+Init}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com1\+W\+Init()}{HwCom1WInit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com1\+W\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the resources, reserves G\+P\+IO 4 and calls \hyperlink{HwCom_8h_a24c2d69c55e2fa0020f5af296d403752}{Hw\+Com1\+W\+Get\+Devices()} 
+
+\begin{DoxyReturn}{Returns}
+Error of success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_a01bb7c79a1dd9e39aaa886252f9b33ff}\label{HwCom_8h_a01bb7c79a1dd9e39aaa886252f9b33ff}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com1\+W\+Exit@{Hw\+Com1\+W\+Exit}}
+\index{Hw\+Com1\+W\+Exit@{Hw\+Com1\+W\+Exit}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com1\+W\+Exit()}{HwCom1WExit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com1\+W\+Exit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Releases the resources. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_a24c2d69c55e2fa0020f5af296d403752}\label{HwCom_8h_a24c2d69c55e2fa0020f5af296d403752}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com1\+W\+Get\+Devices@{Hw\+Com1\+W\+Get\+Devices}}
+\index{Hw\+Com1\+W\+Get\+Devices@{Hw\+Com1\+W\+Get\+Devices}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com1\+W\+Get\+Devices()}{HwCom1WGetDevices()}}
+{\footnotesize\ttfamily uint16\+\_\+t Hw\+Com1\+W\+Get\+Devices (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Scans for devices and saves them internally. 
+
+This is automatically called by \hyperlink{HwCom_8h_aa068ac85aee6a4bf0d32123c51db4203}{Hw\+Com1\+W\+Init()} \begin{DoxyReturn}{Returns}
+The number of devices found 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_aef0861437ad9961206cc044721c5db49}\label{HwCom_8h_aef0861437ad9961206cc044721c5db49}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com1\+W\+Rd\+Async@{Hw\+Com1\+W\+Rd\+Async}}
+\index{Hw\+Com1\+W\+Rd\+Async@{Hw\+Com1\+W\+Rd\+Async}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com1\+W\+Rd\+Async()}{HwCom1WRdAsync()}}
+{\footnotesize\ttfamily const char$\ast$ Hw\+Com1\+W\+Rd\+Async (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ser\+No,  }\item[{\hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us} $\ast$}]{p\+Ts }\end{DoxyParamCaption})}
+
+
+
+Read the value of the 1W sensor asynchronously. 
+
+This works with an internal worker thread. The {\ttfamily ser\+No} must have the form\+:~\newline
+X\+X-\/\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+XX \mbox{[}dev\+Fam\mbox{]}-\/\mbox{[}dev\+ID\mbox{]} \begin{DoxyReturn}{Returns}
+On success, the contents of the sensor file, otherwise 0 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ser\+No} & Optional serial number of the sensor eg\+: \char`\"{}28-\/0215c2c4bcff\char`\"{}. If null, the first sensor with family ID 28 is used \\
+\hline
+\mbox{\tt out}  & {\em p\+Ts} & optional timestamp of the reading \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_a309f2fc27cad40ec1330d6ec32fa18a4}\label{HwCom_8h_a309f2fc27cad40ec1330d6ec32fa18a4}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com1\+W\+Get\+Temp@{Hw\+Com1\+W\+Get\+Temp}}
+\index{Hw\+Com1\+W\+Get\+Temp@{Hw\+Com1\+W\+Get\+Temp}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com1\+W\+Get\+Temp()}{HwCom1WGetTemp()}}
+{\footnotesize\ttfamily float Hw\+Com1\+W\+Get\+Temp (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ser\+No,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$}]{p\+Error }\end{DoxyParamCaption})}
+
+
+
+Gets the temperature from the sensor with family \char`\"{}28\char`\"{}. 
+
+This is a slow synchronous read. It takes about 1s. For soft real-\/time applications, the asynchronous call is suggested. The {\ttfamily ser\+No} must have the form\+:~\newline
+X\+X-\/\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+XX \mbox{[}dev\+Fam\mbox{]}-\/\mbox{[}dev\+ID\mbox{]} \begin{DoxyReturn}{Returns}
+Temperature in ï¿½C on success, otherwise -\/300 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ser\+No} & Optional serial number of the sensor eg\+: \char`\"{}28-\/0215c2c4bcff\char`\"{}. If null, the first sensor with family ID 28 is used \\
+\hline
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag. Only modified if error \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_a30cc625985198dbdf1a251e1391d1164}\label{HwCom_8h_a30cc625985198dbdf1a251e1391d1164}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com1\+W\+Get\+Value@{Hw\+Com1\+W\+Get\+Value}}
+\index{Hw\+Com1\+W\+Get\+Value@{Hw\+Com1\+W\+Get\+Value}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com1\+W\+Get\+Value()}{HwCom1WGetValue()}}
+{\footnotesize\ttfamily void$\ast$ Hw\+Com1\+W\+Get\+Value (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ser\+No,  }\item[{\hyperlink{HwCom_8h_a7105d497341071b22d7c500056001c02}{T\+Hw\+Com1w\+Read\+Fun}}]{cb,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} $\ast$}]{p\+Error }\end{DoxyParamCaption})}
+
+
+
+Gets the data from a generic one wire device by calling user callback. 
+
+todo\+: return the first sensor if ser\+NO == 1. The {\ttfamily ser\+No} must have the form\+:~\newline
+X\+X-\/\+X\+X\+X\+X\+X\+X\+X\+X\+X\+X\+XX \mbox{[}dev\+Fam\mbox{]}-\/\mbox{[}dev\+ID\mbox{]} \begin{DoxyReturn}{Returns}
+Null if error, or the data returned by {\ttfamily cb} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ser\+No} & Optional serial number of the sensor eg\+: \char`\"{}28-\/0215c2c4bcff\char`\"{}. \\
+\hline
+\mbox{\tt in}  & {\em cb} & Callback function that parses the string returned by the driver \\
+\hline
+\mbox{\tt out}  & {\em p\+Error} & Optional error flag. Only modified if error \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_a66f50d1e50f879c73a5b889faaabe8c8}\label{HwCom_8h_a66f50d1e50f879c73a5b889faaabe8c8}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+Ser\+Init@{Hw\+Com\+Ser\+Init}}
+\index{Hw\+Com\+Ser\+Init@{Hw\+Com\+Ser\+Init}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+Ser\+Init()}{HwComSerInit()}}
+{\footnotesize\ttfamily \hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl} Hw\+Com\+Ser\+Init (\begin{DoxyParamCaption}\item[{const char $\ast$}]{device,  }\item[{\hyperlink{HwCom_8h_a2e7a52ac182e42cf2b259006fed97e65}{E\+Hw\+Com\+Baud}}]{baud }\end{DoxyParamCaption})}
+
+
+
+Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
+
+\begin{DoxyReturn}{Returns}
+Handle on success, otherwise error 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em device} & Device path, e.\+g. H\+W\+C\+O\+M\+\_\+\+S\+E\+R\+I\+A\+L\+D\+EV \\
+\hline
+{\em baud} & Baud rate \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_aecc9fe0b506d4400c15738caad0e2f37}\label{HwCom_8h_aecc9fe0b506d4400c15738caad0e2f37}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+Ser\+Exit@{Hw\+Com\+Ser\+Exit}}
+\index{Hw\+Com\+Ser\+Exit@{Hw\+Com\+Ser\+Exit}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+Ser\+Exit()}{HwComSerExit()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+Ser\+Exit (\begin{DoxyParamCaption}\item[{\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Frees resources. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em hdl} & Serial communication handle \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{HwCom_8h_ad0682a9c99cc65e350e8122642ce1d85}\label{HwCom_8h_ad0682a9c99cc65e350e8122642ce1d85}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+Ser\+PutC@{Hw\+Com\+Ser\+PutC}}
+\index{Hw\+Com\+Ser\+PutC@{Hw\+Com\+Ser\+PutC}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+Ser\+Put\+C()}{HwComSerPutC()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Hw\+Com\+Ser\+PutC (\begin{DoxyParamCaption}\item[{\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl}}]{hdl,  }\item[{uint8\+\_\+t}]{c }\end{DoxyParamCaption})}
+
+
+
+Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
+
+\begin{DoxyReturn}{Returns}
+Handle on success, otherwise error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_a59a4bf31bac72346514551c2cd84b039}\label{HwCom_8h_a59a4bf31bac72346514551c2cd84b039}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+Ser\+Pend@{Hw\+Com\+Ser\+Pend}}
+\index{Hw\+Com\+Ser\+Pend@{Hw\+Com\+Ser\+Pend}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+Ser\+Pend()}{HwComSerPend()}}
+{\footnotesize\ttfamily int Hw\+Com\+Ser\+Pend (\begin{DoxyParamCaption}\item[{\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
+
+\begin{DoxyReturn}{Returns}
+Handle on success, otherwise error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{HwCom_8h_a73cad3b3d776b3491a329ae68a6f481e}\label{HwCom_8h_a73cad3b3d776b3491a329ae68a6f481e}} 
+\index{Hw\+Com.\+h@{Hw\+Com.\+h}!Hw\+Com\+Ser\+GetC@{Hw\+Com\+Ser\+GetC}}
+\index{Hw\+Com\+Ser\+GetC@{Hw\+Com\+Ser\+GetC}!Hw\+Com.\+h@{Hw\+Com.\+h}}
+\subsubsection{\texorpdfstring{Hw\+Com\+Ser\+Get\+C()}{HwComSerGetC()}}
+{\footnotesize\ttfamily uint8\+\_\+t Hw\+Com\+Ser\+GetC (\begin{DoxyParamCaption}\item[{\hyperlink{HwCom_8h_ae21883d5808698e0dd63798f7c3aab49}{T\+Hw\+Com\+Ser\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Initializes the resources and reserves G\+P\+I\+Os 14 and 15 for. 
+
+\begin{DoxyReturn}{Returns}
+Handle on success, otherwise error 
+\end{DoxyReturn}

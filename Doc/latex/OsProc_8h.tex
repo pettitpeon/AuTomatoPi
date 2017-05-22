@@ -1,0 +1,421 @@
+\hypertarget{OsProc_8h}{}\section{Os\+Proc.\+h File Reference}
+\label{OsProc_8h}\index{Os\+Proc.\+h@{Os\+Proc.\+h}}
+
+
+Process functions.  
+
+
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Ba\+Core.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Ba\+Log.\+h\char`\"{}}\newline
+Include dependency graph for Os\+Proc.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{OsProc_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structTOsProcCtrlTaskOpts}{T\+Os\+Proc\+Ctrl\+Task\+Opts}
+\begin{DoxyCompactList}\small\item\em Options structure for the control task started with \#\+Ba\+Api\+Start\+Ctrl\+Task() \end{DoxyCompactList}\item 
+struct \hyperlink{structTOsProcCtrlTaskStats}{T\+Os\+Proc\+Ctrl\+Task\+Stats}
+\begin{DoxyCompactList}\small\item\em Control task statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{OsProc_8h_a3c9a9ad2caaae2472761064235cbd62f}\label{OsProc_8h_a3c9a9ad2caaae2472761064235cbd62f}} 
+\#define \hyperlink{OsProc_8h_a3c9a9ad2caaae2472761064235cbd62f}{B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+EN}~16
+\begin{DoxyCompactList}\small\item\em Standard length of program names \textquotesingle{}proc/comm\textquotesingle{}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{OsProc_8h_a71a01cc9c903abdd1e44eba81d7d8b12}\label{OsProc_8h_a71a01cc9c903abdd1e44eba81d7d8b12}} 
+\#define \hyperlink{OsProc_8h_a71a01cc9c903abdd1e44eba81d7d8b12}{B\+A\+P\+R\+O\+C\+\_\+\+F\+U\+L\+L\+N\+A\+M\+E\+L\+EN}~256
+\begin{DoxyCompactList}\small\item\em Maximum length of a file\textquotesingle{}s name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{OsProc_8h_a87ae443f2398b9f3173b316b4f961caa}\label{OsProc_8h_a87ae443f2398b9f3173b316b4f961caa}} 
+typedef struct \hyperlink{structTOsProcCtrlTaskOpts}{T\+Os\+Proc\+Ctrl\+Task\+Opts} \hyperlink{OsProc_8h_a87ae443f2398b9f3173b316b4f961caa}{T\+Os\+Proc\+Ctrl\+Task\+Opts}
+\begin{DoxyCompactList}\small\item\em Options structure for the control task started with \#\+Ba\+Api\+Start\+Ctrl\+Task() \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{OsProc_8h_aff1c6efcd8fb6e299158f053b760541c}\label{OsProc_8h_aff1c6efcd8fb6e299158f053b760541c}} 
+typedef struct \hyperlink{structTOsProcCtrlTaskStats}{T\+Os\+Proc\+Ctrl\+Task\+Stats} \hyperlink{OsProc_8h_aff1c6efcd8fb6e299158f053b760541c}{T\+Os\+Proc\+Ctrl\+Task\+Stats}
+\begin{DoxyCompactList}\small\item\em Control task statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{Indent}\textbf{ Name of Processes}\par
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{OsProc_8h_a1044416a41157cac2592e9a7277400f5}{Os\+Proc\+Get\+Own\+Short\+Name} ()
+\begin{DoxyCompactList}\small\item\em Get the short name of own process. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{OsProc_8h_afe1434359100473d95966f4060ba2ca6}{Os\+Proc\+Get\+Own\+Full\+Name} ()
+\begin{DoxyCompactList}\small\item\em Get the full name of own process. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{OsProc_8h_ab3c43ccf734859d464de5c93156354e5}{Os\+Proc\+Get\+P\+I\+D\+Name} (pid\+\_\+t pid, char buf\mbox{[}\hyperlink{OsProc_8h_a3c9a9ad2caaae2472761064235cbd62f}{B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+EN}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Gets the process name from the P\+ID. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Control TasK P\+ID File}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_a645fb158fc19e5bc02e984fc828f7a74}{Os\+Proc\+Write\+Ctrl\+Task\+Pid\+File} ()
+\begin{DoxyCompactList}\small\item\em Write/overwrite the Control Task P\+ID file which is a special P\+ID file. \end{DoxyCompactList}\item 
+pid\+\_\+t \hyperlink{OsProc_8h_a1a6971924f2b353bf540f1cc4a5446ec}{Os\+Proc\+Read\+Ctrl\+Task\+Pid\+File} (char buf\mbox{[}\hyperlink{OsProc_8h_a3c9a9ad2caaae2472761064235cbd62f}{B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+EN}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Read the Control Task P\+ID file. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_ad39d08d9f93205526e35b1610ea4b3fe}{Os\+Proc\+Del\+Ctrl\+Task\+Pid\+File} ()
+\begin{DoxyCompactList}\small\item\em Deletes the Control Task P\+ID file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ P\+ID Files}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_ae689e588cf2c6b96aef2f8a052aa460c}{Os\+Proc\+Write\+Own\+Pid\+File} ()
+\begin{DoxyCompactList}\small\item\em Writes the P\+ID file of an internal program. \end{DoxyCompactList}\item 
+pid\+\_\+t \hyperlink{OsProc_8h_a6ecd7eb88cfa9fadb6ab763a4b79ff15}{Os\+Proc\+Read\+Pid\+File} (const char $\ast$prog\+Name, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} internal)
+\begin{DoxyCompactList}\small\item\em Tries to read the P\+ID from an internal program, or from a path. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_a2dc3b112736017c1c91a513351fcd64c}{Os\+Proc\+Del\+Pid\+File} (const char $\ast$prog\+Name, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} internal)
+\begin{DoxyCompactList}\small\item\em Delete the P\+ID file. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} \hyperlink{OsProc_8h_aec3bd56802c2bc2e5d91f7425c0d8ff5}{Os\+Proc\+Pid\+File\+Is\+Running} (const char $\ast$prog\+Name, \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} internal)
+\begin{DoxyCompactList}\small\item\em Test if a program with the P\+ID inside the P\+ID file is running and has the same name as {\ttfamily prog\+Name}. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} \hyperlink{OsProc_8h_a14bd9fb21c2edb761031d68c39968312}{Os\+Proc\+Ctrl\+Task\+Pid\+Is\+Running} ()
+\begin{DoxyCompactList}\small\item\em Test if a Ctrl\+Task with the P\+ID inside the Ctrl\+Task P\+ID file is running. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Process Priority}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_a2321955f4d81d086d039585d8a2ea6d5}{Os\+Proc\+Set\+Own\+Prio} (\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} prio)
+\begin{DoxyCompactList}\small\item\em Set the priority of the calling process. \end{DoxyCompactList}\item 
+\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \hyperlink{OsProc_8h_a0e66f1a23adfa5a52bbcc1b2d645a375}{Os\+Proc\+Get\+Own\+Prio} ()
+\begin{DoxyCompactList}\small\item\em Get the priority of the calling process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Control Task}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_a79a3fe579f61f739b82ee0f2f8b65b3f}{Os\+Proc\+Start\+Ctrl\+Task} (const \hyperlink{structTOsProcCtrlTaskOpts}{T\+Os\+Proc\+Ctrl\+Task\+Opts} $\ast$p\+Opts)
+\begin{DoxyCompactList}\small\item\em Starts the one and only control task as a new process. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_a7628a941584596120671fac8606dda7f}{Os\+Proc\+Stop\+Ctrl\+Task} ()
+\begin{DoxyCompactList}\small\item\em Stops the one and only control task. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_ad1a910801786e6a8f563d5d1df40e815}{Os\+Proc\+Start\+Ctrl\+Thread} (const \hyperlink{structTOsProcCtrlTaskOpts}{T\+Os\+Proc\+Ctrl\+Task\+Opts} $\ast$p\+Opts)
+\begin{DoxyCompactList}\small\item\em Starts the one and only control thread as a new thread. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_a80e655878a8fc84483dec61218a535cd}{Os\+Proc\+Stop\+Ctrl\+Thread} ()
+\begin{DoxyCompactList}\small\item\em Stops the one and only control thread. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_a09dcf5f4bce2860e73201670488eb100}{Os\+Proc\+Get\+Ctrl\+Task\+Stats} (\hyperlink{structTOsProcCtrlTaskStats}{T\+Os\+Proc\+Ctrl\+Task\+Stats} $\ast$p\+Stats)
+\begin{DoxyCompactList}\small\item\em Gets the task statistics. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{OsProc_8h_aecf432ee68eef3a1d748f6e791e403a4}{Os\+Proc\+Get\+Ctrl\+Thread\+Stats} (\hyperlink{structTOsProcCtrlTaskStats}{T\+Os\+Proc\+Ctrl\+Task\+Stats} $\ast$p\+Stats)
+\begin{DoxyCompactList}\small\item\em Gets the control thread statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Process functions. 
+
+
+\begin{DoxyItemize}
+\item Names
+\item P\+I\+Ds
+\item Priorities
+\item Control Task 
+\end{DoxyItemize}
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{OsProc_8h_a1044416a41157cac2592e9a7277400f5}\label{OsProc_8h_a1044416a41157cac2592e9a7277400f5}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Get\+Own\+Short\+Name@{Os\+Proc\+Get\+Own\+Short\+Name}}
+\index{Os\+Proc\+Get\+Own\+Short\+Name@{Os\+Proc\+Get\+Own\+Short\+Name}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Get\+Own\+Short\+Name()}{OsProcGetOwnShortName()}}
+{\footnotesize\ttfamily const char$\ast$ Os\+Proc\+Get\+Own\+Short\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the short name of own process. 
+
+\begin{DoxyReturn}{Returns}
+on success, the process name, otherwise, 0 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_afe1434359100473d95966f4060ba2ca6}\label{OsProc_8h_afe1434359100473d95966f4060ba2ca6}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Get\+Own\+Full\+Name@{Os\+Proc\+Get\+Own\+Full\+Name}}
+\index{Os\+Proc\+Get\+Own\+Full\+Name@{Os\+Proc\+Get\+Own\+Full\+Name}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Get\+Own\+Full\+Name()}{OsProcGetOwnFullName()}}
+{\footnotesize\ttfamily const char$\ast$ Os\+Proc\+Get\+Own\+Full\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the full name of own process. 
+
+\begin{DoxyReturn}{Returns}
+on success, the process name, otherwise, 0 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_ab3c43ccf734859d464de5c93156354e5}\label{OsProc_8h_ab3c43ccf734859d464de5c93156354e5}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Get\+P\+I\+D\+Name@{Os\+Proc\+Get\+P\+I\+D\+Name}}
+\index{Os\+Proc\+Get\+P\+I\+D\+Name@{Os\+Proc\+Get\+P\+I\+D\+Name}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Get\+P\+I\+D\+Name()}{OsProcGetPIDName()}}
+{\footnotesize\ttfamily const char$\ast$ Os\+Proc\+Get\+P\+I\+D\+Name (\begin{DoxyParamCaption}\item[{pid\+\_\+t}]{pid,  }\item[{char}]{buf\mbox{[}\+B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Gets the process name from the P\+ID. 
+
+If no {\ttfamily buf} is provided, the pointer is mallocated and has to be freed by the user to avoid memory leaks \begin{DoxyReturn}{Returns}
+on success, the process name, otherwise, 0 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pid} & Process ID \\
+\hline
+\mbox{\tt out}  & {\em buf} & Optional buffer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_a645fb158fc19e5bc02e984fc828f7a74}\label{OsProc_8h_a645fb158fc19e5bc02e984fc828f7a74}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Write\+Ctrl\+Task\+Pid\+File@{Os\+Proc\+Write\+Ctrl\+Task\+Pid\+File}}
+\index{Os\+Proc\+Write\+Ctrl\+Task\+Pid\+File@{Os\+Proc\+Write\+Ctrl\+Task\+Pid\+File}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Write\+Ctrl\+Task\+Pid\+File()}{OsProcWriteCtrlTaskPidFile()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Write\+Ctrl\+Task\+Pid\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Write/overwrite the Control Task P\+ID file which is a special P\+ID file. 
+
+This function is meant to be called from within the forked control task. \begin{DoxyReturn}{Returns}
+Success or error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_a1a6971924f2b353bf540f1cc4a5446ec}\label{OsProc_8h_a1a6971924f2b353bf540f1cc4a5446ec}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Read\+Ctrl\+Task\+Pid\+File@{Os\+Proc\+Read\+Ctrl\+Task\+Pid\+File}}
+\index{Os\+Proc\+Read\+Ctrl\+Task\+Pid\+File@{Os\+Proc\+Read\+Ctrl\+Task\+Pid\+File}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Read\+Ctrl\+Task\+Pid\+File()}{OsProcReadCtrlTaskPidFile()}}
+{\footnotesize\ttfamily pid\+\_\+t Os\+Proc\+Read\+Ctrl\+Task\+Pid\+File (\begin{DoxyParamCaption}\item[{char}]{buf\mbox{[}\+B\+A\+P\+R\+O\+C\+\_\+\+S\+H\+O\+R\+T\+N\+A\+M\+E\+L\+E\+N\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Read the Control Task P\+ID file. 
+
+The special control task P\+ID file contains name of the binary. This name is written to {\ttfamily buf} if the pointer is provided \begin{DoxyReturn}{Returns}
+The P\+ID on success or 0 on error 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em buf} & Optional buffer to read the name of the binary \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_ad39d08d9f93205526e35b1610ea4b3fe}\label{OsProc_8h_ad39d08d9f93205526e35b1610ea4b3fe}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Del\+Ctrl\+Task\+Pid\+File@{Os\+Proc\+Del\+Ctrl\+Task\+Pid\+File}}
+\index{Os\+Proc\+Del\+Ctrl\+Task\+Pid\+File@{Os\+Proc\+Del\+Ctrl\+Task\+Pid\+File}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Del\+Ctrl\+Task\+Pid\+File()}{OsProcDelCtrlTaskPidFile()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Del\+Ctrl\+Task\+Pid\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deletes the Control Task P\+ID file. 
+
+\begin{DoxyReturn}{Returns}
+Success or error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_ae689e588cf2c6b96aef2f8a052aa460c}\label{OsProc_8h_ae689e588cf2c6b96aef2f8a052aa460c}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Write\+Own\+Pid\+File@{Os\+Proc\+Write\+Own\+Pid\+File}}
+\index{Os\+Proc\+Write\+Own\+Pid\+File@{Os\+Proc\+Write\+Own\+Pid\+File}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Write\+Own\+Pid\+File()}{OsProcWriteOwnPidFile()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Write\+Own\+Pid\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Writes the P\+ID file of an internal program. 
+
+\begin{DoxyReturn}{Returns}
+Success or error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_a6ecd7eb88cfa9fadb6ab763a4b79ff15}\label{OsProc_8h_a6ecd7eb88cfa9fadb6ab763a4b79ff15}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Read\+Pid\+File@{Os\+Proc\+Read\+Pid\+File}}
+\index{Os\+Proc\+Read\+Pid\+File@{Os\+Proc\+Read\+Pid\+File}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Read\+Pid\+File()}{OsProcReadPidFile()}}
+{\footnotesize\ttfamily pid\+\_\+t Os\+Proc\+Read\+Pid\+File (\begin{DoxyParamCaption}\item[{const char $\ast$}]{prog\+Name,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool}}]{internal }\end{DoxyParamCaption})}
+
+
+
+Tries to read the P\+ID from an internal program, or from a path. 
+
+\begin{DoxyReturn}{Returns}
+on success, the P\+ID, otherwise, 0 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prog\+Name} & Internal program name or full path to P\+ID file \\
+\hline
+\mbox{\tt in}  & {\em internal} & Flag to signal that the program was created with this A\+PI \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_a2dc3b112736017c1c91a513351fcd64c}\label{OsProc_8h_a2dc3b112736017c1c91a513351fcd64c}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Del\+Pid\+File@{Os\+Proc\+Del\+Pid\+File}}
+\index{Os\+Proc\+Del\+Pid\+File@{Os\+Proc\+Del\+Pid\+File}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Del\+Pid\+File()}{OsProcDelPidFile()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Del\+Pid\+File (\begin{DoxyParamCaption}\item[{const char $\ast$}]{prog\+Name,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool}}]{internal }\end{DoxyParamCaption})}
+
+
+
+Delete the P\+ID file. 
+
+\begin{DoxyReturn}{Returns}
+on success, the P\+ID, otherwise, 0 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prog\+Name} & Internal program name or full path to P\+ID file \\
+\hline
+\mbox{\tt in}  & {\em internal} & Flag to signal that the program was created with this A\+PI \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_aec3bd56802c2bc2e5d91f7425c0d8ff5}\label{OsProc_8h_aec3bd56802c2bc2e5d91f7425c0d8ff5}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Pid\+File\+Is\+Running@{Os\+Proc\+Pid\+File\+Is\+Running}}
+\index{Os\+Proc\+Pid\+File\+Is\+Running@{Os\+Proc\+Pid\+File\+Is\+Running}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Pid\+File\+Is\+Running()}{OsProcPidFileIsRunning()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} Os\+Proc\+Pid\+File\+Is\+Running (\begin{DoxyParamCaption}\item[{const char $\ast$}]{prog\+Name,  }\item[{\hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool}}]{internal }\end{DoxyParamCaption})}
+
+
+
+Test if a program with the P\+ID inside the P\+ID file is running and has the same name as {\ttfamily prog\+Name}. 
+
+\begin{DoxyReturn}{Returns}
+true or false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prog\+Name} & Internal program name or full path to P\+ID file \\
+\hline
+\mbox{\tt in}  & {\em internal} & Flag to signal that the program was created with this A\+PI \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_a14bd9fb21c2edb761031d68c39968312}\label{OsProc_8h_a14bd9fb21c2edb761031d68c39968312}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Ctrl\+Task\+Pid\+Is\+Running@{Os\+Proc\+Ctrl\+Task\+Pid\+Is\+Running}}
+\index{Os\+Proc\+Ctrl\+Task\+Pid\+Is\+Running@{Os\+Proc\+Ctrl\+Task\+Pid\+Is\+Running}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Ctrl\+Task\+Pid\+Is\+Running()}{OsProcCtrlTaskPidIsRunning()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a5fe1eb8d6ba045ac2251a8f369c2e7b6}{T\+Ba\+Bool} Os\+Proc\+Ctrl\+Task\+Pid\+Is\+Running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Test if a Ctrl\+Task with the P\+ID inside the Ctrl\+Task P\+ID file is running. 
+
+\begin{DoxyReturn}{Returns}
+true or false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_a2321955f4d81d086d039585d8a2ea6d5}\label{OsProc_8h_a2321955f4d81d086d039585d8a2ea6d5}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Set\+Own\+Prio@{Os\+Proc\+Set\+Own\+Prio}}
+\index{Os\+Proc\+Set\+Own\+Prio@{Os\+Proc\+Set\+Own\+Prio}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Set\+Own\+Prio()}{OsProcSetOwnPrio()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Set\+Own\+Prio (\begin{DoxyParamCaption}\item[{\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio}}]{prio }\end{DoxyParamCaption})}
+
+
+
+Set the priority of the calling process. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em prio} & New priority \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_a0e66f1a23adfa5a52bbcc1b2d645a375}\label{OsProc_8h_a0e66f1a23adfa5a52bbcc1b2d645a375}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Get\+Own\+Prio@{Os\+Proc\+Get\+Own\+Prio}}
+\index{Os\+Proc\+Get\+Own\+Prio@{Os\+Proc\+Get\+Own\+Prio}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Get\+Own\+Prio()}{OsProcGetOwnPrio()}}
+{\footnotesize\ttfamily \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} Os\+Proc\+Get\+Own\+Prio (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the priority of the calling process. 
+
+\begin{DoxyReturn}{Returns}
+the priority 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_a79a3fe579f61f739b82ee0f2f8b65b3f}\label{OsProc_8h_a79a3fe579f61f739b82ee0f2f8b65b3f}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Start\+Ctrl\+Task@{Os\+Proc\+Start\+Ctrl\+Task}}
+\index{Os\+Proc\+Start\+Ctrl\+Task@{Os\+Proc\+Start\+Ctrl\+Task}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Start\+Ctrl\+Task()}{OsProcStartCtrlTask()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Start\+Ctrl\+Task (\begin{DoxyParamCaption}\item[{const \hyperlink{structTOsProcCtrlTaskOpts}{T\+Os\+Proc\+Ctrl\+Task\+Opts} $\ast$}]{p\+Opts }\end{DoxyParamCaption})}
+
+
+
+Starts the one and only control task as a new process. 
+
+This also automatically initializes the default logger if it not previously initialized via \hyperlink{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}{Ba\+Api\+Init\+Logger()}. If a specialized logger is required, one could initialize it in the init() callback. The minimum cycle time is 2ms \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Opts} & Task options \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_a7628a941584596120671fac8606dda7f}\label{OsProc_8h_a7628a941584596120671fac8606dda7f}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Stop\+Ctrl\+Task@{Os\+Proc\+Stop\+Ctrl\+Task}}
+\index{Os\+Proc\+Stop\+Ctrl\+Task@{Os\+Proc\+Stop\+Ctrl\+Task}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Stop\+Ctrl\+Task()}{OsProcStopCtrlTask()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Stop\+Ctrl\+Task (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stops the one and only control task. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_ad1a910801786e6a8f563d5d1df40e815}\label{OsProc_8h_ad1a910801786e6a8f563d5d1df40e815}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Start\+Ctrl\+Thread@{Os\+Proc\+Start\+Ctrl\+Thread}}
+\index{Os\+Proc\+Start\+Ctrl\+Thread@{Os\+Proc\+Start\+Ctrl\+Thread}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Start\+Ctrl\+Thread()}{OsProcStartCtrlThread()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Start\+Ctrl\+Thread (\begin{DoxyParamCaption}\item[{const \hyperlink{structTOsProcCtrlTaskOpts}{T\+Os\+Proc\+Ctrl\+Task\+Opts} $\ast$}]{p\+Opts }\end{DoxyParamCaption})}
+
+
+
+Starts the one and only control thread as a new thread. 
+
+This is mainly for debugging and development. For proper releases use \#\+Ba\+Api\+Start\+Ctrl\+Task(). \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Opts} & Task options \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_a80e655878a8fc84483dec61218a535cd}\label{OsProc_8h_a80e655878a8fc84483dec61218a535cd}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Stop\+Ctrl\+Thread@{Os\+Proc\+Stop\+Ctrl\+Thread}}
+\index{Os\+Proc\+Stop\+Ctrl\+Thread@{Os\+Proc\+Stop\+Ctrl\+Thread}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Stop\+Ctrl\+Thread()}{OsProcStopCtrlThread()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Stop\+Ctrl\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stops the one and only control thread. 
+
+\begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{OsProc_8h_a09dcf5f4bce2860e73201670488eb100}\label{OsProc_8h_a09dcf5f4bce2860e73201670488eb100}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Get\+Ctrl\+Task\+Stats@{Os\+Proc\+Get\+Ctrl\+Task\+Stats}}
+\index{Os\+Proc\+Get\+Ctrl\+Task\+Stats@{Os\+Proc\+Get\+Ctrl\+Task\+Stats}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Get\+Ctrl\+Task\+Stats()}{OsProcGetCtrlTaskStats()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Get\+Ctrl\+Task\+Stats (\begin{DoxyParamCaption}\item[{\hyperlink{structTOsProcCtrlTaskStats}{T\+Os\+Proc\+Ctrl\+Task\+Stats} $\ast$}]{p\+Stats }\end{DoxyParamCaption})}
+
+
+
+Gets the task statistics. 
+
+This is mostly meant to be called within the {\ttfamily update()} function so it gets the statistics from the control task \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em p\+Stats} & Statistics \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{OsProc_8h_aecf432ee68eef3a1d748f6e791e403a4}\label{OsProc_8h_aecf432ee68eef3a1d748f6e791e403a4}} 
+\index{Os\+Proc.\+h@{Os\+Proc.\+h}!Os\+Proc\+Get\+Ctrl\+Thread\+Stats@{Os\+Proc\+Get\+Ctrl\+Thread\+Stats}}
+\index{Os\+Proc\+Get\+Ctrl\+Thread\+Stats@{Os\+Proc\+Get\+Ctrl\+Thread\+Stats}!Os\+Proc.\+h@{Os\+Proc.\+h}}
+\subsubsection{\texorpdfstring{Os\+Proc\+Get\+Ctrl\+Thread\+Stats()}{OsProcGetCtrlThreadStats()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Os\+Proc\+Get\+Ctrl\+Thread\+Stats (\begin{DoxyParamCaption}\item[{\hyperlink{structTOsProcCtrlTaskStats}{T\+Os\+Proc\+Ctrl\+Task\+Stats} $\ast$}]{p\+Stats }\end{DoxyParamCaption})}
+
+
+
+Gets the control thread statistics. 
+
+This is mainly for debugging and development. For proper releases use {\ttfamily Ctrl\+Task} functions. \begin{DoxyReturn}{Returns}
+Error or success 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em p\+Stats} & Statistics \\
+\hline
+\end{DoxyParams}

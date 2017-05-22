@@ -1,0 +1,203 @@
+\hypertarget{CtrlPT1_8h}{}\section{Ctrl\+P\+T1.\+h File Reference}
+\label{CtrlPT1_8h}\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+
+
+First order delay element P\+T1.  
+
+
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+Include dependency graph for Ctrl\+P\+T1.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=137pt]{CtrlPT1_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}\label{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}} 
+typedef void $\ast$ \hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl}
+\begin{DoxyCompactList}\small\item\em C message handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{Indent}\textbf{ Factory}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl} \hyperlink{CtrlPT1_8h_a455f4d29b0623795d458188db6137e09}{Ctrl\+P\+T1\+Create} (float t\+ConstS, float samp\+TimeS, float init\+Val)
+\begin{DoxyCompactList}\small\item\em Create factory for ... \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{CtrlPT1_8h_a26337dcba49150502fdaff2f5394ac81}{Ctrl\+P\+T1\+Destroy} (\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl} hdl)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ P\+T1 Interface}\par
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{CtrlPT1_8h_a37134b530e629b60168ac363d36d7c75}{Ctrl\+P\+T1\+Update} (\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl} hdl, float in)
+\begin{DoxyCompactList}\small\item\em Update the first order delay element with fixed sample time. \end{DoxyCompactList}\item 
+float \hyperlink{CtrlPT1_8h_aa96c6c164c689b1bb0574a3fe79b61f6}{Ctrl\+P\+T1\+Update\+Var\+SampT} (\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl} hdl, float in, float delta\+TS)
+\begin{DoxyCompactList}\small\item\em Update the first order delay element with variable sample time (delta\+TS) \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{CtrlPT1_8h_a055a1e97ab35d450fa3ffda20d982b89}{Ctrl\+P\+T1\+Reset} (\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl} hdl, float t\+ConstS, float samp\+TimeS, float init\+Val)
+\begin{DoxyCompactList}\small\item\em Update the first order delay element with variable sample time (delta\+TS) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ C++ Factory}\par
+\begin{DoxyCompactItemize}
+\item 
+I\+Ctrl\+P\+T1 $\ast$ \hyperlink{CtrlPT1_8h_a9d9a921d46fd96658cf333c0072da30f}{I\+Ctrl\+P\+T1\+Create} (float t\+ConstS, float samp\+TimeS, float init\+Val)
+\begin{DoxyCompactList}\small\item\em Create factory for ... \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{CtrlPT1_8h_a1f793955cee55fbd1199341e7b751347}{I\+Ctrl\+P\+T1\+Destroy} (I\+Ctrl\+P\+T1 $\ast$p\+Hdl)
+\begin{DoxyCompactList}\small\item\em Destroy and release resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+First order delay element P\+T1. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{CtrlPT1_8h_a455f4d29b0623795d458188db6137e09}\label{CtrlPT1_8h_a455f4d29b0623795d458188db6137e09}} 
+\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}!Ctrl\+P\+T1\+Create@{Ctrl\+P\+T1\+Create}}
+\index{Ctrl\+P\+T1\+Create@{Ctrl\+P\+T1\+Create}!Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+\subsubsection{\texorpdfstring{Ctrl\+P\+T1\+Create()}{CtrlPT1Create()}}
+{\footnotesize\ttfamily \hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl} Ctrl\+P\+T1\+Create (\begin{DoxyParamCaption}\item[{float}]{t\+ConstS,  }\item[{float}]{samp\+TimeS,  }\item[{float}]{init\+Val }\end{DoxyParamCaption})}
+
+
+
+Create factory for ... 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em t\+ConstS} & Time constant in s. Has to be $<$ 2 $\ast$ samp\+TimeS in order to respect the Nyquist sampling theorem \\
+\hline
+\mbox{\tt in}  & {\em samp\+TimeS} & Sample time in s \\
+\hline
+\mbox{\tt in}  & {\em init\+Val} & Initial value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{CtrlPT1_8h_a26337dcba49150502fdaff2f5394ac81}\label{CtrlPT1_8h_a26337dcba49150502fdaff2f5394ac81}} 
+\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}!Ctrl\+P\+T1\+Destroy@{Ctrl\+P\+T1\+Destroy}}
+\index{Ctrl\+P\+T1\+Destroy@{Ctrl\+P\+T1\+Destroy}!Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+\subsubsection{\texorpdfstring{Ctrl\+P\+T1\+Destroy()}{CtrlPT1Destroy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ctrl\+P\+T1\+Destroy (\begin{DoxyParamCaption}\item[{\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl}}]{hdl }\end{DoxyParamCaption})}
+
+
+
+Destroy and release resources. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & handle to destroy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{CtrlPT1_8h_a37134b530e629b60168ac363d36d7c75}\label{CtrlPT1_8h_a37134b530e629b60168ac363d36d7c75}} 
+\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}!Ctrl\+P\+T1\+Update@{Ctrl\+P\+T1\+Update}}
+\index{Ctrl\+P\+T1\+Update@{Ctrl\+P\+T1\+Update}!Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+\subsubsection{\texorpdfstring{Ctrl\+P\+T1\+Update()}{CtrlPT1Update()}}
+{\footnotesize\ttfamily float Ctrl\+P\+T1\+Update (\begin{DoxyParamCaption}\item[{\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl}}]{hdl,  }\item[{float}]{in }\end{DoxyParamCaption})}
+
+
+
+Update the first order delay element with fixed sample time. 
+
+\begin{DoxyReturn}{Returns}
+Output of the first order delay P\+T1\+: in--$>$P\+T1--$>$out 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & handle to destroy \\
+\hline
+\mbox{\tt in}  & {\em in} & input value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{CtrlPT1_8h_aa96c6c164c689b1bb0574a3fe79b61f6}\label{CtrlPT1_8h_aa96c6c164c689b1bb0574a3fe79b61f6}} 
+\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}!Ctrl\+P\+T1\+Update\+Var\+SampT@{Ctrl\+P\+T1\+Update\+Var\+SampT}}
+\index{Ctrl\+P\+T1\+Update\+Var\+SampT@{Ctrl\+P\+T1\+Update\+Var\+SampT}!Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+\subsubsection{\texorpdfstring{Ctrl\+P\+T1\+Update\+Var\+Samp\+T()}{CtrlPT1UpdateVarSampT()}}
+{\footnotesize\ttfamily float Ctrl\+P\+T1\+Update\+Var\+SampT (\begin{DoxyParamCaption}\item[{\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl}}]{hdl,  }\item[{float}]{in,  }\item[{float}]{delta\+TS }\end{DoxyParamCaption})}
+
+
+
+Update the first order delay element with variable sample time (delta\+TS) 
+
+\begin{DoxyReturn}{Returns}
+Output of the first order delay P\+T1\+: in--$>$P\+T1--$>$out 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & handle to destroy \\
+\hline
+\mbox{\tt in}  & {\em in} & input value \\
+\hline
+\mbox{\tt in}  & {\em delta\+TS} & Time delta in s since last call or reset \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{CtrlPT1_8h_a055a1e97ab35d450fa3ffda20d982b89}\label{CtrlPT1_8h_a055a1e97ab35d450fa3ffda20d982b89}} 
+\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}!Ctrl\+P\+T1\+Reset@{Ctrl\+P\+T1\+Reset}}
+\index{Ctrl\+P\+T1\+Reset@{Ctrl\+P\+T1\+Reset}!Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+\subsubsection{\texorpdfstring{Ctrl\+P\+T1\+Reset()}{CtrlPT1Reset()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ctrl\+P\+T1\+Reset (\begin{DoxyParamCaption}\item[{\hyperlink{CtrlPT1_8h_add9fa187ca86ea87e757eb4c0dab99c8}{T\+Ctrl\+P\+T1\+Hdl}}]{hdl,  }\item[{float}]{t\+ConstS,  }\item[{float}]{samp\+TimeS,  }\item[{float}]{init\+Val }\end{DoxyParamCaption})}
+
+
+
+Update the first order delay element with variable sample time (delta\+TS) 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hdl} & handle to destroy \\
+\hline
+\mbox{\tt in}  & {\em t\+ConstS} & Time constant in s. Has to be $<$ 2 $\ast$ samp\+TimeS in order to respect the Nyquist sampling theorem \\
+\hline
+\mbox{\tt in}  & {\em samp\+TimeS} & Sample time in s \\
+\hline
+\mbox{\tt in}  & {\em init\+Val} & Initial value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{CtrlPT1_8h_a9d9a921d46fd96658cf333c0072da30f}\label{CtrlPT1_8h_a9d9a921d46fd96658cf333c0072da30f}} 
+\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}!I\+Ctrl\+P\+T1\+Create@{I\+Ctrl\+P\+T1\+Create}}
+\index{I\+Ctrl\+P\+T1\+Create@{I\+Ctrl\+P\+T1\+Create}!Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+\subsubsection{\texorpdfstring{I\+Ctrl\+P\+T1\+Create()}{ICtrlPT1Create()}}
+{\footnotesize\ttfamily I\+Ctrl\+P\+T1$\ast$ I\+Ctrl\+P\+T1\+Create (\begin{DoxyParamCaption}\item[{float}]{t\+ConstS,  }\item[{float}]{samp\+TimeS,  }\item[{float}]{init\+Val }\end{DoxyParamCaption})}
+
+
+
+Create factory for ... 
+
+\begin{DoxyReturn}{Returns}
+Handle if success, otherwise, null 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em t\+ConstS} & Time constant in s. Has to be $<$ 2 $\ast$ samp\+TimeS in order to respect the Nyquist sampling theorem \\
+\hline
+\mbox{\tt in}  & {\em samp\+TimeS} & Sample time in s \\
+\hline
+\mbox{\tt in}  & {\em init\+Val} & Initial value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{CtrlPT1_8h_a1f793955cee55fbd1199341e7b751347}\label{CtrlPT1_8h_a1f793955cee55fbd1199341e7b751347}} 
+\index{Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}!I\+Ctrl\+P\+T1\+Destroy@{I\+Ctrl\+P\+T1\+Destroy}}
+\index{I\+Ctrl\+P\+T1\+Destroy@{I\+Ctrl\+P\+T1\+Destroy}!Ctrl\+P\+T1.\+h@{Ctrl\+P\+T1.\+h}}
+\subsubsection{\texorpdfstring{I\+Ctrl\+P\+T1\+Destroy()}{ICtrlPT1Destroy()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} I\+Ctrl\+P\+T1\+Destroy (\begin{DoxyParamCaption}\item[{I\+Ctrl\+P\+T1 $\ast$}]{p\+Hdl }\end{DoxyParamCaption})}
+
+
+
+Destroy and release resources. 
+
+\begin{DoxyReturn}{Returns}
+True if success, otherwise, false 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p\+Hdl} & handle to destroy \\
+\hline
+\end{DoxyParams}
