@@ -5,71 +5,39 @@
 Includes the following\+:  
 
 
-{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}Ba\+Log.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}Ba\+Core.\+h\char`\"{}}\\*
-Include dependency graph for Base\+Api.\+h\+:\nopagebreak
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Ba\+Log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Ba\+Core.\+h\char`\"{}}\newline
+Include dependency graph for Base\+Api.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=219pt]{BaseApi_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=165pt]{BaseApi_8h__dep__incl}
 \end{center}
 \end{figure}
-\subsection*{Classes}
-\begin{DoxyCompactItemize}
-\item 
-struct \hyperlink{structTBaApiCtrlTaskOpts}{T\+Ba\+Api\+Ctrl\+Task\+Opts}
-\begin{DoxyCompactList}\small\item\em Options structure for the control task started with \hyperlink{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}{Ba\+Api\+Start\+Ctrl\+Task()} \end{DoxyCompactList}\item 
-struct \hyperlink{structTBaApiCtrlTaskStats}{T\+Ba\+Api\+Ctrl\+Task\+Stats}
-\begin{DoxyCompactList}\small\item\em Control task statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Typedefs}
-\begin{DoxyCompactItemize}
-\item 
-\hypertarget{BaseApi_8h_a948249cb0b015107c2cb5e88149b42cc}{}typedef struct \hyperlink{structTBaApiCtrlTaskOpts}{T\+Ba\+Api\+Ctrl\+Task\+Opts} \hyperlink{BaseApi_8h_a948249cb0b015107c2cb5e88149b42cc}{T\+Ba\+Api\+Ctrl\+Task\+Opts}\label{BaseApi_8h_a948249cb0b015107c2cb5e88149b42cc}
-
-\begin{DoxyCompactList}\small\item\em Options structure for the control task started with \hyperlink{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}{Ba\+Api\+Start\+Ctrl\+Task()} \end{DoxyCompactList}\item 
-\hypertarget{BaseApi_8h_ab5b91434be9ec71d18180600c490503b}{}typedef struct \hyperlink{structTBaApiCtrlTaskStats}{T\+Ba\+Api\+Ctrl\+Task\+Stats} \hyperlink{BaseApi_8h_ab5b91434be9ec71d18180600c490503b}{T\+Ba\+Api\+Ctrl\+Task\+Stats}\label{BaseApi_8h_ab5b91434be9ec71d18180600c490503b}
-
-\begin{DoxyCompactList}\small\item\em Control task statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a1914573ea9bce1d0ebe2c6ed0ac0ec2b}{Ba\+Api\+Log\+F} (\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$fmt,...)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaseApi_8h_a1914573ea9bce1d0ebe2c6ed0ac0ec2b}{Ba\+Api\+LogF} (\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio} prio, const char $\ast$tag, const char $\ast$fmt,...)
 \begin{DoxyCompactList}\small\item\em Logging function that uses the the logger initialized with \hyperlink{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}{Ba\+Api\+Init\+Logger()} or \hyperlink{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}{Ba\+Api\+Init\+Logger\+Def()} \end{DoxyCompactList}\end{DoxyCompactItemize}
-\begin{Indent}{\bf Resource Management}\par
+\begin{Indent}\textbf{ Resource Management}\par
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_afd34d44879e18b4439f7758dc039e2e5}{Ba\+Api\+Init} ()
-\begin{DoxyCompactList}\small\item\em todo\+: stub \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a94ed4f951d7c8059ecc76fb973c027a3}{Ba\+Api\+Exit} ()
-\begin{DoxyCompactList}\small\item\em todo\+: stub \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}{Ba\+Api\+Init\+Logger\+Def} (const char $\ast$name)
-\begin{DoxyCompactList}\small\item\em Initializes the logger that will be used throughout this A\+P\+I with default options. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}{Ba\+Api\+Init\+Logger} (T\+Ba\+Log\+Desc log)
-\begin{DoxyCompactList}\small\item\em Initializes the logger that will be used throughout this A\+P\+I. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a8ec0422be53a6b3d78c1fbd310372711}{Ba\+Api\+Exit\+Logger} ()
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}{Ba\+Api\+Init\+Logger\+Def} (const char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Initializes the logger that will be used throughout this A\+PI with default options. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}{Ba\+Api\+Init\+Logger} (T\+Ba\+Log\+Desc log)
+\begin{DoxyCompactList}\small\item\em Initializes the logger that will be used throughout this A\+PI. \end{DoxyCompactList}\item 
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaseApi_8h_a8ec0422be53a6b3d78c1fbd310372711}{Ba\+Api\+Exit\+Logger} ()
 \begin{DoxyCompactList}\small\item\em Releases the resources of the general logger. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\end{Indent}
-\begin{Indent}{\bf Control Task}\par
-\begin{DoxyCompactItemize}
-\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}{Ba\+Api\+Start\+Ctrl\+Task} (const \hyperlink{structTBaApiCtrlTaskOpts}{T\+Ba\+Api\+Ctrl\+Task\+Opts} $\ast$p\+Opts)
-\begin{DoxyCompactList}\small\item\em Starts the one and only control task as a new process. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a55d72c35323e5ffaa7219d7fb54f4bf1}{Ba\+Api\+Stop\+Ctrl\+Task} ()
-\begin{DoxyCompactList}\small\item\em Stops the one and only control task. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a81ad517fcd3fbf12c5fc57273eb0ce94}{Ba\+Api\+Start\+Ctrl\+Thread} (const \hyperlink{structTBaApiCtrlTaskOpts}{T\+Ba\+Api\+Ctrl\+Task\+Opts} $\ast$p\+Opts)
-\begin{DoxyCompactList}\small\item\em Starts the one and only control thread as a new thread. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_abf560df382cc0fa41c71a555a567befd}{Ba\+Api\+Stop\+Ctrl\+Thread} ()
-\begin{DoxyCompactList}\small\item\em Stops the one and only control thread. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaseApi_8h_a2a738f0b607a8c4fb3b2bcfd0e4f5bcc}{Ba\+Api\+Get\+Ctrl\+Task\+Stats} (\hyperlink{structTBaApiCtrlTaskStats}{T\+Ba\+Api\+Ctrl\+Task\+Stats} $\ast$p\+Stats)
-\begin{DoxyCompactList}\small\item\em Gets the task statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
@@ -78,49 +46,19 @@ Includes the following\+:
 
 
 \begin{DoxyItemize}
-\item A\+P\+I wide logger
-\item Control task 
+\item A\+PI wide logger 
 \end{DoxyItemize}
 
 \subsection{Function Documentation}
-\hypertarget{BaseApi_8h_afd34d44879e18b4439f7758dc039e2e5}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Init@{Ba\+Api\+Init}}
-\index{Ba\+Api\+Init@{Ba\+Api\+Init}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Init()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Init (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_afd34d44879e18b4439f7758dc039e2e5}
-
-
-todo\+: stub 
-
-\begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-\hypertarget{BaseApi_8h_a94ed4f951d7c8059ecc76fb973c027a3}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Exit@{Ba\+Api\+Exit}}
-\index{Ba\+Api\+Exit@{Ba\+Api\+Exit}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Exit()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Exit (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a94ed4f951d7c8059ecc76fb973c027a3}
-
-
-todo\+: stub 
-
-\begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-\hypertarget{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Init\+Logger\+Def@{Ba\+Api\+Init\+Logger\+Def}}
+\mbox{\Hypertarget{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}\label{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}} 
+\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Init\+Logger\+Def@{Ba\+Api\+Init\+Logger\+Def}}
 \index{Ba\+Api\+Init\+Logger\+Def@{Ba\+Api\+Init\+Logger\+Def}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Init\+Logger\+Def(const char $\ast$name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Init\+Logger\+Def (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{name}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}
+\subsubsection{\texorpdfstring{Ba\+Api\+Init\+Logger\+Def()}{BaApiInitLoggerDef()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Api\+Init\+Logger\+Def (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
 
 
-Initializes the logger that will be used throughout this A\+P\+I with default options. 
+
+Initializes the logger that will be used throughout this A\+PI with default options. 
 
 \begin{DoxyReturn}{Returns}
 Error or success 
@@ -130,16 +68,15 @@ Error or success
 \mbox{\tt in}  & {\em name} & Name of the default logger \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Init\+Logger@{Ba\+Api\+Init\+Logger}}
+\mbox{\Hypertarget{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}\label{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}} 
+\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Init\+Logger@{Ba\+Api\+Init\+Logger}}
 \index{Ba\+Api\+Init\+Logger@{Ba\+Api\+Init\+Logger}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Init\+Logger(\+T\+Ba\+Log\+Desc log)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Init\+Logger (
-\begin{DoxyParamCaption}
-\item[{T\+Ba\+Log\+Desc}]{log}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}
+\subsubsection{\texorpdfstring{Ba\+Api\+Init\+Logger()}{BaApiInitLogger()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Api\+Init\+Logger (\begin{DoxyParamCaption}\item[{T\+Ba\+Log\+Desc}]{log }\end{DoxyParamCaption})}
 
 
-Initializes the logger that will be used throughout this A\+P\+I. 
+
+Initializes the logger that will be used throughout this A\+PI. 
 
 \begin{DoxyReturn}{Returns}
 Error or success 
@@ -149,13 +86,12 @@ Error or success
 \mbox{\tt in}  & {\em log} & Logger handle \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaseApi_8h_a8ec0422be53a6b3d78c1fbd310372711}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Exit\+Logger@{Ba\+Api\+Exit\+Logger}}
+\mbox{\Hypertarget{BaseApi_8h_a8ec0422be53a6b3d78c1fbd310372711}\label{BaseApi_8h_a8ec0422be53a6b3d78c1fbd310372711}} 
+\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Exit\+Logger@{Ba\+Api\+Exit\+Logger}}
 \index{Ba\+Api\+Exit\+Logger@{Ba\+Api\+Exit\+Logger}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Exit\+Logger()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Exit\+Logger (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a8ec0422be53a6b3d78c1fbd310372711}
+\subsubsection{\texorpdfstring{Ba\+Api\+Exit\+Logger()}{BaApiExitLogger()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Api\+Exit\+Logger (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 
 
 Releases the resources of the general logger. 
@@ -163,16 +99,12 @@ Releases the resources of the general logger.
 \begin{DoxyReturn}{Returns}
 Error or success 
 \end{DoxyReturn}
-\hypertarget{BaseApi_8h_a1914573ea9bce1d0ebe2c6ed0ac0ec2b}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Log\+F@{Ba\+Api\+Log\+F}}
-\index{Ba\+Api\+Log\+F@{Ba\+Api\+Log\+F}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Log\+F(\+E\+Ba\+Log\+Prio prio, const char $\ast$tag, const char $\ast$fmt,...)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Log\+F (
-\begin{DoxyParamCaption}
-\item[{{\bf E\+Ba\+Log\+Prio}}]{prio, }
-\item[{const char $\ast$}]{tag, }
-\item[{const char $\ast$}]{fmt, }
-\item[{}]{...}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a1914573ea9bce1d0ebe2c6ed0ac0ec2b}
+\mbox{\Hypertarget{BaseApi_8h_a1914573ea9bce1d0ebe2c6ed0ac0ec2b}\label{BaseApi_8h_a1914573ea9bce1d0ebe2c6ed0ac0ec2b}} 
+\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+LogF@{Ba\+Api\+LogF}}
+\index{Ba\+Api\+LogF@{Ba\+Api\+LogF}!Base\+Api.\+h@{Base\+Api.\+h}}
+\subsubsection{\texorpdfstring{Ba\+Api\+Log\+F()}{BaApiLogF()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Api\+LogF (\begin{DoxyParamCaption}\item[{\hyperlink{BaLog_8h_ab14f00a81932b8b62d2e8c4a2d7e3916}{E\+Ba\+Log\+Prio}}]{prio,  }\item[{const char $\ast$}]{tag,  }\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
 
 
 Logging function that uses the the logger initialized with \hyperlink{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}{Ba\+Api\+Init\+Logger()} or \hyperlink{BaseApi_8h_a39fa5faacc955b4f2efb3fd0ea54be62}{Ba\+Api\+Init\+Logger\+Def()} 
@@ -187,90 +119,5 @@ Error or success
 \mbox{\tt in}  & {\em tag} & Tag to track or group the message \\
 \hline
 \mbox{\tt in}  & {\em fmt} & The message format \\
-\hline
-\end{DoxyParams}
-\hypertarget{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Start\+Ctrl\+Task@{Ba\+Api\+Start\+Ctrl\+Task}}
-\index{Ba\+Api\+Start\+Ctrl\+Task@{Ba\+Api\+Start\+Ctrl\+Task}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Start\+Ctrl\+Task(const T\+Ba\+Api\+Ctrl\+Task\+Opts $\ast$p\+Opts)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Start\+Ctrl\+Task (
-\begin{DoxyParamCaption}
-\item[{const {\bf T\+Ba\+Api\+Ctrl\+Task\+Opts} $\ast$}]{p\+Opts}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}
-
-
-Starts the one and only control task as a new process. 
-
-This also automatically initializes the default logger if it not previously initialized via \hyperlink{BaseApi_8h_a67e6e46fba28f5337c7bfe6f8c15445d}{Ba\+Api\+Init\+Logger()}. If a specialized logger is required, one could initialize it in the init() callback \begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em p\+Opts} & Task options \\
-\hline
-\end{DoxyParams}
-\hypertarget{BaseApi_8h_a55d72c35323e5ffaa7219d7fb54f4bf1}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Stop\+Ctrl\+Task@{Ba\+Api\+Stop\+Ctrl\+Task}}
-\index{Ba\+Api\+Stop\+Ctrl\+Task@{Ba\+Api\+Stop\+Ctrl\+Task}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Stop\+Ctrl\+Task()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Stop\+Ctrl\+Task (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a55d72c35323e5ffaa7219d7fb54f4bf1}
-
-
-Stops the one and only control task. 
-
-\begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-\hypertarget{BaseApi_8h_a81ad517fcd3fbf12c5fc57273eb0ce94}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Start\+Ctrl\+Thread@{Ba\+Api\+Start\+Ctrl\+Thread}}
-\index{Ba\+Api\+Start\+Ctrl\+Thread@{Ba\+Api\+Start\+Ctrl\+Thread}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Start\+Ctrl\+Thread(const T\+Ba\+Api\+Ctrl\+Task\+Opts $\ast$p\+Opts)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Start\+Ctrl\+Thread (
-\begin{DoxyParamCaption}
-\item[{const {\bf T\+Ba\+Api\+Ctrl\+Task\+Opts} $\ast$}]{p\+Opts}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a81ad517fcd3fbf12c5fc57273eb0ce94}
-
-
-Starts the one and only control thread as a new thread. 
-
-This is mainly for debugging and development. For proper releases use \hyperlink{BaseApi_8h_a60c99fae43923e540eaafa66bfe17508}{Ba\+Api\+Start\+Ctrl\+Task()}. \begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em p\+Opts} & Task options \\
-\hline
-\end{DoxyParams}
-\hypertarget{BaseApi_8h_abf560df382cc0fa41c71a555a567befd}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Stop\+Ctrl\+Thread@{Ba\+Api\+Stop\+Ctrl\+Thread}}
-\index{Ba\+Api\+Stop\+Ctrl\+Thread@{Ba\+Api\+Stop\+Ctrl\+Thread}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Stop\+Ctrl\+Thread()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Stop\+Ctrl\+Thread (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_abf560df382cc0fa41c71a555a567befd}
-
-
-Stops the one and only control thread. 
-
-\begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-\hypertarget{BaseApi_8h_a2a738f0b607a8c4fb3b2bcfd0e4f5bcc}{}\index{Base\+Api.\+h@{Base\+Api.\+h}!Ba\+Api\+Get\+Ctrl\+Task\+Stats@{Ba\+Api\+Get\+Ctrl\+Task\+Stats}}
-\index{Ba\+Api\+Get\+Ctrl\+Task\+Stats@{Ba\+Api\+Get\+Ctrl\+Task\+Stats}!Base\+Api.\+h@{Base\+Api.\+h}}
-\subsubsection[{Ba\+Api\+Get\+Ctrl\+Task\+Stats(\+T\+Ba\+Api\+Ctrl\+Task\+Stats $\ast$p\+Stats)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Api\+Get\+Ctrl\+Task\+Stats (
-\begin{DoxyParamCaption}
-\item[{{\bf T\+Ba\+Api\+Ctrl\+Task\+Stats} $\ast$}]{p\+Stats}
-\end{DoxyParamCaption}
-)}\label{BaseApi_8h_a2a738f0b607a8c4fb3b2bcfd0e4f5bcc}
-
-
-Gets the task statistics. 
-
-This is mostly meant to be called within the {\ttfamily update()} function so it gets the statistics from the control task \begin{DoxyReturn}{Returns}
-Error or success 
-\end{DoxyReturn}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em p\+Stats} & Statistics \\
 \hline
 \end{DoxyParams}

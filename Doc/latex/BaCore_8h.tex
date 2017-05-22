@@ -2,23 +2,25 @@
 \label{BaCore_8h}\index{Ba\+Core.\+h@{Ba\+Core.\+h}}
 
 
-O\+S level A\+P\+I.  
+OS level A\+PI.  
 
 
-{\ttfamily \#include $<$time.\+h$>$}\\*
-{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
-Include dependency graph for Ba\+Core.\+h\+:\nopagebreak
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+Include dependency graph for Ba\+Core.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=198pt]{BaCore_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=293pt]{BaCore_8h__dep__incl}
+\includegraphics[width=308pt]{BaCore_8h__dep__incl}
 \end{center}
 \end{figure}
 \subsection*{Classes}
@@ -33,47 +35,47 @@ struct \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}{}typedef struct \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} \hyperlink{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}{T\+Ba\+Core\+Time\+Stamp}\label{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}
-
+\mbox{\Hypertarget{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}\label{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}} 
+typedef struct \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} \hyperlink{BaCore_8h_ab12ee629b9995a0696756e25fe0a85ef}{T\+Ba\+Core\+Time\+Stamp}
 \begin{DoxyCompactList}\small\item\em Time stamp structure. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{}typedef int64\+\_\+t \hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us}\label{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}
-
+\mbox{\Hypertarget{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}\label{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}} 
+typedef int64\+\_\+t \hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us}
 \begin{DoxyCompactList}\small\item\em Monotonic timestamp in microseconds. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}{}typedef enum \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \hyperlink{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}{E\+Ba\+Core\+Prio}\label{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}
-
-\begin{DoxyCompactList}\small\item\em Thread priority and scheduler. R\+T is F\+I\+F\+O. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_a9a294779f7323469261016b0f040c297}{}typedef struct \hyperlink{structTBaCoreThreadArg}{T\+Ba\+Core\+Thread\+Arg} \hyperlink{BaCore_8h_a9a294779f7323469261016b0f040c297}{T\+Ba\+Core\+Thread\+Arg}\label{BaCore_8h_a9a294779f7323469261016b0f040c297}
-
+\mbox{\Hypertarget{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}\label{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}} 
+typedef enum \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \hyperlink{BaCore_8h_a157dc8d9ee9a32912cbc26f9b1dd7476}{E\+Ba\+Core\+Prio}
+\begin{DoxyCompactList}\small\item\em Thread priority and scheduler. RT is F\+I\+FO. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaCore_8h_a9a294779f7323469261016b0f040c297}\label{BaCore_8h_a9a294779f7323469261016b0f040c297}} 
+typedef struct \hyperlink{structTBaCoreThreadArg}{T\+Ba\+Core\+Thread\+Arg} \hyperlink{BaCore_8h_a9a294779f7323469261016b0f040c297}{T\+Ba\+Core\+Thread\+Arg}
 \begin{DoxyCompactList}\small\item\em Thread function arguments. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_a55c2b904410b0e5f7b9b3f1b747a0475}{}typedef struct \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info} \hyperlink{BaCore_8h_a55c2b904410b0e5f7b9b3f1b747a0475}{T\+Ba\+Core\+Thread\+Info}\label{BaCore_8h_a55c2b904410b0e5f7b9b3f1b747a0475}
-
+\mbox{\Hypertarget{BaCore_8h_a55c2b904410b0e5f7b9b3f1b747a0475}\label{BaCore_8h_a55c2b904410b0e5f7b9b3f1b747a0475}} 
+typedef struct \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info} \hyperlink{BaCore_8h_a55c2b904410b0e5f7b9b3f1b747a0475}{T\+Ba\+Core\+Thread\+Info}
 \begin{DoxyCompactList}\small\item\em Thread info. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{}typedef void($\ast$ \hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun}) (void $\ast$arg)\label{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}
-
-\begin{DoxyCompactList}\small\item\em General function of the A\+P\+I. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}{}typedef void($\ast$ \hyperlink{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}{T\+Ba\+Core\+Thread\+Fun}) (\hyperlink{structTBaCoreThreadArg}{T\+Ba\+Core\+Thread\+Arg} $\ast$p\+Arg)\label{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}
-
+\mbox{\Hypertarget{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}\label{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}} 
+typedef void($\ast$ \hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun}) (void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em General function of the A\+PI. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}\label{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}} 
+typedef void($\ast$ \hyperlink{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}{T\+Ba\+Core\+Thread\+Fun}) (\hyperlink{structTBaCoreThreadArg}{T\+Ba\+Core\+Thread\+Arg} $\ast$p\+Arg)
 \begin{DoxyCompactList}\small\item\em Functions for threads. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{}typedef const void $\ast$ \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl}\label{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}
-
+\mbox{\Hypertarget{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}\label{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}} 
+typedef const void $\ast$ \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl}
 \begin{DoxyCompactList}\small\item\em Thread handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \{ \\*
+enum \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} \{ \newline
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a5c9348f0471954d02479b1de2d0e0a5c}{e\+Ba\+Core\+Prio\+\_\+\+Minimum} = 0, 
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a18ae3d0630a0ecdc0202911cdb8bd0c8}{e\+Ba\+Core\+Prio\+\_\+\+Low}, 
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a64a4f256f9b0bae0d04f2fd20e6c4333}{e\+Ba\+Core\+Prio\+\_\+\+Normal}, 
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a232e29885fc570166ff832fde62ac33e}{e\+Ba\+Core\+Prio\+\_\+\+High}, 
-\\*
+\newline
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a109bf2120ebb826d6e87117e7a515bd5}{e\+Ba\+Core\+Prio\+\_\+\+Highest}, 
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910aec172ae856b35d50314f66288709eabc}{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal}, 
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a22b7231add58f0a5ac53bcbc1bea9eca}{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High}, 
 \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a62b2c0516fe37f9cb7d91f45dbedecfd}{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest}
- \}\begin{DoxyCompactList}\small\item\em Thread priority and scheduler. R\+T is F\+I\+F\+O. \end{DoxyCompactList}
+ \}\begin{DoxyCompactList}\small\item\em Thread priority and scheduler. RT is F\+I\+FO. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
-\begin{Indent}{\bf Sleep functions}\par
+\begin{Indent}\textbf{ Sleep functions}\par
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{BaCore_8h_a6c94c2551e1b136347b5b67ff948fb8a}{Ba\+Core\+Sleep} (int64\+\_\+t s)
@@ -85,37 +87,37 @@ void \hyperlink{BaCore_8h_a1d944ec09e121ad1d73c342ef0040a7a}{Ba\+Core\+U\+Sleep}
 void \hyperlink{BaCore_8h_a3bdde8e7955f8575a7a7bf94609a8f0a}{Ba\+Core\+N\+Sleep} (int64\+\_\+t ns)
 \begin{DoxyCompactList}\small\item\em Puts the thread to sleep and causes context change. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
-\begin{Indent}{\bf Timing functions}\par
+\begin{Indent}\textbf{ Timing functions}\par
 \begin{DoxyCompactItemize}
 \item 
-int64\+\_\+t \hyperlink{BaCore_8h_a5753216c928d411b57f70254302157c9}{Ba\+Core\+Timed\+S} (\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun} fun, void $\ast$p\+Arg)
+int64\+\_\+t \hyperlink{BaCore_8h_a5753216c928d411b57f70254302157c9}{Ba\+Core\+TimedS} (\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun} fun, void $\ast$p\+Arg)
 \begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\item 
 int64\+\_\+t \hyperlink{BaCore_8h_a2ab9ab9bd8d9002a4bd017d4421e9260}{Ba\+Core\+Timed\+Ms} (\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun} fun, void $\ast$p\+Arg)
 \begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\item 
 int64\+\_\+t \hyperlink{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}{Ba\+Core\+Timed\+Us} (\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun} fun, void $\ast$p\+Arg)
 \begin{DoxyCompactList}\small\item\em Timing function. \end{DoxyCompactList}\item 
 void \hyperlink{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}{Ba\+Core\+Get\+T\+Stamp} (\hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp)
-\begin{DoxyCompactList}\small\item\em Gets the actual timestamp in local time\+S. \end{DoxyCompactList}\item 
-\hypertarget{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}{}\hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us} \hyperlink{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}{Ba\+Core\+Get\+Mon\+T\+Stamp} ()\label{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}
-
+\begin{DoxyCompactList}\small\item\em Gets the actual timestamp in local timeS. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}\label{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}} 
+\hyperlink{BaCore_8h_a26e10ffbac03a898c7f8921f65ee4544}{T\+Ba\+Core\+Mon\+T\+Stamp\+Us} \hyperlink{BaCore_8h_addc3e044eb80deaba6bcbf17e7549b7b}{Ba\+Core\+Get\+Mon\+T\+Stamp} ()
 \begin{DoxyCompactList}\small\item\em Gets the actual monotonic timestamp in microseconds. \end{DoxyCompactList}\item 
-const char $\ast$ \hyperlink{BaCore_8h_a505f6901474517229290f1f9278f5a99}{Ba\+Core\+T\+Stamp\+To\+Str} (const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp, char p\+Buf\mbox{[}B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N\mbox{]})
+const char $\ast$ \hyperlink{BaCore_8h_a505f6901474517229290f1f9278f5a99}{Ba\+Core\+T\+Stamp\+To\+Str} (const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$p\+Stamp, char p\+Buf\mbox{[}B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+EN\mbox{]})
 \begin{DoxyCompactList}\small\item\em Converts time stamp structure to string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
-\begin{Indent}{\bf Multi-\/threading}\par
+\begin{Indent}\textbf{ Multi-\/threading}\par
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} \hyperlink{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}{Ba\+Core\+Create\+Thread} (const char $\ast$name, \hyperlink{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}{T\+Ba\+Core\+Thread\+Fun} routine, \hyperlink{structTBaCoreThreadArg}{T\+Ba\+Core\+Thread\+Arg} $\ast$p\+Arg, \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio} prio)
 \begin{DoxyCompactList}\small\item\em Thread factory. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}{Ba\+Core\+Destroy\+Thread} (\hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, uint32\+\_\+t timeout\+Ms)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}{Ba\+Core\+Destroy\+Thread} (\hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, uint32\+\_\+t timeout\+Ms)
 \begin{DoxyCompactList}\small\item\em Thread destructor. \end{DoxyCompactList}\item 
-\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}{Ba\+Core\+Get\+Thread\+Info} (const \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info} $\ast$p\+Info)
+\hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}{Ba\+Core\+Get\+Thread\+Info} (const \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} hdl, \hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info} $\ast$p\+Info)
 \begin{DoxyCompactList}\small\item\em Get the thread info. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
 \subsection{Detailed Description}
-O\+S level A\+P\+I. 
+OS level A\+PI. 
 
 Core functions include\+:
 \begin{DoxyItemize}
@@ -125,44 +127,59 @@ Core functions include\+:
 \end{DoxyItemize}
 
 \subsection{Enumeration Type Documentation}
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!E\+Ba\+Core\+Prio@{E\+Ba\+Core\+Prio}}
+\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!E\+Ba\+Core\+Prio@{E\+Ba\+Core\+Prio}}
 \index{E\+Ba\+Core\+Prio@{E\+Ba\+Core\+Prio}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{E\+Ba\+Core\+Prio}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+Ba\+Core\+Prio}}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}
+\subsubsection{\texorpdfstring{E\+Ba\+Core\+Prio}{EBaCorePrio}}
+{\footnotesize\ttfamily enum \hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio}}
 
 
-Thread priority and scheduler. R\+T is F\+I\+F\+O. 
 
-\begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{e\+Ba\+Core\+Prio\+\_\+\+Minimum@{e\+Ba\+Core\+Prio\+\_\+\+Minimum}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Minimum@{e\+Ba\+Core\+Prio\+\_\+\+Minimum}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a5c9348f0471954d02479b1de2d0e0a5c}{}e\+Ba\+Core\+Prio\+\_\+\+Minimum\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a5c9348f0471954d02479b1de2d0e0a5c}
-}]0 \index{e\+Ba\+Core\+Prio\+\_\+\+Low@{e\+Ba\+Core\+Prio\+\_\+\+Low}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Low@{e\+Ba\+Core\+Prio\+\_\+\+Low}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a18ae3d0630a0ecdc0202911cdb8bd0c8}{}e\+Ba\+Core\+Prio\+\_\+\+Low\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a18ae3d0630a0ecdc0202911cdb8bd0c8}
-}]1 \index{e\+Ba\+Core\+Prio\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+Normal}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+Normal}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a64a4f256f9b0bae0d04f2fd20e6c4333}{}e\+Ba\+Core\+Prio\+\_\+\+Normal\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a64a4f256f9b0bae0d04f2fd20e6c4333}
-}]2 \index{e\+Ba\+Core\+Prio\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+High}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+High}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a232e29885fc570166ff832fde62ac33e}{}e\+Ba\+Core\+Prio\+\_\+\+High\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a232e29885fc570166ff832fde62ac33e}
-}]3 \index{e\+Ba\+Core\+Prio\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+Highest}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+Highest}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a109bf2120ebb826d6e87117e7a515bd5}{}e\+Ba\+Core\+Prio\+\_\+\+Highest\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a109bf2120ebb826d6e87117e7a515bd5}
-}]4 \index{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910aec172ae856b35d50314f66288709eabc}{}e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910aec172ae856b35d50314f66288709eabc}
-}]5 \index{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a22b7231add58f0a5ac53bcbc1bea9eca}{}e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a22b7231add58f0a5ac53bcbc1bea9eca}
-}]6 \index{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest}}\item[{\em 
-\hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a62b2c0516fe37f9cb7d91f45dbedecfd}{}e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a62b2c0516fe37f9cb7d91f45dbedecfd}
-}]7 \end{description}
-\end{Desc}
+Thread priority and scheduler. RT is F\+I\+FO. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+Minimum@{e\+Ba\+Core\+Prio\+\_\+\+Minimum}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Minimum@{e\+Ba\+Core\+Prio\+\_\+\+Minimum}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a5c9348f0471954d02479b1de2d0e0a5c}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a5c9348f0471954d02479b1de2d0e0a5c}} 
+e\+Ba\+Core\+Prio\+\_\+\+Minimum&0 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+Low@{e\+Ba\+Core\+Prio\+\_\+\+Low}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Low@{e\+Ba\+Core\+Prio\+\_\+\+Low}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a18ae3d0630a0ecdc0202911cdb8bd0c8}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a18ae3d0630a0ecdc0202911cdb8bd0c8}} 
+e\+Ba\+Core\+Prio\+\_\+\+Low&1 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+Normal}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+Normal}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a64a4f256f9b0bae0d04f2fd20e6c4333}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a64a4f256f9b0bae0d04f2fd20e6c4333}} 
+e\+Ba\+Core\+Prio\+\_\+\+Normal&2 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+High}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+High}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a232e29885fc570166ff832fde62ac33e}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a232e29885fc570166ff832fde62ac33e}} 
+e\+Ba\+Core\+Prio\+\_\+\+High&3 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+Highest}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+Highest}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a109bf2120ebb826d6e87117e7a515bd5}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a109bf2120ebb826d6e87117e7a515bd5}} 
+e\+Ba\+Core\+Prio\+\_\+\+Highest&4 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910aec172ae856b35d50314f66288709eabc}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910aec172ae856b35d50314f66288709eabc}} 
+e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Normal&5 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a22b7231add58f0a5ac53bcbc1bea9eca}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a22b7231add58f0a5ac53bcbc1bea9eca}} 
+e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+High&6 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest}!Ba\+Core.\+h@{Ba\+Core.\+h}}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest@{e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest}}}\mbox{\Hypertarget{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a62b2c0516fe37f9cb7d91f45dbedecfd}\label{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910a62b2c0516fe37f9cb7d91f45dbedecfd}} 
+e\+Ba\+Core\+Prio\+\_\+\+R\+T\+\_\+\+Highest&7 \\
+\hline
+
+\end{DoxyEnumFields}
 
 
 \subsection{Function Documentation}
-\hypertarget{BaCore_8h_a6c94c2551e1b136347b5b67ff948fb8a}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Sleep@{Ba\+Core\+Sleep}}
+\mbox{\Hypertarget{BaCore_8h_a6c94c2551e1b136347b5b67ff948fb8a}\label{BaCore_8h_a6c94c2551e1b136347b5b67ff948fb8a}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Sleep@{Ba\+Core\+Sleep}}
 \index{Ba\+Core\+Sleep@{Ba\+Core\+Sleep}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Sleep(int64\+\_\+t s)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Core\+Sleep (
-\begin{DoxyParamCaption}
-\item[{int64\+\_\+t}]{s}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a6c94c2551e1b136347b5b67ff948fb8a}
+\subsubsection{\texorpdfstring{Ba\+Core\+Sleep()}{BaCoreSleep()}}
+{\footnotesize\ttfamily void Ba\+Core\+Sleep (\begin{DoxyParamCaption}\item[{int64\+\_\+t}]{s }\end{DoxyParamCaption})}
+
 
 
 Puts the thread to sleep and causes context change. 
@@ -172,13 +189,12 @@ if s = 0 $\vert$$\vert$ ms = 0 $\vert$$\vert$ us = 0, there is no sleep if ns = 
 \mbox{\tt in}  & {\em s} & Sleep time in s \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a0b02663d5b06d203f8886a8b9702a055}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+M\+Sleep@{Ba\+Core\+M\+Sleep}}
+\mbox{\Hypertarget{BaCore_8h_a0b02663d5b06d203f8886a8b9702a055}\label{BaCore_8h_a0b02663d5b06d203f8886a8b9702a055}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+M\+Sleep@{Ba\+Core\+M\+Sleep}}
 \index{Ba\+Core\+M\+Sleep@{Ba\+Core\+M\+Sleep}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+M\+Sleep(int64\+\_\+t ms)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Core\+M\+Sleep (
-\begin{DoxyParamCaption}
-\item[{int64\+\_\+t}]{ms}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a0b02663d5b06d203f8886a8b9702a055}
+\subsubsection{\texorpdfstring{Ba\+Core\+M\+Sleep()}{BaCoreMSleep()}}
+{\footnotesize\ttfamily void Ba\+Core\+M\+Sleep (\begin{DoxyParamCaption}\item[{int64\+\_\+t}]{ms }\end{DoxyParamCaption})}
+
 
 
 Puts the thread to sleep and causes context change. 
@@ -188,13 +204,12 @@ if s = 0 $\vert$$\vert$ ms = 0 $\vert$$\vert$ us = 0, there is no sleep if ns = 
 \mbox{\tt in}  & {\em ms} & Sleep time in ms \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a1d944ec09e121ad1d73c342ef0040a7a}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+U\+Sleep@{Ba\+Core\+U\+Sleep}}
+\mbox{\Hypertarget{BaCore_8h_a1d944ec09e121ad1d73c342ef0040a7a}\label{BaCore_8h_a1d944ec09e121ad1d73c342ef0040a7a}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+U\+Sleep@{Ba\+Core\+U\+Sleep}}
 \index{Ba\+Core\+U\+Sleep@{Ba\+Core\+U\+Sleep}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+U\+Sleep(int64\+\_\+t us)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Core\+U\+Sleep (
-\begin{DoxyParamCaption}
-\item[{int64\+\_\+t}]{us}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a1d944ec09e121ad1d73c342ef0040a7a}
+\subsubsection{\texorpdfstring{Ba\+Core\+U\+Sleep()}{BaCoreUSleep()}}
+{\footnotesize\ttfamily void Ba\+Core\+U\+Sleep (\begin{DoxyParamCaption}\item[{int64\+\_\+t}]{us }\end{DoxyParamCaption})}
+
 
 
 Puts the thread to sleep and causes context change. 
@@ -204,13 +219,12 @@ if s = 0 $\vert$$\vert$ ms = 0 $\vert$$\vert$ us = 0, there is no sleep if ns = 
 \mbox{\tt in}  & {\em us} & Sleep time in us \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a3bdde8e7955f8575a7a7bf94609a8f0a}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+N\+Sleep@{Ba\+Core\+N\+Sleep}}
+\mbox{\Hypertarget{BaCore_8h_a3bdde8e7955f8575a7a7bf94609a8f0a}\label{BaCore_8h_a3bdde8e7955f8575a7a7bf94609a8f0a}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+N\+Sleep@{Ba\+Core\+N\+Sleep}}
 \index{Ba\+Core\+N\+Sleep@{Ba\+Core\+N\+Sleep}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+N\+Sleep(int64\+\_\+t ns)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Core\+N\+Sleep (
-\begin{DoxyParamCaption}
-\item[{int64\+\_\+t}]{ns}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a3bdde8e7955f8575a7a7bf94609a8f0a}
+\subsubsection{\texorpdfstring{Ba\+Core\+N\+Sleep()}{BaCoreNSleep()}}
+{\footnotesize\ttfamily void Ba\+Core\+N\+Sleep (\begin{DoxyParamCaption}\item[{int64\+\_\+t}]{ns }\end{DoxyParamCaption})}
+
 
 
 Puts the thread to sleep and causes context change. 
@@ -220,14 +234,12 @@ if s = 0 $\vert$$\vert$ ms = 0 $\vert$$\vert$ us = 0, there is no sleep if ns = 
 \mbox{\tt in}  & {\em ns} & Sleep time in ns \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a5753216c928d411b57f70254302157c9}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Timed\+S@{Ba\+Core\+Timed\+S}}
-\index{Ba\+Core\+Timed\+S@{Ba\+Core\+Timed\+S}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Timed\+S(\+T\+Ba\+Core\+Fun fun, void $\ast$p\+Arg)}]{\setlength{\rightskip}{0pt plus 5cm}int64\+\_\+t Ba\+Core\+Timed\+S (
-\begin{DoxyParamCaption}
-\item[{{\bf T\+Ba\+Core\+Fun}}]{fun, }
-\item[{void $\ast$}]{p\+Arg}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a5753216c928d411b57f70254302157c9}
+\mbox{\Hypertarget{BaCore_8h_a5753216c928d411b57f70254302157c9}\label{BaCore_8h_a5753216c928d411b57f70254302157c9}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+TimedS@{Ba\+Core\+TimedS}}
+\index{Ba\+Core\+TimedS@{Ba\+Core\+TimedS}!Ba\+Core.\+h@{Ba\+Core.\+h}}
+\subsubsection{\texorpdfstring{Ba\+Core\+Timed\+S()}{BaCoreTimedS()}}
+{\footnotesize\ttfamily int64\+\_\+t Ba\+Core\+TimedS (\begin{DoxyParamCaption}\item[{\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun}}]{fun,  }\item[{void $\ast$}]{p\+Arg }\end{DoxyParamCaption})}
+
 
 
 Timing function. 
@@ -242,14 +254,12 @@ Time in the defined unit
 \mbox{\tt in}  & {\em p\+Arg} & Function arguments \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a2ab9ab9bd8d9002a4bd017d4421e9260}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Timed\+Ms@{Ba\+Core\+Timed\+Ms}}
+\mbox{\Hypertarget{BaCore_8h_a2ab9ab9bd8d9002a4bd017d4421e9260}\label{BaCore_8h_a2ab9ab9bd8d9002a4bd017d4421e9260}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Timed\+Ms@{Ba\+Core\+Timed\+Ms}}
 \index{Ba\+Core\+Timed\+Ms@{Ba\+Core\+Timed\+Ms}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Timed\+Ms(\+T\+Ba\+Core\+Fun fun, void $\ast$p\+Arg)}]{\setlength{\rightskip}{0pt plus 5cm}int64\+\_\+t Ba\+Core\+Timed\+Ms (
-\begin{DoxyParamCaption}
-\item[{{\bf T\+Ba\+Core\+Fun}}]{fun, }
-\item[{void $\ast$}]{p\+Arg}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a2ab9ab9bd8d9002a4bd017d4421e9260}
+\subsubsection{\texorpdfstring{Ba\+Core\+Timed\+Ms()}{BaCoreTimedMs()}}
+{\footnotesize\ttfamily int64\+\_\+t Ba\+Core\+Timed\+Ms (\begin{DoxyParamCaption}\item[{\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun}}]{fun,  }\item[{void $\ast$}]{p\+Arg }\end{DoxyParamCaption})}
+
 
 
 Timing function. 
@@ -264,14 +274,12 @@ Time in the defined unit
 \mbox{\tt in}  & {\em p\+Arg} & Function arguments \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Timed\+Us@{Ba\+Core\+Timed\+Us}}
+\mbox{\Hypertarget{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}\label{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Timed\+Us@{Ba\+Core\+Timed\+Us}}
 \index{Ba\+Core\+Timed\+Us@{Ba\+Core\+Timed\+Us}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Timed\+Us(\+T\+Ba\+Core\+Fun fun, void $\ast$p\+Arg)}]{\setlength{\rightskip}{0pt plus 5cm}int64\+\_\+t Ba\+Core\+Timed\+Us (
-\begin{DoxyParamCaption}
-\item[{{\bf T\+Ba\+Core\+Fun}}]{fun, }
-\item[{void $\ast$}]{p\+Arg}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_ac7c70166fe4345034332c00a46d4946f}
+\subsubsection{\texorpdfstring{Ba\+Core\+Timed\+Us()}{BaCoreTimedUs()}}
+{\footnotesize\ttfamily int64\+\_\+t Ba\+Core\+Timed\+Us (\begin{DoxyParamCaption}\item[{\hyperlink{BaCore_8h_a41dc05559f1b0abe2f8261fc5cece7a9}{T\+Ba\+Core\+Fun}}]{fun,  }\item[{void $\ast$}]{p\+Arg }\end{DoxyParamCaption})}
+
 
 
 Timing function. 
@@ -286,54 +294,47 @@ Time in the defined unit
 \mbox{\tt in}  & {\em p\+Arg} & Function arguments \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+T\+Stamp@{Ba\+Core\+Get\+T\+Stamp}}
+\mbox{\Hypertarget{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}\label{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+T\+Stamp@{Ba\+Core\+Get\+T\+Stamp}}
 \index{Ba\+Core\+Get\+T\+Stamp@{Ba\+Core\+Get\+T\+Stamp}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Get\+T\+Stamp(\+T\+Ba\+Core\+Time\+Stamp $\ast$p\+Stamp)}]{\setlength{\rightskip}{0pt plus 5cm}void Ba\+Core\+Get\+T\+Stamp (
-\begin{DoxyParamCaption}
-\item[{{\bf T\+Ba\+Core\+Time\+Stamp} $\ast$}]{p\+Stamp}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a5890e7e91b8c1895f6a474781c489eb8}
+\subsubsection{\texorpdfstring{Ba\+Core\+Get\+T\+Stamp()}{BaCoreGetTStamp()}}
+{\footnotesize\ttfamily void Ba\+Core\+Get\+T\+Stamp (\begin{DoxyParamCaption}\item[{\hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$}]{p\+Stamp }\end{DoxyParamCaption})}
 
 
-Gets the actual timestamp in local time\+S. 
+
+Gets the actual timestamp in local timeS. 
 
 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt out}  & {\em p\+Stamp} & Time stamp \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a505f6901474517229290f1f9278f5a99}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}}
+\mbox{\Hypertarget{BaCore_8h_a505f6901474517229290f1f9278f5a99}\label{BaCore_8h_a505f6901474517229290f1f9278f5a99}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}}
 \index{Ba\+Core\+T\+Stamp\+To\+Str@{Ba\+Core\+T\+Stamp\+To\+Str}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+T\+Stamp\+To\+Str(const T\+Ba\+Core\+Time\+Stamp $\ast$p\+Stamp, char p\+Buf[B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N])}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Ba\+Core\+T\+Stamp\+To\+Str (
-\begin{DoxyParamCaption}
-\item[{const {\bf T\+Ba\+Core\+Time\+Stamp} $\ast$}]{p\+Stamp, }
-\item[{char}]{p\+Buf\mbox{[}\+B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N\mbox{]}}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a505f6901474517229290f1f9278f5a99}
+\subsubsection{\texorpdfstring{Ba\+Core\+T\+Stamp\+To\+Str()}{BaCoreTStampToStr()}}
+{\footnotesize\ttfamily const char$\ast$ Ba\+Core\+T\+Stamp\+To\+Str (\begin{DoxyParamCaption}\item[{const \hyperlink{structTBaCoreTimeStamp}{T\+Ba\+Core\+Time\+Stamp} $\ast$}]{p\+Stamp,  }\item[{char}]{p\+Buf\mbox{[}\+B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N\mbox{]} }\end{DoxyParamCaption})}
+
 
 
 Converts time stamp structure to string. 
 
-If the user gives a buffer ({\ttfamily p\+Buf}), it is used and returned. If the buffer is null, the string is mallocated and user must free the returned pointer to avoid memory leaks \begin{DoxyReturn}{Returns}
+If the user gives a buffer ({\ttfamily p\+Buf}), it is used and returned. If the buffer is null, the string is mallocated and user must free the returned pointer to avoid memory leaks. The string is 22 char long and has the following format\+: Y/\+M/D h\+:min\+:s.\+ms \begin{DoxyReturn}{Returns}
 Time stamp string if success, otherwise, null 
 \end{DoxyReturn}
 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em p\+Stamp} & Time stamp to convert to string \\
 \hline
-\mbox{\tt in,out}  & {\em p\+Buf} & Optional buffer of length $>$= B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+E\+N. If null, the string is mallocated $\ast$ \\
+\mbox{\tt in,out}  & {\em p\+Buf} & Optional buffer of length $>$= B\+A\+C\+O\+R\+E\+\_\+\+T\+S\+T\+A\+M\+P\+L\+EN. If null, the string is mallocated $\ast$ \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Create\+Thread@{Ba\+Core\+Create\+Thread}}
+\mbox{\Hypertarget{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}\label{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Create\+Thread@{Ba\+Core\+Create\+Thread}}
 \index{Ba\+Core\+Create\+Thread@{Ba\+Core\+Create\+Thread}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Create\+Thread(const char $\ast$name, T\+Ba\+Core\+Thread\+Fun routine, T\+Ba\+Core\+Thread\+Arg $\ast$p\+Arg, E\+Ba\+Core\+Prio prio)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Core\+Thread\+Hdl} Ba\+Core\+Create\+Thread (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{name, }
-\item[{{\bf T\+Ba\+Core\+Thread\+Fun}}]{routine, }
-\item[{{\bf T\+Ba\+Core\+Thread\+Arg} $\ast$}]{p\+Arg, }
-\item[{{\bf E\+Ba\+Core\+Prio}}]{prio}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a91ad70ff751bb8afd38fe7fd3bc7e1e1}
+\subsubsection{\texorpdfstring{Ba\+Core\+Create\+Thread()}{BaCoreCreateThread()}}
+{\footnotesize\ttfamily \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl} Ba\+Core\+Create\+Thread (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{\hyperlink{BaCore_8h_ae50095c02ffddc39ec0df7f19e52c559}{T\+Ba\+Core\+Thread\+Fun}}]{routine,  }\item[{\hyperlink{structTBaCoreThreadArg}{T\+Ba\+Core\+Thread\+Arg} $\ast$}]{p\+Arg,  }\item[{\hyperlink{BaCore_8h_a2021b3f630464ad65ce8f08ab10dc910}{E\+Ba\+Core\+Prio}}]{prio }\end{DoxyParamCaption})}
+
 
 
 Thread factory. 
@@ -352,14 +353,12 @@ Thread handle
 \mbox{\tt in}  & {\em prio} & Thread priority \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}}
+\mbox{\Hypertarget{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}\label{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}}
 \index{Ba\+Core\+Destroy\+Thread@{Ba\+Core\+Destroy\+Thread}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Destroy\+Thread(\+T\+Ba\+Core\+Thread\+Hdl hdl, uint32\+\_\+t timeout\+Ms)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Destroy\+Thread (
-\begin{DoxyParamCaption}
-\item[{{\bf T\+Ba\+Core\+Thread\+Hdl}}]{hdl, }
-\item[{uint32\+\_\+t}]{timeout\+Ms}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a0135e688ca9ae4e687e4c774917e1067}
+\subsubsection{\texorpdfstring{Ba\+Core\+Destroy\+Thread()}{BaCoreDestroyThread()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Core\+Destroy\+Thread (\begin{DoxyParamCaption}\item[{\hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl}}]{hdl,  }\item[{uint32\+\_\+t}]{timeout\+Ms }\end{DoxyParamCaption})}
+
 
 
 Thread destructor. 
@@ -374,14 +373,12 @@ Error if bad handle or timeout and {\ttfamily time\+Out\+Ms} != 0, otherwise, su
 \mbox{\tt in}  & {\em timeout\+Ms} & Timeout to wait in ms. If zero, no timeout and behaves like an asynchronous call \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}{}\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+Thread\+Info@{Ba\+Core\+Get\+Thread\+Info}}
+\mbox{\Hypertarget{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}\label{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}} 
+\index{Ba\+Core.\+h@{Ba\+Core.\+h}!Ba\+Core\+Get\+Thread\+Info@{Ba\+Core\+Get\+Thread\+Info}}
 \index{Ba\+Core\+Get\+Thread\+Info@{Ba\+Core\+Get\+Thread\+Info}!Ba\+Core.\+h@{Ba\+Core.\+h}}
-\subsubsection[{Ba\+Core\+Get\+Thread\+Info(const T\+Ba\+Core\+Thread\+Hdl hdl, T\+Ba\+Core\+Thread\+Info $\ast$p\+Info)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+Ba\+Bool\+R\+C} Ba\+Core\+Get\+Thread\+Info (
-\begin{DoxyParamCaption}
-\item[{const {\bf T\+Ba\+Core\+Thread\+Hdl}}]{hdl, }
-\item[{{\bf T\+Ba\+Core\+Thread\+Info} $\ast$}]{p\+Info}
-\end{DoxyParamCaption}
-)}\label{BaCore_8h_a3063c6580150f08a015d37bcd9cd3bb6}
+\subsubsection{\texorpdfstring{Ba\+Core\+Get\+Thread\+Info()}{BaCoreGetThreadInfo()}}
+{\footnotesize\ttfamily \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} Ba\+Core\+Get\+Thread\+Info (\begin{DoxyParamCaption}\item[{const \hyperlink{BaCore_8h_a2898da7dd1b0e998b8c64dca81dff404}{T\+Ba\+Core\+Thread\+Hdl}}]{hdl,  }\item[{\hyperlink{structTBaCoreThreadInfo}{T\+Ba\+Core\+Thread\+Info} $\ast$}]{p\+Info }\end{DoxyParamCaption})}
+
 
 
 Get the thread info. 

@@ -6,19 +6,20 @@ General useful functions~\newline
 .  
 
 
-{\ttfamily \#include $<$sys/stat.\+h$>$}\\*
-{\ttfamily \#include $<$stdio.\+h$>$}\\*
-{\ttfamily \#include $<$stdlib.\+h$>$}\\*
-{\ttfamily \#include $<$dirent.\+h$>$}\\*
-{\ttfamily \#include $<$string.\+h$>$}\\*
-{\ttfamily \#include $<$stdarg.\+h$>$}\\*
-{\ttfamily \#include $<$string$>$}\\*
-{\ttfamily \#include $<$istream$>$}\\*
-{\ttfamily \#include $<$fstream$>$}\\*
-{\ttfamily \#include $<$algorithm$>$}\\*
-{\ttfamily \#include $<$iterator$>$}\\*
-{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\\*
-Include dependency graph for Ba\+Utils.\+hpp\+:\nopagebreak
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$dirent.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$istream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$iterator$>$}\newline
+{\ttfamily \#include \char`\"{}Ba\+Bool.\+h\char`\"{}}\newline
+Include dependency graph for Ba\+Utils.\+hpp\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -28,7 +29,7 @@ Include dependency graph for Ba\+Utils.\+hpp\+:\nopagebreak
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
- \hyperlink{namespaceBaFS}{Ba\+F\+S}
+ \hyperlink{namespaceBaFS}{Ba\+FS}
 \begin{DoxyCompactList}\small\item\em Namespace to wrap all file system functions. \end{DoxyCompactList}\item 
  \hyperlink{namespaceBaPath}{Ba\+Path}
 \begin{DoxyCompactList}\small\item\em Namespace to wrap all path functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -45,34 +46,36 @@ static std\+::string \hyperlink{BaUtils_8hpp_a62d66fe05ae48e810bdde3090a16ab9b}{
 \begin{DoxyCompactList}\small\item\em Reads a file and returns it in a std\+::string. \end{DoxyCompactList}\item 
 static std\+::string \hyperlink{BaUtils_8hpp_af6d23afeb91690ed50fd63216d485f54}{Ba\+Proc\+File\+To\+String} (std\+::ifstream $\ast$p\+Is)
 \begin{DoxyCompactList}\small\item\em Reads a file and returns it in a std\+::string. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\begin{Indent}{\bf Base A\+P\+I File System}\par
+\begin{Indent}\textbf{ Base A\+PI File System}\par
 \begin{DoxyCompactItemize}
 \item 
 static int \hyperlink{namespaceBaFS_a9e6346a9784d4de1dbda3c79ef8bb72b}{Ba\+F\+S\+::\+Mk\+Dir} (std\+::string dir, int per=0660)
 \begin{DoxyCompactList}\small\item\em Portable mkdir(), creates a directory. \end{DoxyCompactList}\item 
-static \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+R\+C} \hyperlink{namespaceBaFS_a500756f66ff45aaf311421e7f68a0070}{Ba\+F\+S\+::\+Cp\+File} (std\+::string src, std\+::string dst)
+static \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{namespaceBaFS_ac4636cb3d87c93a0c666989f670f7680}{Ba\+F\+S\+::\+Cp\+File2} (std\+::string src, std\+::string dst)
+\begin{DoxyCompactList}\small\item\em Portable file copy. \end{DoxyCompactList}\item 
+static \hyperlink{BaBool_8h_a84d5a0de4729ca4c89f2479c605dbf3d}{T\+Ba\+Bool\+RC} \hyperlink{namespaceBaFS_a500756f66ff45aaf311421e7f68a0070}{Ba\+F\+S\+::\+Cp\+File} (std\+::string src, std\+::string dst)
 \begin{DoxyCompactList}\small\item\em Portable file copy. \end{DoxyCompactList}\item 
 static int \hyperlink{namespaceBaFS_ad729f83dfe589df3058696c6db6452c9}{Ba\+F\+S\+::\+Rename} (std\+::string path, std\+::string new\+Path)
 \begin{DoxyCompactList}\small\item\em Portable rename(). \end{DoxyCompactList}\item 
-static uint32\+\_\+t \hyperlink{namespaceBaFS_a526ea62172fcaa4003dd437863c6604c}{Ba\+F\+S\+::\+Size} (std\+::string path)
+static uint64\+\_\+t \hyperlink{namespaceBaFS_ada7d22f6e3458a9db589923cbacfbaca}{Ba\+F\+S\+::\+Size} (std\+::string path)
 \begin{DoxyCompactList}\small\item\em Gets the file size in bytes. \end{DoxyCompactList}\item 
-static uint64\+\_\+t \hyperlink{namespaceBaFS_aafa79b524a4f13b6531cf79b1f73774e}{Ba\+F\+S\+::\+Dir\+Size} (std\+::string path, uint32\+\_\+t max\+Depth=(uint32\+\_\+t)-\/1)
+static uint64\+\_\+t \hyperlink{namespaceBaFS_acfbdc7327ac781f0e3087eb03d37ef35}{Ba\+F\+S\+::\+Dir\+Size} (std\+::string path, uint32\+\_\+t max\+Depth=(uint32\+\_\+t) -\/1)
 \begin{DoxyCompactList}\small\item\em Gets the directory size in bytes recursively with a maximum depth. \end{DoxyCompactList}\item 
 static bool \hyperlink{namespaceBaFS_a73d165c90a00491cfe0b9ce3b5fe5c58}{Ba\+F\+S\+::\+Exists} (std\+::string path)
 \begin{DoxyCompactList}\small\item\em Tests if a file or directory exists. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
-\begin{Indent}{\bf Base A\+P\+I Path}\par
+\begin{Indent}\textbf{ Base A\+PI Path}\par
 \begin{DoxyCompactItemize}
 \item 
-static std\+::string \hyperlink{namespaceBaPath_aee6b101395e5f32a76b304aa765de13c}{Ba\+Path\+::\+Get\+Directory} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
+static std\+::string \hyperlink{namespaceBaPath_a565903d233aae8655f38347e3bb0a551}{Ba\+Path\+::\+Get\+Directory} (std\+::string path, char delimiter=\textquotesingle{}/\textquotesingle{})
 \begin{DoxyCompactList}\small\item\em Gets everything, including the trailing path separator, except the filename. \end{DoxyCompactList}\item 
-static std\+::string \hyperlink{namespaceBaPath_a41d87786f4a43d64094624187ac90dca}{Ba\+Path\+::\+Get\+Filename} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
+static std\+::string \hyperlink{namespaceBaPath_a7285e10c066bb8fb44faf97b709ad8ed}{Ba\+Path\+::\+Get\+Filename} (std\+::string path, char delimiter=\textquotesingle{}/\textquotesingle{})
 \begin{DoxyCompactList}\small\item\em Gets only the filename part of the path. \end{DoxyCompactList}\item 
-static std\+::string \hyperlink{namespaceBaPath_a42b3acac9c048e45a531c9dc4be319f1}{Ba\+Path\+::\+Get\+File\+Extension} (std\+::string path, char delimiter= \textquotesingle{}/\textquotesingle{})
+static std\+::string \hyperlink{namespaceBaPath_a96f0d430e53152e28075df8445cc676c}{Ba\+Path\+::\+Get\+File\+Extension} (std\+::string path, char delimiter=\textquotesingle{}/\textquotesingle{})
 \begin{DoxyCompactList}\small\item\em Gets the extension of a path. \end{DoxyCompactList}\item 
-static std\+::string \hyperlink{namespaceBaPath_a70f965f0c97d211e1f91dc2f16e05195}{Ba\+Path\+::\+Change\+File\+Extension} (std\+::string path, std\+::string ext, char delimiter= \textquotesingle{}/\textquotesingle{})
+static std\+::string \hyperlink{namespaceBaPath_a79ec43e1258100ad926c954d03ea06fb}{Ba\+Path\+::\+Change\+File\+Extension} (std\+::string path, std\+::string ext, char delimiter=\textquotesingle{}/\textquotesingle{})
 \begin{DoxyCompactList}\small\item\em Changes the extension of a path. \end{DoxyCompactList}\item 
-static std\+::string \hyperlink{namespaceBaPath_a4038d1b6c1fb3beb13b50b68f54c652d}{Ba\+Path\+::\+Concatenate} (std\+::string path1, std\+::string path2, char delimiter= \textquotesingle{}/\textquotesingle{})
+static std\+::string \hyperlink{namespaceBaPath_a2ef9e1a6ca9f3da675e9ed2362db0811}{Ba\+Path\+::\+Concatenate} (std\+::string path1, std\+::string path2, char delimiter=\textquotesingle{}/\textquotesingle{})
 \begin{DoxyCompactList}\small\item\em Concatenates {\ttfamily path1} with {\ttfamily path2} and adds or removes a delimiter when required. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
@@ -89,15 +92,13 @@ General useful functions~\newline
 \end{DoxyItemize}
 
 \subsection{Function Documentation}
-\hypertarget{BaUtils_8hpp_a25c40b6a558aa8194365db78934a577e}{}\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+To\+Number@{Ba\+To\+Number}}
+\mbox{\Hypertarget{BaUtils_8hpp_a25c40b6a558aa8194365db78934a577e}\label{BaUtils_8hpp_a25c40b6a558aa8194365db78934a577e}} 
+\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+To\+Number@{Ba\+To\+Number}}
 \index{Ba\+To\+Number@{Ba\+To\+Number}!Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}}
-\subsubsection[{Ba\+To\+Number(std\+::string s, T def, bool $\ast$p\+Error=0)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ static T Ba\+To\+Number (
-\begin{DoxyParamCaption}
-\item[{std\+::string}]{s, }
-\item[{T}]{def, }
-\item[{bool $\ast$}]{p\+Error = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{BaUtils_8hpp_a25c40b6a558aa8194365db78934a577e}
+\subsubsection{\texorpdfstring{Ba\+To\+Number()}{BaToNumber()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static T Ba\+To\+Number (\begin{DoxyParamCaption}\item[{std\+::string}]{s,  }\item[{T}]{def,  }\item[{bool $\ast$}]{p\+Error = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
 
 
 Converts string to number. 
@@ -114,14 +115,12 @@ Parsed number on success, otherwise def
 \mbox{\tt out}  & {\em p\+Error} & Optional error flag \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaUtils_8hpp_a42ed36ddc7c211af550ec7c7eb28738b}{}\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+F\+String@{Ba\+F\+String}}
+\mbox{\Hypertarget{BaUtils_8hpp_a42ed36ddc7c211af550ec7c7eb28738b}\label{BaUtils_8hpp_a42ed36ddc7c211af550ec7c7eb28738b}} 
+\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+F\+String@{Ba\+F\+String}}
 \index{Ba\+F\+String@{Ba\+F\+String}!Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}}
-\subsubsection[{Ba\+F\+String(const char $\ast$fmt, va\+\_\+list arg)}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+F\+String (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{fmt, }
-\item[{va\+\_\+list}]{arg}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{BaUtils_8hpp_a42ed36ddc7c211af550ec7c7eb28738b}
+\subsubsection{\texorpdfstring{Ba\+F\+String()}{BaFString()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily static std\+::string Ba\+F\+String (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{va\+\_\+list}]{arg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
 
 
 Creates a string formated C-\/style with a maximum length of 65534 chars. 
@@ -136,14 +135,12 @@ formated string
 \mbox{\tt in}  & {\em arg} & variable arguments \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaUtils_8hpp_a0f53b34a2fb1568c4af4d228bc4f8708}{}\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+F\+String@{Ba\+F\+String}}
+\mbox{\Hypertarget{BaUtils_8hpp_a0f53b34a2fb1568c4af4d228bc4f8708}\label{BaUtils_8hpp_a0f53b34a2fb1568c4af4d228bc4f8708}} 
+\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+F\+String@{Ba\+F\+String}}
 \index{Ba\+F\+String@{Ba\+F\+String}!Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}}
-\subsubsection[{Ba\+F\+String(const char $\ast$fmt,...)}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+F\+String (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{fmt, }
-\item[{}]{...}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{BaUtils_8hpp_a0f53b34a2fb1568c4af4d228bc4f8708}
+\subsubsection{\texorpdfstring{Ba\+F\+String()}{BaFString()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static std\+::string Ba\+F\+String (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
 
 
 Creates a string formated C-\/style with a maximum length of 65534 chars. 
@@ -156,14 +153,12 @@ formated string
 \mbox{\tt in}  & {\em fmt} & format string \\
 \hline
 \end{DoxyParams}
-\hypertarget{BaUtils_8hpp_a62d66fe05ae48e810bdde3090a16ab9b}{}\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+File\+To\+String@{Ba\+File\+To\+String}}
+\mbox{\Hypertarget{BaUtils_8hpp_a62d66fe05ae48e810bdde3090a16ab9b}\label{BaUtils_8hpp_a62d66fe05ae48e810bdde3090a16ab9b}} 
+\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+File\+To\+String@{Ba\+File\+To\+String}}
 \index{Ba\+File\+To\+String@{Ba\+File\+To\+String}!Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}}
-\subsubsection[{Ba\+File\+To\+String(std\+::ifstream $\ast$p\+Is, bool $\ast$p\+Error)}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+File\+To\+String (
-\begin{DoxyParamCaption}
-\item[{std\+::ifstream $\ast$}]{p\+Is, }
-\item[{bool $\ast$}]{p\+Error}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{BaUtils_8hpp_a62d66fe05ae48e810bdde3090a16ab9b}
+\subsubsection{\texorpdfstring{Ba\+File\+To\+String()}{BaFileToString()}}
+{\footnotesize\ttfamily static std\+::string Ba\+File\+To\+String (\begin{DoxyParamCaption}\item[{std\+::ifstream $\ast$}]{p\+Is,  }\item[{bool $\ast$}]{p\+Error }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
 
 
 Reads a file and returns it in a std\+::string. 
@@ -171,13 +166,12 @@ Reads a file and returns it in a std\+::string.
 \begin{DoxyReturn}{Returns}
 string 
 \end{DoxyReturn}
-\hypertarget{BaUtils_8hpp_af6d23afeb91690ed50fd63216d485f54}{}\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+Proc\+File\+To\+String@{Ba\+Proc\+File\+To\+String}}
+\mbox{\Hypertarget{BaUtils_8hpp_af6d23afeb91690ed50fd63216d485f54}\label{BaUtils_8hpp_af6d23afeb91690ed50fd63216d485f54}} 
+\index{Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}!Ba\+Proc\+File\+To\+String@{Ba\+Proc\+File\+To\+String}}
 \index{Ba\+Proc\+File\+To\+String@{Ba\+Proc\+File\+To\+String}!Ba\+Utils.\+hpp@{Ba\+Utils.\+hpp}}
-\subsubsection[{Ba\+Proc\+File\+To\+String(std\+::ifstream $\ast$p\+Is)}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string Ba\+Proc\+File\+To\+String (
-\begin{DoxyParamCaption}
-\item[{std\+::ifstream $\ast$}]{p\+Is}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\label{BaUtils_8hpp_af6d23afeb91690ed50fd63216d485f54}
+\subsubsection{\texorpdfstring{Ba\+Proc\+File\+To\+String()}{BaProcFileToString()}}
+{\footnotesize\ttfamily static std\+::string Ba\+Proc\+File\+To\+String (\begin{DoxyParamCaption}\item[{std\+::ifstream $\ast$}]{p\+Is }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
 
 
 Reads a file and returns it in a std\+::string. 

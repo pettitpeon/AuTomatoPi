@@ -35,28 +35,6 @@
   <UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Class List"><param name="Local" value="annotated.html"><param name="ImageNumber" value="1"></OBJECT>
     <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaGpio"><param name="Local" value="classIBaGpio.html"><param name="ImageNumber" value="1"></OBJECT>
-      <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="InitHWPWM"><param name="Local" value="classIBaGpio.html#af8f837eef2a5db810723753d2ddfec0b"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="ExitHWPWM"><param name="Local" value="classIBaGpio.html#a0a1ef586b8d8786802b4535709dfd288"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetClkHWPWM"><param name="Local" value="classIBaGpio.html#a598f466d00fe7f82b620e1b22afbd599"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="CleanUp"><param name="Local" value="classIBaGpio.html#a2567239d643262d9c595d4bf9f435957"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetInp"><param name="Local" value="classIBaGpio.html#a611ac27d6c3bb62ceed41ea2c903dd1a"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetOut"><param name="Local" value="classIBaGpio.html#af5835f618c2a102d8091095a6312a6e4"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetAlt"><param name="Local" value="classIBaGpio.html#a5baae78354a9c3b260f15a9e4c7b04b1"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="Set"><param name="Local" value="classIBaGpio.html#a042a9a7fdb061734786cfb4c44850d2d"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="Reset"><param name="Local" value="classIBaGpio.html#a1cf812d8ade23b42610bef90080ad0da"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="Get"><param name="Local" value="classIBaGpio.html#a8c5e199fd9b74a7350dd81f6d9b21f37"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="StartHWPWM"><param name="Local" value="classIBaGpio.html#a4e596e2cb442f0cac35f3ae4c13145de"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetHWPWMDuCy"><param name="Local" value="classIBaGpio.html#aac3d2a18c5d440814044695ee20341b5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="StopHWPWM"><param name="Local" value="classIBaGpio.html#ab138b536d15b0ad67b6afa24e0917bf1"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWM"><param name="Local" value="classIBaGpio.html#addfdcd925b81bb2223848b566fd79926"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMDuCy"><param name="Local" value="classIBaGpio.html#ac2c80caf2b5bed3157a9612d4aea2bbb"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWM"><param name="Local" value="classIBaGpio.html#adcecff5f384ecfc53860ad25ff6b078e"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWMSleepingLED"><param name="Local" value="classIBaGpio.html#a1cac50af16367c2f1a0a1c2348f11798"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMSleepingLED"><param name="Local" value="classIBaGpio.html#ab1fe03939b7c54bef2867af7902732a4"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWMSleepingLED"><param name="Local" value="classIBaGpio.html#a6e9d69322514503ed6888873f8070e50"><param name="ImageNumber" value="11"></OBJECT>
-      </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaIniParser"><param name="Local" value="classIBaIniParser.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="GetString"><param name="Local" value="classIBaIniParser.html#a94c36d5c60509da2bd75a986860974d8"><param name="ImageNumber" value="11"></OBJECT>
@@ -89,25 +67,39 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="Register"><param name="Local" value="classIBaSwOsci.html#ac04ce939f45bd7c9cc7270c9dcb3c02d"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="Sample"><param name="Local" value="classIBaSwOsci.html#a72219859525f1c1af136d1a8081bb1a7"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskOpts"><param name="Local" value="structTBaApiCtrlTaskOpts.html"><param name="ImageNumber" value="1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="IHwGpio"><param name="Local" value="classIHwGpio.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structTBaApiCtrlTaskOpts.html#acca524319d638b833006dda8de72b33a"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="prio"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a6ecce6215aba4fe37a0cae7944d407d5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="cyleTimeMs"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a4a2241999559f0924c70899e6c1e71f3"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="log"><param name="Local" value="structTBaApiCtrlTaskOpts.html#abb595fe7dc59ebd1ce4711ff59cc2034"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="init"><param name="Local" value="structTBaApiCtrlTaskOpts.html#aaf141541ca77bd40f2bb5fc2e5859fc9"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="initArg"><param name="Local" value="structTBaApiCtrlTaskOpts.html#ad3650f49b9a488c420c4c22da3ae1dda"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="update"><param name="Local" value="structTBaApiCtrlTaskOpts.html#aeb48d712d7cc744807975ec51cdf9f37"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="updateArg"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a596bfe867887a3d23e7888300708837c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="exit"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a987242de0c1c39f97ff157c918ad7746"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="exitArg"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a4b4f0d49fe18ab1bebd856f2d07f65e3"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="InitHWPWM"><param name="Local" value="classIHwGpio.html#ae383c9085032483c3e7edd50ae6b3989"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ExitHWPWM"><param name="Local" value="classIHwGpio.html#a66811dfbca832afe93774dc50cff8579"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetClkHWPWM"><param name="Local" value="classIHwGpio.html#afe7c0f0224564e0c480199ef2f9518d8"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="CleanUp"><param name="Local" value="classIHwGpio.html#ac97639a59db6cddb63e8dc524ab45666"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetInp"><param name="Local" value="classIHwGpio.html#affe4037f33a1f87cae3223863ffb22d5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetOut"><param name="Local" value="classIHwGpio.html#aa0b016b46e6dab258d70eebd925940ec"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetAlt"><param name="Local" value="classIHwGpio.html#a81bae8e12e617a82ca0a40d31b3d5972"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="Set"><param name="Local" value="classIHwGpio.html#a0b68a9811ec5e825d40067410e914867"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="Reset"><param name="Local" value="classIHwGpio.html#a3f2a363ba55761a88877e8f4dff44701"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="Get"><param name="Local" value="classIHwGpio.html#a23b3d77fdae406d5fce9d3be3ea56363"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="StartHWPWM"><param name="Local" value="classIHwGpio.html#a5a6ed0cb7598db00ffd428d4bbf106c0"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetHWPWMDuCy"><param name="Local" value="classIHwGpio.html#a6d1faea477f22aebe70853f66d772bbe"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="StopHWPWM"><param name="Local" value="classIHwGpio.html#a54d4e297f8f7a250f0b2f548c7073e3d"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWM"><param name="Local" value="classIHwGpio.html#a282a9b02f28edb2e97f705f38468ee5e"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMDuCy"><param name="Local" value="classIHwGpio.html#ad46ce55419ecdf5b43c3d3d59b3abf61"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWM"><param name="Local" value="classIHwGpio.html#a6cd73e781afe3232ce874685a14900d9"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWMSleepingLED"><param name="Local" value="classIHwGpio.html#ac62a0fbeb1836d7f512a964f92639bfb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMSleepingLED"><param name="Local" value="classIHwGpio.html#a897e1e8f2dc07a57451f1d8286c50261"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWMSleepingLED"><param name="Local" value="classIHwGpio.html#a765a2ec2a649074f0cd9e90e8148fbf7"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskStats"><param name="Local" value="structTBaApiCtrlTaskStats.html"><param name="ImageNumber" value="1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="IOsIpcRegistry"><param name="Local" value="classIOsIpcRegistry.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="imRunning"><param name="Local" value="structTBaApiCtrlTaskStats.html#a5991a4b35aec43477fee7d8634268e5e"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="updCnt"><param name="Local" value="structTBaApiCtrlTaskStats.html#a2d2fd92a156a13e4370b0780af633b4e"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="lastDurUs"><param name="Local" value="structTBaApiCtrlTaskStats.html#ad7f03c51dc4304d96c3a4800cdfe32ce"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="lastCycleUs"><param name="Local" value="structTBaApiCtrlTaskStats.html#af283fbcd6b2606313931d905a4b44f2a"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="RegisterFun"><param name="Local" value="classIOsIpcRegistry.html#aa0a7789bc4b73ba3fd9ffc95c36b211d"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="UnregisterFun"><param name="Local" value="classIOsIpcRegistry.html#a8edb89cab48ee05564504402c9e18481"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ClearFunRegistry"><param name="Local" value="classIOsIpcRegistry.html#a6b4ffa30ef275d63227dbd5c5d586802"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="CallFun"><param name="Local" value="classIOsIpcRegistry.html#af123e37a919ea2d2026976857bdb3199"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="RegisterVar"><param name="Local" value="classIOsIpcRegistry.html#a754f5c04c6b8980d072517ef22a85613"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="UnregisterVar"><param name="Local" value="classIOsIpcRegistry.html#ac34e3769178b6f9c05e57334045ffe18"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ClearVarRegistry"><param name="Local" value="classIOsIpcRegistry.html#ac84f55f0f6f5469e6333270c17a8450c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="CallVar"><param name="Local" value="classIOsIpcRegistry.html#a9e912067bedaecd35cf5ca8dbea54f12"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="SetVar"><param name="Local" value="classIOsIpcRegistry.html#a5588474e7ba19e8cc8c29a0c6f295d42"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreThreadArg"><param name="Local" value="structTBaCoreThreadArg.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
@@ -148,24 +140,77 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="maxNoFiles"><param name="Local" value="structTBaLogOptions.html#ad166ebc564ffd6f03051f299e04f42ee"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="maxBufLength"><param name="Local" value="structTBaLogOptions.html#a40c96f001cb6655087b0c6f70704645c"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaPiBoard"><param name="Local" value="structTBaPiBoard.html"><param name="ImageNumber" value="1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="THwPiBoard"><param name="Local" value="structTHwPiBoard.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="hardware"><param name="Local" value="structTHwPiBoard.html#a32e53d11dccfac9ae28822debd28ef62"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="revision"><param name="Local" value="structTHwPiBoard.html#abe65312b7ce78d83e1ad5a6ff9df38af"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="serial"><param name="Local" value="structTHwPiBoard.html#af2aef80ffd1eaafb84b486f5d65af706"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcArg"><param name="Local" value="unionTOsIpcArg.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="i"><param name="Local" value="unionTOsIpcArg.html#a1ecdf39bb385368b65b70f56b1ba4af1"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcFunArg"><param name="Local" value="structTOsIpcFunArg.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="a"><param name="Local" value="structTOsIpcFunArg.html#a3a3b365a1895aa5a420050557211db9f"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegFun"><param name="Local" value="structTOsIpcRegFun.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="pFun"><param name="Local" value="structTOsIpcRegFun.html#a5f832c2518de98fa144f23d5cc56b82b"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="type"><param name="Local" value="structTOsIpcRegFun.html#a90cf4b78efb7a0be08c9abd8c3c9a02c"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVar"><param name="Local" value="structTOsIpcRegVar.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="pVar"><param name="Local" value="structTOsIpcRegVar.html#ab90584847b3e4f4bdf663ab55cc16662"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="sz"><param name="Local" value="structTOsIpcRegVar.html#a75571e76870b0226aa864f16eee31298"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="wr"><param name="Local" value="structTOsIpcRegVar.html#a5fd400d6adcb70017082bac6a488ba89"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVarOut"><param name="Local" value="structTOsIpcRegVarOut.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="i"><param name="Local" value="structTOsIpcRegVarOut.html#a90eba908f867d96d6722f3dc62f03bce"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="sz"><param name="Local" value="structTOsIpcRegVarOut.html#aadc42a240380abc6b62eb41bfb7e1c09"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskOpts"><param name="Local" value="structTOsProcCtrlTaskOpts.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a4ca14d44ee20af9f8e34aa0c50ef4ef2"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="prio"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a1e7c435cfa5d0f275855f7fb403ec0e1"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="cyleTimeUs"><param name="Local" value="structTOsProcCtrlTaskOpts.html#aecdcb6fe934bdf0c8333a7cf69d771e8"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="log"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a6e6097af89a05b7fbf2deb6ea2a09efe"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="init"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a81e319c1f890c3cc46eb92a89bcaf0d7"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="initArg"><param name="Local" value="structTOsProcCtrlTaskOpts.html#ae99b61db863e33a0a730d0453226543d"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="update"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a0e0820ca8344f53abbdd74e19ae23ae2"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="updateArg"><param name="Local" value="structTOsProcCtrlTaskOpts.html#acc3145ad90230f453520f263ed81c2f9"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="exit"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a5ab98d06a1e8e23dbce548e8303aa6ac"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="exitArg"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a19c3110bcab4a63f42ac4b080f2786bb"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskStats"><param name="Local" value="structTOsProcCtrlTaskStats.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="imRunning"><param name="Local" value="structTOsProcCtrlTaskStats.html#a010696a1e99efa5bb7b1c38ad3c72dcb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="updCnt"><param name="Local" value="structTOsProcCtrlTaskStats.html#ad4a3b8c19e030c383123d44a46414ceb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="lastDurUs"><param name="Local" value="structTOsProcCtrlTaskStats.html#a0f0c5b7cd8ac63e69aec6dd1866c744a"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="lastCycleUs"><param name="Local" value="structTOsProcCtrlTaskStats.html#a1e97d1091f02afc81a234df2f375beda"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     </UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Class Hierarchy"><param name="Local" value="hierarchy.html"><param name="ImageNumber" value="1"></OBJECT>
     <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaGpio"><param name="Local" value="classIBaGpio.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaIniParser"><param name="Local" value="classIBaIniParser.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaLog"><param name="Local" value="classIBaLog.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaSwOsci"><param name="Local" value="classIBaSwOsci.html"><param name="ImageNumber" value="11"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskOpts"><param name="Local" value="structTBaApiCtrlTaskOpts.html"><param name="ImageNumber" value="11"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskStats"><param name="Local" value="structTBaApiCtrlTaskStats.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="IHwGpio"><param name="Local" value="classIHwGpio.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="IOsIpcRegistry"><param name="Local" value="classIOsIpcRegistry.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreThreadArg"><param name="Local" value="structTBaCoreThreadArg.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreThreadInfo"><param name="Local" value="structTBaCoreThreadInfo.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCoreTimeStamp"><param name="Local" value="structTBaCoreTimeStamp.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaLogInfo"><param name="Local" value="structTBaLogInfo.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaLogOptions"><param name="Local" value="structTBaLogOptions.html"><param name="ImageNumber" value="11"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaPiBoard"><param name="Local" value="structTBaPiBoard.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="THwPiBoard"><param name="Local" value="structTHwPiBoard.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcArg"><param name="Local" value="unionTOsIpcArg.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcFunArg"><param name="Local" value="structTOsIpcFunArg.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegFun"><param name="Local" value="structTOsIpcRegFun.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVar"><param name="Local" value="structTOsIpcRegVar.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVarOut"><param name="Local" value="structTOsIpcRegVarOut.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskOpts"><param name="Local" value="structTOsProcCtrlTaskOpts.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskStats"><param name="Local" value="structTOsProcCtrlTaskStats.html"><param name="ImageNumber" value="11"></OBJECT>
     </UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Class Members"><param name="Local" value="functions.html"><param name="ImageNumber" value="1"></OBJECT>
     <UL>
@@ -186,38 +231,6 @@
         </UL>
         <UL>
         </UL>
-      </UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom.h"><param name="Local" value="BaCom_8h.html"><param name="ImageNumber" value="1"></OBJECT>
-      <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BACOM_SERIALDEV"><param name="Local" value="BaCom_8h.html#a560d10625971945890a829c2cfd32769"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaComHdl"><param name="Local" value="BaCom_8h.html#a9ac1d442bdbe734ad6aac5974f37e4ad"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaComSerHdl"><param name="Local" value="BaCom_8h.html#abd28efcbb112d949c065c93b9496f281"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaCom1wReadFun"><param name="Local" value="BaCom_8h.html#add8b012b9350e6336e8bc815a3b732d2"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaComBaud"><param name="Local" value="BaCom_8h.html#a0c2d065555852132f1e554bba19040db"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaComBaud"><param name="Local" value="BaCom_8h.html#a51ae55d0c5491b76a6070eb31390691d"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        </UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CInit"><param name="Local" value="BaCom_8h.html#a3464a36d770f73acc550282077141c80"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CExit"><param name="Local" value="BaCom_8h.html#ae5478e26b371c55c89b9d91f6ed3d1b4"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CSelectDev"><param name="Local" value="BaCom_8h.html#a9a75fa558afeb9f0bcde9acbb03bca1c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CFuncs"><param name="Local" value="BaCom_8h.html#a376b66c93597284146ed488dc63495d7"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CRead8"><param name="Local" value="BaCom_8h.html#ad9092f258ac9af11ca5b6f4f2603978a"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CReadReg8"><param name="Local" value="BaCom_8h.html#ad68dc1207377371300d4a97fd5f86a8a"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CReadReg16"><param name="Local" value="BaCom_8h.html#a5f55665f43f303f6320e1fd2e3cea653"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CWrite8"><param name="Local" value="BaCom_8h.html#a7f608fffc8055e230d59c9a77baea034"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CWriteReg8"><param name="Local" value="BaCom_8h.html#a17c24c471792cb9e94bd266a86b41bf8"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComI2CWriteReg16"><param name="Local" value="BaCom_8h.html#a803f2ca92c372c1826625120f1b8f0aa"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WInit"><param name="Local" value="BaCom_8h.html#a36457e41594d45b408d50a9dd23866e2"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WExit"><param name="Local" value="BaCom_8h.html#a1db343e7949ded79fd54ed5c49dfbdfa"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetDevices"><param name="Local" value="BaCom_8h.html#a17f4dcfdde9d9a2a0b2c88151b744706"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WRdAsync"><param name="Local" value="BaCom_8h.html#a624dc3c42afb27ed7ad9514ab4cc8485"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetTemp"><param name="Local" value="BaCom_8h.html#aead9e89e6d443d5cdfdf0f5f0b7489ec"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCom1WGetValue"><param name="Local" value="BaCom_8h.html#abe2197503642d4517de5445e652e4ead"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerInit"><param name="Local" value="BaCom_8h.html#afd029cee32185ec1613ba18b144439a2"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerExit"><param name="Local" value="BaCom_8h.html#a607a0ab43460b1e999519a8b6697e7f2"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerPutC"><param name="Local" value="BaCom_8h.html#a6e2bd92d46d4f9326dbccc3f25408fcd"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerPend"><param name="Local" value="BaCom_8h.html#a5763d9526e6dc78f324391e4a17b4d36"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaComSerGetC"><param name="Local" value="BaCom_8h.html#aced95b335f1d9c05e7b3c84427cd9949"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaCore.h"><param name="Local" value="BaCore_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
@@ -290,59 +303,6 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="FILE_NAME_"><param name="Local" value="BaGenMacros_8h.html#a633384e5d5fa26e07db9e7d078b06117"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="TIME_FUN_"><param name="Local" value="BaGenMacros_8h.html#a8170837187d85e164f0c7c58c7ce5e89"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="SWAP"><param name="Local" value="BaGenMacros_8h.html#af94e4e21ed04253852b7d127965b5801"><param name="ImageNumber" value="11"></OBJECT>
-      </UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpio.h"><param name="Local" value="BaGpio_8h.html"><param name="ImageNumber" value="1"></OBJECT>
-      <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaGpio"><param name="Local" value="classIBaGpio.html"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="InitHWPWM"><param name="Local" value="classIBaGpio.html#af8f837eef2a5db810723753d2ddfec0b"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="ExitHWPWM"><param name="Local" value="classIBaGpio.html#a0a1ef586b8d8786802b4535709dfd288"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetClkHWPWM"><param name="Local" value="classIBaGpio.html#a598f466d00fe7f82b620e1b22afbd599"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="CleanUp"><param name="Local" value="classIBaGpio.html#a2567239d643262d9c595d4bf9f435957"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetInp"><param name="Local" value="classIBaGpio.html#a611ac27d6c3bb62ceed41ea2c903dd1a"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetOut"><param name="Local" value="classIBaGpio.html#af5835f618c2a102d8091095a6312a6e4"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetAlt"><param name="Local" value="classIBaGpio.html#a5baae78354a9c3b260f15a9e4c7b04b1"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Set"><param name="Local" value="classIBaGpio.html#a042a9a7fdb061734786cfb4c44850d2d"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Reset"><param name="Local" value="classIBaGpio.html#a1cf812d8ade23b42610bef90080ad0da"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Get"><param name="Local" value="classIBaGpio.html#a8c5e199fd9b74a7350dd81f6d9b21f37"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="StartHWPWM"><param name="Local" value="classIBaGpio.html#a4e596e2cb442f0cac35f3ae4c13145de"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetHWPWMDuCy"><param name="Local" value="classIBaGpio.html#aac3d2a18c5d440814044695ee20341b5"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="StopHWPWM"><param name="Local" value="classIBaGpio.html#ab138b536d15b0ad67b6afa24e0917bf1"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWM"><param name="Local" value="classIBaGpio.html#addfdcd925b81bb2223848b566fd79926"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMDuCy"><param name="Local" value="classIBaGpio.html#ac2c80caf2b5bed3157a9612d4aea2bbb"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWM"><param name="Local" value="classIBaGpio.html#adcecff5f384ecfc53860ad25ff6b078e"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWMSleepingLED"><param name="Local" value="classIBaGpio.html#a1cac50af16367c2f1a0a1c2348f11798"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMSleepingLED"><param name="Local" value="classIBaGpio.html#ab1fe03939b7c54bef2867af7902732a4"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWMSleepingLED"><param name="Local" value="classIBaGpio.html#a6e9d69322514503ed6888873f8070e50"><param name="ImageNumber" value="11"></OBJECT>
-        </UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaGpio"><param name="Local" value="BaGpio_8h.html#aa287029c6ab2b66092b8e3b35ba41cb2"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaGpioSWPWMHdl"><param name="Local" value="BaGpio_8h.html#a0278073ad2b28a3a007b85f4b7e1cdb7"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaGpioHWPWMMode"><param name="Local" value="BaGpio_8h.html#abbc2af93a4290ff12e2e26ce87b86810"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaGpioHWPWMMode"><param name="Local" value="BaGpio_8h.html#a63be35fa967e6932fc65444ce4a97f1f"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaGpioHWPWMMode_MarkedSpace"><param name="Local" value="BaGpio_8h.html#a63be35fa967e6932fc65444ce4a97f1fa9adbab6b5a0d53ddf3fc7bf36763f404"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaGpioHWPWMMode_Balanced"><param name="Local" value="BaGpio_8h.html#a63be35fa967e6932fc65444ce4a97f1fa5cb71a1a36c39d389b036c51dbbf3e36"><param name="ImageNumber" value="11"></OBJECT>
-        </UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioInit"><param name="Local" value="BaGpio_8h.html#ac45f705d6a118b9a6906eb4c2ead28e5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioExit"><param name="Local" value="BaGpio_8h.html#a4e73325028e7dc07512de8bc365f2aa5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioInitHWPWM"><param name="Local" value="BaGpio_8h.html#a7410dc8bd492a08566f8dce8f6d19409"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioExitHWPWM"><param name="Local" value="BaGpio_8h.html#a03c0e46ed47943fea8e4693d0d779746"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioSetClkHWPWM"><param name="Local" value="BaGpio_8h.html#a4212de0e0d110fc9c98bb0a03f91c720"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioCleanUp"><param name="Local" value="BaGpio_8h.html#a1ff6ed95e15557ca3cc90f3339a94ccb"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioSetInp"><param name="Local" value="BaGpio_8h.html#abbd38fa98845cf4593d50914e80163ec"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioSetOut"><param name="Local" value="BaGpio_8h.html#ade291c254be8b78a55e7e4cbd67dc280"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioSetAlt"><param name="Local" value="BaGpio_8h.html#a4e3556c9f680a78d0d64c055278e4757"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioSet"><param name="Local" value="BaGpio_8h.html#a19bd984edf2725c2ba9143cd72a209ce"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioReset"><param name="Local" value="BaGpio_8h.html#a07a6c673d058de591cbbb1a204087b1c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioGet"><param name="Local" value="BaGpio_8h.html#a33c51c0d60162284541644ab9b253728"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioStartHWPWM"><param name="Local" value="BaGpio_8h.html#a8cb36a42d8174d7feec21e7efe23a66e"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioResetHWPWMDuCy"><param name="Local" value="BaGpio_8h.html#ac77888349ea2d6f446df57ee9805f859"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioStopHWPWM"><param name="Local" value="BaGpio_8h.html#a03dc82924acee9df4ac55b298e549dfb"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioStartSWPWM"><param name="Local" value="BaGpio_8h.html#aad89a86e462d6c700eb0f26a93d5c690"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioResetSWPWMDuCy"><param name="Local" value="BaGpio_8h.html#ab2f6e0401076586a6f4b6d5fe7902b93"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaGpioStopSWPWM"><param name="Local" value="BaGpio_8h.html#a79b33d8a85223b99b6f6ad6d2fa6edc9"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaGpioCreate"><param name="Local" value="BaGpio_8h.html#aebd32f84c3ed5166ee0f1bb99589b154"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaGpioDelete"><param name="Local" value="BaGpio_8h.html#a55b89951cd1565097e61c2f1eadfc948"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaIniParse.h"><param name="Local" value="BaIniParse_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
@@ -478,71 +438,12 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaMsgCreate"><param name="Local" value="BaMsg_8h.html#a4abd8e9092520542acb0a246d1454c67"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="IBaMsgDestroy"><param name="Local" value="BaMsg_8h.html#a051e0750bf7aaa7339cffe55253dee36"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProc.h"><param name="Local" value="BaProc_8h.html"><param name="ImageNumber" value="1"></OBJECT>
-      <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BAPROC_SHORTNAMELEN"><param name="Local" value="BaProc_8h.html#a3c9a9ad2caaae2472761064235cbd62f"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BAPROC_FULLNAMELEN"><param name="Local" value="BaProc_8h.html#a71a01cc9c903abdd1e44eba81d7d8b12"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetOwnShortName"><param name="Local" value="BaProc_8h.html#ad46d33c7f014cf825241bc7095b9737b"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetOwnFullName"><param name="Local" value="BaProc_8h.html#a73fc3532099b1f6d8ec26a69d065bca7"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetPIDName"><param name="Local" value="BaProc_8h.html#a73d2aefbd3859030073bc2bbab6de07f"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcWriteCtrlTaskPidFile"><param name="Local" value="BaProc_8h.html#a667375fe0a60e74e7381f89d355e7401"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcReadCtrlTaskPidFile"><param name="Local" value="BaProc_8h.html#a524fd9c92965cdab16be46d9b8551f1c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcDelCtrlTaskPidFile"><param name="Local" value="BaProc_8h.html#a236a46d6e33d23942605b54b9b4c1a21"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcWriteOwnPidFile"><param name="Local" value="BaProc_8h.html#a482d93d161a58d213b2e0afb47adde14"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcReadPidFile"><param name="Local" value="BaProc_8h.html#a96b3ee236e4731559f69eca02a5e3d88"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcDelPidFile"><param name="Local" value="BaProc_8h.html#a013102082e8b0f1c7148c1642194af6d"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcPidFileIsRunning"><param name="Local" value="BaProc_8h.html#afedb73be073c8b608dfff1bacbdbdc25"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcSetOwnPrio"><param name="Local" value="BaProc_8h.html#abcb0de82a78484519583fff8d18b7b50"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaProcGetOwnPrio"><param name="Local" value="BaProc_8h.html#a98f2e5bacc720d9d3ce9a666a890de6b"><param name="ImageNumber" value="11"></OBJECT>
-      </UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="BaRPi.h"><param name="Local" value="BaRPi_8h.html"><param name="ImageNumber" value="1"></OBJECT>
-      <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaPiBoard"><param name="Local" value="structTBaPiBoard.html"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        </UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaPiModel"><param name="Local" value="BaRPi_8h.html#a23b1468e0349512c878aa4b98f17f039"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaPiBoard"><param name="Local" value="BaRPi_8h.html#ad422608f772eaf4c91c8e93802b58551"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="EBaPiModel"><param name="Local" value="BaRPi_8h.html#a5d3dc42f23e3106ebadbb152f5ad738b"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        </UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaPiGetBoardInfo"><param name="Local" value="BaRPi_8h.html#aa1bb60a827a50b4268f7b8f3baa799b5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaPiGetBoardModel"><param name="Local" value="BaRPi_8h.html#ada297b20e97f11dd23acf061a26fab09"><param name="ImageNumber" value="11"></OBJECT>
-      </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaseApi.h"><param name="Local" value="BaseApi_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskOpts"><param name="Local" value="structTBaApiCtrlTaskOpts.html"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structTBaApiCtrlTaskOpts.html#acca524319d638b833006dda8de72b33a"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="prio"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a6ecce6215aba4fe37a0cae7944d407d5"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="cyleTimeMs"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a4a2241999559f0924c70899e6c1e71f3"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="log"><param name="Local" value="structTBaApiCtrlTaskOpts.html#abb595fe7dc59ebd1ce4711ff59cc2034"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="init"><param name="Local" value="structTBaApiCtrlTaskOpts.html#aaf141541ca77bd40f2bb5fc2e5859fc9"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="initArg"><param name="Local" value="structTBaApiCtrlTaskOpts.html#ad3650f49b9a488c420c4c22da3ae1dda"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="update"><param name="Local" value="structTBaApiCtrlTaskOpts.html#aeb48d712d7cc744807975ec51cdf9f37"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="updateArg"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a596bfe867887a3d23e7888300708837c"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="exit"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a987242de0c1c39f97ff157c918ad7746"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="exitArg"><param name="Local" value="structTBaApiCtrlTaskOpts.html#a4b4f0d49fe18ab1bebd856f2d07f65e3"><param name="ImageNumber" value="11"></OBJECT>
-        </UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskStats"><param name="Local" value="structTBaApiCtrlTaskStats.html"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="imRunning"><param name="Local" value="structTBaApiCtrlTaskStats.html#a5991a4b35aec43477fee7d8634268e5e"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="updCnt"><param name="Local" value="structTBaApiCtrlTaskStats.html#a2d2fd92a156a13e4370b0780af633b4e"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="lastDurUs"><param name="Local" value="structTBaApiCtrlTaskStats.html#ad7f03c51dc4304d96c3a4800cdfe32ce"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="lastCycleUs"><param name="Local" value="structTBaApiCtrlTaskStats.html#af283fbcd6b2606313931d905a4b44f2a"><param name="ImageNumber" value="11"></OBJECT>
-        </UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskOpts"><param name="Local" value="BaseApi_8h.html#a948249cb0b015107c2cb5e88149b42cc"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="TBaApiCtrlTaskStats"><param name="Local" value="BaseApi_8h.html#ab5b91434be9ec71d18180600c490503b"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiInit"><param name="Local" value="BaseApi_8h.html#afd34d44879e18b4439f7758dc039e2e5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiExit"><param name="Local" value="BaseApi_8h.html#a94ed4f951d7c8059ecc76fb973c027a3"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiInitLoggerDef"><param name="Local" value="BaseApi_8h.html#a39fa5faacc955b4f2efb3fd0ea54be62"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiInitLogger"><param name="Local" value="BaseApi_8h.html#a67e6e46fba28f5337c7bfe6f8c15445d"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiExitLogger"><param name="Local" value="BaseApi_8h.html#a8ec0422be53a6b3d78c1fbd310372711"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiLogF"><param name="Local" value="BaseApi_8h.html#a1914573ea9bce1d0ebe2c6ed0ac0ec2b"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiStartCtrlTask"><param name="Local" value="BaseApi_8h.html#a60c99fae43923e540eaafa66bfe17508"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiStopCtrlTask"><param name="Local" value="BaseApi_8h.html#a55d72c35323e5ffaa7219d7fb54f4bf1"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiStartCtrlThread"><param name="Local" value="BaseApi_8h.html#a81ad517fcd3fbf12c5fc57273eb0ce94"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiStopCtrlThread"><param name="Local" value="BaseApi_8h.html#abf560df382cc0fa41c71a555a567befd"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="BaApiGetCtrlTaskStats"><param name="Local" value="BaseApi_8h.html#a2a738f0b607a8c4fb3b2bcfd0e4f5bcc"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaSwOsci.h"><param name="Local" value="BaSwOsci_8h.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
@@ -580,16 +481,17 @@
     <LI><OBJECT type="text/sitemap"><param name="Name" value="BaUtils.hpp"><param name="Local" value="BaUtils_8hpp.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="MkDir"><param name="Local" value="BaUtils_8hpp.html#a9e6346a9784d4de1dbda3c79ef8bb72b"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="CpFile2"><param name="Local" value="BaUtils_8hpp.html#ac4636cb3d87c93a0c666989f670f7680"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="CpFile"><param name="Local" value="BaUtils_8hpp.html#a500756f66ff45aaf311421e7f68a0070"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="Rename"><param name="Local" value="BaUtils_8hpp.html#ad729f83dfe589df3058696c6db6452c9"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="Size"><param name="Local" value="BaUtils_8hpp.html#a526ea62172fcaa4003dd437863c6604c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="DirSize"><param name="Local" value="BaUtils_8hpp.html#aafa79b524a4f13b6531cf79b1f73774e"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="Size"><param name="Local" value="BaUtils_8hpp.html#ada7d22f6e3458a9db589923cbacfbaca"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="DirSize"><param name="Local" value="BaUtils_8hpp.html#acfbdc7327ac781f0e3087eb03d37ef35"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="Exists"><param name="Local" value="BaUtils_8hpp.html#a73d165c90a00491cfe0b9ce3b5fe5c58"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="GetDirectory"><param name="Local" value="BaUtils_8hpp.html#aee6b101395e5f32a76b304aa765de13c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="GetFilename"><param name="Local" value="BaUtils_8hpp.html#a41d87786f4a43d64094624187ac90dca"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="GetFileExtension"><param name="Local" value="BaUtils_8hpp.html#a42b3acac9c048e45a531c9dc4be319f1"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="ChangeFileExtension"><param name="Local" value="BaUtils_8hpp.html#a70f965f0c97d211e1f91dc2f16e05195"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="Concatenate"><param name="Local" value="BaUtils_8hpp.html#a4038d1b6c1fb3beb13b50b68f54c652d"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="GetDirectory"><param name="Local" value="BaUtils_8hpp.html#a565903d233aae8655f38347e3bb0a551"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="GetFilename"><param name="Local" value="BaUtils_8hpp.html#a7285e10c066bb8fb44faf97b709ad8ed"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="GetFileExtension"><param name="Local" value="BaUtils_8hpp.html#a96f0d430e53152e28075df8445cc676c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ChangeFileExtension"><param name="Local" value="BaUtils_8hpp.html#a79ec43e1258100ad926c954d03ea06fb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="Concatenate"><param name="Local" value="BaUtils_8hpp.html#a2ef9e1a6ca9f3da675e9ed2362db0811"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaToNumber"><param name="Local" value="BaUtils_8hpp.html#a25c40b6a558aa8194365db78934a577e"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaFString"><param name="Local" value="BaUtils_8hpp.html#a42ed36ddc7c211af550ec7c7eb28738b"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="BaFString"><param name="Local" value="BaUtils_8hpp.html#a0f53b34a2fb1568c4af4d228bc4f8708"><param name="ImageNumber" value="11"></OBJECT>
@@ -607,6 +509,237 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="ICtrlPT1Create"><param name="Local" value="CtrlPT1_8h.html#a9d9a921d46fd96658cf333c0072da30f"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="ICtrlPT1Destroy"><param name="Local" value="CtrlPT1_8h.html#a1f793955cee55fbd1199341e7b751347"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="HwCom.h"><param name="Local" value="HwCom_8h.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HWCOM_SERIALDEV"><param name="Local" value="HwCom_8h.html#a7d70aa569d7bd83eda77b8f6afed7293"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="THwComHdl"><param name="Local" value="HwCom_8h.html#a1a20060734a5e952b508218cf1772f72"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="THwComSerHdl"><param name="Local" value="HwCom_8h.html#ae21883d5808698e0dd63798f7c3aab49"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="THwCom1wReadFun"><param name="Local" value="HwCom_8h.html#a7105d497341071b22d7c500056001c02"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwComBaud"><param name="Local" value="HwCom_8h.html#a6cf0c653d0f7ed834aa742e8001bccfb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwComBaud"><param name="Local" value="HwCom_8h.html#a2e7a52ac182e42cf2b259006fed97e65"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CInit"><param name="Local" value="HwCom_8h.html#ac060a9e652b427458813273086549aea"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CExit"><param name="Local" value="HwCom_8h.html#ad7b784b3ad8721365f2f7a72bc14a397"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CSelectDev"><param name="Local" value="HwCom_8h.html#aecac8fa7372a133b5fc7ae4cec3abdc6"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CFuncs"><param name="Local" value="HwCom_8h.html#a0c624b08aa8c2651109a8a8ac33f2728"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CRead8"><param name="Local" value="HwCom_8h.html#a149ed3dae346ed9f946b7935085a6127"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CReadReg8"><param name="Local" value="HwCom_8h.html#adda67755cbfa532769c143051a4d01de"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CReadReg16"><param name="Local" value="HwCom_8h.html#adfb547c2f589e0e4d70e85dafbfaee03"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CWrite8"><param name="Local" value="HwCom_8h.html#a570ddc70c8be8b4c20a186bf34cd92fc"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CWriteReg8"><param name="Local" value="HwCom_8h.html#abb0e8c24a41d28afed5db520db093e0b"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComI2CWriteReg16"><param name="Local" value="HwCom_8h.html#a86244a8d6ad15bc182a41b8a5c671d81"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwCom1WInit"><param name="Local" value="HwCom_8h.html#aa068ac85aee6a4bf0d32123c51db4203"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwCom1WExit"><param name="Local" value="HwCom_8h.html#a01bb7c79a1dd9e39aaa886252f9b33ff"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwCom1WGetDevices"><param name="Local" value="HwCom_8h.html#a24c2d69c55e2fa0020f5af296d403752"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwCom1WRdAsync"><param name="Local" value="HwCom_8h.html#aef0861437ad9961206cc044721c5db49"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwCom1WGetTemp"><param name="Local" value="HwCom_8h.html#a309f2fc27cad40ec1330d6ec32fa18a4"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwCom1WGetValue"><param name="Local" value="HwCom_8h.html#a30cc625985198dbdf1a251e1391d1164"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComSerInit"><param name="Local" value="HwCom_8h.html#a66f50d1e50f879c73a5b889faaabe8c8"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComSerExit"><param name="Local" value="HwCom_8h.html#aecc9fe0b506d4400c15738caad0e2f37"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComSerPutC"><param name="Local" value="HwCom_8h.html#ad0682a9c99cc65e350e8122642ce1d85"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComSerPend"><param name="Local" value="HwCom_8h.html#a59a4bf31bac72346514551c2cd84b039"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwComSerGetC"><param name="Local" value="HwCom_8h.html#a73cad3b3d776b3491a329ae68a6f481e"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpio.h"><param name="Local" value="HwGpio_8h.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="IHwGpio"><param name="Local" value="classIHwGpio.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="InitHWPWM"><param name="Local" value="classIHwGpio.html#ae383c9085032483c3e7edd50ae6b3989"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="ExitHWPWM"><param name="Local" value="classIHwGpio.html#a66811dfbca832afe93774dc50cff8579"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetClkHWPWM"><param name="Local" value="classIHwGpio.html#afe7c0f0224564e0c480199ef2f9518d8"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="CleanUp"><param name="Local" value="classIHwGpio.html#ac97639a59db6cddb63e8dc524ab45666"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetInp"><param name="Local" value="classIHwGpio.html#affe4037f33a1f87cae3223863ffb22d5"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetOut"><param name="Local" value="classIHwGpio.html#aa0b016b46e6dab258d70eebd925940ec"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetAlt"><param name="Local" value="classIHwGpio.html#a81bae8e12e617a82ca0a40d31b3d5972"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Set"><param name="Local" value="classIHwGpio.html#a0b68a9811ec5e825d40067410e914867"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Reset"><param name="Local" value="classIHwGpio.html#a3f2a363ba55761a88877e8f4dff44701"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Get"><param name="Local" value="classIHwGpio.html#a23b3d77fdae406d5fce9d3be3ea56363"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="StartHWPWM"><param name="Local" value="classIHwGpio.html#a5a6ed0cb7598db00ffd428d4bbf106c0"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetHWPWMDuCy"><param name="Local" value="classIHwGpio.html#a6d1faea477f22aebe70853f66d772bbe"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="StopHWPWM"><param name="Local" value="classIHwGpio.html#a54d4e297f8f7a250f0b2f548c7073e3d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWM"><param name="Local" value="classIHwGpio.html#a282a9b02f28edb2e97f705f38468ee5e"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMDuCy"><param name="Local" value="classIHwGpio.html#ad46ce55419ecdf5b43c3d3d59b3abf61"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWM"><param name="Local" value="classIHwGpio.html#a6cd73e781afe3232ce874685a14900d9"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="StartSWPWMSleepingLED"><param name="Local" value="classIHwGpio.html#ac62a0fbeb1836d7f512a964f92639bfb"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="ResetSWPWMSleepingLED"><param name="Local" value="classIHwGpio.html#a897e1e8f2dc07a57451f1d8286c50261"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="StopSWPWMSleepingLED"><param name="Local" value="classIHwGpio.html#a765a2ec2a649074f0cd9e90e8148fbf7"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="THwGpio"><param name="Local" value="HwGpio_8h.html#a79342b3f5f1b3529b13823fe63a3deb5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="THwGpioSWPWMHdl"><param name="Local" value="HwGpio_8h.html#a9e3ff52e6a3d5fbc88e19f35aa80a3eb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwGpioHWPWMMode"><param name="Local" value="HwGpio_8h.html#a1ae4eb00a17c927fafd7616aba658fc9"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwGpioHWPWMMode"><param name="Local" value="HwGpio_8h.html#a4f85e40afc7a7a55f67f869d4f304c94"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwGpioHWPWMMode_MarkedSpace"><param name="Local" value="HwGpio_8h.html#a4f85e40afc7a7a55f67f869d4f304c94ae33c11da943dd0769d7cd2b156b0a753"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwGpioHWPWMMode_Balanced"><param name="Local" value="HwGpio_8h.html#a4f85e40afc7a7a55f67f869d4f304c94aafcb08fd7ffe81a6e118ada3faba3747"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioInit"><param name="Local" value="HwGpio_8h.html#a1d968462f3edd712667b4f75ec44cfed"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioExit"><param name="Local" value="HwGpio_8h.html#acfcd28b73eb0f2e265e3b24b293e6590"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioInitHWPWM"><param name="Local" value="HwGpio_8h.html#a6d6615e21e0514b50da05923221e28db"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioExitHWPWM"><param name="Local" value="HwGpio_8h.html#a2c45dcfb516635d865b9bfbd88a53543"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioSetClkHWPWM"><param name="Local" value="HwGpio_8h.html#a252043f4a914351cb582fb93d0d74f5e"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioCleanUp"><param name="Local" value="HwGpio_8h.html#a3f1c2c0601070abb5a593ad580c941aa"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioSetInp"><param name="Local" value="HwGpio_8h.html#a5be4271de431da1d18256d7cd34115ef"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioSetOut"><param name="Local" value="HwGpio_8h.html#a6a24226f6f09aeb646c67dec3e574f2f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioSetAlt"><param name="Local" value="HwGpio_8h.html#acab9f0533e164e5478a04447fa054b75"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioSet"><param name="Local" value="HwGpio_8h.html#aceb592be77bc482f19c4262db9920805"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioReset"><param name="Local" value="HwGpio_8h.html#a3364842cffdcea651bbda71b58ea325c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioGet"><param name="Local" value="HwGpio_8h.html#ac1c476b89905c6510dd502fe92af2925"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioStartHWPWM"><param name="Local" value="HwGpio_8h.html#a04f13981c2033becc1435724957eb55d"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioResetHWPWMDuCy"><param name="Local" value="HwGpio_8h.html#a0028af6f42d0994bf0cfd88e5165c3cb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioStopHWPWM"><param name="Local" value="HwGpio_8h.html#a84766fbecb84246883ad037014379822"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioStartSWPWM"><param name="Local" value="HwGpio_8h.html#a8dc38f04b47f9cca01d5b9e08920c1e6"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioResetSWPWMDuCy"><param name="Local" value="HwGpio_8h.html#aed43687c444e5dd77c4fe6d137ee24eb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwGpioStopSWPWM"><param name="Local" value="HwGpio_8h.html#adde7229553ee1dfc0470b247722266d6"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="IHwGpioCreate"><param name="Local" value="HwGpio_8h.html#a3885c92d0b10ec67e5381eeea50c922f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="IHwGpioDelete"><param name="Local" value="HwGpio_8h.html#a7807c9116813f217fbff15c637faf538"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="HwPi.h"><param name="Local" value="HwPi_8h.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="THwPiBoard"><param name="Local" value="structTHwPiBoard.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="hardware"><param name="Local" value="structTHwPiBoard.html#a32e53d11dccfac9ae28822debd28ef62"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="revision"><param name="Local" value="structTHwPiBoard.html#abe65312b7ce78d83e1ad5a6ff9df38af"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="serial"><param name="Local" value="structTHwPiBoard.html#af2aef80ffd1eaafb84b486f5d65af706"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwPiModel"><param name="Local" value="HwPi_8h.html#a207a0326fb9f00babc835066e39eae43"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="THwPiBoard"><param name="Local" value="HwPi_8h.html#a6b78ef743e539c6bc87f7bced82ee878"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="EHwPiModel"><param name="Local" value="HwPi_8h.html#ad9df2c155fa597e3d0df4a41c93db250"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwPiGetBoardInfo"><param name="Local" value="HwPi_8h.html#af6873003c47fde98ababd741281ac18c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="HwPiGetBoardModel"><param name="Local" value="HwPi_8h.html#ad0036bc3563dbeb059fce6e25425fea4"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="OsDef.h"><param name="Local" value="OsDef_8h.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OSIPC_MSGDATASZ"><param name="Local" value="OsDef_8h.html#a8de09786e495194e7a4fbff013c63de1"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpc.h"><param name="Local" value="OsIpc_8h.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcInitSvr"><param name="Local" value="OsIpc_8h.html#a5f0cfa22531ad906fb141596fa982d72"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcSvrRunning"><param name="Local" value="OsIpc_8h.html#a4a45dd21f342330504fadbc1b0edcc6f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcExitSvr"><param name="Local" value="OsIpc_8h.html#a5c2d92e6e6d3b88a04f51c1b783c71b5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcInitClnt"><param name="Local" value="OsIpc_8h.html#a7467462b65c133e2ef1b92057706ce20"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcExitClnt"><param name="Local" value="OsIpc_8h.html#a1325288fa31ffe343e5f0b3813d29a55"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcCallFun"><param name="Local" value="OsIpc_8h.html#ac531972cde5cb18ae90a859e12b9cc09"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcCallVar"><param name="Local" value="OsIpc_8h.html#adadc3247830475fb8bebb7ec5f39d565"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistry.h"><param name="Local" value="OsIpcRegistry_8h.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVar"><param name="Local" value="structTOsIpcRegVar.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="pVar"><param name="Local" value="structTOsIpcRegVar.html#ab90584847b3e4f4bdf663ab55cc16662"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="sz"><param name="Local" value="structTOsIpcRegVar.html#a75571e76870b0226aa864f16eee31298"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="wr"><param name="Local" value="structTOsIpcRegVar.html#a5fd400d6adcb70017082bac6a488ba89"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegFun"><param name="Local" value="structTOsIpcRegFun.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="pFun"><param name="Local" value="structTOsIpcRegFun.html#a5f832c2518de98fa144f23d5cc56b82b"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="type"><param name="Local" value="structTOsIpcRegFun.html#a90cf4b78efb7a0be08c9abd8c3c9a02c"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVarOut"><param name="Local" value="structTOsIpcRegVarOut.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="i"><param name="Local" value="structTOsIpcRegVarOut.html#a90eba908f867d96d6722f3dc62f03bce"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="sz"><param name="Local" value="structTOsIpcRegVarOut.html#aadc42a240380abc6b62eb41bfb7e1c09"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcArg"><param name="Local" value="unionTOsIpcArg.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="i"><param name="Local" value="unionTOsIpcArg.html#a1ecdf39bb385368b65b70f56b1ba4af1"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcFunArg"><param name="Local" value="structTOsIpcFunArg.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="a"><param name="Local" value="structTOsIpcFunArg.html#a3a3b365a1895aa5a420050557211db9f"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="IOsIpcRegistry"><param name="Local" value="classIOsIpcRegistry.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="RegisterFun"><param name="Local" value="classIOsIpcRegistry.html#aa0a7789bc4b73ba3fd9ffc95c36b211d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="UnregisterFun"><param name="Local" value="classIOsIpcRegistry.html#a8edb89cab48ee05564504402c9e18481"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="ClearFunRegistry"><param name="Local" value="classIOsIpcRegistry.html#a6b4ffa30ef275d63227dbd5c5d586802"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="CallFun"><param name="Local" value="classIOsIpcRegistry.html#af123e37a919ea2d2026976857bdb3199"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="RegisterVar"><param name="Local" value="classIOsIpcRegistry.html#a754f5c04c6b8980d072517ef22a85613"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="UnregisterVar"><param name="Local" value="classIOsIpcRegistry.html#ac34e3769178b6f9c05e57334045ffe18"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="ClearVarRegistry"><param name="Local" value="classIOsIpcRegistry.html#ac84f55f0f6f5469e6333270c17a8450c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="CallVar"><param name="Local" value="classIOsIpcRegistry.html#a9e912067bedaecd35cf5ca8dbea54f12"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="SetVar"><param name="Local" value="classIOsIpcRegistry.html#a5588474e7ba19e8cc8c29a0c6f295d42"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OSIPC_MAXARG"><param name="Local" value="OsIpcRegistry_8h.html#a0c51094eb9214b8ed7d1af23581342e1"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegistryHdl"><param name="Local" value="OsIpcRegistry_8h.html#a1c94418df65da16c54f60acee256fde2"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVar"><param name="Local" value="OsIpcRegistry_8h.html#ac92b4110339600517d1ae6d07b13f210"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegFun"><param name="Local" value="OsIpcRegistry_8h.html#a77c4f25a214ca9182c1787228d68085b"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcRegVarOut"><param name="Local" value="OsIpcRegistry_8h.html#a64434e930a85b2b4894f2de836445635"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcArg"><param name="Local" value="OsIpcRegistry_8h.html#a18ced6315ff086dd4c3a725c6b4369ad"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsIpcFunArg"><param name="Local" value="OsIpcRegistry_8h.html#a7a47893c9fe1388763b4791e39dbdb28"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalInit"><param name="Local" value="OsIpcRegistry_8h.html#ac34b841424dd4676b10af8d2e5c60e66"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalExit"><param name="Local" value="OsIpcRegistry_8h.html#ab3de3a12a3bdda511b979ea88094399b"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalRegisterFun"><param name="Local" value="OsIpcRegistry_8h.html#ad303ba019dd1ad67d61b20a6556fbdac"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalUnregisterFun"><param name="Local" value="OsIpcRegistry_8h.html#a8ac4a6e5653cf658c689e5100c373469"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalCallFun"><param name="Local" value="OsIpcRegistry_8h.html#a441f3dcd23f594852da3ff690e978703"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalClearFunReg"><param name="Local" value="OsIpcRegistry_8h.html#ae89f3cb33a24f78c5f7ad9ec6cb72625"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalRegisterVar"><param name="Local" value="OsIpcRegistry_8h.html#a75ce7dfb37d6a57925d8e3e484882930"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalUnregisterVar"><param name="Local" value="OsIpcRegistry_8h.html#a2cfdcf710ceb3855758468d4d63efd5e"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalClearVarReg"><param name="Local" value="OsIpcRegistry_8h.html#af8f81398a2211e8131cf3412ee26a372"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalCallVar"><param name="Local" value="OsIpcRegistry_8h.html#a93fabdc0b7ac4cda2badd83df748d83f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryLocalSetVar"><param name="Local" value="OsIpcRegistry_8h.html#a1dd8b62efad877dc46657297dab64729"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryCreate"><param name="Local" value="OsIpcRegistry_8h.html#a4dd6fc784a414be479d9e4293a6d7dfb"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryDestroy"><param name="Local" value="OsIpcRegistry_8h.html#a8dbb22e9c419074e256ff57fd16dd521"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryRegisterFun"><param name="Local" value="OsIpcRegistry_8h.html#aaad20b88f417f90f4c90aa6a43c445fa"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryUnregisterFun"><param name="Local" value="OsIpcRegistry_8h.html#a0451225ef9ed1ed1efc80f4a5836ad39"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryClearFunReg"><param name="Local" value="OsIpcRegistry_8h.html#a6c53d0c471be96ffa705e7642fad540a"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryCallFun"><param name="Local" value="OsIpcRegistry_8h.html#a43a7b0a2b844e33f2f26a7742dd800d2"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryRegisterVar"><param name="Local" value="OsIpcRegistry_8h.html#a4af481ea6ea987fca2f213cdb5685596"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryUnregisterVar"><param name="Local" value="OsIpcRegistry_8h.html#a1093a5ac25dcd073d4f2c1db44d5d82f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryClearVarReg"><param name="Local" value="OsIpcRegistry_8h.html#a481d0ee428275ab4b45528e4650cc19d"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistryCallVar"><param name="Local" value="OsIpcRegistry_8h.html#aeff6010871511a5b07b80b212ac64727"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsIpcRegistrySetVar"><param name="Local" value="OsIpcRegistry_8h.html#a53676e32b8de5d93de6368557b4aede5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="IOsIpcRegistryCreate"><param name="Local" value="OsIpcRegistry_8h.html#a53af1c8c32178e3952910e02a47dfc61"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="IOsIpcRegistryDestroy"><param name="Local" value="OsIpcRegistry_8h.html#a97acd0c8e1c9d0200ead23de62667264"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProc.h"><param name="Local" value="OsProc_8h.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskOpts"><param name="Local" value="structTOsProcCtrlTaskOpts.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a4ca14d44ee20af9f8e34aa0c50ef4ef2"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="prio"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a1e7c435cfa5d0f275855f7fb403ec0e1"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="cyleTimeUs"><param name="Local" value="structTOsProcCtrlTaskOpts.html#aecdcb6fe934bdf0c8333a7cf69d771e8"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="log"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a6e6097af89a05b7fbf2deb6ea2a09efe"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="init"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a81e319c1f890c3cc46eb92a89bcaf0d7"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="initArg"><param name="Local" value="structTOsProcCtrlTaskOpts.html#ae99b61db863e33a0a730d0453226543d"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="update"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a0e0820ca8344f53abbdd74e19ae23ae2"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="updateArg"><param name="Local" value="structTOsProcCtrlTaskOpts.html#acc3145ad90230f453520f263ed81c2f9"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="exit"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a5ab98d06a1e8e23dbce548e8303aa6ac"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="exitArg"><param name="Local" value="structTOsProcCtrlTaskOpts.html#a19c3110bcab4a63f42ac4b080f2786bb"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskStats"><param name="Local" value="structTOsProcCtrlTaskStats.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="imRunning"><param name="Local" value="structTOsProcCtrlTaskStats.html#a010696a1e99efa5bb7b1c38ad3c72dcb"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="updCnt"><param name="Local" value="structTOsProcCtrlTaskStats.html#ad4a3b8c19e030c383123d44a46414ceb"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="lastDurUs"><param name="Local" value="structTOsProcCtrlTaskStats.html#a0f0c5b7cd8ac63e69aec6dd1866c744a"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="lastCycleUs"><param name="Local" value="structTOsProcCtrlTaskStats.html#a1e97d1091f02afc81a234df2f375beda"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BAPROC_SHORTNAMELEN"><param name="Local" value="OsProc_8h.html#a3c9a9ad2caaae2472761064235cbd62f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="BAPROC_FULLNAMELEN"><param name="Local" value="OsProc_8h.html#a71a01cc9c903abdd1e44eba81d7d8b12"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskOpts"><param name="Local" value="OsProc_8h.html#a87ae443f2398b9f3173b316b4f961caa"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="TOsProcCtrlTaskStats"><param name="Local" value="OsProc_8h.html#aff1c6efcd8fb6e299158f053b760541c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcGetOwnShortName"><param name="Local" value="OsProc_8h.html#a1044416a41157cac2592e9a7277400f5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcGetOwnFullName"><param name="Local" value="OsProc_8h.html#afe1434359100473d95966f4060ba2ca6"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcGetPIDName"><param name="Local" value="OsProc_8h.html#ab3c43ccf734859d464de5c93156354e5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcWriteCtrlTaskPidFile"><param name="Local" value="OsProc_8h.html#a645fb158fc19e5bc02e984fc828f7a74"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcReadCtrlTaskPidFile"><param name="Local" value="OsProc_8h.html#a1a6971924f2b353bf540f1cc4a5446ec"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcDelCtrlTaskPidFile"><param name="Local" value="OsProc_8h.html#ad39d08d9f93205526e35b1610ea4b3fe"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcWriteOwnPidFile"><param name="Local" value="OsProc_8h.html#ae689e588cf2c6b96aef2f8a052aa460c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcReadPidFile"><param name="Local" value="OsProc_8h.html#a6ecd7eb88cfa9fadb6ab763a4b79ff15"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcDelPidFile"><param name="Local" value="OsProc_8h.html#a2dc3b112736017c1c91a513351fcd64c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcPidFileIsRunning"><param name="Local" value="OsProc_8h.html#aec3bd56802c2bc2e5d91f7425c0d8ff5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcCtrlTaskPidIsRunning"><param name="Local" value="OsProc_8h.html#a14bd9fb21c2edb761031d68c39968312"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcSetOwnPrio"><param name="Local" value="OsProc_8h.html#a2321955f4d81d086d039585d8a2ea6d5"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcGetOwnPrio"><param name="Local" value="OsProc_8h.html#a0e66f1a23adfa5a52bbcc1b2d645a375"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcStartCtrlTask"><param name="Local" value="OsProc_8h.html#a79a3fe579f61f739b82ee0f2f8b65b3f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcStopCtrlTask"><param name="Local" value="OsProc_8h.html#a7628a941584596120671fac8606dda7f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcStartCtrlThread"><param name="Local" value="OsProc_8h.html#ad1a910801786e6a8f563d5d1df40e815"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcStopCtrlThread"><param name="Local" value="OsProc_8h.html#a80e655878a8fc84483dec61218a535cd"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcGetCtrlTaskStats"><param name="Local" value="OsProc_8h.html#a09dcf5f4bce2860e73201670488eb100"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="OsProcGetCtrlThreadStats"><param name="Local" value="OsProc_8h.html#aecf432ee68eef3a1d748f6e791e403a4"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
     </UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="File Members"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
     <UL>
@@ -617,9 +750,11 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="c"><param name="Local" value="globals_c.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="e"><param name="Local" value="globals_e.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="f"><param name="Local" value="globals_f.html"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="h"><param name="Local" value="globals_h.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="i"><param name="Local" value="globals_i.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="l"><param name="Local" value="globals_l.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="m"><param name="Local" value="globals_m.html"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="o"><param name="Local" value="globals_o.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="r"><param name="Local" value="globals_r.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="s"><param name="Local" value="globals_s.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="t"><param name="Local" value="globals_t.html"><param name="ImageNumber" value="11"></OBJECT>
