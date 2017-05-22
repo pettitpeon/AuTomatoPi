@@ -25,20 +25,22 @@ public:
 
    CPPUNIT_TEST_SUITE(CBaCoreTest);
 
+   CPPUNIT_TEST(Init);
    CPPUNIT_TEST(SleepAndTiming);
    CPPUNIT_TEST(TimeStamps);
    CPPUNIT_TEST(ThreadsNiceWeather);
    CPPUNIT_TEST(ThreadsSpecialCases);
-   CPPUNIT_TEST(PidFiles);
+   CPPUNIT_TEST(Exit);
 
    CPPUNIT_TEST_SUITE_END();
 
 public:
+   void Init();
    void SleepAndTiming();
    void TimeStamps();
    void ThreadsNiceWeather();
    void ThreadsSpecialCases();
-   void PidFiles();
+   void Exit();
 };
 
 

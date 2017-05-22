@@ -53,17 +53,6 @@ static bool   sExtLogger = false;
  */
 
 //
-TBaBoolRC BaApiInit() {
-   return eBaBoolRC_Success;
-}
-
-
-//
-TBaBoolRC BaApiExit() {
-   return eBaBoolRC_Success;
-}
-
-//
 TBaBoolRC BaApiInitLoggerDef(const char* name) {
    if (spLog) {
       return eBaBoolRC_Success;

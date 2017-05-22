@@ -40,7 +40,7 @@ typedef struct TOsProcCtrlTaskOpts {
    const char* name; ///< Task name
    EBaCorePrio prio; ///< Task priority
    uint32_t cyleTimeUs; ///< Desired cycle time in ms
-   TBaLogDesc log; ///< The logger descriptor union
+   TBaLogDesc log; ///< The logger descriptor union (optional). If null def is used
 
    // Control task callbacks
    TBaBoolRC (*init)(void*); ///< Optional initialization function
@@ -194,7 +194,7 @@ EBaCorePrio OsProcGetOwnPrio();
  *  could initialize it in the init() callback. The minimum cycle time is 2ms
  *  @return Error or success
  */
-TBaBoolRC OsApiStartCtrlTask(
+TBaBoolRC OsProcStartCtrlTask(
       const TOsProcCtrlTaskOpts* pOpts ///< [in] Task options
       );
 
@@ -202,14 +202,14 @@ TBaBoolRC OsApiStartCtrlTask(
 /** Stops the one and only control task
  *  @return Error or success
  */
-TBaBoolRC OsApiStopCtrlTask();
+TBaBoolRC OsProcStopCtrlTask();
 
 /******************************************************************************/
 /** Starts the one and only control thread as a new thread. This is mainly for
  *  debugging and development. For proper releases use #BaApiStartCtrlTask().
  *  @return Error or success
  */
-TBaBoolRC OsApiStartCtrlThread(
+TBaBoolRC OsProcStartCtrlThread(
       const TOsProcCtrlTaskOpts* pOpts ///< [in] Task options
       );
 
@@ -217,14 +217,14 @@ TBaBoolRC OsApiStartCtrlThread(
 /** Stops the one and only control thread
  *  @return Error or success
  */
-TBaBoolRC OsApiStopCtrlThread();
+TBaBoolRC OsProcStopCtrlThread();
 
 /******************************************************************************/
 /** Gets the task statistics. This is mostly meant to be called within the
  *  @c update() function so it gets the statistics from the control task
  *  @return Error or success
  */
-TBaBoolRC OsApiGetCtrlTaskStats(
+TBaBoolRC OsProcGetCtrlTaskStats(
       TOsProcCtrlTaskStats *pStats  ///< [out] Statistics
       );
 
@@ -233,7 +233,7 @@ TBaBoolRC OsApiGetCtrlTaskStats(
  *  development. For proper releases use @c CtrlTask functions.
  *  @return Error or success
  */
-TBaBoolRC OsApiGetCtrlThreadStats(
+TBaBoolRC OsProcGetCtrlThreadStats(
       TOsProcCtrlTaskStats *pStats  ///< [out] Statistics
       );
 //@}

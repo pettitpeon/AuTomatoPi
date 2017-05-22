@@ -17,7 +17,7 @@
  #include <winbase.h>
 #endif
 
-#include <iostream> // uncomment for debugging
+//#include <iostream> // uncomment for debugging
 #include <fstream>      // std::ifstream
 #include <chrono>
 #include <thread>
@@ -231,14 +231,11 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
       pDesc->pArg->exitTh = eBaBool_true;
 
       // Wait for the thread to end with a timeout
-      // TODELETE
-      auto start = STEADYCLK_::now();
       if (pDesc->cv.wait_for(lck, CHRONO_::milliseconds(timeoutMs),
             // [cap list] (args) { body }
                 [&pDesc] () { return pDesc->status == eFinished; })
           ) {
-         std::chrono::duration<double> dur = (STEADYCLK_::now() - start);
-         std::cout  << ": " << dur.count() << " s" << std::endl;
+         TRACE_("Thread(%s:%i) joined", pDesc->name.c_str(), pDesc->tid);
          pDesc->pThread->join();
       } else {
          // Detach it, let it live, and release the memory
@@ -256,8 +253,7 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
          }
       }
 
-      // todo: This finishes the thread? I do not think so, but pThread is used
-      // later on so it crashes
+      // pThread is used later. This is why it is inside the lock
       delete pDesc->pThread;
       pDesc->pThread = 0;
    }

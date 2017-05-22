@@ -205,14 +205,14 @@ void COsProcTest::ControlThread() {
    CPPUNIT_ASSERT(BaApiExitLogger());
 
    uint64_t slpMs = 500;
-   CPPUNIT_ASSERT(OsApiStartCtrlThread(&sOpts));
+   CPPUNIT_ASSERT(OsProcStartCtrlThread(&sOpts));
    BaCoreMSleep(slpMs);
-   CPPUNIT_ASSERT(!OsApiGetCtrlThreadStats(0));
-   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
+   CPPUNIT_ASSERT(!OsProcGetCtrlThreadStats(0));
+   CPPUNIT_ASSERT(OsProcGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
 
-   CPPUNIT_ASSERT(OsApiStopCtrlThread());
-   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
+   CPPUNIT_ASSERT(OsProcStopCtrlThread());
+   CPPUNIT_ASSERT(OsProcGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 
    // Logger should not be set after stop
@@ -237,12 +237,12 @@ void COsProcTest::ControlTask() {
 
 
 #ifdef __WIN32
-   CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
+   CPPUNIT_ASSERT(!OsProcStartCtrlTask(&sOpts));
    BaCoreMSleep(slpMs);
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
-   CPPUNIT_ASSERT(!OsApiStopCtrlTask());
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(!OsProcStopCtrlTask());
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 #else
 
@@ -250,11 +250,11 @@ void COsProcTest::ControlTask() {
    CPPUNIT_ASSERT(!OsProcCtrlTaskPidIsRunning());
 
    // Start the control task
-   CPPUNIT_ASSERT(OsApiStartCtrlTask(&sOpts));
+   CPPUNIT_ASSERT(OsProcStartCtrlTask(&sOpts));
    BaCoreMSleep(slpMs);
 
    // This is the parent, but it knows the child is running
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
 
    // Check that PID file is correct
@@ -266,10 +266,10 @@ void COsProcTest::ControlTask() {
    ASS_EQ(tskName, std::string(buf));
 
    // Should not start because the control task is running
-   CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
+   CPPUNIT_ASSERT(!OsProcStartCtrlTask(&sOpts));
 
-   CPPUNIT_ASSERT(OsApiStopCtrlTask());
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsProcStopCtrlTask());
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
    BaCoreMSleep(slpMs * 5);
    ASS(!OsProcCtrlTaskPidIsRunning());
@@ -301,16 +301,16 @@ void COsProcTest::ControlThreadOvertime() {
    uint64_t slpUs = sOpts.cyleTimeUs * 2; // 80ms
 
    // Start the control thread
-   CPPUNIT_ASSERT(OsApiStartCtrlThread(&sOpts));
+   CPPUNIT_ASSERT(OsProcStartCtrlThread(&sOpts));
    BaCoreUSleep(slpUs);
 
    // The parent process knows that the thread is running
-   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
+   CPPUNIT_ASSERT(OsProcGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
 
    // Stop the thread
-   ASS(OsApiStopCtrlThread());
-   CPPUNIT_ASSERT(OsApiGetCtrlThreadStats(&stats));
+   ASS(OsProcStopCtrlThread());
+   CPPUNIT_ASSERT(OsProcGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 
    // Logger should not be set after stop
@@ -337,30 +337,30 @@ void COsProcTest::ControlTaskOvertime() {
    uint64_t slpUs = sOpts.cyleTimeUs * 2; // 80
 
 #ifdef __WIN32
-   CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
+   CPPUNIT_ASSERT(!OsProcStartCtrlTask(&sOpts));
    BaCoreUSleep(slpUs);
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
-   CPPUNIT_ASSERT(!OsApiStopCtrlTask());
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(!OsProcStopCtrlTask());
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 #else
 
-   CPPUNIT_ASSERT(OsApiStartCtrlTask(&sOpts));
+   CPPUNIT_ASSERT(OsProcStartCtrlTask(&sOpts));
    BaCoreUSleep(slpUs);
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
 
    // This is the parent. But knows that the child process is running
    CPPUNIT_ASSERT(stats.imRunning);
 
    // Should not start
-   CPPUNIT_ASSERT(!OsApiStartCtrlTask(&sOpts));
+   CPPUNIT_ASSERT(!OsProcStartCtrlTask(&sOpts));
 
    // Let the task run for a bit
    BaCoreUSleep(slpUs*3);
 
-   CPPUNIT_ASSERT(OsApiStopCtrlTask());
-   CPPUNIT_ASSERT(OsApiGetCtrlTaskStats(&stats));
+   CPPUNIT_ASSERT(OsProcStopCtrlTask());
+   CPPUNIT_ASSERT(OsProcGetCtrlTaskStats(&stats));
    CPPUNIT_ASSERT(!stats.imRunning);
 
 #endif
@@ -388,7 +388,7 @@ LOCAL TBaBoolRC initExit(void *arg) {
 //
 LOCAL void update(void *arg) {
    TOsProcCtrlTaskStats stats;
-   OsApiGetCtrlTaskStats(&stats);
+   OsProcGetCtrlTaskStats(&stats);
    TRACE_("update(%s): cnt=%llu, dur=%llu us, cycle=%llu us",
          stats.imRunning ? "T" : "F", stats.updCnt, stats.lastDurUs, stats.lastCycleUs);
    BaCoreMSleep(1);
@@ -398,7 +398,7 @@ LOCAL void update(void *arg) {
 //
 LOCAL void slowUpdate(void *arg) {
    TOsProcCtrlTaskStats stats;
-   OsApiGetCtrlTaskStats(&stats);
+   OsProcGetCtrlTaskStats(&stats);
    TRACE_("update(%s): cnt=%llu, dur=%llu us, cycle=%llu us",
          stats.imRunning ? "T" : "F", stats.updCnt, stats.lastDurUs, stats.lastCycleUs);
    BaCoreMSleep(50);

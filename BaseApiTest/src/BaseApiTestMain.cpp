@@ -121,7 +121,7 @@ int main(int argc, char* argv[]) {
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CTestTemplate::suite());
 //   pSuite->addTest(CBaLogTest::suite());
-//   pSuite->addTest(CBaCoreTest::suite());
+   pSuite->addTest(CBaCoreTest::suite());
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());
@@ -132,9 +132,9 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CHwComTest::suite());
 //   pSuite->addTest(CHwGpioTest::suite());
 //   pSuite->addTest(CHwPiTest::suite());
-   pSuite->addTest(COsIpcTest::suite());
-   pSuite->addTest(COsIpcRegistryTest::suite());
-   pSuite->addTest(COsProcTest::suite());
+//   pSuite->addTest(COsIpcTest::suite());
+//   pSuite->addTest(COsIpcRegistryTest::suite());
+//   pSuite->addTest(COsProcTest::suite());
    return pSuite;
 }
 

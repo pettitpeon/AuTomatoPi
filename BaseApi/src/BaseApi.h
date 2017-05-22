@@ -42,18 +42,6 @@ extern "C" {
 /// @name Resource Management
 //@{
 /******************************************************************************/
-/** todo: stub
- *  @return Error or success
- */
-TBaBoolRC BaApiInit();
-
-/******************************************************************************/
-/** todo: stub
- *  @return Error or success
- */
-TBaBoolRC BaApiExit();
-
-/******************************************************************************/
 /** Initializes the logger that will be used throughout this API with default
  *  options.
  *  @return Error or success

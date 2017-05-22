@@ -8,7 +8,7 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  Raspberry Pi model information
  */
 /*------------------------------------------------------------------------------
  */
@@ -39,11 +39,11 @@ typedef enum EHwPiModel {
    eHwPiModel3
 } EHwPiModel;
 
-/// Board Descriptor
+/// Board Descriptor. Do not modify the strings of this structure
 typedef struct THwPiBoard {
-   const char* hardware;
-   const char* revision;
-   const char* serial;
+   const char* hardware; ///< Hardware version, e.g., BCM2709
+   const char* revision; ///< Revision version, e.g., a01041
+   const char* serial; ///< Serial version, e.g., 00000000a3428455
    EHwPiModel boardModel;
 } THwPiBoard;
 
@@ -54,21 +54,20 @@ typedef struct THwPiBoard {
 extern "C" {
 #endif
 
-
 /******************************************************************************/
 /** Get the board information from the RPi
  *  @return True if success, otherwise, false
  */
-TBaBool HwPiGetBoardInfo(THwPiBoard *pBoardInf);
+TBaBool HwPiGetBoardInfo(
+      THwPiBoard *pBoardInf ///< [out] Board information
+      );
 
 /******************************************************************************/
 /** Get the board model from the RPi
  *  @return The board model
  */
 EHwPiModel HwPiGetBoardModel();
-
 //@}
-
 
 
 #ifdef __cplusplus

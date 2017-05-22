@@ -8,6 +8,7 @@
  *   Module description:
  */
 
+#include <stdio.h>
 #include <iostream>
 #include "BaseApi.h"
 #include "BaCoreTest.h"
@@ -17,6 +18,12 @@
 #include "BaLogMacros.h"
 
 #define TAG "Test"
+#define LOGFILE "testDef"
+#ifdef __linux
+# define LOGDIR "/var/log/"
+#else
+# define LOGDIR "C:\\log\\"
+#endif
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CBaCoreTest );
 
@@ -39,6 +46,9 @@ void CBaCoreTest::setUp() {
 void CBaCoreTest::tearDown() {
 }
 
+void CBaCoreTest::Init() {
+   ASS(BaApiInitLoggerDef(LOGFILE));
+}
 
 /* ****************************************************************************/
 /*  ...
@@ -242,6 +252,12 @@ void CBaCoreTest::ThreadsSpecialCases() {
    TBaCoreThreadInfo info;
    EBaCorePrio testPrio = eBaCorePrio_Normal;
 
+   // Create destroy thread
+   hdl = BaCoreCreateThread("testThreadNorm", testThreadNiceWeatherFun, &arg, testPrio);
+   ASS(hdl);
+   ASS(BaCoreDestroyThread(hdl, 0));
+   hdl = 0;
+
    // Test destroying a running infinite thread
    hdl = BaCoreCreateThread("testThreadNorm", testInfThreadFun, &arg, testPrio);
    CPPUNIT_ASSERT(hdl);
@@ -268,33 +284,10 @@ void CBaCoreTest::ThreadsSpecialCases() {
    CPPUNIT_ASSERT(!BaCoreDestroyThread(0, 0));
 }
 
-
-/* ****************************************************************************/
-/*  ...
- */
-void CBaCoreTest::PidFiles() {
-
-//   TBaApiCtrlTaskOpts opts = {0};
-//   opts.cyleTimeMs = 1000;
-//   opts.prio = eBaCorePrio_Normal;
-//   opts.update = writePidRout;
-//   TBaCoreTimeStamp ts;
-//   BaCoreGetTStamp(&ts);
-//   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
-//   TRACE_("Now!");
 //
-//   // Create a second process with the same name
-//   ASS(BaApiStartCtrlTask(&opts));
-//
-//   // Give it chance to be born
-//   BaCoreMSleep(500);
-//
-//   // Check if the PID in the file is running, is not ourself, and is called
-//   // the same.
-//   ASS(!BaCoreTestPidFile("BaseApiTest"));
-//   BaCoreGetTStamp(&ts);
-//   std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
-//   ASS(BaApiStopCtrlTask());
+void CBaCoreTest::Exit() {
+   ASS(BaApiExitLogger());
+   remove(LOGDIR LOGFILE ".log");
 }
 
 // Auxiliary timing function
@@ -332,17 +325,3 @@ LOCAL void testInfThreadFun(TBaCoreThreadArg *pArg) {
    std::cout << "testInfThreadFun exit\n";
 }
 
-//LOCAL void writePidRout(void*) {
-//   static int sInit = 0;
-//   if (!sInit) {
-////      BaCoreWritePidFile("BaseApiTest");
-//      BaProcWriteOwnPidFile();
-//      TBaCoreTimeStamp ts;
-//      BaCoreGetTStamp(&ts);
-//      std::cout << BaCoreTStampToStr(&ts, 0) << std::endl;
-//   }
-//   if (sInit >= 100) {
-//      exit(0);
-//   }
-//   sInit++;
-//}

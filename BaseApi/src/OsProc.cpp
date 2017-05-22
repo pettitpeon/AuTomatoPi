@@ -85,7 +85,8 @@ static TOsProcCtrlTaskStats sThreadStats = {0};
 
 // Handler in progress flag
 static volatile sig_atomic_t sHandlerInProgress = 0;
-static volatile sig_atomic_t sExit = 0;
+static volatile sig_atomic_t sExitTask = 0;
+static volatile sig_atomic_t sExitThread = 0;
 
 /*------------------------------------------------------------------------------
     C Interface
@@ -345,7 +346,7 @@ EBaCorePrio OsProcGetOwnPrio() {
 
 // ===================================================
 //
-TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
+TBaBoolRC OsProcStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
    if (!checkCtrlStart(pOpts)) {
       return eBaBoolRC_Error;
    }
@@ -359,7 +360,7 @@ TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
    }
 
    // Reset exit flag
-   sExit = 0;
+   sExitTask = 0;
 
    // Set signals before forking to the child inherits the signals
    if (!registerSignals()) {
@@ -406,7 +407,7 @@ TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
    IBaMsg *pTaskCycleMsg = IBaMsgCreate();
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !sExit; sTaskStats.updCnt++, sTaskStats.lastCycleUs = LASTCYCLE_US) {
+   for ( ; !sExitTask; sTaskStats.updCnt++, sTaskStats.lastCycleUs = LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
 
       // ==== Update function call and duration ====
@@ -447,7 +448,7 @@ TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
 }
 
 //
-TBaBoolRC OsApiStopCtrlTask() {
+TBaBoolRC OsProcStopCtrlTask() {
    BaApiExitLogger();
 #ifdef __WIN32
    resetStats(sTaskStats);
@@ -472,13 +473,13 @@ TBaBoolRC OsApiStopCtrlTask() {
 }
 
 //
-TBaBoolRC OsApiStartCtrlThread(const TOsProcCtrlTaskOpts* pOpts) {
+TBaBoolRC OsProcStartCtrlThread(const TOsProcCtrlTaskOpts* pOpts) {
    if (sCtrlThread || !checkCtrlStart(pOpts)) {
       return eBaBoolRC_Error;
    }
 
    // Reset exit flag
-   sExit = 0;
+   sExitThread = 0;
 
    sThreadStats.imRunning = eBaBool_true;
    sCtrlThreadArg.pArg = (void*)pOpts;
@@ -490,8 +491,8 @@ TBaBoolRC OsApiStartCtrlThread(const TOsProcCtrlTaskOpts* pOpts) {
 }
 
 //
-TBaBoolRC OsApiStopCtrlThread() {
-   sExit = 1;
+TBaBoolRC OsProcStopCtrlThread() {
+   sExitThread = 1;
 
    // Wait for thread to end
    TBaBoolRC rc = BaCoreDestroyThread(sCtrlThread, 2*MAXSLEEP_US/1000);
@@ -501,7 +502,7 @@ TBaBoolRC OsApiStopCtrlThread() {
 }
 
 //
-TBaBoolRC OsApiGetCtrlTaskStats(TOsProcCtrlTaskStats *pStats) {
+TBaBoolRC OsProcGetCtrlTaskStats(TOsProcCtrlTaskStats *pStats) {
    if (!pStats) {
       return eBaBoolRC_Error;
    }
@@ -511,7 +512,7 @@ TBaBoolRC OsApiGetCtrlTaskStats(TOsProcCtrlTaskStats *pStats) {
 }
 
 //
-TBaBoolRC OsApiGetCtrlThreadStats(TOsProcCtrlTaskStats *pStats) {
+TBaBoolRC OsProcGetCtrlThreadStats(TOsProcCtrlTaskStats *pStats) {
    if (!pStats) {
       return eBaBoolRC_Error;
    }
@@ -689,7 +690,7 @@ LOCAL void signalHdlr(int sig) {
    }
 
    sHandlerInProgress = 1;
-   sExit = 1;
+   sExitTask = 1;
 }
 
 //
@@ -706,7 +707,7 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    IBaMsg *pThreadCycleMsg = IBaMsgCreate();
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !sExit; sThreadStats.updCnt++, cycleCumUs += LASTCYCLE_US) {
+   for ( ; !sExitThread; sThreadStats.updCnt++, cycleCumUs += LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
 
       // The cycle time has elapsed. Call update
