@@ -68,6 +68,12 @@ LOCAL int32_t testRegFun(int32_t i) {
    return sInt;
 }
 
+LOCAL TBaBoolRC testLongSleepFun() {
+   BaCoreSleep(1);
+   TRACE_("testLongSleepFun Finished");
+   return eBaBoolRC_Success;
+}
+
 void COsIpcTest::Init() {
    ASS(BaApiInitLoggerDef(LOGFILE));
 }
@@ -258,6 +264,12 @@ void COsIpcTest::IPCServer() {
       ASS(COsIpcRegistry::SRegisterFun(BaFString("testRegFun_%i", i), fun));
    }
 
+   // testLongSleepFun
+   fun.pFun = (void*) testLongSleepFun;
+   fun.type = "i:v";
+   ASS(COsIpcRegistry::SRegisterFun("testLongSleepFun", fun));
+
+
    sInt = 1;
    TOsIpcFunArg a = {0};
    a.a[0].i = 7;
@@ -270,6 +282,33 @@ void COsIpcTest::IPCServer() {
    std::cout << "Call duration: " << us/1000.0 << "ms" << std::endl;
    ASS_EQ(r.i, sInt);
 
+   // Register a variable
+   TOsIpcRegVar var;
+   TOsIpcRegVarOut varOut = {0};
+   uint32_t target = 11;
+   var.pVar = (void *)&target;
+   var.sz = sizeof(target);
+   var.wr = true;
+   ASS(COsIpcRegistry::SRegisterVar("testvar", var));
+
+   // Call a var
+   ASS(OsIpcCallVar("testvar", &varOut));
+   ASS_EQ(11, varOut.dat.i);
+
+   // Call a bad var
+   ASS(!OsIpcCallVar("BAADFOOD", &varOut));
+   ASS_EQ((size_t)4, varOut.sz); // not changed
+
+   // todo: Set a var
+
+   // Register a function that will not finish on time
+   r.I = 0;
+   us = BaCoreGetMonTStamp();
+   ASS(!OsIpcCallFun("testLongSleepFun", a, &r));
+   us = BaCoreGetMonTStamp() - us;
+   std::cout << "Call duration: " << us/1000.0 << "ms: " << r.i << std::endl;
+
+   // Exit
    COsIpcRegistry::SClearFunRegistry();
    ASS(OsIpcExitClnt());
    ASS(OsIpcExitSvr());

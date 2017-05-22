@@ -162,6 +162,7 @@ private:
 
    IBaMsg *pIPCHandlerMsg;
    IBaMsg *pPollMsg;
+//   IBaMsg *pMsg;
 
 };
 

@@ -47,7 +47,7 @@
 /*------------------------------------------------------------------------------
     Local variables
  -----------------------------------------------------------------------------*/
-
+static std::mutex sPipeSvrWrPipeMtx;
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
@@ -236,8 +236,11 @@ bool CBaPipePairSvr::Destroy(CBaPipePairSvr *pHdl) {
    close(pHdl->mFdEp);
    rc &= CBaPipe::Destroy(pHdl->mpRd);
    pHdl->mpRd = 0;
-   rc &= CBaPipe::Destroy(pHdl->mpWr);
-   pHdl->mpWr = 0;
+   {
+      std::lock_guard<std::mutex> lck(sPipeSvrWrPipeMtx);
+      rc &= CBaPipe::Destroy(pHdl->mpWr);
+      pHdl->mpWr = 0;
+   }
 
    rc = BaCoreDestroyThread(pHdl->mTh, FOREVER);
    if (rc) {
@@ -331,6 +334,7 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
    }
 
    // Handle the command
+   rc = false;
    switch (mMsg.cmd) {
 
    // Server status
@@ -343,20 +347,29 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
       mMsg.cmd = eOsIpcReplyCmdCall;
       TOsIpcFunCallData *pFc = (TOsIpcFunCallData*) mMsg.dat.data;
       TOsIpcArg ret = {0};
-      COsIpcRegistry::SCallFun(pFc->name, pFc->a, &ret);
-      memcpy(mMsg.dat.data, &ret, sizeof(ret));
-   }
+
+      // Todo: This can take very long... Async?
+      rc = COsIpcRegistry::SCallFun(pFc->name, pFc->a, (TOsIpcArg*)mMsg.dat.data);
+      if (!rc) {
+         pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
+                  "Bad function call(%s)", pFc->name);
+      }
       break;
+   }
 
    // Variable request
-   case eOsIpcCmdGetVar:
+   case eOsIpcCmdGetVar: {
       mMsg.cmd = eOsIpcReplyCmdGetVar;
-      memset(mMsg.dat.data, 0, sizeof(mMsg.dat.data));
-
-      // dummy answer
-      strcpy(mMsg.dat.data, "GetVar");
-
+      rc = COsIpcRegistry::SCallVar(mMsg.dat.data, *(TOsIpcRegVarOut*)mMsg.dat.data);
+      if (!rc) {
+         pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
+                  "Bad variable call(%s)", mMsg.dat.data);
+      }
       break;
+   }
+   case eOsIpcCmdSetVar:
+      mMsg.cmd = eOsIpcReplyCmdSetVar;
+   break;
 
    // Error
    default:
@@ -368,8 +381,15 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
 
    // Write the answer on the pipe
    pIPCHandlerMsg->Reset();
-   rc |= mpWr->Write((char*)&mMsg, sizeof(TOsIpcMsg));
-   return rc;
+
+   // Critical section. Server could exit before this
+   std::lock_guard<std::mutex> lck(sPipeSvrWrPipeMtx);
+   if (!mpWr) {
+      return false;
+   }
+
+   // todo: What does an error mean here?
+   return mpWr->Write((char*)&mMsg, sizeof(TOsIpcMsg)) && rc;
 }
 
 /*------------------------------------------------------------------------------

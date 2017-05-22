@@ -133,8 +133,8 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CHwGpioTest::suite());
 //   pSuite->addTest(CHwPiTest::suite());
    pSuite->addTest(COsIpcTest::suite());
-//   pSuite->addTest(COsIpcRegistryTest::suite());
-//   pSuite->addTest(COsProcTest::suite());
+   pSuite->addTest(COsIpcRegistryTest::suite());
+   pSuite->addTest(COsProcTest::suite());
    return pSuite;
 }
 

@@ -380,25 +380,24 @@ TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
    }
 
    // Success: Let the parent return
+   // Luke, I am your father
    if (pid > 0) {
       unregisterSignals();
-      TRACE_("Fork successful: Luke, I am you father");
+      TRACE_("Parent: Fork successful");
       sTaskStats.imRunning = eBaBool_true;
-//      resetStats(sStats);
       return eBaBoolRC_Success;
    }
 
+   // Luke:  NOooooo!!!
    // Now Luke is in command ////////////////////////////////////////
+   TRACE_("Child: Fork successful");
 
    // Write PID file
    OsProcWriteCtrlTaskPidFile();
 
    // Change directory to default
    chdir(DEFDIR);
-
-   TRACE_("prio: %i", OsProcSetOwnPrio(pOpts->prio));
-   TRACE_("NOOOO!!");
-
+   TRACE_("Prio set: %s", OsProcSetOwnPrio(pOpts->prio) ? "Ok" :"Not ok");
 
    TTimePoint start;
    uint64_t sampTimeUs = MAX(pOpts->cyleTimeUs, MINCYCLET_US);
@@ -436,11 +435,12 @@ TBaBoolRC OsApiStartCtrlTask(const TOsProcCtrlTaskOpts* pOpts) {
    if (pOpts->exit) {
       pOpts->exit(pOpts->exitArg);
    }
-   TRACE_("Luke: I finished your quest father");
+
    OsProcDelCtrlTaskPidFile();
    resetStats(sTaskStats);
 
    // This is the child process, should not continue
+   TRACE_("Control task exit");
    exit(EXIT_SUCCESS);
 
 #endif

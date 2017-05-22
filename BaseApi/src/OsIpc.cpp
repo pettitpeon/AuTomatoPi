@@ -32,6 +32,7 @@
 #define TAG "OsIpc"
 #define WRPIPE COSIPCPIPEDIR COSIPCSERVER_RD // RD svr is WR clnt
 #define RDPIPE COSIPCPIPEDIR COSIPCSERVER_WR // WR svr is RD clnt
+#define WAITRPLY 100 // 1s
 
 
 /*------------------------------------------------------------------------------
@@ -175,35 +176,35 @@ TBaBoolRC OsIpcCallFun(const char* name, TOsIpcFunArg a, TOsIpcArg *pRet) {
       return eBaBoolRC_Error;
    }
 
-   // TODO: error: the name should not be copied like that
+   // Prepare the function call message
    msg.cmd = eOsIpcCmdCall;
-   TOsIpcFunCallData *pFc = (TOsIpcFunCallData *)msg.dat.data;
-   // TODO: copy correctly
 
+   // Create a pointer to the desired structure to ease the copy
+   TOsIpcFunCallData *pFc = (TOsIpcFunCallData *)msg.dat.data;
    memcpy(pFc->name, name, sz);
    pFc->a = a;
 
-   // send mesg
+   // Send message
    if (!writeClntPipe((char*) &msg, sizeof(TOsIpcMsg))) {
       return eBaBoolRC_Error;
    }
 
+   // Erase the message to reuse it
    memset(msg.dat.data, 0, sizeof(msg.dat.data));
 
-   // todo: wait for reply??
-   for (int i = 0; i < 100; ++i) {
+   // Wait for reply
+   for (int i = 0; i < WAITRPLY; ++i) {
       if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdCall) {
 
          // Copy data to return value
          *pRet = *((TOsIpcArg*)msg.dat.data);
-         // todo: delete
-         TRACE_("Call delay %i ms", i*10);
          return eBaBoolRC_Success;
       }
 
       BaCoreMSleep(10);
    }
 
+   WARN_("CallFun: No reply from server");
    return eBaBoolRC_Error;
 }
 
@@ -219,17 +220,20 @@ TBaBoolRC OsIpcCallVar(const char* name, TOsIpcRegVarOut *pVar) {
       return eBaBoolRC_Error;
    }
 
+   // Prepare the message for the variable call
    msg.cmd = eOsIpcCmdGetVar;
    memcpy(msg.dat.data, name, sz);
 
-   // send mesg
+   // Send message
    if (!writeClntPipe((char*) &msg, sizeof(TOsIpcMsg))) {
       return eBaBoolRC_Error;
    }
 
+   // Erase message for reuse
    memset(msg.dat.data, 0, sizeof(msg.dat.data));
 
-   for (int i = 0; i < 100; ++i) {
+   // Wait 1s for reply
+   for (int i = 0; i < WAITRPLY; ++i) {
       if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdGetVar) {
 
          // capture reply
@@ -239,15 +243,13 @@ TBaBoolRC OsIpcCallVar(const char* name, TOsIpcRegVarOut *pVar) {
          }
 
          memcpy(pVar, msg.dat.data, sizeof(TOsIpcRegVarOut));
-
-         // todo: delete
-         TRACE_("Call delay %i ms", i*10);
          return eBaBoolRC_Success;
       }
 
       BaCoreMSleep(10);
    }
 
+   WARN_("CallVar: No reply from server");
    return eBaBoolRC_Error;
 }
 

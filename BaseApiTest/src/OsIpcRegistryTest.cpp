@@ -78,12 +78,14 @@ void COsIpcRegistryTest::CppInterfaceFunRegistry() {
    ASS(pReg->RegisterFun(fun.type, fun));
    ASS(pReg->CallFun(fun.type, a, &tOut));
    ASS_EQ(1, sInt);
+   ASS(!tOut.I);
 
    SET_FUN(fun, funvi, "v:i");
    ASS(pReg->RegisterFun(fun.type, fun));
    a.a[0].i = 7;
    ASS(pReg->CallFun(fun.type, a, &tOut));
    ASS_EQ(7, sInt);
+   ASS(!tOut.I);
 
    SET_FUN(fun, funTT<int32_t>, "i:i");
    ASS(pReg->RegisterFun(fun.type, fun));
@@ -143,12 +145,14 @@ void COsIpcRegistryTest::CInterfaceFunRegistry() {
    ASS(OsIpcRegistryCallFun(pReg, fun.type, a, &tOut));
    ASS(!OsIpcRegistryCallFun(0, fun.type, a, &tOut));
    ASS_EQ(1, sInt);
+   ASS(!tOut.I);
 
    SET_FUN(fun, funvi, "v:i");
    ASS(OsIpcRegistryRegisterFun(pReg, fun.type, fun));
    a.a[0].i = 7;
    ASS(OsIpcRegistryCallFun(pReg, fun.type, a, &tOut));
    ASS_EQ(7, sInt);
+   ASS(!tOut.I);
 
    SET_FUN(fun, funTT<int32_t>, "i:i");
    ASS(OsIpcRegistryRegisterFun(pReg, fun.type, fun));

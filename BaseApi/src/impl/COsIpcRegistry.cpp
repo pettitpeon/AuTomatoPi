@@ -288,6 +288,7 @@ bool COsIpcRegistry::CallVar(std::string name, TOsIpcRegVarOut &rVar) {
 
 
    if (!CallVarInternal(name, var) || !var.pVar || var.sz > OSIPC_MAXVARSZ) {
+      rVar.sz = -1; // This signals an error in the IPC server
       return false;
    }
 
@@ -310,7 +311,6 @@ bool COsIpcRegistry::CallVarInternal(std::string name, TOsIpcRegVar &rVar) {
    if (it == mVarReg.end() || !varIsValid(it->second)) {
       return false;
    }
-
 
    rVar = (it->second);
    return true;

@@ -12,9 +12,9 @@
  *  create registries at the user's discretion, or use the embedded "local"
  *  registry. The IPC API uses the local registry to call functions and
  *  variables remotely.
- *
- *  // TODO: The variables registry is not concurrency-safe
  */
+// TODO: The variables registry is not concurrency-safe
+// because of the non-atomic variables
 /*------------------------------------------------------------------------------
  */
 #ifndef OSIPCREGISTRY_H_

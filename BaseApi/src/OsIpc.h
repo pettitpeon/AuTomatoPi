@@ -8,7 +8,8 @@
  *   Module description:
  */
 /** @file
- *  ...
+ *  Inter-process communication module. It implements an IPC server-client
+ *  solution with remote procedure calls (RPCs) and remote variable calls
  */
 /*------------------------------------------------------------------------------
  */
@@ -98,6 +99,18 @@ TBaBoolRC OsIpcCallVar(
       const char* name, ///< [in] Variable name
       TOsIpcRegVarOut *pVar  ///< [out] Variable descriptor
       );
+
+/******************************************************************************/
+/** Remotely set the value of a registered variable from the control task
+ *  @return True if success, otherwise, false
+ */
+// TODO: ToImplement
+//TBaBoolRC OsIpcCallVar(
+//      const char* name, ///< [in] Variable name
+//      TOsIpcRegVarOut *pVar  ///< [out] Variable descriptor
+//      );
+
+
 //@}
 
 
