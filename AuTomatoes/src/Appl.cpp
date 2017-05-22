@@ -19,12 +19,14 @@
 
 #define TAG "APPL"
 
+//
 static TOsProcCtrlTaskStats taskStats = {0};
 TBaBoolRC ApplInit(void *pArg) {
    TRACE_("Init");
    return eBaBoolRC_Success;
 }
 
+//
 void ApplUpd(void *pArg) {
    OsProcGetCtrlTaskStats(&taskStats);
    TRACE_("Log %llu", taskStats.updCnt);
@@ -35,6 +37,7 @@ void ApplUpd(void *pArg) {
 
 }
 
+//
 TBaBoolRC ApplExit(void *pArg) {
    TRACE_("Exit");
    return eBaBoolRC_Success;
