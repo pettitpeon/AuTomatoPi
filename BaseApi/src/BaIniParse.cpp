@@ -47,7 +47,10 @@ class CBaIniParser: public IBaIniParser {
 public:
 
    //
-   static IBaIniParser * Create(const char *file) {
+   static IBaIniParser * Create(const char *file, TBaIniParseError *pErr) {
+      TBaIniParseError tErr = eBaIniParseError_OK;
+      pErr = pErr ? pErr : &tErr;
+
       CBaIniParser *pIp = new CBaIniParser();
       if (!file) {
          return pIp;
@@ -66,8 +69,7 @@ public:
       int errs = 0;
 
       if (!pIp || !(in = fopen(file, "r"))) {
-//         fprintf(stderr, "iniparser: cannot open %s\n", file);
-         // fixme: log error
+         *pErr = eBaIniParseError_OpenFile;
          return 0;
       }
 
@@ -86,8 +88,7 @@ public:
 
          // Safety check against buffer overflows
          if (line[len] != '\n' && !feof(in)) {
-            // fixme: log error
-//            fprintf(stderr, "iniparser: input line too long in %s (%d)\n", file, lineno);
+            *pErr = eBaIniParseError_BufOvFl;
             Destroy(pIp);
             fclose(in);
             return 0;
@@ -123,7 +124,6 @@ public:
             pIp->dic[tmp] = val;
             break;
          case eLINE_ERROR:
-            // TODO: either log all errors or brake loop!!
             ++errs;
             break;
          default:
@@ -136,14 +136,14 @@ public:
 
       if (errs) {
          // fixme: log the error count
+         *pErr = eBaIniParseError_WarnLine;
          Destroy(pIp);
          pIp = 0;
       }
 
       fclose(in);
       return pIp;
-   }
-   ;
+   };
 
    //
    static bool Destroy(IBaIniParser *pHdl) {
@@ -153,8 +153,7 @@ public:
       }
       delete p;
       return true;
-   }
-   ;
+   };
 
    //
    void Dump(FILE * f) {
@@ -328,12 +327,15 @@ public:
 
 private:
    // Members
+   EBaIniParseError mErr;
    std::map<std::string, std::string> dic;
+
+
 };
 
 //
-IBaIniParser * IBaIniParserCreate(const char *file) {
-   return CBaIniParser::Create(file);
+IBaIniParser * IBaIniParserCreate(const char *file, TBaIniParseError *pErr) {
+   return CBaIniParser::Create(file, pErr);
 }
 
 //
@@ -345,8 +347,8 @@ bool IBaIniParserDestroy(IBaIniParser *pHdl) {
  C Interface
  -----------------------------------------------------------------------------*/
 //
-TBaIniParseHdl BaIniParseCreate(const char *file) {
-   return IBaIniParserCreate(file);
+TBaIniParseHdl BaIniParseCreate(const char *file, TBaIniParseError *pErr) {
+   return IBaIniParserCreate(file, pErr);
 }
 
 //

@@ -71,7 +71,7 @@ typedef struct TThreadDesc {
    std::mutex              mtx;
    std::condition_variable cv;
    pid_t                   tid;
-   EStatus                 status;
+   volatile EStatus        status;
    TThreadDesc() : name(""), routine(0), pArg(0), prio(eBaCorePrio_Normal),
          pThread(0), mtx(), cv(), tid(0), status(eInitializing) {}
  } TThreadDesc;
@@ -235,7 +235,10 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
             // [cap list] (args) { body }
                 [&pDesc] () { return pDesc->status == eFinished; })
           ) {
+<<<<<<< HEAD
          TRACE_("Thread(%s:%i) joined", pDesc->name.c_str(), pDesc->tid);
+=======
+>>>>>>> refs/heads/Stabilization
          pDesc->pThread->join();
       } else {
          // Detach it, let it live, and release the memory
@@ -245,18 +248,24 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
          // If the timeout elapsed, signal it
          if (timeoutMs != 0) {
             rc = eBaBoolRC_Error;
-            if (!WARN_("Th(%i:%s): Destroy timeout > %i ms",
+            if (!WARN_("Th(%i:%s): Destroy timeout > %i ms. Detached!",
                   pDesc->tid, pDesc->name.c_str(), timeoutMs)) {
-               BASYSLOG(TAG, "Th(%i:%s): Destroy timeout > %i ms",
+               BASYSLOG(TAG, "Th(%i:%s): Destroy timeout > %i ms. Detached!",
                      pDesc->tid, pDesc->name.c_str(), timeoutMs);
             }
          }
       }
 
+<<<<<<< HEAD
       // pThread is used later. This is why it is inside the lock
+=======
+      // Here the thread either finished gracefully, or was marked as detached.
+      // If the thread was marked as detached, releases its resources with a
+      // small memory leak.
+>>>>>>> refs/heads/Stabilization
       delete pDesc->pThread;
       pDesc->pThread = 0;
-   }
+   } // Mutex unlock
 
    // Do not delete pDesc inside the mutex. REMEMBER THAT!
    if (pDesc->status == eFinished) {
@@ -340,7 +349,8 @@ LOCAL void threadRoutine(TThreadDesc *pDesc) {
       pthread_setname_np(hld, pDesc->name.c_str());
       pthread_setschedparam(hld, sched, &prio);
       pArg = pDesc->pArg;
-   }
+
+   } // Mutex unlock
 
    // Call the actual thread entry function /////
    pDesc->routine(pArg);

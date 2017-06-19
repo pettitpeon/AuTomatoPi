@@ -41,6 +41,7 @@ public:
    void CPPTest();
    void CTest();
    void TwistedIni();
+   void CreateErrors();
 };
 
 #endif // BAINIPARSETEST_H_

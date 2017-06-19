@@ -56,10 +56,9 @@ void CBaIniParse::tearDown() {
 /*  ...
  */
 void CBaIniParse::CPPTest() {
-
    CPPUNIT_ASSERT(true);
    create_example_ini_file();
-   IBaIniParser *pHdl = IBaIniParserCreate(EXINI);
+   IBaIniParser *pHdl = IBaIniParserCreate(EXINI, 0);
    CPPUNIT_ASSERT(pHdl);
 
    pHdl->Dump(stdout);
@@ -86,7 +85,7 @@ void CBaIniParse::CPPTest() {
 void CBaIniParse::CTest() {
    CPPUNIT_ASSERT(true);
    create_example_ini_file();
-   TBaIniParseHdl hdl = BaIniParseCreate(EXINI);
+   TBaIniParseHdl hdl = BaIniParseCreate(EXINI, 0);
    CPPUNIT_ASSERT(hdl);
 
    BaIniParseDump(hdl, stdout);
@@ -108,24 +107,23 @@ void CBaIniParse::CTest() {
 /*  ...
  */
 void CBaIniParse::TwistedIni() {
-
    IBaIniParser *pNewHdl = 0;
    dictionary   *pOrgHdl = 0;
    std::string   tmp;
 
-   CPPUNIT_ASSERT(!IBaIniParserCreate("You/Shall/Not/Path"));
+   CPPUNIT_ASSERT(!IBaIniParserCreate("You/Shall/Not/Path", 0));
    CPPUNIT_ASSERT(!iniparser_load("You/Shall/Not/Path"));
-   CPPUNIT_ASSERT(!IBaIniParserCreate(ERRORINI));
+   CPPUNIT_ASSERT(!IBaIniParserCreate(ERRORINI, 0));
    CPPUNIT_ASSERT(!iniparser_load(ERRORINI));
 
    CPPUNIT_ASSERT(!iniparser_load(OFKEYINI));
-   CPPUNIT_ASSERT(!IBaIniParserCreate(OFKEYINI));
+   CPPUNIT_ASSERT(!IBaIniParserCreate(OFKEYINI, 0));
 
 
-   CPPUNIT_ASSERT(!IBaIniParserCreate(OFVALINI));
+   CPPUNIT_ASSERT(!IBaIniParserCreate(OFVALINI, 0));
    CPPUNIT_ASSERT(!iniparser_load(OFVALINI));
 
-   pNewHdl = IBaIniParserCreate(TWISTEDINI);
+   pNewHdl = IBaIniParserCreate(TWISTEDINI, 0);
    pOrgHdl = iniparser_load(TWISTEDINI);
    CPPUNIT_ASSERT(pNewHdl);
    CPPUNIT_ASSERT(pOrgHdl);
@@ -159,7 +157,7 @@ void CBaIniParse::TwistedIni() {
    pNewHdl = 0;
    pOrgHdl = 0;
 
-   pNewHdl = IBaIniParserCreate(0);
+   pNewHdl = IBaIniParserCreate(0, 0);
    pOrgHdl = dictionary_new(10);
    CPPUNIT_ASSERT(pNewHdl);
    CPPUNIT_ASSERT(pOrgHdl);
@@ -200,6 +198,15 @@ void CBaIniParse::TwistedIni() {
 
 }
 
+/* ****************************************************************************/
+/*  ...
+ */
+void CBaIniParse::CreateErrors() {
+   CPPUNIT_ASSERT(false);
+   // Todo Implement
+}
+
+//
 LOCAL void create_example_ini_file() {
     FILE *ini ;
 
