@@ -35,6 +35,14 @@
 /// C INI parser handle
 typedef void* TBaIniParseHdl;
 
+typedef enum EBaIniParseError {
+   eBaIniParseError_OK = 0,
+   eBaIniParseError_OpenFile = 1,
+   eBaIniParseError_BufOvFl = 2, // Input line too long
+   eBaIniParseError_WarnLine = 3 // Warning, one or more lines have errors
+} EBaIniParseError;
+typedef uint32_t TBaIniParseError;
+
 /*------------------------------------------------------------------------------
     C Interface
  -----------------------------------------------------------------------------*/
@@ -49,7 +57,8 @@ extern "C" {
  *  @return Handle if success, otherwise, null
  */
 TBaIniParseHdl BaIniParseCreate(
-      const char *file ///< [in] Path to file
+      const char *file, ///< [in] Path to file
+      TBaIniParseError *pErr ///< [out] Optional error info
       );
 
 /******************************************************************************/
@@ -332,7 +341,8 @@ public:
  *  @return Handle if success, otherwise, null
  */
 extern "C" IBaIniParser * IBaIniParserCreate(
-      const char *file ///< [in] Path to file
+      const char *file, ///< [in] Path to file
+      TBaIniParseError *pErr ///< [out] Optional error info
       );
 
 /******************************************************************************/
