@@ -120,13 +120,10 @@ int main(int argc, char* argv[]) {
 **/
 LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CTestTemplate::suite());
-<<<<<<< HEAD
 //   pSuite->addTest(CBaLogTest::suite());
    pSuite->addTest(CBaCoreTest::suite());
-=======
    pSuite->addTest(CBaLogTest::suite());
 //   pSuite->addTest(CBaCoreTest::suite());
->>>>>>> refs/heads/Stabilization
 //   pSuite->addTest(CBaIniParse::suite());
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());

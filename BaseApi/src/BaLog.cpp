@@ -45,7 +45,11 @@ TBaLogHdl BaLogCreate(const TBaLogOptions *pOpts) {
 
 //
 TBaBoolRC BaLogDestroy(TBaLogHdl hld, TBaBool saveCfg) {
-   return CBaLog::Destroy((IBaLog*)hld, saveCfg) ? eBaBoolRC_Success : eBaBoolRC_Error;
+   CBaLog *p = dynamic_cast<CBaLog*>((IBaLog*)hld);
+   if (!p) {
+      return false;
+   }
+   return CBaLog::Destroy(p, saveCfg) ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
@@ -177,9 +181,12 @@ IBaLog * IBaLogCreate(const TBaLogOptions *pOpts) {
 
 //
 TBaBoolRC IBaLogDestroy(IBaLog *pHdl, TBaBool saveCfg) {
+   CBaLog *p = dynamic_cast<CBaLog*>(pHdl);
+   if (!p) {
+      return false;
+   }
 
-   // TODO: dynamic cast has to be done here instead of in CBaLog?
-   return CBaLog::Destroy(pHdl, saveCfg);
+   return CBaLog::Destroy(p, saveCfg);
 }
 
 

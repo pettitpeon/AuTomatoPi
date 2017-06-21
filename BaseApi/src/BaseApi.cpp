@@ -64,7 +64,7 @@ TBaBoolRC BaApiInitLoggerDef(const char* name) {
    return spLog ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
-// todo: multi-thread?
+//
 TBaBoolRC BaApiInitLogger(TBaLogDesc log) {
    if (spLog) {
       return eBaBoolRC_Success;
@@ -81,23 +81,32 @@ TBaBoolRC BaApiExitLogger() {
       return eBaBoolRC_Success;
    }
 
+   // Deactivate the log so no one can use it anymore.
+   CBaLog *tpLog = spLog;
+   spLog = 0;
+
+   // This acquires and releases the internal log mutex thereby ensuring that
+   // after releasing it, it was the last entry with BaseApi.
+   tpLog->Log(eBaLogPrio_Trace, TAG, "Exit BaApiLog");
+
    // Only destroy the logger if you created it. NEVER mess with data owned by
    // the user
-   bool ret = sExtLogger ? true : CBaLog::Destroy(spLog);
+   bool ret = sExtLogger ? true : CBaLog::Destroy(tpLog);
    sExtLogger = false;
-   spLog = 0;
    return ret ? eBaBoolRC_Success : eBaBoolRC_Error;
 }
 
 //
 TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
-   if (!spLog) {
+   if (!spLog || !fmt) {
       return eBaBoolRC_Error;
    }
 
    va_list arg;
    va_start(arg, fmt);
-   TBaBoolRC ret = spLog->LogV(prio, tag, fmt, arg);
+
+   // Check again that the logger exists.
+   TBaBoolRC ret = spLog ? spLog->LogV(prio, tag, fmt, arg) : eBaBoolRC_Error;
    va_end(arg);
    return ret;
 }

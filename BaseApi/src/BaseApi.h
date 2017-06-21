@@ -10,6 +10,9 @@
 /** @file
  *  Includes the following:
  *  - API wide logger
+ *  - The init/exit functions are not multi-thread safe and are NOT meant to be.
+ *    The exit function has to be called after the logging functions are not
+ *    used anymore.
  */
 /*------------------------------------------------------------------------------
  */

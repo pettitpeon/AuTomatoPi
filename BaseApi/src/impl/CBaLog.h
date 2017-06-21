@@ -67,7 +67,7 @@ public:
 
    //
    static bool Destroy (
-         IBaLog* hdl,
+         CBaLog *pHdl,
          bool saveCfg = false
          );
 

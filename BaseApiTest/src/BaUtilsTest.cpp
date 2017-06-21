@@ -87,7 +87,7 @@ void CBaUtilsTest::FS() {
    ASS_MSG(strerror(errno), !BaFS::Rename(RESPATH "testfileCp", RESPATH "testfileRn"));
    ASS_EQ(BaFS::Size(RESPATH "testfileRn"), sz);
 
-   // Dir size, todo recursive
+   // Dir size
    ASS_EQ_MSG(strerror(errno), 2*sz, BaFS::DirSize(RESPATH));
 
    // Remove creations

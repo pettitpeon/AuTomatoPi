@@ -232,9 +232,8 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile, bool disableThread) {
    // Get the real path
    getCfgPath(cfgFile);
 
-   IBaIniParser *pIni = IBaIniParserCreate(cfgFile.c_str());
+   IBaIniParser *pIni = IBaIniParserCreate(cfgFile.c_str(), 0);
    if (!pIni) {
-      // todo: log? Ini parser should log
       return 0;
    }
 
@@ -262,26 +261,27 @@ CBaLog* CBaLog::CreateFromCfg(std::string cfgFile, bool disableThread) {
 }
 
 //
-bool CBaLog::Destroy(IBaLog *pHdl, bool saveCfg) {
-   std::lock_guard<std::mutex> lck(sMtx);
-
-   CBaLog *p = dynamic_cast<CBaLog*>(pHdl);
-   if (!p ) {
+bool CBaLog::Destroy(CBaLog *pHdl, bool saveCfg) {
+   if (!pHdl) {
       return false;
    }
 
-   if (--p->mOpenCnt == 0) {
-      // Erase from loggers
-      sLoggers.erase(p->mName);
-      p->Flush();
-      p->mLog.close();
+   std::lock_guard<std::mutex> lck(sMtx);
 
+   if (--pHdl->mOpenCnt == 0) {
+      // Erase from loggers
+      sLoggers.erase(pHdl->mName);
+      pHdl->Flush();
+      {
+         std::lock_guard<std::mutex> lck(pHdl->mMtx);
+         pHdl->mLog.close();
+      }
       // Save state
       if (saveCfg) {
-         p->saveCfg();
+         pHdl->saveCfg();
       }
 
-      delete p;
+      delete pHdl;
    }
 
    if (sLoggers.empty()) {
@@ -454,7 +454,10 @@ inline void CBaLog::Flush() {
 bool CBaLog::saveCfg() {
 
    // Create file-less
-   IBaIniParser *pIni = IBaIniParserCreate(0);
+   IBaIniParser *pIni = IBaIniParserCreate(0, 0);
+   if (!pIni) {
+      return false;
+   }
 
    // Set tag for section
    pIni->Set(TAG, "");
@@ -558,6 +561,7 @@ bool inline CBaLog::LogV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
    if (!fmt) {
       return false;
    }
+   std::lock_guard<std::mutex> lck(mMtx);
 
    // Get the required size + 1 for the ending null
    uint16_t size = vsnprintf(0, 0, fmt, arg) + 1;
@@ -565,7 +569,6 @@ bool inline CBaLog::LogV(EBaLogPrio prio, const char* tag, const char* fmt, va_l
    // Not using the FString function to be as quick as possible
    char msg[size];
    vsnprintf(msg, size, fmt, arg);
-   std::lock_guard<std::mutex> lck(mMtx);
    return log(prio, tag, msg);
 }
 

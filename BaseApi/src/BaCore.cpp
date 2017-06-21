@@ -235,10 +235,7 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
             // [cap list] (args) { body }
                 [&pDesc] () { return pDesc->status == eFinished; })
           ) {
-<<<<<<< HEAD
          TRACE_("Thread(%s:%i) joined", pDesc->name.c_str(), pDesc->tid);
-=======
->>>>>>> refs/heads/Stabilization
          pDesc->pThread->join();
       } else {
          // Detach it, let it live, and release the memory
@@ -256,13 +253,10 @@ TBaBoolRC BaCoreDestroyThread(TBaCoreThreadHdl hdl, uint32_t timeoutMs) {
          }
       }
 
-<<<<<<< HEAD
       // pThread is used later. This is why it is inside the lock
-=======
       // Here the thread either finished gracefully, or was marked as detached.
       // If the thread was marked as detached, releases its resources with a
       // small memory leak.
->>>>>>> refs/heads/Stabilization
       delete pDesc->pThread;
       pDesc->pThread = 0;
    } // Mutex unlock
