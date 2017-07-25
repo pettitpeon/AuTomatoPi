@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mutex>
+#include <future>  // std::async, std::future
+#include <iostream>
 
 #include "BaUtils.hpp"
 #include "BaLogMacros.h"
@@ -117,11 +119,11 @@ CBaPipe* CBaPipe::CreateSvrWr() {
 
 //
 bool CBaPipe::Destroy(CBaPipe* pHdl) {
-   // todo: all this checking makes sense or better to delete and unlink blind?
    if (!pHdl || pHdl->mFdRd < 0 || pHdl->mFdWr < 0 || pHdl->mName.length() == 0) {
       return false;
    }
 
+   // ToDo: Check errors?
    close(pHdl->mFdRd);
    close(pHdl->mFdWr);
    unlink(pHdl->mName.c_str());
@@ -289,7 +291,26 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
          }
 
          // Do something with the fd (pipe)
-         p->handleIpcMsg(pEvents[i].data.fd);
+         // todo
+         // in order to do the async call, the pipe read has to be separated from
+         // the handle. Only do the handle async!!
+         int fd = pEvents[i].data.fd;
+
+         if (p->getPipeMsg(fd)) {
+            TOsIpcMsg msg = p->mMsg;
+            p->handleIpcMsg(fd, msg);
+//            auto theasync = std::async(std::launch::async, [&p ,fd, msg] {
+//               return p->handleIpcMsg(fd, msg); }
+//            );
+
+            std::cout << "before get" << std::endl;
+
+            //todo delete
+//            BaCoreMSleep(100);
+            //theasync.get();
+
+            std::cout << "after get" << std::endl;
+         }
 
       }
 
@@ -302,12 +323,10 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
    free(pEvents);
 }
 
-//
-bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
-
-   if (fdRd == -1) {
+bool CBaPipePairSvr::getPipeMsg(int fdRdPipe) {
+   if (fdRdPipe == -1) {
       // error?
-      TRACE_("invalid fd(%i)", fdRd);
+      TRACE_("invalid fd(%i)", fdRdPipe);
       return false;
    }
 
@@ -323,10 +342,40 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
       offset += rc;
       if (rc < 0 || offset > sz) {
          pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
-               "Unrecognizable IPC message(%i)", fdRd);
+               "Unrecognizable IPC message(%i)", fdRdPipe);
          return false;
       }
    } while (rc != 0);
+   return true;
+}
+
+//
+bool CBaPipePairSvr::handleIpcMsg(int fdRdPipe, TOsIpcMsg msg) {
+   std::cout << "Handling Msg" << std::endl;
+   bool rc = 0;
+
+//   if (fdRdPipe == -1) {
+//      // error?
+//      TRACE_("invalid fd(%i)", fdRdPipe);
+//      return false;
+//   }
+//
+//   size_t sz = sizeof(TOsIpcMsg);
+//   mMsg = {0};
+//
+//   // Read the actual message from the pipe
+//   // If not all was read at once, continue reading
+//   size_t rc = 0;
+//   uint32_t offset = 0;
+//   do {
+//      rc = mpRd->Read(((char*) &mMsg) + offset, sz - offset);
+//      offset += rc;
+//      if (rc < 0 || offset > sz) {
+//         pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+//               "Unrecognizable IPC message(%i)", fdRdPipe);
+//         return false;
+//      }
+//   } while (rc != 0);
 
    // Check if there is a Wr pipe to reply
    if (mpWr->GetServerFd() < 0) {
@@ -335,21 +384,24 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
 
    // Handle the command
    rc = false;
-   switch (mMsg.cmd) {
+   switch (msg.cmd) {
 
    // Server status
    case eOsIpcCmdGetSvrStatus:
-      mMsg.cmd = eOsIpcReplySvrRuns;
+      msg.cmd = eOsIpcReplySvrRuns;
       break;
 
    // Function call
    case eOsIpcCmdCall: {
-      mMsg.cmd = eOsIpcReplyCmdCall;
-      TOsIpcFunCallData *pFc = (TOsIpcFunCallData*) mMsg.dat.data;
+      msg.cmd = eOsIpcReplyCmdCall;
+      TOsIpcFunCallData *pFc = (TOsIpcFunCallData*) msg.dat.data;
       TOsIpcArg ret = {0};
 
-      // Todo: This can take very long... Async?
-      rc = COsIpcRegistry::SCallFun(pFc->name, pFc->a, (TOsIpcArg*)mMsg.dat.data);
+      // ToDo: This is a synchronous call. If the registered function hangs, it
+      // will block the worker thread.
+      // A possible solution is to save the state, process the call async, and
+      // respond when it is done.
+      rc = COsIpcRegistry::SCallFun(pFc->name, pFc->a, (TOsIpcArg*)msg.dat.data);
       if (!rc) {
          pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
                   "Bad function call(%s)", pFc->name);
@@ -359,24 +411,24 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
 
    // Variable request
    case eOsIpcCmdGetVar: {
-      mMsg.cmd = eOsIpcReplyCmdGetVar;
-      rc = COsIpcRegistry::SCallVar(mMsg.dat.data, *(TOsIpcRegVarOut*)mMsg.dat.data);
+      msg.cmd = eOsIpcReplyCmdGetVar;
+      rc = COsIpcRegistry::SCallVar(msg.dat.data, *(TOsIpcRegVarOut*)msg.dat.data);
       if (!rc) {
          pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
-                  "Bad variable call(%s)", mMsg.dat.data);
+                  "Bad variable call(%s)", msg.dat.data);
       }
       break;
    }
    case eOsIpcCmdSetVar:
-      mMsg.cmd = eOsIpcReplyCmdSetVar;
+      msg.cmd = eOsIpcReplyCmdSetVar;
    break;
 
    // Error
    default:
-      mMsg.cmd = eOsIpcCmdError;
+      msg.cmd = eOsIpcCmdError;
       rc = false;
       pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
-            "Unrecognizable IPC message(%i)", fdRd);
+            "Unrecognizable IPC message(%i)", fdRdPipe);
    }
 
    // Write the answer on the pipe
@@ -389,7 +441,7 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRd) {
    }
 
    // todo: What does an error mean here?
-   return mpWr->Write((char*)&mMsg, sizeof(TOsIpcMsg)) && rc;
+   return mpWr->Write((char*)&msg, sizeof(TOsIpcMsg)) && rc;
 }
 
 /*------------------------------------------------------------------------------

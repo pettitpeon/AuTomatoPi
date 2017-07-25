@@ -34,7 +34,6 @@ void ApplUpd(void *pArg) {
    if (taskStats.updCnt > 10) {
       OsProcStopCtrlTask();
    }
-
 }
 
 //

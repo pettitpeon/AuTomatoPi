@@ -145,9 +145,8 @@ public:
 private:
    static void svrRout(TBaCoreThreadArg *pArg);
 
-   bool handleIpcMsg(
-         int fdRds
-         );
+   bool handleIpcMsg(int fdRds, TOsIpcMsg msg);
+   bool getPipeMsg(int fdRdPipe);
 
    CBaPipe* mpRd; // server reads here
    CBaPipe* mpWr; // server writes here
