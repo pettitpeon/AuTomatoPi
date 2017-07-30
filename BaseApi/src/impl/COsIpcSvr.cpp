@@ -178,7 +178,7 @@ CBaPipePairSvr* CBaPipePairSvr::Create(const char *name, TBaCoreThreadFun rout) 
       return 0;
    }
 
-   if (!p->pIPCHandlerMsg || !p->pPollMsg) {
+   if (!p->mpIPCHandlerMsg || !p->mpPollMsg) {
       delete p;
       return 0;
    }
@@ -269,7 +269,7 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
       // wait for something to do...
       int nfds = epoll_wait(p->mFdEp, pEvents, MAXEVENTS, EPOLLTIMEOUTMS);
       if (nfds < 0) {
-         p->pPollMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+         p->mpPollMsg->SetDefLogF(eBaLogPrio_Error, TAG,
                "Error in epoll_wait: %s", strerror(errno));
          TRACE_("Error in epoll_wait: %s", strerror(errno));
          continue;
@@ -285,7 +285,7 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
          if (!(pEvents[i].events & EPOLLIN)) {
             // An error has occurred on this fd, or the socket is not
             // ready for reading (why were we notified then?)
-            p->pPollMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+            p->mpPollMsg->SetDefLogF(eBaLogPrio_Error, TAG,
                   "Error in epoll fd (%i): %s", pEvents[i].data.fd, strerror(errno));
             continue;
          }
@@ -297,11 +297,12 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
          int fd = pEvents[i].data.fd;
 
          if (p->getPipeMsg(fd)) {
-            TOsIpcMsg msg = p->mMsg;
-            p->handleIpcMsg(fd, msg);
-//            auto theasync = std::async(std::launch::async, [&p ,fd, msg] {
-//               return p->handleIpcMsg(fd, msg); }
-//            );
+            TOsIpcMsg *pMsg = new TOsIpcMsg();
+            *pMsg = p->mMsg;
+//            p->handleIpcMsg(fd, pMsg);
+            auto theasync = std::async(std::launch::async, [&p ,fd, pMsg] {
+               return p->handleIpcMsg(fd, pMsg); }
+            );
 
             std::cout << "before get" << std::endl;
 
@@ -315,7 +316,7 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
       }
 
       BaCoreMSleep(50);
-      p->pPollMsg->Reset();
+      p->mpPollMsg->Reset();
    }
 
    TRACE_("IPC sever exited successfully");
@@ -341,7 +342,7 @@ bool CBaPipePairSvr::getPipeMsg(int fdRdPipe) {
       rc = mpRd->Read(((char*) &mMsg) + offset, sz - offset);
       offset += rc;
       if (rc < 0 || offset > sz) {
-         pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+         mpIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
                "Unrecognizable IPC message(%i)", fdRdPipe);
          return false;
       }
@@ -350,7 +351,7 @@ bool CBaPipePairSvr::getPipeMsg(int fdRdPipe) {
 }
 
 //
-bool CBaPipePairSvr::handleIpcMsg(int fdRdPipe, TOsIpcMsg msg) {
+bool CBaPipePairSvr::handleIpcMsg(int fdRdPipe, TOsIpcMsg *pMsg) {
    std::cout << "Handling Msg" << std::endl;
    bool rc = 0;
 
@@ -384,26 +385,26 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRdPipe, TOsIpcMsg msg) {
 
    // Handle the command
    rc = false;
-   switch (msg.cmd) {
+   switch (pMsg->cmd) {
 
    // Server status
    case eOsIpcCmdGetSvrStatus:
-      msg.cmd = eOsIpcReplySvrRuns;
+      pMsg->cmd = eOsIpcReplySvrRuns;
       break;
 
    // Function call
    case eOsIpcCmdCall: {
-      msg.cmd = eOsIpcReplyCmdCall;
-      TOsIpcFunCallData *pFc = (TOsIpcFunCallData*) msg.dat.data;
-      TOsIpcArg ret = {0};
+      pMsg->cmd = eOsIpcReplyCmdCall;
+      TOsIpcFunCallData *pFc = (TOsIpcFunCallData*) pMsg->dat.data;
+      //TOsIpcArg ret = {0};
 
       // ToDo: This is a synchronous call. If the registered function hangs, it
       // will block the worker thread.
       // A possible solution is to save the state, process the call async, and
       // respond when it is done.
-      rc = COsIpcRegistry::SCallFun(pFc->name, pFc->a, (TOsIpcArg*)msg.dat.data);
+      rc = COsIpcRegistry::SCallFun(pFc->name, pFc->a, (TOsIpcArg*)pMsg->dat.data);
       if (!rc) {
-         pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
+         mpIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
                   "Bad function call(%s)", pFc->name);
       }
       break;
@@ -411,37 +412,41 @@ bool CBaPipePairSvr::handleIpcMsg(int fdRdPipe, TOsIpcMsg msg) {
 
    // Variable request
    case eOsIpcCmdGetVar: {
-      msg.cmd = eOsIpcReplyCmdGetVar;
-      rc = COsIpcRegistry::SCallVar(msg.dat.data, *(TOsIpcRegVarOut*)msg.dat.data);
+      pMsg->cmd = eOsIpcReplyCmdGetVar;
+      rc = COsIpcRegistry::SCallVar(pMsg->dat.data, *(TOsIpcRegVarOut*)pMsg->dat.data);
       if (!rc) {
-         pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
-                  "Bad variable call(%s)", msg.dat.data);
+         mpIPCHandlerMsg->SetDefLogF(eBaLogPrio_Trace, TAG,
+                  "Bad variable call(%s)", pMsg->dat.data);
       }
       break;
    }
    case eOsIpcCmdSetVar:
-      msg.cmd = eOsIpcReplyCmdSetVar;
+      pMsg->cmd = eOsIpcReplyCmdSetVar;
    break;
 
    // Error
    default:
-      msg.cmd = eOsIpcCmdError;
+      pMsg->cmd = eOsIpcCmdError;
       rc = false;
-      pIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
+      mpIPCHandlerMsg->SetDefLogF(eBaLogPrio_Error, TAG,
             "Unrecognizable IPC message(%i)", fdRdPipe);
    }
 
    // Write the answer on the pipe
-   pIPCHandlerMsg->Reset();
+   mpIPCHandlerMsg->Reset();
 
    // Critical section. Server could exit before this
    std::lock_guard<std::mutex> lck(sPipeSvrWrPipeMtx);
    if (!mpWr) {
+      delete pMsg;
       return false;
    }
 
    // todo: What does an error mean here?
-   return mpWr->Write((char*)&msg, sizeof(TOsIpcMsg)) && rc;
+   bool ret = mpWr->Write((char*)pMsg, sizeof(TOsIpcMsg)) && rc;
+
+   delete pMsg;
+   return ret;
 }
 
 /*------------------------------------------------------------------------------
