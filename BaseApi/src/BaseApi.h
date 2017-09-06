@@ -54,6 +54,16 @@ TBaBoolRC BaApiInitLoggerDef(
       );
 
 /******************************************************************************/
+/** Initializes the logger that will be used throughout this API with default
+ *  options.
+ *  @return Error or success
+ */
+TBaBoolRC BaApiInitLoggerDefPath(
+      const char* name, ///< [in] Name of the default logger
+      const char* path ///< [in] Path of the default logger
+      );
+
+/******************************************************************************/
 /** Initializes the logger that will be used throughout this API
  *  @return Error or success
  */

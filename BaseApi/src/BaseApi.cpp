@@ -53,15 +53,24 @@ static bool   sExtLogger = false;
  */
 
 //
-TBaBoolRC BaApiInitLoggerDef(const char* name) {
+TBaBoolRC BaApiInitLoggerDefPath(const char* name, const char* path) {
    if (spLog) {
       return eBaBoolRC_Success;
    } else if (!name) {
       return eBaBoolRC_Error;
    }
 
-   spLog = CBaLog::Create(name);
+   if (path) {
+      spLog = CBaLog::Create(name, path);
+   } else {
+      spLog = CBaLog::Create(name);
+   }
    return spLog ? eBaBoolRC_Success : eBaBoolRC_Error;
+}
+
+//
+TBaBoolRC BaApiInitLoggerDef(const char* name) {
+   return BaApiInitLoggerDefPath(name, 0);
 }
 
 //
