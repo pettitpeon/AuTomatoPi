@@ -21,6 +21,7 @@
 
 // Local includes
 #include "HwGpio.h"
+#include "HwPi.h"
 #include "BaCore.h"
 #include "BaGenMacros.h"
 
@@ -46,6 +47,7 @@
 // BCM Magic
 #define BCM_PASSWORD      0x5A000000
 // Offset to peripherals
+#define BCM2708_PERI_BASE_OLD  0x20000000
 #define BCM2708_PERI_BASE 0x3F000000
 #define TIMER_BASE        (BCM2708_PERI_BASE + 0x000B000)
 #define PADS_BASE         (BCM2708_PERI_BASE + 0x0100000)
@@ -148,6 +150,15 @@ TBaBoolRC HwGpioInit() {
    // Lock the region for concurrency RAII
    std::unique_lock<std::mutex> lck(sMtx);
 
+   EHwPiModel model = HwPiGetBoardModel();
+   uint32_t offset = 0;
+
+   // RPI 1 compatibility
+   if (model < eHwPiModelBp) {
+      offset = BCM2708_PERI_BASE - BCM2708_PERI_BASE_OLD;
+   }
+
+
    // Already init
    if (spGpio_map) {
 
@@ -159,18 +170,18 @@ TBaBoolRC HwGpioInit() {
       return eBaBoolRC_Success;
    }
 
-   spGpio_map = mapAddr(GPIO_BASE);
+   spGpio_map = mapAddr(GPIO_BASE - offset);
    if (spGpio_map == MAP_FAILED) {
       return eBaBoolRC_Error;
    }
 
-   spClk_map = mapAddr(CLOCK_BASE);
+   spClk_map = mapAddr(CLOCK_BASE - offset);
    if (spClk_map == MAP_FAILED) {
       unmapAddr(spGpio_map);
       return eBaBoolRC_Error;
    }
 
-   spPWM_map = mapAddr(PWM_BASE);
+   spPWM_map = mapAddr(PWM_BASE - offset);
    if (spPWM_map == MAP_FAILED) {
       unmapAddr(spGpio_map);
       unmapAddr(spClk_map);
@@ -669,13 +680,16 @@ public:
    }
 
    //
-   static bool Delete(IHwGpio *pHdl) {
+   static bool Delete(IHwGpio *pHdl, bool dirty = false) {
       CHwGpio *p = dynamic_cast<CHwGpio*>(pHdl);
       if (!p ) {
          return false;
       }
 
-      HwGpioCleanUp(p->mGpioNo);
+      if (!dirty) {
+         HwGpioCleanUp(p->mGpioNo);
+      }
+
       HwGpioExit();
       if (p->mpLock != SEM_FAILED) {
 #ifdef __linux
@@ -873,6 +887,11 @@ IHwGpio* IHwGpioCreate(THwGpio gpio) {
 //
 TBaBoolRC IHwGpioDelete(IHwGpio* pHdl) {
    return CHwGpio::Delete(pHdl);
+}
+
+//
+TBaBoolRC IHwGpioDeleteDirty(IHwGpio* pHdl) {
+   return CHwGpio::Delete(pHdl, true);
 }
 
 

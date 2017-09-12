@@ -245,6 +245,16 @@ IHwGpio* IHwGpioCreate(
 TBaBoolRC IHwGpioDelete(
       IHwGpio* pHdl ///< [in] Interface handle
       );
+
+/******************************************************************************/
+/** C++ interface object oriented destructor. This destructor does not clean up
+ *  the gpio state, eg, it stays on after destruction.
+ *  @return Error or success
+ */
+TBaBoolRC IHwGpioDeleteDirty(
+      IHwGpio* pHdl ///< [in] Interface handle
+      );
+
 //@} C-Linkage OO factory
 
 #ifdef __cplusplus
