@@ -363,6 +363,14 @@ extern "C" IBaLog * IBaLogCreate(
       );
 
 /******************************************************************************/
+/** Create factory for a logger from previously closed logger.
+ *  @return Handle if success, otherwise, null
+ */
+extern "C" IBaLog * IBaLogCreateCFG(
+      const char *cfgFile ///< [in] Path to CFG file
+      );
+
+/******************************************************************************/
 /** Destroy and release resources of logger
  *  @return True if success, otherwise, false
  */
