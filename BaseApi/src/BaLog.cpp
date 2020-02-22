@@ -180,6 +180,11 @@ IBaLog * IBaLogCreate(const TBaLogOptions *pOpts) {
 }
 
 //
+IBaLog * IBaLogCreateCFG(const char *cfgFile) {
+   return CBaLog::CreateFromCfg(cfgFile);
+}
+
+//
 TBaBoolRC IBaLogDestroy(IBaLog *pHdl, TBaBool saveCfg) {
    CBaLog *p = dynamic_cast<CBaLog*>(pHdl);
    if (!p) {

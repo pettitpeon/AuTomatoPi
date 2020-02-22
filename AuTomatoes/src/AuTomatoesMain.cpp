@@ -32,15 +32,19 @@ int main() {
 	TOsProcCtrlTaskOpts ctrlOpts = {0};
 	ctrlOpts.name = "AuTomatoes";
 	ctrlOpts.prio = eBaCorePrio_RT_Normal;
-	ctrlOpts.cyleTimeUs = 1000000; // 1s
+	ctrlOpts.cyleTimeUs = 500000; // 500ms
 
 	// Callbacks
 	ctrlOpts.init = ApplInit;
 	ctrlOpts.update = ApplUpd;
 	ctrlOpts.exit = ApplExit;
 
-	OsProcStartCtrlTask(&ctrlOpts);
-	BaCoreSleep(10);
+	OsProcStartCtrlThread(&ctrlOpts);
+
+
+	BaCoreSleep(5000);
+
+	OsProcStopCtrlThread();
 
 	TRACE_("Main exit");
 	BaApiExitLogger();

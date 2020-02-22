@@ -134,20 +134,19 @@ public:
 
    CBaPipePairSvr() : mpRd(0), mpWr(0), mFdEp(0), mTh(0), mThArg{0}, mEv{0},
          mMsg{0}, mSvrRunning(eBaBool_false),
-         pIPCHandlerMsg(IBaMsgCreate()), pPollMsg(IBaMsgCreate()) {};
+         mpIPCHandlerMsg(IBaMsgCreate()), mpPollMsg(IBaMsgCreate()) {};
 
    // Typical object oriented destructor must be virtual!
    virtual ~CBaPipePairSvr() {
-      IBaMsgDestroy(pIPCHandlerMsg);
-      IBaMsgDestroy(pPollMsg);
+      IBaMsgDestroy(mpIPCHandlerMsg);
+      IBaMsgDestroy(mpPollMsg);
    };
 
 private:
    static void svrRout(TBaCoreThreadArg *pArg);
 
-   bool handleIpcMsg(
-         int fdRds
-         );
+   bool handleIpcMsg(int fdRds, TOsIpcMsg *pMsg);
+   bool getPipeMsg(int fdRdPipe);
 
    CBaPipe* mpRd; // server reads here
    CBaPipe* mpWr; // server writes here
@@ -160,8 +159,8 @@ private:
 
    volatile TBaBool mSvrRunning;
 
-   IBaMsg *pIPCHandlerMsg;
-   IBaMsg *pPollMsg;
+   IBaMsg *mpIPCHandlerMsg;
+   IBaMsg *mpPollMsg;
 //   IBaMsg *pMsg;
 
 };

@@ -25,6 +25,7 @@
 #include "BaBool.h"
 #include "BaCore.h"
 #include "BaLog.h"
+#include <sys/types.h>
 
 /*------------------------------------------------------------------------------
     Defines
@@ -39,7 +40,7 @@
 typedef struct TOsProcCtrlTaskOpts {
    const char* name; ///< Task name
    EBaCorePrio prio; ///< Task priority
-   uint32_t cyleTimeUs; ///< Desired cycle time in ms
+   uint32_t cyleTimeUs; ///< Desired cycle time in us
    TBaLogDesc log; ///< The logger descriptor union (optional). If null def is used
 
    // Control task callbacks
