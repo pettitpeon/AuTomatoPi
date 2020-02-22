@@ -18,17 +18,31 @@
 #include "OsProc.h"
 #include "HwGpio.h"
 
-#define TAG "APPL"
+#define TAG "AUTOM"
+#define APPL_NAME "AuTomato PI"
 
 //
 static TOsProcCtrlTaskStats taskStats = {0};
 static IHwGpio* pGpio23 = 0;
 
+//
 TBaBoolRC ApplInit(void *pArg) {
-   TRACE_("Init");
+   TOsProcCtrlTaskOpts* pOpts = static_cast<TOsProcCtrlTaskOpts*>(pArg);
+
+   if (!pOpts || !pOpts->name)
+   {
+      ERROR_("No app name");
+   }
+
+   TRACE_(pOpts->name);
+
    pGpio23 = IHwGpioCreate(23);
-   TRACE_("Init: %p", pGpio23);
-   pGpio23->SetInp();
+   if (!pGpio23 || !pGpio23->SetInp())
+   {
+	   return eBaBoolRC_Error;
+   }
+
+   TRACE_("Init successful");
    return eBaBoolRC_Success;
 }
 

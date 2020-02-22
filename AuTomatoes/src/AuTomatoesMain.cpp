@@ -36,6 +36,7 @@ int main() {
 
 	// Callbacks
 	ctrlOpts.init = ApplInit;
+	ctrlOpts.initArg = &ctrlOpts;
 	ctrlOpts.update = ApplUpd;
 	ctrlOpts.exit = ApplExit;
 
@@ -43,9 +44,7 @@ int main() {
 
 
 	BaCoreSleep(5000);
-
 	OsProcStopCtrlThread();
-
 	TRACE_("Main exit");
 	BaApiExitLogger();
 	return 0;
