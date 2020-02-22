@@ -34,12 +34,22 @@ TBaBoolRC ApplInit(void *pArg) {
       ERROR_("No app name");
    }
 
+   TRACE_("========================");
    TRACE_(pOpts->name);
+   TRACE_("========================");
 
    pGpio23 = IHwGpioCreate(23);
-   if (!pGpio23 || !pGpio23->SetInp())
-   {
-	   return eBaBoolRC_Error;
+   if (!pGpio23) {
+      // Try again, it might have been dirty
+      pGpio23 = IHwGpioCreate(23);
+
+      if (!pGpio23) {
+         return eBaBoolRC_Error;
+      }
+   }
+
+   if (!pGpio23->SetInp()) {
+            return eBaBoolRC_Error;
    }
 
    TRACE_("Init successful");

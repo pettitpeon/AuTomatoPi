@@ -21,23 +21,26 @@
 //Todo: naming convention
 
 // One Wire Bus
-#define BUS1W    04
-#define W1TEMPFAM 28
+#define BA_BUS1W    04
+#define BA_W1TEMPFAM 28
 
 // Serial Interface
-#define SERTXD0  14
-#define SERRXD0  15
-#define SER_ALT   0
+#define BA_SERTXD0  14
+#define BA_SERRXD0  15
+#define BA_SER_ALT   0
 
 // I2C GPIOs
-#define I2CSDA1  02
-#define I2CSCL1  03
-#define I2C_ALT   0
+#define BA_I2CSDA1  02
+#define BA_I2CSCL1  03
+#define BA_I2C_ALT   0
 
 // Hardware PWM
-#define PWM0     18
-#define PWM0_ALT  5
-#define PWM1     19 // Not sure
-#define PWM1_ALT  5
+#define BA_PWM0     18
+#define BA_PWM0_ALT  5
+#define BA_PWM1     19 // Not sure
+#define BA_PWM1_ALT  5
+
+// GPIOS
+
 
 #endif // HWGPIOPINOUT_H_

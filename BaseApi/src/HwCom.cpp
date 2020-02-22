@@ -59,8 +59,8 @@ typedef struct TSerialDesc {
    IHwGpio *pRXD0;
 
    TSerialDesc() : fd(0), pTXD0(0), pRXD0(0) {
-      pTXD0 = IHwGpioCreate(SERTXD0);
-      pRXD0 = IHwGpioCreate(SERRXD0);
+      pTXD0 = IHwGpioCreate(BA_SERTXD0);
+      pRXD0 = IHwGpioCreate(BA_SERRXD0);
    }
    ~TSerialDesc() {
       IHwGpioDelete(pTXD0);
@@ -150,12 +150,12 @@ TBaBoolRC HwComI2CInit() {
    EHwPiModel mod = HwPiGetBoardModel();
    const char* dev = mod < eHwPiModel2 ? "/dev/i2c-0" : "/dev/i2c-1";
 
-   sI2cHdl.pSDA = IHwGpioCreate(I2CSDA1);
+   sI2cHdl.pSDA = IHwGpioCreate(BA_I2CSDA1);
    if(!sI2cHdl.pSDA) {
       return eBaBoolRC_Error;
    }
 
-   sI2cHdl.pSCL = IHwGpioCreate(I2CSCL1);
+   sI2cHdl.pSCL = IHwGpioCreate(BA_I2CSCL1);
    if(!sI2cHdl.pSCL) {
       IHwGpioDelete(sI2cHdl.pSDA);
       sI2cHdl.pSDA = 0;
@@ -423,7 +423,7 @@ TBaBoolRC HwCom1WInit() {
    }
 
    // This reserves the GPIO in the c++ interface
-   sp1w = IHwGpioCreate(BUS1W);
+   sp1w = IHwGpioCreate(BA_BUS1W);
    if (!sp1w) {
       return eBaBoolRC_Error;
    }
@@ -606,7 +606,7 @@ float HwCom1WGetTemp(const char* serNo, TBaBool *pError) {
       return ERRTEMP;
    }
 
-   T1wDev *pDev = serNo ? w1GetDev(serNo) : w1GetFirstFamDev(W1TEMPFAM);
+   T1wDev *pDev = serNo ? w1GetDev(serNo) : w1GetFirstFamDev(BA_W1TEMPFAM);
 
    if (!w1ReadDevice(pDev, contents)) {
       *pError = eBaBool_true;
@@ -659,8 +659,8 @@ THwComSerHdl HwComSerInit(const char *dev, EHwComBaud baud) {
       return 0;
    }
 
-   p->pTXD0->SetAlt(SER_ALT);
-   p->pRXD0->SetAlt(SER_ALT);
+   p->pTXD0->SetAlt(BA_SER_ALT);
+   p->pRXD0->SetAlt(BA_SER_ALT);
 
    fcntl(p->fd, F_SETFL, O_RDWR) ;
 

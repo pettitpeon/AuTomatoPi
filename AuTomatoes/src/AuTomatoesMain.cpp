@@ -25,9 +25,6 @@
 
 int main() {
 	BaApiInitLoggerDef("AuTomatoesLog");
-	TRACE_("========================");
-	TRACE_("====== AuTomatoes ======");
-	TRACE_("========================");
 
 	TOsProcCtrlTaskOpts ctrlOpts = {0};
 	ctrlOpts.name = "AuTomatoes";

@@ -686,6 +686,7 @@ public:
          return false;
       }
 
+      // If dirty flag, do not cleanup
       if (!dirty) {
          HwGpioCleanUp(p->mGpioNo);
       }
@@ -703,7 +704,7 @@ public:
    }
 
    // Worker thread routine
-   LOCAL void SleepLEDRoutine(TBaCoreThreadArg *pArg) {
+   static void SleepLEDRoutine(TBaCoreThreadArg *pArg) {
       CHwGpio *pGpio = ((TSleepLED*)pArg->pArg)->pGpio;
       float &rCylcleS = ((TSleepLED*)pArg->pArg)->sCycleS;
       for (int i = 0; !pArg->exitTh; ++i) {
