@@ -210,6 +210,7 @@ void COsProcTest::ControlThread() {
    CPPUNIT_ASSERT(!OsProcGetCtrlThreadStats(0));
    CPPUNIT_ASSERT(OsProcGetCtrlThreadStats(&stats));
    CPPUNIT_ASSERT(stats.imRunning);
+   ASS(stats.updCnt > 0);
 
    CPPUNIT_ASSERT(OsProcStopCtrlThread());
    CPPUNIT_ASSERT(OsProcGetCtrlThreadStats(&stats));
