@@ -128,10 +128,10 @@ LOCAL CPPUNIT_NS::TestSuite* AddSuites(CPPUNIT_NS::TestSuite* pSuite) {
 //   pSuite->addTest(CBaMsgTest::suite());
 //   pSuite->addTest(CBaseApiTest::suite());
 //   pSuite->addTest(CBaUtilsTest::suite());
-   pSuite->addTest(COsProcTest::suite());
+//   pSuite->addTest(COsProcTest::suite());
 //   pSuite->addTest(CCtrlPT1Test::suite());
 //   pSuite->addTest(CBaSwOsciTest::suite());
-//   pSuite->addTest(CHwComTest::suite());
+   pSuite->addTest(CHwComTest::suite());
 //   pSuite->addTest(CHwGpioTest::suite());
 //   pSuite->addTest(CHwPiTest::suite());
 //   pSuite->addTest(COsIpcTest::suite());

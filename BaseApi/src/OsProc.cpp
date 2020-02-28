@@ -707,13 +707,14 @@ LOCAL void ctrlThreadRout(TBaCoreThreadArg* pArg) {
    IBaMsg *pThreadCycleMsg = IBaMsgCreate();
 
    // This is the actual control loop ////////////////////////////////////
-   for ( ; !sExitThread; sThreadStats.updCnt++, cycleCumUs += LASTCYCLE_US) {
+   for ( ; !sExitThread; cycleCumUs += LASTCYCLE_US) {
       start = std::chrono::steady_clock::now();
 
       // The cycle time has elapsed. Call update
       if (cycleCumUs >= sampTimeUs) {
          sThreadStats.lastCycleUs = cycleCumUs;
          sThreadStats.lastDurUs = BaCoreTimedUs(update, updateArg);
+         ++sThreadStats.updCnt;
 
          // The new cumulated cycle is
          cycleCumUs = (cycleCumUs - sampTimeUs);

@@ -661,6 +661,9 @@ public:
       if (p) {
          std::string name = "/GPIO_" + std::to_string(gpioNo);
 #ifdef __linux
+         sem_unlink(name.c_str());
+         sem_close(p->mpLock);
+
          p->mpLock = sem_open(name.c_str(), O_CREAT, WRR_, 1);
 
          // Check if we can own this GPIO and lock it

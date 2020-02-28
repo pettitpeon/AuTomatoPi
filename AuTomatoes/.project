@@ -3,7 +3,6 @@
 	<name>AuTomatoes</name>
 	<comment></comment>
 	<projects>
-		<project>BaseApi</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

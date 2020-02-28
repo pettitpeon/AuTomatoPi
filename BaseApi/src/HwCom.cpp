@@ -337,7 +337,7 @@ TBaBoolRC HwComI2CWriteReg8(uint32_t reg, uint8_t val) {
    }
 
    UI2cData data = {0};
-   data.word = val;
+   data.byte = val;
 
    if(i2cAccess(sI2cHdl.fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BYTE_DATA, &data) < 0) {
       return eBaBoolRC_Error;

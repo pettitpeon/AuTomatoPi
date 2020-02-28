@@ -29,7 +29,7 @@ int main() {
 	TOsProcCtrlTaskOpts ctrlOpts = {0};
 	ctrlOpts.name = "AuTomatoes";
 	ctrlOpts.prio = eBaCorePrio_RT_Normal;
-	ctrlOpts.cyleTimeUs = 500000; // 500ms
+	ctrlOpts.cyleTimeUs = 1000000; // 1s
 
 	// Callbacks
 	ctrlOpts.init = ApplInit;
@@ -38,7 +38,6 @@ int main() {
 	ctrlOpts.exit = ApplExit;
 
 	OsProcStartCtrlThread(&ctrlOpts);
-
 
 	BaCoreSleep(5000);
 	OsProcStopCtrlThread();
