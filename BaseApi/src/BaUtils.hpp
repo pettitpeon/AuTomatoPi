@@ -32,6 +32,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iterator>
+#include <type_traits>
 
 #include "BaBool.h"
 
@@ -340,6 +341,18 @@ static inline T BaToNumber(
    }
 
    return res;
+}
+
+/**
+ * Converts an enum to its corresponding integral type
+ * @return
+ */
+template<typename E>
+constexpr auto BaToUnderlying(
+      E e ///< [in] Enum to convert
+      ) -> typename std::underlying_type<E>::type
+{
+   return static_cast<typename std::underlying_type<E>::type>(e);
 }
 
 /******************************************************************************/

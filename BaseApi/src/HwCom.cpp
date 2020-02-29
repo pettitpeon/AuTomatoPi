@@ -200,6 +200,7 @@ TBaBoolRC HwComI2CExit() {
 }
 
 TBaBoolRC HwComI2CSelectDev(uint16_t devAddr) {
+   static uint16_t activeAddr = 0;
    if (!sI2cHdl.fd) {
       if (!HwComI2CInit()) {
          return eBaBoolRC_Error;
@@ -207,11 +208,17 @@ TBaBoolRC HwComI2CSelectDev(uint16_t devAddr) {
    }
 
    std::lock_guard<std::mutex> lck(sI2cHdl.mtx);
-   if (ioctl (sI2cHdl.fd, I2C_SLAVE, devAddr) < 0) {
+   if (activeAddr == devAddr) {
+      return eBaBoolRC_Success;
+   }
+
+   if (ioctl(sI2cHdl.fd, I2C_SLAVE, devAddr) < 0) {
       WARN_("Unable to select I2C device(%x): %s", devAddr, strerror(errno));
+      activeAddr == 0;
       return eBaBoolRC_Error;
    }
 
+   activeAddr = devAddr;
    return eBaBoolRC_Success;
 }
 
