@@ -18,6 +18,7 @@
 #include "OsProc.h"
 #include "HwGpio.h"
 #include "SensAds1115.h"
+#include "OsIpc.h"
 
 #include <linux/i2c-dev.h> // I2C bus definitions
 #include <fcntl.h>     // open
@@ -40,6 +41,8 @@ constexpr int ADS1115_CONF = 1;
 constexpr float CAPT_TO_VOLT = 6.144/32767.0;
 
 SensAds1115 ADC(ADS1115_ADR, SensAds1115::Mode::Continuous, SensAds1115::SampsRate::SR128);
+
+float LAST_CONVERSION = 0;
 }
 
 //
@@ -49,6 +52,29 @@ TBaBoolRC ApplInit(void *pArg) {
    if (!pOpts || !pOpts->name)
    {
       ERROR_("No app name");
+   }
+
+   if (!OsIpcInitSvr())
+   {
+      ERROR_("OsIpcInitSvr");
+      return eBaBoolRC_Error;
+   }
+
+   if (!OsIpcRegistryLocalInit())
+   {
+      OsIpcExitSvr();
+      ERROR_("OsIpcRegistryLocalInit");
+      return eBaBoolRC_Error;
+   }
+
+   TOsIpcRegVar var = {&LAST_CONVERSION, sizeof(LAST_CONVERSION), false};
+
+   if (!OsIpcRegistryLocalRegisterVar("last_conversion", &var))
+   {
+      OsIpcRegistryLocalExit();
+      OsIpcExitSvr();
+      ERROR_("OsIpcRegistryLocalRegisterVar");
+      return eBaBoolRC_Error;
    }
 
    TRACE_("========================");
@@ -70,6 +96,8 @@ TBaBoolRC ApplInit(void *pArg) {
    }
 
    ADC.Init();
+
+   OsIpcInitSvr();
 
    TRACE_("Init successful");
    return eBaBoolRC_Success;
