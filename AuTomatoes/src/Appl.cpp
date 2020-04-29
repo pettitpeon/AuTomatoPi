@@ -31,9 +31,10 @@
 //
 namespace {
 TOsProcCtrlTaskStats taskStats = {0};
-IHwGpio* pGpio23 = 0;
+constexpr auto LEDsCNT = 4;
+IHwGpio* pGpios23_25[LEDsCNT] = {0, 0, 0, 0};
+constexpr int GPIOS_23_26[LEDsCNT] = {23, 24, 25, 26};
 constexpr int ADS1115_ADR = 0x48;
-constexpr int GPIO_23 = 23;
 constexpr int ADS1115_CONV = 0;
 constexpr int ADS1115_CONF = 1;
 constexpr float CAPT_TO_VOLT = 6.144/32767.0;
@@ -54,13 +55,18 @@ TBaBoolRC ApplInit(void *pArg) {
    TRACE_(pOpts->name);
    TRACE_("========================");
 
-   pGpio23 = IHwGpioCreate(GPIO_23);
-   if (!pGpio23) {
-      return eBaBoolRC_Error;
-   }
+   for (int i = 0; i < LEDsCNT; ++i)
+   {
+      pGpios23_25[i] = IHwGpioCreate(GPIOS_23_26[i]);
+      if (!pGpios23_25[i]) {
+         return eBaBoolRC_Error;
+      }
 
-   if (!pGpio23->SetInp()) {
-      return eBaBoolRC_Error;
+      if (!pGpios23_25[i]->SetOut()) {
+         return eBaBoolRC_Error;
+      }
+
+      pGpios23_25[i]->Set();
    }
 
    ADC.Init();
@@ -79,8 +85,19 @@ void ApplUpd(void *pArg) {
       TRACE_("Read conversion failed");
    }
 
-   TRACE_("Log % 3llu, GPIO_23: %i, Value: %4.3f V."
-            , taskStats.updCnt, pGpio23->Get(), volts);
+   for (int i = 0; i < LEDsCNT; ++i)
+   {
+      if (volts >= i + 1) {
+         pGpios23_25[i]->Reset();
+      }
+      else {
+         pGpios23_25[i]->Set();
+      }
+   }
+
+   TRACE_("Log %3llu, Value: %4.3f V." ,taskStats.updCnt, volts);
+
+   BaApiFlushLog();
 
 }
 

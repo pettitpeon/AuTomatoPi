@@ -90,6 +90,11 @@ TBaBoolRC BaApiLogF(
       ... ///< [in] Variable arguments
       );
 
+/******************************************************************************/
+/** Flush the default logger
+ */
+TBaBoolRC BaApiFlushLog();
+
 
 #ifdef __cplusplus
 } // extern c

@@ -13,6 +13,7 @@
 #include "SensAds1115.h"
 #include "HwCom.h"
 #include "BaUtils.hpp"
+#include "BaLogMacros.h"
 
 #include <array>
 #include <byteswap.h>
@@ -21,6 +22,7 @@
 /*------------------------------------------------------------------------------
     Defines
  -----------------------------------------------------------------------------*/
+#define TAG "HwCom"
 
 /*------------------------------------------------------------------------------
     Type definitions
@@ -106,7 +108,7 @@ float SensAds1115::Capture(AnInput in, Gain gain, TBaBool *pError) {
       return 0;
    }
 
-   return bswap_16(HwComI2CReadReg16(READ_REG, pError)) * CAP_TO_VOLT[BaToUnderlying(gain)];
+   return (int16_t)bswap_16(HwComI2CReadReg16(READ_REG, pError)) * CAP_TO_VOLT[BaToUnderlying(gain)];
 }
 
 SensAds1115::~SensAds1115() {

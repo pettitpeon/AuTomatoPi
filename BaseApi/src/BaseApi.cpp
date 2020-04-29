@@ -120,6 +120,17 @@ TBaBoolRC BaApiLogF(EBaLogPrio prio, const char* tag, const char* fmt, ...) {
    return ret;
 }
 
+//
+TBaBoolRC BaApiFlushLog() {
+   if (!spLog) {
+      return eBaBoolRC_Error;
+   }
+
+   spLog->Flush();
+
+   return eBaBoolRC_Success;
+}
+
 
 
 

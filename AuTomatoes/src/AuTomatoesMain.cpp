@@ -29,7 +29,7 @@ int main() {
 	TOsProcCtrlTaskOpts ctrlOpts = {0};
 	ctrlOpts.name = "AuTomatoes";
 	ctrlOpts.prio = eBaCorePrio_RT_Normal;
-	ctrlOpts.cyleTimeUs = 1000000; // 1s
+	ctrlOpts.cyleTimeUs = 2000000; // 2s
 
 	// Callbacks
 	ctrlOpts.init = ApplInit;
