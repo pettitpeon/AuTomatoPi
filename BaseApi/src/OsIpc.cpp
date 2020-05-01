@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <mutex>
+#include <poll.h>
 
 #include "OsIpc.h"
 #include "COsIpcSvr.h"
@@ -54,7 +55,6 @@ LOCAL TBaBoolRC writeClntPipe(const char* pData, size_t sz);
  -----------------------------------------------------------------------------*/
 static int sClntRdFifo = -1;
 static int sClntWrFifo = -1;
-static IBaMsg *spClntRdMsg = 0;
 static IBaMsg *spClntWrMsg = 0;
 
 static TPipeSvr sPipeSvr;
@@ -96,13 +96,12 @@ TBaBoolRC OsIpcExitSvr() {
  *  CLIENT side
  ******************************************************************************/
 TBaBoolRC OsIpcInitClnt() {
-   if (sClntRdFifo != -1 && sClntWrFifo != -1 && spClntRdMsg && spClntWrMsg) {
+   if (sClntRdFifo != -1 && sClntWrFifo != -1 && spClntWrMsg) {
       return eBaBoolRC_Success;
    }
 
-   spClntRdMsg = spClntRdMsg ? spClntRdMsg : IBaMsgCreate();
    spClntWrMsg = spClntWrMsg ? spClntWrMsg : IBaMsgCreate();
-   if (!spClntRdMsg || !spClntWrMsg) {
+   if (!spClntWrMsg) {
       return eBaBoolRC_Error;
    }
 
@@ -128,13 +127,11 @@ TBaBoolRC OsIpcInitClnt() {
    // Check if the server is running
    writeClntPipe((const char*)&msg, sizeof(TOsIpcMsg));
 
-   for (int i = 1; i < 50; ++i) {
-      BaCoreMSleep(20);
-      readClntPipe((char*)&msg, sizeof(TOsIpcMsg));
-      if (msg.cmd == eOsIpcReplySvrRuns) {
-         TRACE_("Server is running");
-         return eBaBoolRC_Success;
-      }
+   // Read reply
+   readClntPipe((char*)&msg, sizeof(TOsIpcMsg));
+   if (msg.cmd == eOsIpcReplySvrRuns) {
+      TRACE_("Server is running");
+      return eBaBoolRC_Success;
    }
 
    TRACE_("Server is not running");
@@ -157,9 +154,7 @@ TBaBoolRC OsIpcExitClnt() {
    sClntRdFifo = -1;
    sClntWrFifo = -1;
 
-   IBaMsgDestroy(spClntRdMsg);
    IBaMsgDestroy(spClntWrMsg);
-   spClntRdMsg = 0;
    spClntWrMsg = 0;
 
    return !rc ? eBaBoolRC_Success : eBaBoolRC_Error;
@@ -192,16 +187,12 @@ TBaBoolRC OsIpcCallFun(const char* name, TOsIpcFunArg a, TOsIpcArg *pRet) {
    // Erase the message to reuse it
    memset(msg.dat.data, 0, sizeof(msg.dat.data));
 
-   // Wait for reply
-   for (int i = 0; i < WAITRPLY; ++i) {
-      if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdCall) {
+   // Read reply
+   if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdCall) {
 
-         // Copy data to return value
-         *pRet = *((TOsIpcArg*)msg.dat.data);
-         return eBaBoolRC_Success;
-      }
-
-      BaCoreMSleep(10);
+      // Copy data to return value
+      *pRet = *((TOsIpcArg*)msg.dat.data);
+      return eBaBoolRC_Success;
    }
 
    WARN_("CallFun: No reply from server");
@@ -232,21 +223,16 @@ TBaBoolRC OsIpcCallVar(const char* name, TOsIpcRegVarOut *pVar) {
    // Erase message for reuse
    memset(msg.dat.data, 0, sizeof(msg.dat.data));
 
-   // Wait 1s for reply
-   for (int i = 0; i < WAITRPLY; ++i) {
-      if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdGetVar) {
 
-         // capture reply
-         TOsIpcRegVarOut *p = (TOsIpcRegVarOut *)msg.dat.data;
-         if (p->sz > OSIPC_MAXVARSZ) {
-            return eBaBoolRC_Error;
-         }
-
-         memcpy(pVar, msg.dat.data, sizeof(TOsIpcRegVarOut));
-         return eBaBoolRC_Success;
+   if (readClntPipe((char*)&msg, sizeof(TOsIpcMsg)) && msg.cmd == eOsIpcReplyCmdGetVar) {
+      // capture reply
+      TOsIpcRegVarOut *p = (TOsIpcRegVarOut *)msg.dat.data;
+      if (p->sz > OSIPC_MAXVARSZ) {
+         return eBaBoolRC_Error;
       }
 
-      BaCoreMSleep(10);
+      memcpy(pVar, msg.dat.data, sizeof(TOsIpcRegVarOut));
+      return eBaBoolRC_Success;
    }
 
    WARN_("CallVar: No reply from server");
@@ -259,6 +245,18 @@ LOCAL TBaBoolRC readClntPipe(char* pData, size_t size) {
       return eBaBoolRC_Error;
    }
 
+   pollfd pfds[1] = {{0, 0, 0}};
+   pfds[0].fd = sClntRdFifo;
+   pfds[0].events |= POLLIN;
+   constexpr auto timeoutMs = 100;
+
+   // Poll for read ready (POLLIN)
+   if (!poll(pfds, 1, timeoutMs))
+   {
+      TRACE_("poll timeout (fd %i)", sClntRdFifo);
+      return eBaBoolRC_Error;
+   }
+
    // If not all was read at once, continue reading
    size_t rc = 0;
    size_t offset = 0;
@@ -266,13 +264,11 @@ LOCAL TBaBoolRC readClntPipe(char* pData, size_t size) {
       rc = read(sClntRdFifo, pData + offset, size - offset);
       offset += rc;
       if (rc < 0 || offset > size) {
-         spClntRdMsg->SetDefLogF(eBaLogPrio_Warning, TAG,
-               "Read failed(fd %i): %s", sClntRdFifo, strerror(errno));
+         TRACE_("Read failed(fd %i): %s", sClntRdFifo, strerror(errno));
          return eBaBoolRC_Error;
       }
    } while (rc != 0);
 
-   spClntRdMsg->Reset();
    return eBaBoolRC_Success;
 }
 

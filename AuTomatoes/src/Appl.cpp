@@ -97,8 +97,6 @@ TBaBoolRC ApplInit(void *pArg) {
 
    ADC.Init();
 
-   OsIpcInitSvr();
-
    TRACE_("Init successful");
    return eBaBoolRC_Success;
 }
@@ -107,7 +105,7 @@ TBaBoolRC ApplInit(void *pArg) {
 void ApplUpd(void *pArg) {
    OsProcGetCtrlThreadStats(&taskStats);
    TBaBool err = eBaBool_false;
-   float volts = ADC.Capture(SensAds1115::AnInput::AnIn1, SensAds1115::Gain::Max6_144V, &err);
+   LAST_CONVERSION = ADC.Capture(SensAds1115::AnInput::AnIn1, SensAds1115::Gain::Max6_144V, &err);
 
    if (err) {
       TRACE_("Read conversion failed");
@@ -115,7 +113,7 @@ void ApplUpd(void *pArg) {
 
    for (int i = 0; i < LEDsCNT; ++i)
    {
-      if (volts >= i + 1) {
+      if (LAST_CONVERSION >= i + 1) {
          pGpios23_25[i]->Reset();
       }
       else {
@@ -123,7 +121,7 @@ void ApplUpd(void *pArg) {
       }
    }
 
-   TRACE_("Log %3llu, Value: %4.3f V." ,taskStats.updCnt, volts);
+   TRACE_("Log %3llu, Value: %4.3f V." ,taskStats.updCnt, LAST_CONVERSION);
 
    BaApiFlushLog();
 

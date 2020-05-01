@@ -304,13 +304,10 @@ void CBaPipePairSvr::svrRout(TBaCoreThreadArg *pArg) {
                return p->handleIpcMsg(fd, pMsg); }
             );
 
-            std::cout << "before get" << std::endl;
-
             //todo delete
 //            BaCoreMSleep(100);
             //theasync.get();
 
-            std::cout << "after get" << std::endl;
          }
 
       }
@@ -352,7 +349,6 @@ bool CBaPipePairSvr::getPipeMsg(int fdRdPipe) {
 
 //
 bool CBaPipePairSvr::handleIpcMsg(int fdRdPipe, TOsIpcMsg *pMsg) {
-   std::cout << "Handling Msg" << std::endl;
    bool rc = 0;
 
 //   if (fdRdPipe == -1) {
