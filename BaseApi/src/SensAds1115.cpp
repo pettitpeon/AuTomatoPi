@@ -76,7 +76,7 @@ bool SensAds1115::Init() {
    return true;
 }
 
-float SensAds1115::Capture(AnInput in, Gain gain, TBaBool *pError) {
+TBaBoolRC SensAds1115::Config(AnInput in, Gain gain) {
    //        0x83c0         = 0b1000'0011'1100'0000;
    //  5 Data rate -128-samps/s-^^^| |||| |||| ||||
    //  4 Comp Mode -Traditional----+ |||| |||| ||||
@@ -88,9 +88,6 @@ float SensAds1115::Capture(AnInput in, Gain gain, TBaBool *pError) {
    //  9 Gain -6.144V--------------------------+++|
    //  8 Op mode -Continuous-conversion-----------+
 
-   constexpr auto READ_REG = 0;
-   constexpr auto CONF_REG = 1;
-
    uint8_t sampsRateAndComp = (BaToUnderlying(mSampsRate) << 5u) | 0b00011;
    uint16_t opts = 0b10000000; // start capture
    opts |= (BaToUnderlying(in) + 4) << 4u; // ADC Input
@@ -99,8 +96,18 @@ float SensAds1115::Capture(AnInput in, Gain gain, TBaBool *pError) {
 
    opts |= (sampsRateAndComp << 8u); // Combine both bytes
 
+   TRACE_("input %i", (uint16_t)((BaToUnderlying(in) + 4)));
+
    // Todo: lock interface?
-   if (!HwComI2CSelectDev(mAddr) || !HwComI2CWriteReg16(CONF_REG, opts)) {
+   if (!HwComI2CSelectDev(mAddr) || !HwComI2CWriteReg16(ADS1115_CONF, opts)) {
+      return eBaBoolRC_Error;
+   }
+
+   return eBaBoolRC_Success;
+}
+
+float SensAds1115::ConfigCapture(AnInput in, Gain gain, TBaBool *pError) {
+   if (!Config(in, gain)) {
       if (pError) {
          *pError = eBaBool_true;
       }
@@ -108,7 +115,13 @@ float SensAds1115::Capture(AnInput in, Gain gain, TBaBool *pError) {
       return 0;
    }
 
-   return (int16_t)bswap_16(HwComI2CReadReg16(READ_REG, pError)) * CAP_TO_VOLT[BaToUnderlying(gain)];
+   // Gotta sleep between writing config and reading capture
+   BaCoreMSleep(15);
+   return Capture(gain, pError);
+}
+
+float SensAds1115::Capture(Gain gain, TBaBool *pError) {
+   return (int16_t)bswap_16(HwComI2CReadReg16(ADS1115_CONV, pError)) * CAP_TO_VOLT[BaToUnderlying(gain)];
 }
 
 SensAds1115::~SensAds1115() {

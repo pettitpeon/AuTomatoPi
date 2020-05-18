@@ -75,7 +75,9 @@ public:
    SensAds1115(uint16_t devAddr, Mode mode, SampsRate mSampsRate);
 
    bool Init();
-   float Capture(AnInput in, Gain gain, TBaBool *pError);
+   TBaBoolRC Config(AnInput in, Gain gain);
+   float ConfigCapture(AnInput in, Gain gain, TBaBool *pError);
+   float Capture(Gain gain, TBaBool *pError);
 
    // Typical object oriented destructor must be virtual!
    virtual ~SensAds1115();
