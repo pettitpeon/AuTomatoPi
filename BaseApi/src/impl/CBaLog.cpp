@@ -292,7 +292,7 @@ bool CBaLog::Destroy(CBaLog *pHdl, bool saveCfg) {
 }
 
 //
-void inline CBaLog::SysLog(const char *tag, int line, const char *msg) {
+void CBaLog::SysLog(const char *tag, int line, const char *msg) {
 
    char tagOut[TAGSZ];
    reTag(tag, tagOut);

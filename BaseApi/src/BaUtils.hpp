@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <iterator>
 #include <type_traits>
+#include <sstream>
 
 #include "BaBool.h"
 

@@ -214,7 +214,7 @@ TBaBoolRC HwComI2CSelectDev(uint16_t devAddr) {
 
    if (ioctl(sI2cHdl.fd, I2C_SLAVE, devAddr) < 0) {
       WARN_("Unable to select I2C device(%x): %s", devAddr, strerror(errno));
-      activeAddr == 0;
+      activeAddr = 0;
       return eBaBoolRC_Error;
    }
 

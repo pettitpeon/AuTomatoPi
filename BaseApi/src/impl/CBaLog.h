@@ -164,7 +164,6 @@ private:
    CBaMsg mLogCloseFailed;
    CBaMsg mRenameFailed;
    CBaMsg mLogOpenFailed;
-
 };
 
 
