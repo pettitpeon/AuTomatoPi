@@ -1,0 +1,7 @@
+cmake \
+-DCMAKE_VERBOSE_MAKEFILE=ON \
+-DCMAKE_BUILD_TYPE=Debug \
+-DCMAKE_TOOLCHAIN_FILE=/home/piva/repos/AuTomatoPi/cmake-toolchains/raspi.cmake \
+../..
+
+cmake -G "MinGW Makefiles" -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE="D:\Programming\Repos\rpiapi\cmake-toolchains\raspi-win.cmake" ..
