@@ -1,6 +1,18 @@
 
 set(MODULE_NAME BaseApi)
 
+if(DEFINED ${PLATFORM})
+        if(${PLATFORM} EQUAL "RASPI")
+                set(PLATFORM_SOURCES
+                        src/SensAds1115.h
+                )
+                set(PLATFORM_HEADERS
+                        src/SensAds1115.cpp
+                )
+        endif()
+endif()
+
+
 set(${MODULE_NAME}_SRCS
         src/BaCore.cpp
         src/BaIniParse.cpp
@@ -21,6 +33,9 @@ set(${MODULE_NAME}_SRCS
         src/OsIpc.cpp
         src/OsIpcRegistry.cpp
         src/OsProc.cpp
+        )
+
+set(${MODULE_NAME}_RASPI_SRCS
         src/SensAds1115.cpp
         )
 
@@ -52,12 +67,13 @@ set(${MODULE_NAME}_HEADERS
         src/OsIpc.h
         src/OsIpcRegistry.h
         src/OsProc.h
-        src/SensAds1115.h
         )
 
 add_library(${MODULE_NAME} STATIC
         ${${MODULE_NAME}_SRCS}
         ${${MODULE_NAME}_HEADERS}
+        ${PLATFORM_SOURCES}
+        ${PLATFORM_HEADERS}
         )
 
 target_include_directories(${MODULE_NAME}
